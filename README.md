@@ -1,5 +1,14 @@
 # Personal Zoo
 
+## Purpose
+
+This webapp is for managing my "personal zoo" @home. You can add animals, there feedings, ect...
+
+Currently the app is still under development and not stable and will start in debug mode by default.
+
+### **The app is NOT production ready!**
+
+
 ## Startup
 ```bash
 python3 -m pip install -r requirements.txt
