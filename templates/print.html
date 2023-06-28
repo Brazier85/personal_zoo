@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Steckbriefe{% endblock %}
+
+{% block content %}
+    <p>&nbsp;</p>
+    <h3 class="no-print">Notes:</h3>  
+    <p class="no-print">To print your animal cards please use the print function of your browser. The not needed elements like this one will be hidden.</p>
+    <h4 class="no-print" style="color: red;"> THIS SITE WILL NOT WORK ON MOBILE DEVICES!</h4>
+    {% for row in data %}
+    <div class="print_card">
+        <div class="user-card" style="background-color: {{ row[8] }} !important;">
+            {% if row[7] %}
+            <img src="{{ url_for('uploaded_file', filename=row[7]) }}" alt="Uploaded Image">
+            {% endif %}
+        </div>
+        <div class="general">
+            <h1>{{ row[1] }}</h1>
+            <table>
+                <tr>
+                <td class="tbl_title">Art</td>
+                <td>{{ row[2] }}</td>
+                </tr>
+                <tr>
+                <td class="tbl_title">Morph</td>
+                <td>{{ row[3] }}</td>
+                </tr>
+                <tr>
+                <td class="tbl_title">Geschlecht</td>
+                <td>{{ row[4] }}</td>
+                </tr>
+                <tr>
+                <td class="tbl_title">Schlupfdatum</td>
+                <td>{{ row[5] }}</td>
+                </tr>
+            </table>
+            <p>{{ row[6] }}</p>
+            <span class="more">Stand:  {{ row[9] }}</span>
+        </div>
+        <div>
+            {% set feed_url = feed_url ~ row[0] ~ '?external'%}
+            <img class="d-block ms-auto me-0" src="{{ qrcode(feed_url, box_size=3) }}">
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,21 @@
+# From debugging
+venv
+*.log
+Backup
+
+# No database
+*.db
+
+# No uploads
+data/uploads/*
+
+# Old files
+Original/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+
+# No not ignore .gitkeep
+!/**/.gitkeep

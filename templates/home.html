@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Personal Zoo{% endblock %}
+
+{% block content %}
+    <p>&nbsp;</p>
+    <h3>Your animals:</h3>
+    <div class="row row-cols-lg-3 row-cols-1 g-4">
+        {% for row in data %}
+        <div class="col">
+            <div class="card card-animal">
+                <a href="{{ url_for('animal.animal', id=row[0]) }}" class="card-link">
+                <div class="container">
+                    <div class="row row-cols-3 align-items-center">
+                        <div class="col col-1"></div>
+                        <div class="card-animal-image col-5 mx-auto">
+                            <img src="{{ url_for('uploaded_file', filename=row[7]) }}" style="border-color: {{ row[8] }} !important;">
+                        </div>
+                        <div class="col col-1"></div>
+                    </div>
+                </div>
+                <div class="card-body card-body-clickable" style="min-height: 116.9px !important;">
+                    <h5 class="card-title text-center">{{ row[1] }}</h5>
+                    <p class="card-text">{{ row[6] }}</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated: {{ row[10] }}</small>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

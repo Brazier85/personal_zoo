@@ -1,0 +1,12 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="itemLabel">Feeding QR-Code for {{ animal }}</h5>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="mb-3">
+        <img class="rounded mx-auto d-block" src="{{ qrcode(feed_url, box_size=4) }}">
+        <p class="text-center"><a href="{{ feed_url }}" target="_blank">{{ feed_url }}</a></p>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+</div>

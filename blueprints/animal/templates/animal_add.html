@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Add{% endblock %}
+
+{% block content %}
+<p>&nbsp;</p>
+<div class="card" style="background-color: white;">
+    <div class="card-header">
+        <h3>Add a new animal</h3>
+    </div>
+    <form action="{{ url_for('animal.add') }}" method="post" enctype="multipart/form-data">
+        <div class="card-body">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="art" class="form-label">Type</label>
+                        <input type="text" class="form-control" id="art" name="art" required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="morph" class="form-label">Morph</label>
+                        <input type="text" class="form-control" id="morph" name="morph" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">    
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gender</label>
+                        <select class="form-select" id="gender" name="gender" required>
+                            <option value="male" >Male</option>
+                            <option value="female" >Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="birth" class="form-label">Birth</label>
+                        <input type="date" class="form-control" id="birth" name="birth" required>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="notes" class="form-label">Notes</label>
+                <textarea class="form-control" id="notes" name="notes" rows="3" required></textarea>
+            </div>    
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image:</label>
+                        <input type="file" accept="image/*" class="form-control" id="image" name="image" required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="background-color" class="form-label">Background Color</label>
+                        <input type="color" class="form-control" id="background-color" name="background-color" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

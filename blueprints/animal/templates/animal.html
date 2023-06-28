@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+
+{% block title %}Personal Zoo | {{ data[1] }}{% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-row align-items-center flex-nowrap mt-3 mb-3">
+    <div class="animal-image"><!---->
+        <img src="{{ url_for('uploaded_file', filename=data[7]) }}"  style="border-color: {{ data[8] }} !important;">
+    </div>
+    <div class="px-4">
+        <div>
+            <h2 class="d-inline">{{ data[1] }}</h2>
+            <span class="gender text-center ml-3">
+                <i class="bi {% if data[4] == 'female' %} bi-gender-female female {% else %} bi-gender-male male {% endif %} d-none d-sm-inline-block"></i>
+            </span>
+        </div>
+        <div>{{ data[3] }}</div>
+        <div class="text-muted">{{ data[2] }} (*{{ data[5] }})</div>
+    </div>
+</div>
+
+<div class="btn-list">
+    <button class="btn rounded-right animal_edit_button green_button"><i class="bi bi-pencil-square"></i></button>
+    <button class="btn rounded-right animal_print_button green_button"><i class="bi bi-printer"></i></button>
+    <button class="btn rounded-right animal_qr_button green_button" style="-webkit-text-stroke: 0.4px;"><i class="bi bi-qr-code-scan"></i></button>
+</div>
+
+<div class="row row-cols-lg-2 row-cols-sm-1">
+    <div>
+        <div class="mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="progress" style="display: none;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1"></div>
+                    </div>
+                    <div class="flex-grow"> Feedings </div>
+                    <div class="btn-list">
+                        <button class="btn rounded-right feeding_add_button green_button"><i class="bi bi-plus"></i></button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if feedings %}
+                    <table class="table table-striped m-0">
+                        <thead>
+                            <th>Date</th>
+                            <th>Count</th>
+                            <th>Type</th>
+                            <th>Weight</th>
+                        </thead>
+                        <tbody>
+                            {% for row in feedings %}
+                            <tr data-id="{{ row[0] }}" class="feeding_edit active_row">
+                                <td>{{ row[5] }}</td>
+                                <td>{{ row[3] }}</td>
+                                <td>{{ row[2] }}</td>
+                                <td>{% if row[4] > 0 %} {{ row[4] }} gr {% else %} - {% endif %}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                        <p class="mb-0">No feedings found!</p>
+                    {% endif %}
+                </div>
+                <div class="list-group list-group-clickable"><!----><!----></div>
+                <div class="card-footer card-footer-clickable text-right pr-0">
+                    <div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="progress" style="display: none;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1"></div>
+                    </div>
+                    <div class="flex-grow"> Events/Actions </div>
+                    <div class="btn-list">
+                        <button class="btn history_add_button green_button"><i class="bi bi-plus"></i></button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if history %}
+                    <table class="table table-striped m-0">
+                        <thead>
+                            <th>Date</th>
+                            <th>Event</th>
+                            <th>Details</th>
+                        </thead>
+                        <tbody>
+                            {% for row in history %}
+                            <tr data-id="{{ row[0] }}" class="history_edit active_row">
+                                <td>{{ row[4] }}</td>
+                                <td>{{ row[2] }}</td>
+                                <td>{{ row[3] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                        <p class="mb-0">No History found!</p>
+                    {% endif %}
+                </div>
+                <div class="list-group list-group-clickable"><!----></div>
+                <div class="card-footer card-footer-clickable text-right pr-0">
+                    <div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="progress" style="display: none;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1"></div>
+                    </div>
+                    <div class="flex-grow"> Notes </div>
+                    <div class="btn-list">
+                        <!-- no button -->
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>{{ data[6] }}</p>
+                </div>
+                <div class="list-group list-group-clickable"><!----></div>
+                <div class="card-footer card-footer-clickable text-right pr-0">
+                    <div style="text-transform: uppercase;">Last updated: {{ data[10] }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="flex-grow"> Image </div>
+                    <div class="btn-list">
+                        <!-- no button here -->
+                    </div>
+                </div>
+                <div class="card-body">
+                    <img class="rounded mx-auto d-block" src="{{ url_for('uploaded_file', filename=data[7]) }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Will be loaded later -->
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" >
+    $(document).ready(function(){
+        $('.feeding_edit').click(function(){
+            var feed_id = $(this).data('id');
+            $.ajax({
+                        url: '/feeding/edit/'+feed_id,
+                        type: 'get',
+                        success: function(data){ 
+                            $('.modal-content').html(data); 
+                            $('.modal-content').append(data.htmlresponse);
+                            $('#modal_details').modal('show');
+                            $('.feeding_delete_button').click(function(){
+                                var feed_id = $(this).data('id');
+                                if (confirm("Are You Sure ?")) {
+                                    $.ajax({
+                                            url: '/feeding/delete/'+feed_id,
+                                            type: 'post',
+                                            data: {animal_id: {{ data[0] }}},
+                                            success: function(data) {
+                                                location.reload(true); 
+                                            }
+                                        });
+                                }
+                            });
+                        }
+                    });
+        });
+        $('.history_edit').click(function(){
+            var feed_id = $(this).data('id');
+            $.ajax({
+                        url: '/history/edit/'+feed_id,
+                        type: 'get',
+                        success: function(data){ 
+                            $('.modal-content').html(data); 
+                            $('.modal-content').append(data.htmlresponse);
+                            $('#modal_details').modal('show');
+                            $('.history_delete_button').click(function(){
+                                var feed_id = $(this).data('id');
+                                if (confirm("Are You Sure ?")) {
+                                    $.ajax({
+                                            url: '/history/delete/'+feed_id,
+                                            type: 'post',
+                                            data: {animal_id: {{ data[0] }}},
+                                            success: function(data) {
+                                                location.reload(true); 
+                                            }
+                                        });
+                                }
+                            });
+                        }
+                    });
+        });
+    });
+    $('.feeding_add_button').on('click',function(){
+        $('.modal-content').load('/feeding/add/{{ data[0] }}',function(){
+            $('#modal_details').modal('show'); 
+        });
+    });
+    $('.history_add_button').on('click',function(){
+        $('.modal-content').load('/history/add/{{ data[0] }}',function(){
+            $('#modal_details').modal('show'); 
+        });
+    });
+    $('.animal_qr_button').on('click',function(){
+        $('.modal-content').load('/feeding/get_qr/{{ data[0] }}',function(){
+            $('#modal_details').modal('show'); 
+        });
+    })
+    $('.animal_print_button').on('click',function(){
+        window.open('/animal/{{ data[0] }}?print=1', '_blank'); 
+    });
+    $('.animal_edit_button').on('click',function(){
+        $('.modal-content').load('/animal/edit/{{ data[0] }}',function(){
+            $('#modal_details').modal('show'); 
+            $('.animal_delete_button').click(function(){
+                                var animal_id = $(this).data('id');
+                                if (confirm("Are You Sure ?")) {
+                                    $.ajax({
+                                            url: '/animal/delete/'+animal_id,
+                                            type: 'post',
+                                            data: {animal_id: {{ data[0] }}},
+                                            success: function(data) {
+                                                window.location.replace("/"); 
+                                            }
+                                        });
+                                }
+                            });
+        });
+    });
+</script>
+{% endblock %}
