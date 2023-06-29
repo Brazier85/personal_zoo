@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, send_from_directory
-import logging
 from flask_qrcode import QRcode
 
-# Import own functions
+# Imports
+from config import Config
 from functions import *
 
 # Import Blueprints
@@ -10,16 +10,9 @@ from blueprints.animal.animal import animal_bp
 from blueprints.feeding.feeding import feeding_bp
 from blueprints.history.history import history_bp
 
-logging.basicConfig(filename='app.log',
-                    level=logging.WARN,
-                    format='[%(asctime)s] %(levelname)s %(name)s %(threadName)s : %(message)s')
-logging.getLogger().addHandler(logging.StreamHandler())
-
 app = Flask(__name__)
 # Configuration
-app.config['UPLOAD_FOLDER'] = 'data/uploads'
-app.secret_key = 'meine_tiere'
-app.static_folder = 'static'
+app.config.from_object(Config)
 
 QRcode(app)
 
