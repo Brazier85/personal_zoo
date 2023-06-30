@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, send_from_directory
 from flask_qrcode import QRcode
+import os
+import logging
+from logging.config import dictConfig
 
 # Imports
-from config import Config
 from functions import *
 
 # Import Blueprints
@@ -11,8 +13,37 @@ from blueprints.feeding.feeding import feeding_bp
 from blueprints.history.history import history_bp
 
 app = Flask(__name__)
+
+# Logging
+logging.getLogger('werkzeug').disabled = True
+dictConfig(
+    {
+        "version": 1,
+        "formatters": {
+            "default": {
+                "format": "[%(asctime)s] %(levelname)s | %(module)s >>> %(message)s",
+                "datefmt": "%B %d, %Y %H:%M:%S %Z",
+            }
+        },
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+                "stream": "ext://sys.stdout",
+                "formatter": "default",
+            }
+        },
+        "root": {"level": "DEBUG", "handlers": ["console"]},
+    }
+)
+
 # Configuration
-app.config.from_object(Config)
+if os.environ.get('FLASK_ENV') == 'dev':
+    app.logger.warning(f"App running in mode: { os.environ.get('FLASK_ENV') }")
+    app.config.from_object('config.DevConfig')
+else:
+    app.logger.info(f"App running in mode: { os.environ.get('FLASK_ENV') }")
+    app.config.from_object('config.ProdConfig')
+
 
 QRcode(app)
 
@@ -20,6 +51,19 @@ QRcode(app)
 app.register_blueprint(animal_bp, url_prefix="/animal")
 app.register_blueprint(feeding_bp, url_prefix="/feeding")
 app.register_blueprint(history_bp, url_prefix="/history")
+
+@app.after_request
+def logAfterRequest(response):
+
+    app.logger.info(
+        "path: %s | method: %s | status: %s | size: %s",
+        request.path,
+        request.method,
+        response.status,
+        response.content_length,
+    )
+
+    return response
 
 # Main route
 @app.route('/')
@@ -61,4 +105,4 @@ def uploaded_file(filename):
 ###############
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",debug=True)
+    app.run(host="0.0.0.0")

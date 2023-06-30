@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, flash, jsonify, Blueprint
+from flask import current_app, render_template, request, redirect, flash, jsonify, Blueprint
 from functions import *
 
 feeding_bp = Blueprint("feeding", __name__, template_folder="templates")
@@ -33,6 +33,7 @@ def add(id):
         db_update(query)
 
         flash('Added feeding successfully!')
+        current_app.logger.info("Added feeding!")
 
         return redirect("/animal/"+str(id))
     
@@ -55,6 +56,7 @@ def edit(id):
         db_update(query)
         
         flash('Changes to feeding saved!')
+        current_app.logger.info(f"Modified feeding with id: {id} !")
         return redirect("/animal/"+str(animal_id))
     
 @feeding_bp.route('/delete/<int:id>', methods=['POST'])
@@ -63,5 +65,6 @@ def delete(id):
         # Delete data into the database
         db_update(f"DELETE FROM feeding WHERE id={ id }")
         flash('Deleted feeding successfully!')
+        current_app.logger.info(f"Deleted feeding with id: {id} !")
 
         return "", 200

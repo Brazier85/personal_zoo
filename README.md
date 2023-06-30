@@ -14,6 +14,11 @@ Currently the app is still under development and not stable and will start in de
 python3 -m pip install -r requirements.txt
 ```
 
+## ENV
+```bash
+FLASK_ENV=dev # For dev -> If not set it will use prod
+```
+
 ## Docker 
 ```bash
 docker build -t personal_zoo .

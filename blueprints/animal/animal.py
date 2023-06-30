@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, Blueprint
+from flask import current_app, render_template, request, redirect, url_for, flash, Blueprint
 import os
 from werkzeug.utils import secure_filename
 from functions import *

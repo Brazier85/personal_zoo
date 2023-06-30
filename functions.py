@@ -1,10 +1,12 @@
+from flask import current_app
 from datetime import datetime
 import sqlite3
+import os
 
 # Variables
-DATABASE = 'data/database.db'
+DATABASE = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/database.db')
+UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/uploads')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-UPLOAD_FOLDER = str('data/uploads')
 
 # Check if a file has an allowed extension
 def allowed_file(filename):

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, flash, jsonify, Blueprint
+from flask import current_app, render_template, request, redirect, flash, jsonify, Blueprint
 from functions import *
 
 history_bp = Blueprint("history", __name__, template_folder="templates")
@@ -20,6 +20,7 @@ def add(id):
         db_update(query)
 
         flash('Added event/action successfully!')
+        current_app.logger.info("Added history!")
 
         return redirect("/animal/"+str(id))
     
@@ -41,6 +42,7 @@ def edit(id):
         db_update(query)
 
         flash('Changes to history saved!')
+        current_app.logger.info(f"Modified history with id: {id} !")
         return redirect("/animal/"+str(animal_id))
 
 @history_bp.route('/delete/<int:id>', methods=['POST'])
@@ -50,5 +52,6 @@ def delete(id):
         db_update(f"DELETE FROM history WHERE id={ id }")
 
         flash('Deleted history successfully!')
+        current_app.logger.info(f"Deleted history with id: {id} !")
 
         return "", 200
