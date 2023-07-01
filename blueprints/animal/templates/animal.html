@@ -4,9 +4,11 @@
 
 {% block content %}
 
+{% set image = url_for("uploaded_file", filename=data[7]) %}
+
 <div class="d-flex flex-row align-items-center flex-nowrap mt-3 mb-3">
     <div class="animal-image"><!---->
-        <img src="{{ url_for('uploaded_file', filename=data[7]) }}"  style="border-color: {{ data[8] }} !important;">
+        <img class="show_animal_image" src="{{ image }}"  style="border-color: {{ data[8] }} !important;">
     </div>
     <div class="px-4">
         <div>
@@ -139,7 +141,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <img class="rounded mx-auto d-block" src="{{ url_for('uploaded_file', filename=data[7]) }}">
+                    <img class="rounded mx-auto d-block show_animal_image" src="{{ image }}">
                 </div>
             </div>
         </div>
@@ -206,6 +208,10 @@
                         }
                     });
         });
+        $('.show_animal_image').click(function(){
+            $('.modal-content').html('<div class="modal-body"><img src="{{ image }}" class="img-fluid"></div>')
+            $('#modal_details').modal('show'); 
+        })
     });
     $('.feeding_add_button').on('click',function(){
         $('.modal-content').load('/feeding/add/{{ data[0] }}',function(){
