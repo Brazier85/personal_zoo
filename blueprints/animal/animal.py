@@ -56,7 +56,7 @@ def add():
                 flash('Invalid file. Please upload an image file.')
                 return redirect(url_for('animal.add'))
         else:
-            filename = None
+            filename = "dummy.jpg"
 
         query = "INSERT INTO animals" \
                     "(name, image, art, morph, background_color, gender, birth, notes)" \
@@ -121,10 +121,11 @@ def delete(id):
             return redirect('/')
 
         # Delete the image file
-        if image_filename:
-            image_path = os.path.join(UPLOAD_FOLDER, str(image_filename))
-            if os.path.exists(image_path):
-                os.remove(image_path)
+        if image_filename != 'dummy.png':
+            if image_filename:
+                image_path = os.path.join(UPLOAD_FOLDER, str(image_filename))
+                if os.path.exists(image_path):
+                    os.remove(image_path)
 
         db_update(f"DELETE FROM animals WHERE id={ id }")
 
