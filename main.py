@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request, send_from_directory
 from flask_qrcode import QRcode
-from flask_moment import Moment
 import os
 import logging
 from logging.config import dictConfig
 
 # Imports
 from functions import *
+from momentjs import momentjs
 
 # Import Blueprints
 from blueprints.animal.animal import animal_bp
@@ -47,7 +47,8 @@ else:
 
 
 QRcode(app)
-moment = Moment(app)
+# MomentJS
+app.jinja_env.globals['momentjs'] = momentjs
 
 # Blueprints
 app.register_blueprint(animal_bp, url_prefix="/animal")
