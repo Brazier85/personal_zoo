@@ -14,6 +14,10 @@
     <!-- mobile render fix -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- MomentJS -->
+    {{ moment.include_moment() }}
+    {{ moment.locale(auto_detect=True) }}
+
     <!-- Add something if needed -->
     {% block head %}{% endblock %}
 </head>
@@ -53,9 +57,18 @@
     {% endif %}
     {% endwith %}
 
-    <div class="container">
+    <div class="container pb-5 mb-5">
         {% block content %}{% endblock %}
     </div>
+
+    <footer class="bg-light text-center text-lg-start fixed-bottom">
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+          © {{ moment().format('YYYY') }} Copyright:
+          <a class="text-dark" target="_blank" href="https://brazier85.de/">Brazier85</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
 
     <script>
         // Add fade-out animation to flash message

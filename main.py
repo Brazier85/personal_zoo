@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, send_from_directory
 from flask_qrcode import QRcode
+from flask_moment import Moment
 import os
 import logging
 from logging.config import dictConfig
@@ -46,6 +47,7 @@ else:
 
 
 QRcode(app)
+moment = Moment(app)
 
 # Blueprints
 app.register_blueprint(animal_bp, url_prefix="/animal")
