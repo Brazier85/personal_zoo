@@ -21,7 +21,7 @@
     {% block head %}{% endblock %}
 </head>
 <body class="d-flex flex-column h-100">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light no-print">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light no-print">
         <div class="container">
             <a class="navbar-brand" href="/">Personal Zoo</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,6 +42,9 @@
             </div>
         </div>
     </nav>
+
+    <!-- spacer for nav -->
+    <div style="margin-top: 50px;"></div>
 
     {% with messages = get_flashed_messages() %}
     {% if messages %}
