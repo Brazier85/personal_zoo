@@ -8,6 +8,7 @@ Backup
 
 # No uploads
 data/uploads/*
+!data/uploads/dummy.jpg
 
 # Old files
 Original/

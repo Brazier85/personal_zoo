@@ -4,11 +4,11 @@ FROM python:3.9
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the required files into the container
-COPY requirements.txt .
-COPY main.py .
-COPY templates templates
-COPY static static
+# Install git
+RUN apt-get update
+RUN apt-get install -y git
+
+RUN git clone https://github.com/Brazier85/personal_zoo.git /app
 
 # Install the dependencies
 RUN pip install --no-cache-dir -r requirements.txt
