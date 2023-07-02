@@ -11,14 +11,17 @@ RUN apt-get install -y git
 #RUN git clone https://github.com/Brazier85/personal_zoo.git /app
 
 # Copy the required files into the container
-COPY requirements.txt .
-COPY main.py .
-COPY functions.py .
 COPY config.py .
+COPY functions.py .
+COPY main.py .
 COPY momentjs.py .
-COPY templates templates
-COPY static static
+COPY requirements.txt .
+
+# Folders
+COPY blueprints blueprints
 COPY data data
+COPY static static
+COPY templates templates
 
 # Install the dependencies
 RUN pip install --no-cache-dir -r requirements.txt
