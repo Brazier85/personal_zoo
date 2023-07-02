@@ -146,56 +146,6 @@
 
 <script type="text/javascript" >
     $(document).ready(function(){
-        $('.feeding_edit').click(function(){
-            var feed_id = $(this).data('id');
-            $.ajax({
-                url: '/feeding/edit/'+feed_id,
-                type: 'get',
-                success: function(data){ 
-                    $('.modal-content').html(data); 
-                    $('.modal-content').append(data.htmlresponse);
-                    $('#modal_details').modal('show');
-                    $('.feeding_delete_button').click(function(){
-                        var feed_id = $(this).data('id');
-                        if (confirm("Are You Sure ?")) {
-                            $.ajax({
-                                    url: '/feeding/delete/'+feed_id,
-                                    type: 'post',
-                                    data: {animal_id: {{ data[0] }}},
-                                    success: function(data) {
-                                        location.reload(true); 
-                                    }
-                                });
-                        }
-                    });
-                }
-            });
-        });
-        $('.history_edit').click(function(){
-            var feed_id = $(this).data('id');
-            $.ajax({
-                url: '/history/edit/'+feed_id,
-                type: 'get',
-                success: function(data){ 
-                    $('.modal-content').html(data); 
-                    $('.modal-content').append(data.htmlresponse);
-                    $('#modal_details').modal('show');
-                    $('.history_delete_button').click(function(){
-                        var feed_id = $(this).data('id');
-                        if (confirm("Are You Sure ?")) {
-                            $.ajax({
-                                    url: '/history/delete/'+feed_id,
-                                    type: 'post',
-                                    data: {animal_id: {{ data[0] }}},
-                                    success: function(data) {
-                                        location.reload(true); 
-                                    }
-                                });
-                        }
-                    });
-                }
-            });
-        });
         $('.show_animal_image').click(function(){
             $('.modal-content').html('<div class="modal-body"><img src="{{ image }}" class="rounded img-fluid mx-auto"></div>')
             $('#modal_details').modal('show'); 
@@ -217,6 +167,56 @@
                     $('.feeding_card').html(data);
                 }
             })
+        });
+    });
+    $(document).on("click",".feeding_edit",function(){
+        var feed_id = $(this).data('id');
+        $.ajax({
+            url: '/feeding/edit/'+feed_id,
+            type: 'get',
+            success: function(data){ 
+                $('.modal-content').html(data); 
+                $('.modal-content').append(data.htmlresponse);
+                $('#modal_details').modal('show');
+                $('.feeding_delete_button').click(function(){
+                    var feed_id = $(this).data('id');
+                    if (confirm("Are You Sure ?")) {
+                        $.ajax({
+                                url: '/feeding/delete/'+feed_id,
+                                type: 'post',
+                                data: {animal_id: {{ data[0] }}},
+                                success: function(data) {
+                                    location.reload(true); 
+                                }
+                            });
+                    }
+                });
+            }
+        });
+    });
+    $(document).on("click",".history_edit",function(){
+        var feed_id = $(this).data('id');
+        $.ajax({
+            url: '/history/edit/'+feed_id,
+            type: 'get',
+            success: function(data){ 
+                $('.modal-content').html(data); 
+                $('.modal-content').append(data.htmlresponse);
+                $('#modal_details').modal('show');
+                $('.history_delete_button').click(function(){
+                    var feed_id = $(this).data('id');
+                    if (confirm("Are You Sure ?")) {
+                        $.ajax({
+                                url: '/history/delete/'+feed_id,
+                                type: 'post',
+                                data: {animal_id: {{ data[0] }}},
+                                success: function(data) {
+                                    location.reload(true); 
+                                }
+                            });
+                    }
+                });
+            }
         });
     });
     $('.feeding_add_button').on('click',function(){
