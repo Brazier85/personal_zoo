@@ -56,7 +56,7 @@ def add():
                 filename = secure_filename(image.filename)
                 image.save(os.path.join(UPLOAD_FOLDER, filename))
             else:
-                flash('Invalid file. Please upload an image file.')
+                flash('Invalid file. Please upload an image file.', 'error')
                 return redirect(url_for('animal.add'))
         else:
             filename = "dummy.jpg"
@@ -66,7 +66,7 @@ def add():
                     f"VALUES ('{ name }', '{ filename }', '{ art }', '{ morph }', '{ background_color }', '{ gender }', '{ birth }', '{ notes }')"
         db_update(query)
 
-        flash('Data submitted successfully!')
+        flash('Data submitted successfully!', 'success')
         return redirect('/')
 
 @animal_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
@@ -96,7 +96,7 @@ def edit(id):
                 image.save(os.path.join(UPLOAD_FOLDER, filename))
             else:
                 # Invalid file format
-                flash('Invalid file format. Please upload an image file.')
+                flash('Invalid file format. Please upload an image file.', 'error')
                 return redirect(url_for('animal_edit', id=id))
         else:
             # No new image provided
@@ -108,7 +108,7 @@ def edit(id):
                     f"WHERE id='{ id }'"
         db_update(query)
 
-        flash('Data submitted successfully!')
+        flash('Data submitted successfully!', 'success')
         return redirect("/animal/"+str(id))
 
 @animal_bp.route('/delete/<int:id>', methods=['POST'])
@@ -132,6 +132,6 @@ def delete(id):
 
         db_update(f"DELETE FROM animals WHERE id={ id }")
 
-        flash('Animal deleted successfully!')
+        flash('Animal deleted successfully!', 'success')
 
         return "", 200

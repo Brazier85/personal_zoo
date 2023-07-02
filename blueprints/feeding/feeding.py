@@ -32,7 +32,7 @@ def add(id):
                     f"VALUES ('{id}', '{type}', '{count}', '{weight}', '{date}')"
         db_update(query)
 
-        flash('Added feeding successfully!')
+        flash('Added feeding successfully!', 'success')
         current_app.logger.info("Added feeding!")
 
         return redirect("/animal/"+str(id))
@@ -60,7 +60,7 @@ def multi_add():
                         f"VALUES ('{animal}', '{type}', '{count}', '{weight}', '{date}')"
             db_update(query)
 
-        flash('Added multi feeding successfully!')
+        flash('Added multi feeding successfully!', 'success')
         current_app.logger.info("Added multi feeding!")
 
         return redirect("/")
@@ -84,7 +84,7 @@ def edit(id):
                     f"WHERE id='{ id }'"
         db_update(query)
         
-        flash('Changes to feeding saved!')
+        flash('Changes to feeding saved!', 'success')
         current_app.logger.info(f"Modified feeding with id: {id} !")
         return redirect("/animal/"+str(animal_id))
     
@@ -93,7 +93,7 @@ def delete(id):
     if request.method == 'POST': 
         # Delete data into the database
         db_update(f"DELETE FROM feeding WHERE id={ id }")
-        flash('Deleted feeding successfully!')
+        flash('Deleted feeding successfully!', 'success')
         current_app.logger.info(f"Deleted feeding with id: {id} !")
 
         return "", 200

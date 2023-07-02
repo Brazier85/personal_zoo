@@ -19,7 +19,7 @@ def add(id):
                     f"VALUES ('{id}', '{event}', '{text}', '{date}')"
         db_update(query)
 
-        flash('Added event/action successfully!')
+        flash('Added event/action successfully!', 'success')
         current_app.logger.info("Added history!")
 
         return redirect("/animal/"+str(id))
@@ -41,7 +41,7 @@ def edit(id):
                     f"WHERE id='{ id }'"
         db_update(query)
 
-        flash('Changes to history saved!')
+        flash('Changes to history saved!', 'success')
         current_app.logger.info(f"Modified history with id: {id} !")
         return redirect("/animal/"+str(animal_id))
 
@@ -51,7 +51,7 @@ def delete(id):
         # Delete data into the database
         db_update(f"DELETE FROM history WHERE id={ id }")
 
-        flash('Deleted history successfully!')
+        flash('Deleted history successfully!', 'success')
         current_app.logger.info(f"Deleted history with id: {id} !")
 
         return "", 200
