@@ -20,8 +20,22 @@ EVENT_TYPES = ["Häutung","Gewogen","Medizinisch","Sonstiges"]
 
 **WARNING**: You must restart the app after this changes!
 
+## Startup
 
-## Docker 
+1. Clone this repo
+    ```
+    git clone https://github.com/Brazier85/personal_zoo.git
+    ```
+2. Install docker
+
+    [See docker docs](https://docs.docker.com/get-docker/)
+3. Run `run_docker.sh`
+    ```bash
+    sh run_docker.sh
+    ```
+4. Visit `<host/ip>:5000`
+
+## Docker
 ```bash
 docker build -t personal_zoo .
 
