@@ -14,11 +14,9 @@
                 <div class="mb-3">
                     <label for="feeding_type" class="form-label">Type</label>
                     <select class="form-select" class="form-control" id="feeding_type" name="feeding_type" required>
-                        <option value="Elefant">Elefant</option>
-                        <option value="Kleinkind">Kleinkind</option>
-                        <option value="Maus" selected>Maus</option>
-                        <option value="Ratte">Ratte</option>
-                        <option value="Wal">Wal</option>
+                        {% for feeding_type in feeding_types %}
+                            <option value="{{ feeding_type }}">{{ feeding_type }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>

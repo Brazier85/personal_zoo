@@ -14,10 +14,9 @@
                 <div class="mb-3">
                     <label for="history_event" class="form-label">Event/Action</label>
                     <select class="form-select" class="form-control" id="history_event" name="history_event" required>
-                        <option value="Häutung">Häutung</option>
-                        <option value="Gewogen">Gewogen</option>
-                        <option value="Medizinisch">Medizinisch</option>
-                        <option value="Sonstiges">Sonstiges</option>
+                        {% for event_type in event_types %}
+                            <option value="{{ event_type }}">{{ event_type }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>

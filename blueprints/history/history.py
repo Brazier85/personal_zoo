@@ -6,7 +6,7 @@ history_bp = Blueprint("history", __name__, template_folder="templates")
 @history_bp.route('/add/<int:id>', methods=['POST','GET'])
 def add(id):
     if request.method == 'GET':
-        return render_template('history_add.html', id=id)
+        return render_template('history_add.html', id=id, event_types=current_app.config['EVENT_TYPES'])
 
     elif request.method == 'POST':
         history = request.form
@@ -27,7 +27,7 @@ def add(id):
 @history_bp.route('/edit/<int:id>', methods=['POST','GET'])
 def edit(id):
     if request.method == 'GET':
-        return jsonify({'htmlresponse': render_template('history_edit.html', data=db_fetch(f"SELECT * FROM history WHERE  id={ id }", False))})
+        return jsonify({'htmlresponse': render_template('history_edit.html', data=db_fetch(f"SELECT * FROM history WHERE  id={ id }", False), event_types=current_app.config['EVENT_TYPES'])})
     
     elif request.method == 'POST':
         history = request.form

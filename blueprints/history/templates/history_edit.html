@@ -14,10 +14,9 @@
                 <div class="mb-3">
                     <label for="history_event" class="form-label">Event/Action</label>
                     <select class="form-select" class="form-control" id="history_event" name="history_event" required>
-                        <option value="Häutung"{% if data[2] == 'Häutung' %}selected{% endif %}>Häutung</option>
-                        <option value="Gewogen"{% if data[2] == 'Gewogen' %}selected{% endif %}>Gewogen</option>
-                        <option value="Medizinisch"{% if data[2] == 'Medizinisch' %}selected{% endif %}>Medizinisch</option>
-                        <option value="Sonstiges"{% if data[2] == 'Sonstiges' %}selected{% endif %}>Sonstiges</option>
+                        {% for event_type in event_types %}
+                            <option value="{{ event_type }}" {% if data[2] == event_type %}selected{% endif %}>{{ event_type }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>

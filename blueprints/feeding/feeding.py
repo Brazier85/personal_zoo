@@ -14,10 +14,10 @@ def add(id):
     if request.method == 'GET':
         external = request.args.get('external')
         if external is None:
-            return render_template('feeding_add.html', id=id)
+            return render_template('feeding_add.html', id=id, feeding_types=current_app.config['FEEDING_TYPES'])
         else:
             animal = db_fetch(f"SELECT name FROM animals WHERE id={ id }", False)
-            return render_template('feeding_add_external.html', id=id, animal=animal[0])
+            return render_template('feeding_add_external.html', id=id, animal=animal[0], feeding_types=current_app.config['FEEDING_TYPES'])
         
     elif request.method == 'POST':
         feeding = request.form
@@ -37,10 +37,39 @@ def add(id):
 
         return redirect("/animal/"+str(id))
     
+@feeding_bp.route('/multi', methods=['POST','GET'])
+def multi_add():
+    if request.method == 'GET':
+        # get animals
+        animals = db_fetch(f"SELECT id, name FROM animals ORDER BY name DESC")
+        return render_template('feeding_multi_add.html', animals=animals, feeding_types=current_app.config['FEEDING_TYPES'])
+        
+    elif request.method == 'POST':
+        feeding = request.form
+        animals = feeding.getlist('animals')
+        count = feeding['feeding_count']
+        type = feeding['feeding_type']
+        weight = feeding['feeding_weight']
+        date = feeding['feeding_date']
+
+        print(animals)
+
+        for animal in animals:
+            query = "INSERT INTO feeding " \
+                        "(animal, type, count, weight, date)" \
+                        f"VALUES ('{animal}', '{type}', '{count}', '{weight}', '{date}')"
+            db_update(query)
+
+        flash('Added multi feeding successfully!')
+        current_app.logger.info("Added multi feeding!")
+
+        return redirect("/")
+    
+    
 @feeding_bp.route('/edit/<int:id>', methods=['POST','GET'])
 def edit(id):
     if request.method == 'GET':
-        return jsonify({'htmlresponse': render_template('feeding_edit.html', data=db_fetch(f"SELECT * FROM feeding WHERE  id={ id }", False))})
+        return jsonify({'htmlresponse': render_template('feeding_edit.html', data=db_fetch(f"SELECT * FROM feeding WHERE  id={ id }", False), feeding_types=current_app.config['FEEDING_TYPES'])})
     
     elif request.method == 'POST':
         feeding = request.form

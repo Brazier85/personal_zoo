@@ -14,11 +14,9 @@
                 <div class="mb-3">
                     <label for="feeding_type" class="form-label">Type</label>
                     <select class="form-select" class="form-control" id="feeding_type" name="feeding_type" required>
-                        <option value="Elefant"{% if data[2] == 'Elefant' %}selected{% endif %}>Elefant</option>
-                        <option value="Kleinkind"{% if data[2] == 'Kleinkind' %}selected{% endif %}>Kleinkind</option>
-                        <option value="Maus"{% if data[2] == 'Maus' %}selected{% endif %}>Maus</option>
-                        <option value="Ratte"{% if data[2] == 'Ratte' %}selected{% endif %}>Ratte</option>
-                        <option value="Wal"{% if data[2] == 'Wal' %}selected{% endif %}>Wal</option>
+                        {% for feeding_type in feeding_types %}
+                            <option value="{{ feeding_type }}" {% if data[2] == feeding_type %}selected{% endif %}>{{ feeding_type }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
