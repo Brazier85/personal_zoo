@@ -52,8 +52,6 @@ def multi_add():
         weight = feeding['feeding_weight']
         date = feeding['feeding_date']
 
-        print(animals)
-
         for animal in animals:
             query = "INSERT INTO feeding " \
                         "(animal, type, count, weight, date)" \

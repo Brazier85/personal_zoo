@@ -24,6 +24,30 @@ def add(id):
 
         return redirect("/animal/"+str(id))
     
+@history_bp.route('/multi', methods=['POST','GET'])
+def multi_add():
+    if request.method == 'GET':
+        animals = db_fetch(f"SELECT id, name FROM animals ORDER BY name DESC")
+        return render_template('history_multi_add.html', animals=animals, event_types=current_app.config['EVENT_TYPES'])
+
+    elif request.method == 'POST':
+        history = request.form
+        animals = history.getlist('animals')
+        event = history['history_event']
+        text = history['history_text']
+        date = history['history_date']
+        
+        for animal in animals:
+            query = "INSERT INTO history " \
+                        "(animal, event, text, date)" \
+                        f"VALUES ('{animal}', '{event}', '{text}', '{date}')"
+            db_update(query)
+
+        flash('Added event/action successfully!', 'success')
+        current_app.logger.info("Added history!")
+
+        return redirect("/")
+    
 @history_bp.route('/edit/<int:id>', methods=['POST','GET'])
 def edit(id):
     if request.method == 'GET':
