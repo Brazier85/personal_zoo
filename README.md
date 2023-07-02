@@ -4,20 +4,22 @@
 
 This webapp is for managing my "personal zoo" @home. You can add animals, there feedings, ect...
 
-Currently the app is still under development and not stable and will start in debug mode by default.
+Currently the app is still under development and not stable.
 
 ### **The app is NOT production ready!**
 
+## Custom Types
+You can set your custom settings by editing the `data/custom_settings.py` file!
+```python
+# Custom feeding types
+FEEDING_TYPES = ["Elefant",'Heuschrecke',"Kleinkind","Maus","Ratte","Wal"]
 
-## Startup
-```bash
-python3 -m pip install -r requirements.txt
+# Custom events
+EVENT_TYPES = ["Häutung","Gewogen","Medizinisch","Sonstiges"]
 ```
 
-## ENV
-```bash
-FLASK_ENV=dev # For dev -> If not set it will use prod
-```
+**WARNING**: You must restart the app after this changes!
+
 
 ## Docker 
 ```bash
@@ -29,7 +31,19 @@ docker run -d -p 5000:5000 -v ./data:/app/data --name personal_zoo personal_zoo
 docker run -d -p 5000:5000 -v .:/app --name personal_zoo personal_zoo
 ```
 
-## Development
+## DEVELOPMENT
+
+### Startup
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+### ENV
+```bash
+FLASK_ENV=dev # For dev -> If not set it will use prod
+```
+
+### Change `requirements.txt`
 ```bash
 
 #create venv
