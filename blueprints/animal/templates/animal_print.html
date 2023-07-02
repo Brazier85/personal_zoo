@@ -4,9 +4,11 @@
 
 {% block content %}
 
-<div class="d-flex flex-row align-items-center flex-nowrap mt-3 mb-3">
+{% set image = url_for("uploaded_file", filename=data[7]) %}
+
+<div class="d-flex flex-row rounded" style="background-color: #d7d7d7; padding: 5px;">
     <div class="animal-image"><!---->
-        <img src="{{ url_for('uploaded_file', filename=data[7]) }}"  style="border-color: {{ data[8] }} !important;">
+        <img src="{{ image }}"  style="border-color: {{ data[8] }} !important;">
     </div>
     <div class="px-4">
         <div>
@@ -20,88 +22,88 @@
     </div>
 </div>
 
+<div class="spacer"></div>
+
 <div class="row">
-    <div class="col-sm-12 col-md-6">
-        <div class="mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <div class="flex-grow"> Feedings (last 10)</div>
-                </div>
-                <div class="card-body">
-                    {% if feedings %}
-                    <table class="table table-striped m-0">
-                        <thead>
-                            <th>Date</th>
-                            <th>Count</th>
-                            <th>Type</th>
-                            <th>Weight</th>
-                        </thead>
-                        <tbody>
-                            {% for row in feedings %}
-                            <tr data-id="{{ row[0] }}" class="feeding_edit">
-                                <td>{{ row[5] }}</td>
-                                <td>{{ row[3] }}</td>
-                                <td>{{ row[2] }}</td>
-                                <td>{% if row[4] > 0 %} {{ row[4] }} gr {% else %} - {% endif %}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    {% else %}
-                        <p class="mb-0">No feedings found!</p>
-                    {% endif %}
-                </div>
+    <div class="col">
+        <div class="card" >
+            <div class="card-header">
+                <div class="flex-grow"> Feedings (last 10)</div>
+            </div>
+            <div class="card-body">
+                {% if feedings %}
+                <table class="table table-striped m-0">
+                    <thead>
+                        <th>Date</th>
+                        <th>Count</th>
+                        <th>Type</th>
+                        <th>Weight</th>
+                    </thead>
+                    <tbody>
+                        {% for row in feedings %}
+                        <tr data-id="{{ row[0] }}" class="feeding_edit">
+                            <td>{{ row[5] }}</td>
+                            <td>{{ row[3] }}</td>
+                            <td>{{ row[2] }}</td>
+                            <td>{% if row[4] > 0 %} {{ row[4] }} gr {% else %} - {% endif %}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p class="mb-0">No feedings found!</p>
+                {% endif %}
             </div>
         </div>
-        <div class="mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <div class="flex-grow"> Events/Actions (last 10)</div>
-                </div>
-                <div class="card-body">
-                    {% if history %}
-                    <table class="table table-striped m-0">
-                        <thead>
-                            <th>Date</th>
-                            <th>Event</th>
-                            <th>Details</th>
-                        </thead>
-                        <tbody>
-                            {% for row in history %}
-                            <tr data-id="{{ row[0] }}" class="history_edit">
-                                <td>{{ row[4] }}</td>
-                                <td>{{ row[2] }}</td>
-                                <td>{{ row[3] }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    {% else %}
-                        <p class="mb-0">No History found!</p>
-                    {% endif %}
-                </div>
+    </div>
+    <div class="card" >
+        <div class="card">
+            <div class="card-header">
+                <div class="flex-grow"> Events/Actions (last 10)</div>
             </div>
-        </div>
-        <div class="mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <div class="progress" style="display: none;">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1"></div>
-                    </div>
-                    <div class="flex-grow"> Notes </div>
-                    <div class="btn-list">
-                        <!-- no button -->
-                    </div>
-                </div>
-                <div class="card-body">
-                    <p>{{ data[6] }}</p>
-                </div>
-                <div class="list-group list-group-clickable"><!----></div>
-                <div class="card-footer card-footer-clickable text-right pr-0">
-                    <div style="text-transform: uppercase;">Last updated: {{ data[10] }}</div>
-                </div>
+            <div class="card-body">
+                {% if history %}
+                <table class="table table-striped m-0">
+                    <thead>
+                        <th>Date</th>
+                        <th>Event</th>
+                        <th>Details</th>
+                    </thead>
+                    <tbody>
+                        {% for row in history %}
+                        <tr data-id="{{ row[0] }}" class="history_edit">
+                            <td>{{ row[4] }}</td>
+                            <td>{{ row[2] }}</td>
+                            <td>{{ row[3] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p class="mb-0">No History found!</p>
+                {% endif %}
             </div>
         </div>
     </div>
 </div>
+
+<div class="spacer"></div>
+<div class="d-flex flex-row rounded" style="background-color: #d7d7d7; padding: 5px;">
+    <div class="card">
+        <div class="card-header">
+            <div class="flex-grow"> Notes </div>
+            <div class="btn-list">
+                <!-- no button -->
+            </div>
+        </div>
+        <div class="card-body">
+            <p>{{ data[6] }}</p>
+        </div>
+        <div class="list-group list-group-clickable"><!----></div>
+        <div class="card-footer card-footer-clickable text-right pr-0">
+            <div style="text-transform: uppercase;">Last updated: {{ data[10] }}</div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

@@ -2,6 +2,7 @@ from flask import current_app, render_template, request, redirect, url_for, flas
 import os
 from werkzeug.utils import secure_filename
 from functions import *
+from flask_weasyprint import HTML, render_pdf
 
 animal_bp = Blueprint("animal", __name__, template_folder="templates")
 
@@ -25,7 +26,9 @@ def animal(id):
     formatted_history_data = date_eu(history_data,4)
 
     if printing == '1':
-        return render_template('animal_print.html', data=formatted_animal_data, feedings=formatted_feeding_data, history=formatted_history_data, location=location)
+        html = render_template('animal_print.html', data=formatted_animal_data, feedings=formatted_feeding_data, history=formatted_history_data, location=location)
+        return render_pdf(HTML(string=html), "", download_filename=f"{animal_data[1]}.pdf", automatic_download=False)
+        #return html
     else:
         return render_template('animal.html', data=formatted_animal_data, feedings=formatted_feeding_data, history=formatted_history_data, location=location)
 
