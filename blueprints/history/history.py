@@ -3,6 +3,14 @@ from functions import *
 
 history_bp = Blueprint("history", __name__, template_folder="templates")
 
+@history_bp.route('/get_all/<int:id>', methods=['POST','GET'])
+def get_all(id):
+    if request.method == 'GET':
+        history_data = db_fetch(f"SELECT * FROM history WHERE animal={ id } ORDER BY date DESC")
+        formatted_history_data = date_eu(history_data,4)
+        return render_template('history_all.html', history=formatted_history_data)
+    
+
 @history_bp.route('/add/<int:id>', methods=['POST','GET'])
 def add(id):
     if request.method == 'GET':

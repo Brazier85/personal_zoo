@@ -21,7 +21,7 @@
                 <div class="col">
                     <div class="mb-3">
                         <label for="animals" class="form-label">Animals</label>
-                        <select class="selectpicker" multiple id="animals" name="animals"  data-live-search="true">       
+                        <select class="selectpicker" multiple id="animals" name="animals"  data-live-search="true" required>       
                             {% for animal in animals %}
                                 <option value="{{ animal[0] }}">{{ animal[1] }}</option>
                             {% endfor %}

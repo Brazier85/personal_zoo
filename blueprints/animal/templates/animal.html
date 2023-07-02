@@ -33,15 +33,12 @@
         <div class="mb-3">
             <div class="card">
                 <div class="card-header">
-                    <div class="progress" style="display: none;">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1"></div>
-                    </div>
                     <div class="flex-grow"> Feedings </div>
                     <div class="btn-list">
                         <button class="btn rounded-right feeding_add_button green_button"><i class="bi bi-plus"></i></button>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body feeding_card">
                     {% if feedings %}
                     <table class="table table-striped m-0">
                         <thead>
@@ -65,8 +62,7 @@
                         <p class="mb-0">No feedings found!</p>
                     {% endif %}
                 </div>
-                <div class="list-group list-group-clickable"><!----><!----></div>
-                <div class="card-footer card-footer-clickable text-right pr-0">
+                <div class="card-footer card-footer-clickable text-right pr-0 show_all_feedings">
                     <div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>
                 </div>
             </div>
@@ -74,15 +70,12 @@
         <div class="mb-3">
             <div class="card">
                 <div class="card-header">
-                    <div class="progress" style="display: none;">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1"></div>
-                    </div>
                     <div class="flex-grow"> Events/Actions </div>
                     <div class="btn-list">
                         <button class="btn history_add_button green_button"><i class="bi bi-plus"></i></button>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body history_card">
                     {% if history %}
                     <table class="table table-striped m-0">
                         <thead>
@@ -104,8 +97,7 @@
                         <p class="mb-0">No History found!</p>
                     {% endif %}
                 </div>
-                <div class="list-group list-group-clickable"><!----></div>
-                <div class="card-footer card-footer-clickable text-right pr-0">
+                <div class="card-footer card-footer-clickable text-right pr-0 show_all_history">
                     <div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>
                 </div>
             </div>
@@ -115,9 +107,6 @@
         <div class="mb-3">
             <div class="card">
                 <div class="card-header">
-                    <div class="progress" style="display: none;">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1"></div>
-                    </div>
                     <div class="flex-grow"> Notes </div>
                     <div class="btn-list">
                         <!-- no button -->
@@ -126,8 +115,7 @@
                 <div class="card-body">
                     <p>{{ data[6] }}</p>
                 </div>
-                <div class="list-group list-group-clickable"><!----></div>
-                <div class="card-footer card-footer-clickable text-right pr-0">
+                <div class="card-footer text-right pr-0">
                     <div style="text-transform: uppercase;">Last updated: {{ data[10] }}</div>
                 </div>
             </div>
@@ -161,57 +149,75 @@
         $('.feeding_edit').click(function(){
             var feed_id = $(this).data('id');
             $.ajax({
-                        url: '/feeding/edit/'+feed_id,
-                        type: 'get',
-                        success: function(data){ 
-                            $('.modal-content').html(data); 
-                            $('.modal-content').append(data.htmlresponse);
-                            $('#modal_details').modal('show');
-                            $('.feeding_delete_button').click(function(){
-                                var feed_id = $(this).data('id');
-                                if (confirm("Are You Sure ?")) {
-                                    $.ajax({
-                                            url: '/feeding/delete/'+feed_id,
-                                            type: 'post',
-                                            data: {animal_id: {{ data[0] }}},
-                                            success: function(data) {
-                                                location.reload(true); 
-                                            }
-                                        });
-                                }
-                            });
+                url: '/feeding/edit/'+feed_id,
+                type: 'get',
+                success: function(data){ 
+                    $('.modal-content').html(data); 
+                    $('.modal-content').append(data.htmlresponse);
+                    $('#modal_details').modal('show');
+                    $('.feeding_delete_button').click(function(){
+                        var feed_id = $(this).data('id');
+                        if (confirm("Are You Sure ?")) {
+                            $.ajax({
+                                    url: '/feeding/delete/'+feed_id,
+                                    type: 'post',
+                                    data: {animal_id: {{ data[0] }}},
+                                    success: function(data) {
+                                        location.reload(true); 
+                                    }
+                                });
                         }
                     });
+                }
+            });
         });
         $('.history_edit').click(function(){
             var feed_id = $(this).data('id');
             $.ajax({
-                        url: '/history/edit/'+feed_id,
-                        type: 'get',
-                        success: function(data){ 
-                            $('.modal-content').html(data); 
-                            $('.modal-content').append(data.htmlresponse);
-                            $('#modal_details').modal('show');
-                            $('.history_delete_button').click(function(){
-                                var feed_id = $(this).data('id');
-                                if (confirm("Are You Sure ?")) {
-                                    $.ajax({
-                                            url: '/history/delete/'+feed_id,
-                                            type: 'post',
-                                            data: {animal_id: {{ data[0] }}},
-                                            success: function(data) {
-                                                location.reload(true); 
-                                            }
-                                        });
-                                }
-                            });
+                url: '/history/edit/'+feed_id,
+                type: 'get',
+                success: function(data){ 
+                    $('.modal-content').html(data); 
+                    $('.modal-content').append(data.htmlresponse);
+                    $('#modal_details').modal('show');
+                    $('.history_delete_button').click(function(){
+                        var feed_id = $(this).data('id');
+                        if (confirm("Are You Sure ?")) {
+                            $.ajax({
+                                    url: '/history/delete/'+feed_id,
+                                    type: 'post',
+                                    data: {animal_id: {{ data[0] }}},
+                                    success: function(data) {
+                                        location.reload(true); 
+                                    }
+                                });
                         }
                     });
+                }
+            });
         });
         $('.show_animal_image').click(function(){
             $('.modal-content').html('<div class="modal-body"><img src="{{ image }}" class="rounded img-fluid mx-auto"></div>')
             $('#modal_details').modal('show'); 
-        })
+        });
+        $('.show_all_history').click(function(){
+            $.ajax({
+                url: '/history/get_all/{{ data[0] }}',
+                type: 'get',
+                success: function(data){
+                    $('.history_card').html(data);
+                }
+            })
+        });
+        $('.show_all_feedings').click(function(){
+            $.ajax({
+                url: '/feeding/get_all/{{ data[0] }}',
+                type: 'get',
+                success: function(data){
+                    $('.feeding_card').html(data);
+                }
+            })
+        });
     });
     $('.feeding_add_button').on('click',function(){
         $('.modal-content').load('/feeding/add/{{ data[0] }}',function(){
