@@ -16,6 +16,9 @@ docker stop personal_zoo
 echo "Remove old container"
 docker rm personal_zoo
 
+echo "Remove old images"
+docker image prune -a --force --filter "until=240h"
+
 # Run new container
 echo "Start new container"
 docker run -d -p 5000:5000 -v ./data:/app/data --name personal_zoo personal_zoo
