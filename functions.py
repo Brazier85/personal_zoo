@@ -117,6 +117,18 @@ def insert_defaults():
     query = f"UPDATE feeding SET type='6' WHERE type='Heuschrecke'"
     db_update(query)
 
+    query = f"UPDATE history SET type='2' WHERE type='Gewogen'"
+    db_update(query)
+
+    query = f"UPDATE history SET type='1' WHERE type='Häutung'"
+    db_update(query)
+
+    query = f"UPDATE history SET type='3' WHERE type='Medizinisch'"
+    db_update(query)
+
+    query = f"UPDATE history SET type='4' WHERE type='Sonstiges'"
+    db_update(query)
+
 
 # Create the DATABASE tables
 def create_tables():
