@@ -118,7 +118,7 @@ def create_tables():
     c = conn.cursor()
 
     # Debug clear feeding table
-    c.execute('''DROP TABLE settings''')
+    # c.execute('''DROP TABLE settings''')
 
     # Create animal table
     c.execute('''CREATE TABLE IF NOT EXISTS animals
