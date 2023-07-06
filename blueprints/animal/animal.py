@@ -28,15 +28,27 @@ def animal(id):
     weight_setting = get_setting("weight_type")
     try:
         current_weight = db_fetch(f"SELECT text FROM history WHERE event='{weight_setting}' AND animal='{ id }' ORDER BY date DESC", False)[0]
+        weight_number = float(current_weight.split(' ')[0].replace(',','.'))
     except:
         current_weight = "0"
+        weight_number = 0
+
+    # Calculate feeding size 
+    if weight_number > 0:
+        print("Weight bigger than zero")
+        if animal_data[2] == "Königspython":
+            print("Python")
+            percent = lambda part, whole:float(whole) / 100 * float(part)
+            feed_min = percent(10,weight_number)
+            feed_max = percent(20,weight_number)
+            feeding_size = f"Currently a feeding size between {feed_min:.0f}gr and {feed_max:.0f}gr (10% -> 20%) is recommended!"
 
     if printing == '1':
         html = render_template('animal_print.html', data=formatted_animal_data, feedings=formatted_feeding_data, history=formatted_history_data, location=location)
         return render_pdf(HTML(string=html), "", download_filename=f"{animal_data[1]}.pdf", automatic_download=False)
         #return html
     else:
-        return render_template('animal.html', data=formatted_animal_data, feedings=formatted_feeding_data, history=formatted_history_data, location=location, current_weight=current_weight)
+        return render_template('animal.html', data=formatted_animal_data, feedings=formatted_feeding_data, history=formatted_history_data, location=location, current_weight=current_weight, feeding_size=feeding_size)
 
 @animal_bp.route('/add', methods=['POST','GET'])
 def add():
