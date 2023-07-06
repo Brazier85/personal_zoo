@@ -110,6 +110,13 @@ def insert_defaults():
                     f"VALUES ('weight_type','2')"
         db_update(query)
 
+    # Migrate old Data
+    query = f"UPDATE feeding SET type='3' WHERE type='Maus'"
+    db_update(query)
+
+    query = f"UPDATE feeding SET type='6' WHERE type='Heuschrecke'"
+    db_update(query)
+
 
 # Create the DATABASE tables
 def create_tables():
