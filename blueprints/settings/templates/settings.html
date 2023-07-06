@@ -9,68 +9,6 @@
         <div class="mb-3">
             <div class="card">
                 <div class="card-header">
-                    <div class="flex-grow"> Feeding Types </div>
-                    <div class="btn-list">
-                        <button class="btn rounded-right ft_add_button green_button"><i class="bi bi-plus"></i></button>
-                    </div>
-                </div>
-                <div class="card-body feeding_card">
-                    <table class="table table-striped m-0">
-                        <thead>
-                            <th>Name</th>
-                            <th>Note</th>
-                        </thead>
-                        <tbody>
-                            {% for row in feeding_types %}
-                            <tr data-id="{{ row[0] }}" class="ft_edit active_row">
-                                <td>{{ row[1] }}</td>
-                                <td>{{ row[2] }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer text-right pr-0">
-                    <!-- nothing -->
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col"
-        <div class="mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <div class="flex-grow"> Event/Action Types</div>
-                    <div class="btn-list">
-                        <button class="btn ht_add_button green_button"><i class="bi bi-plus"></i></button>
-                    </div>
-                </div>
-                <div class="card-body history_card">
-                    <table class="table table-striped m-0">
-                        <thead>
-                            <th>Name</th>
-                            <th>Note</th>
-                        </thead>
-                        <tbody>
-                            {% for row in history_types %}
-                            <tr data-id="{{ row[0] }}" class="ht_edit active_row">
-                                <td>{{ row[1] }}</td>
-                                <td>{{ row[2] }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer text-right pr-0">
-                    <!-- nothing -->
-                </div>
-            </div>
-        </div>
-    </div>
-    <div>
-        <div class="mb-3">
-            <div class="card">
-                <div class="card-header">
                     <div class="flex-grow"> General Settings </div>
                     <div class="btn-list">
                         <!-- no button -->
@@ -106,19 +44,101 @@
                 </form>
             </div>
         </div>
-        <!--
+    </div>
+    <div class="col">
         <div class="mb-3">
             <div class="card mb-3">
                 <div class="card-header">
-                    <div class="flex-grow"> Image </div>
+                    <div class="flex-grow"> Animal Types </div>
                     <div class="btn-list">
+                        <button class="btn rounded-right at_add_button green_button"><i class="bi bi-plus"></i></button>
                     </div>
                 </div>
-                <div class="card-body">
-                    <img class="rounded mx-auto d-block show_animal_image" src="{{ image }}">
+                <div class="card-body animal_card">
+                    <table class="table table-striped m-0">
+                        <thead>
+                            <th>Name</th>
+                            <th>Note</th>
+                        </thead>
+                        <tbody>
+                            {% for row in animal_types %}
+                            <tr data-id="{{ row[0] }}" class="at_edit active_row">
+                                <td>{{ row[1] }}</td>
+                                <td>{{ row[2] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer text-right pr-0">
+                    <div>Notes are only visible on this page</div>
                 </div>
             </div>
-        </div> -->
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="flex-grow"> Feeding Types </div>
+                    <div class="btn-list">
+                        <button class="btn rounded-right ft_add_button green_button"><i class="bi bi-plus"></i></button>
+                    </div>
+                </div>
+                <div class="card-body feeding_card">
+                    <table class="table table-striped m-0">
+                        <thead>
+                            <th>Name</th>
+                            <th>Note</th>
+                        </thead>
+                        <tbody>
+                            {% for row in feeding_types %}
+                            <tr data-id="{{ row[0] }}" class="ft_edit active_row">
+                                <td>{{ row[1] }}</td>
+                                <td>{{ row[2] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer text-right pr-0">
+                    <div>Notes are only visible on this page</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="flex-grow"> Event/Action Types</div>
+                    <div class="btn-list">
+                        <button class="btn ht_add_button green_button"><i class="bi bi-plus"></i></button>
+                    </div>
+                </div>
+                <div class="card-body history_card">
+                    <table class="table table-striped m-0">
+                        <thead>
+                            <th>Name</th>
+                            <th>Note</th>
+                        </thead>
+                        <tbody>
+                            {% for row in history_types %}
+                            <tr data-id="{{ row[0] }}" class="ht_edit active_row">
+                                <td>{{ row[1] }}</td>
+                                <td>{{ row[2] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer text-right pr-0">
+                    <div>Notes are only visible on this page</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -181,6 +201,31 @@
             }
         });
     });
+    $(document).on("click",".at_edit",function(){
+        var feed_id = $(this).data('id');
+        $.ajax({
+            url: '/settings/at_edit/'+feed_id,
+            type: 'get',
+            success: function(data){ 
+                $('.modal-content').html(data); 
+                $('.modal-content').append(data.htmlresponse);
+                $('#modal_details').modal('show');
+                $('.at_delete_button').click(function(){
+                    var feed_id = $(this).data('id');
+                    if (confirm("Are You Sure ?")) {
+                        $.ajax({
+                                url: '/settings/at_delete/'+feed_id,
+                                type: 'post',
+                                data: {},
+                                success: function(data) {
+                                    location.reload(true); 
+                                }
+                            });
+                    }
+                });
+            }
+        });
+    });
     $('.ft_add_button').on('click',function(){
         $('.modal-content').load('/settings/ft_add',function(){
             $('#modal_details').modal('show'); 
@@ -188,6 +233,11 @@
     });
     $('.ht_add_button').on('click',function(){
         $('.modal-content').load('/settings/ht_add',function(){
+            $('#modal_details').modal('show'); 
+        });
+    });
+    $('.at_add_button').on('click',function(){
+        $('.modal-content').load('/settings/at_add',function(){
             $('#modal_details').modal('show'); 
         });
     });

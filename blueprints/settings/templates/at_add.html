@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="itemLabel">Add animal type</h5>
+</div>
+<form action="{{ url_for('settings.at_add') }}" method="post" enctype="multipart/form-data">
+    <div class="modal-body" id="modal-body">
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="at_name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="at_name" name="at_name" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="at_note" class="form-label">Note</label>
+                    <textarea class="form-control" id="at_note" name="at_note" rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>

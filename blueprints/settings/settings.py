@@ -8,7 +8,7 @@ def settings():
 
     location = 'settings'
 
-    return render_template('settings.html', feeding_types=get_ft(), history_types=get_ht(), ht=get_ht(), settings=get_setting(), location=location)
+    return render_template('settings.html', feeding_types=get_ft(), history_types=get_ht(), ht=get_ht(), settings=get_setting(), animal_types=get_at(), location=location)
 
 @settings_bp.route('/edit', methods=['POST','GET'])
 def edit():
@@ -124,5 +124,55 @@ def ht_delete(id):
 
         flash('Deleted history type successfully!', 'success')
         current_app.logger.info(f"Deleted history type with id: {id} !")
+
+        return "", 200
+    
+@settings_bp.route('/at_edit/<int:id>', methods=['POST','GET'])
+def at_edit(id):
+    if request.method == 'GET':
+        return jsonify({'htmlresponse': render_template('at_edit.html', data=db_fetch(f"SELECT * FROM animal_type WHERE id={ id }", False))})
+    
+    elif request.method == 'POST':
+        data = request.form
+        name = data['at_name']
+        note = data['at_note']
+
+        query = "UPDATE animal_type " \
+                    f"SET name='{name}', note='{note}'" \
+                    f"WHERE id='{ id }'"
+        db_update(query)
+
+        flash('Changes to animal type saved!', 'success')
+        current_app.logger.info(f"Modified animal type with id: {id} !")
+        return redirect("/settings")
+    
+@settings_bp.route('/at_add', methods=['POST','GET'])
+def at_add():
+    if request.method == 'GET':
+        return render_template('at_add.html')
+
+    elif request.method == 'POST':
+        data = request.form
+        name = data['at_name']
+        note = data['at_note']
+        
+        query = "INSERT INTO animal_type " \
+                    "(name, note)" \
+                    f"VALUES ('{name}', '{note}')"
+        db_update(query)
+
+        flash('Added animal type successfully!', 'success')
+        current_app.logger.info("Added animal type !")
+
+        return redirect("/settings")
+    
+@settings_bp.route('/at_delete/<int:id>', methods=['POST'])
+def at_delete(id):
+    if request.method == 'POST': 
+        # Delete data into the database
+        db_update(f"DELETE FROM animal_type WHERE id={ id }")
+
+        flash('Deleted animal type successfully!', 'success')
+        current_app.logger.info(f"Deleted animal type with id: {id} !")
 
         return "", 200

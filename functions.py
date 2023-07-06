@@ -64,6 +64,9 @@ def get_ft():
 def get_ht():
     return db_fetch("SELECT id, name, note FROM history_type")
 
+def get_at():
+    return db_fetch("SELECT id, name, note FROM animal_type")
+
 def get_setting(name=None):
     if (name == None):
         settings = {}
@@ -77,6 +80,18 @@ def get_setting(name=None):
         return setting[0]
 
 def insert_defaults():
+
+     # Add animal defaults
+    animal_types = db_fetch("SELECT * FROM animal_type ORDER BY name DESC")
+    print(f"Types: {animal_types}")
+    if animal_types == []:
+        # Insert base data
+        ANIMAL_TYPES =  ["Ball Python","Leopard Gecko"]
+        for type in ANIMAL_TYPES:
+            query = "INSERT INTO animal_type " \
+                    "(name)" \
+                    f"VALUES ('{type}')"
+            db_update(query)
 
     # Add feeding defaults
     feeding_types = db_fetch("SELECT * FROM feeding_type ORDER BY name DESC")
@@ -110,6 +125,13 @@ def insert_defaults():
                     "(setting, value, name, description)" \
                     f"VALUES ('weight_type','2','Weight Option','Last entry will be shown as weight on the animal page!')"
         db_update(query)
+
+    #Migration stuff
+    query = "UPDATE animals SET art='1' WHERE art='Königspython'"
+    db_update(query)
+
+    query = "UPDATE animals SET art='2' WHERE art='Leopardgecko'"
+    db_update(query)
 
 
 # Create the DATABASE tables
@@ -160,5 +182,9 @@ def create_tables():
                     value TEXT,
                     name TEXT, 
                     description TEXT)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS animal_type
+                (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT,
+                    note TEXT)''')
     conn.commit()
     conn.close()
