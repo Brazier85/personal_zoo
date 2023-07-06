@@ -33,6 +33,7 @@ def animal(id):
         current_weight = "0"
         weight_number = 0
 
+    feeding_size = ""
     # Calculate feeding size 
     if weight_number > 0:
         print("Weight bigger than zero")
