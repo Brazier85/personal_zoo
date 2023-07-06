@@ -127,11 +127,11 @@ def insert_defaults():
         db_update(query)
 
     #Migration stuff
-    query = "UPDATE animals SET art='1' WHERE art='Königspython'"
-    db_update(query)
+    #query = "UPDATE animals SET art='1' WHERE art='Königspython'"
+    #db_update(query)
 
-    query = "UPDATE animals SET art='2' WHERE art='Leopardgecko'"
-    db_update(query)
+    #query = "UPDATE animals SET art='2' WHERE art='Leopardgecko'"
+    #db_update(query)
 
 
 # Create the DATABASE tables

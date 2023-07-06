@@ -108,7 +108,11 @@ def print_data(id=None):
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    file_path = os.path.join(UPLOAD_FOLDER, filename)
+    if os.path.exists(file_path):
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    else:
+        return send_from_directory(app.config['UPLOAD_FOLDER'], 'dummy.jpg')
 
 ###############
 #     MAIN    #

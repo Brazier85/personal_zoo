@@ -18,7 +18,11 @@
                 <div class="col">
                     <div class="mb-3">
                         <label for="art" class="form-label">Type</label>
-                        <input type="text" class="form-control" id="art" name="art" required>
+                        <select class="form-select" id="art" name="art" required>
+                        {% for row in animal_types %}
+                            <option value="{{ row[0] }}" >{{ row[1] }}</option>
+                        {% endfor %}
+                        </select>
                     </div>
                 </div>
                 <div class="col">

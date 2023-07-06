@@ -56,7 +56,7 @@ def add():
 
     location = 'add'
     if request.method == 'GET':
-        return render_template('animal_add.html', location=location)
+        return render_template('animal_add.html', location=location, animal_types=get_at())
     
     elif request.method == 'POST':
         name = request.form.get('name')
@@ -91,7 +91,7 @@ def add():
 @animal_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
     if request.method == 'GET':
-        return render_template('animal_edit.html', data=db_fetch(f"SELECT * FROM animals WHERE id={ id }", False))
+        return render_template('animal_edit.html', data=db_fetch(f"SELECT * FROM animals WHERE id={ id }", False), animal_types=get_at())
     
     elif request.method == 'POST':
         name = request.form['name']
