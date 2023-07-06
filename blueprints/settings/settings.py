@@ -33,9 +33,9 @@ def ft_edit(id):
         return jsonify({'htmlresponse': render_template('ft_edit.html', data=db_fetch(f"SELECT * FROM feeding_type WHERE id={ id }", False))})
     
     elif request.method == 'POST':
-        history = request.form
-        name = history['ft_name']
-        note = history['ft_note']
+        data = request.form
+        name = data['ft_name']
+        note = data['ft_note']
 
         query = "UPDATE feeding_type " \
                     f"SET name='{name}', note='{note}'" \
@@ -45,6 +45,37 @@ def ft_edit(id):
         flash('Changes to feeding type saved!', 'success')
         current_app.logger.info(f"Modified feeding type with id: {id} !")
         return redirect("/settings")
+    
+@settings_bp.route('/ft_add', methods=['POST','GET'])
+def ft_add():
+    if request.method == 'GET':
+        return render_template('ft_add.html')
+
+    elif request.method == 'POST':
+        data = request.form
+        name = data['ft_name']
+        note = data['ft_note']
+        
+        query = "INSERT INTO feeding_type " \
+                    "(name, note)" \
+                    f"VALUES ('{name}', '{note}')"
+        db_update(query)
+
+        flash('Added feed type successfully!', 'success')
+        current_app.logger.info("Added feed type !")
+
+        return redirect("/settings")
+    
+@settings_bp.route('/ft_delete/<int:id>', methods=['POST'])
+def ft_delete(id):
+    if request.method == 'POST': 
+        # Delete data into the database
+        db_update(f"DELETE FROM feeding_type WHERE id={ id }")
+
+        flash('Deleted feeding type successfully!', 'success')
+        current_app.logger.info(f"Deleted feeding type with id: {id} !")
+
+        return "", 200
     
 @settings_bp.route('/ht_edit/<int:id>', methods=['POST','GET'])
 def ht_edit(id):
@@ -64,3 +95,34 @@ def ht_edit(id):
         flash('Changes to history type saved!', 'success')
         current_app.logger.info(f"Modified history type with id: {id} !")
         return redirect("/settings")
+    
+@settings_bp.route('/ht_add', methods=['POST','GET'])
+def ht_add():
+    if request.method == 'GET':
+        return render_template('ht_add.html')
+
+    elif request.method == 'POST':
+        data = request.form
+        name = data['ht_name']
+        note = data['ht_note']
+        
+        query = "INSERT INTO history_type " \
+                    "(name, note)" \
+                    f"VALUES ('{name}', '{note}')"
+        db_update(query)
+
+        flash('Added history type successfully!', 'success')
+        current_app.logger.info("Added history type !")
+
+        return redirect("/settings")
+    
+@settings_bp.route('/ht_delete/<int:id>', methods=['POST'])
+def ht_delete(id):
+    if request.method == 'POST': 
+        # Delete data into the database
+        db_update(f"DELETE FROM history_type WHERE id={ id }")
+
+        flash('Deleted history type successfully!', 'success')
+        current_app.logger.info(f"Deleted history type with id: {id} !")
+
+        return "", 200
