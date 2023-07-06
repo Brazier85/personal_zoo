@@ -85,11 +85,14 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Weight Option</td>
+                                    <td>
+                                        <div>{{ settings["weight_type"][1] }}</div>
+                                        <div class="text-muted">{{ settings["weight_type"][2] }}</div>
+                                    </td>
                                     <td>
                                         <select class="form-select" class="form-control" id="weight" name="weight" required>
                                             {% for event_type in ht %}
-                                                <option value="{{ event_type[0] }}" {% if event_type[0]|int == settings["weight_type"]|int %} selected {% endif %}>{{ event_type[1] }}</option>
+                                                <option value="{{ event_type[0] }}" {% if event_type[0]|int == settings["weight_type"][0]|int %} selected {% endif %}>{{ event_type[1] }}</option>
                                             {% endfor %}
                                         </select>
                                     </td>

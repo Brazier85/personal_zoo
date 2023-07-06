@@ -19,7 +19,7 @@ def edit():
         settings = request.form
         weight = settings["weight"]
 
-        query = f"UPDATE settings SET setting='{weight}' WHERE name='weight_type'"
+        query = f"UPDATE settings SET value='{weight}' WHERE setting='weight_type'"
         db_update(query)
 
         flash('Settings saved!', 'success')

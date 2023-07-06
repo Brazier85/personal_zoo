@@ -29,7 +29,7 @@ def animal(id):
     try:
         current_weight = db_fetch(f"SELECT text FROM history WHERE event='{weight_setting}' AND animal='{ id }' ORDER BY date DESC", False)[0]
     except:
-        current_weight = "0 gr"
+        current_weight = "0"
 
     if printing == '1':
         html = render_template('animal_print.html', data=formatted_animal_data, feedings=formatted_feeding_data, history=formatted_history_data, location=location)

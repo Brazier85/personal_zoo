@@ -67,12 +67,13 @@ def get_ht():
 def get_setting(name=None):
     if (name == None):
         settings = {}
-        settings_list = db_fetch("SELECT id, name, setting FROM settings")
+        settings_list = db_fetch("SELECT id, setting, value, name, description FROM settings")
+        print(settings_list)
         for setting in settings_list:
-            settings.update({setting[1]:setting[2]})
+            settings.update({setting[1]:[ setting[2], setting[3], setting[4] ]})
         return settings
     else:
-        setting = db_fetch(f"SELECT setting FROM settings WHERE name = '{ name }'", False)
+        setting = db_fetch(f"SELECT value FROM settings WHERE setting = '{ name }'", False)
         return setting[0]
 
 def insert_defaults():
@@ -106,28 +107,9 @@ def insert_defaults():
     if settings == []:
         # Weight
         query = "INSERT INTO settings " \
-                    "(name, setting)" \
-                    f"VALUES ('weight_type','2')"
+                    "(setting, value, name, description)" \
+                    f"VALUES ('weight_type','2','Weight Option','Last entry will be shown as weight on the animal page!')"
         db_update(query)
-
-    # Migrate old Data
-    query = f"UPDATE feeding SET type='3' WHERE type='Maus'"
-    db_update(query)
-
-    query = f"UPDATE feeding SET type='6' WHERE type='Heuschrecke'"
-    db_update(query)
-
-    query = f"UPDATE history SET event='2' WHERE event='Gewogen'"
-    db_update(query)
-
-    query = f"UPDATE history SET event='1' WHERE event='Häutung'"
-    db_update(query)
-
-    query = f"UPDATE history SET event='3' WHERE event='Medizinisch'"
-    db_update(query)
-
-    query = f"UPDATE history SET event='4' WHERE event='Sonstiges'"
-    db_update(query)
 
 
 # Create the DATABASE tables
@@ -136,7 +118,7 @@ def create_tables():
     c = conn.cursor()
 
     # Debug clear feeding table
-    # c.execute('''DROP TABLE feeding''')
+    c.execute('''DROP TABLE settings''')
 
     # Create animal table
     c.execute('''CREATE TABLE IF NOT EXISTS animals
@@ -174,7 +156,9 @@ def create_tables():
                     note TEXT)''')
     c.execute('''CREATE TABLE IF NOT EXISTS settings
                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT,
-                    setting TEXT)''')
+                    setting TEXT,
+                    value TEXT,
+                    name TEXT, 
+                    description TEXT)''')
     conn.commit()
     conn.close()
