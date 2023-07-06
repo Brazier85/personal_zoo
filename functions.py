@@ -117,16 +117,16 @@ def insert_defaults():
     query = f"UPDATE feeding SET type='6' WHERE type='Heuschrecke'"
     db_update(query)
 
-    query = f"UPDATE history SET type='2' WHERE type='Gewogen'"
+    query = f"UPDATE history SET event='2' WHERE event='Gewogen'"
     db_update(query)
 
-    query = f"UPDATE history SET type='1' WHERE type='Häutung'"
+    query = f"UPDATE history SET event='1' WHERE event='Häutung'"
     db_update(query)
 
-    query = f"UPDATE history SET type='3' WHERE type='Medizinisch'"
+    query = f"UPDATE history SET event='3' WHERE event='Medizinisch'"
     db_update(query)
 
-    query = f"UPDATE history SET type='4' WHERE type='Sonstiges'"
+    query = f"UPDATE history SET event='4' WHERE event='Sonstiges'"
     db_update(query)
 
 
