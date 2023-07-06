@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+
+{% block title %}Personal Zoo | Settings {% endblock %}
+
+{% block content %}
+<p>&nbsp;</p>
+<div class="row">
+    <div class="col">
+        <div class="mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="flex-grow"> Feeding Types </div>
+                    <div class="btn-list">
+                        <button class="btn rounded-right ft_add_button green_button"><i class="bi bi-plus"></i></button>
+                    </div>
+                </div>
+                <div class="card-body feeding_card">
+                    <table class="table table-striped m-0">
+                        <thead>
+                            <th>Name</th>
+                            <th>Note</th>
+                        </thead>
+                        <tbody>
+                            {% for row in feeding_types %}
+                            <tr data-id="{{ row[0] }}" class="ft_edit active_row">
+                                <td>{{ row[1] }}</td>
+                                <td>{{ row[2] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer text-right pr-0">
+                    <!-- nothing -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col"
+        <div class="mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="flex-grow"> Event/Action Types</div>
+                    <div class="btn-list">
+                        <button class="btn ht_add_button green_button"><i class="bi bi-plus"></i></button>
+                    </div>
+                </div>
+                <div class="card-body history_card">
+                    <table class="table table-striped m-0">
+                        <thead>
+                            <th>Name</th>
+                            <th>Note</th>
+                        </thead>
+                        <tbody>
+                            {% for row in history_types %}
+                            <tr data-id="{{ row[0] }}" class="ht_edit active_row">
+                                <td>{{ row[1] }}</td>
+                                <td>{{ row[2] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer text-right pr-0">
+                    <!-- nothing -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="flex-grow"> General Settings </div>
+                    <div class="btn-list">
+                        <!-- no button -->
+                    </div>
+                </div>
+                <form action="{{ url_for('settings.edit') }}" method="post" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <table class="table table-striped m-0">
+                            <thead>
+                                <th>Setting</th>
+                                <th>Option</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Weight Option</td>
+                                    <td>
+                                        <select class="form-select" class="form-control" id="weight" name="weight" required>
+                                            {% for event_type in ht %}
+                                                <option value="{{ event_type[0] }}" {% if event_type[0]|int == settings["weight_type"]|int %} selected {% endif %}>{{ event_type[1] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer text-end pr-0">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--
+        <div class="mb-3">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="flex-grow"> Image </div>
+                    <div class="btn-list">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <img class="rounded mx-auto d-block show_animal_image" src="{{ image }}">
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<div class="modal fade" id="modal_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Will be loaded later -->
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" >
+    $(document).on("click",".ft_edit",function(){
+        var feed_id = $(this).data('id');
+        $.ajax({
+            url: '/settings/ft_edit/'+feed_id,
+            type: 'get',
+            success: function(data){ 
+                $('.modal-content').html(data); 
+                $('.modal-content').append(data.htmlresponse);
+                $('#modal_details').modal('show');
+                $('.ft_delete_button').click(function(){
+                    var feed_id = $(this).data('id');
+                    if (confirm("Are You Sure ?")) {
+                        $.ajax({
+                                url: '/settings/ft_delete/'+feed_id,
+                                type: 'post',
+                                data: {},
+                                success: function(data) {
+                                    location.reload(true); 
+                                }
+                            });
+                    }
+                });
+            }
+        });
+    });
+    $(document).on("click",".ht_edit",function(){
+        var feed_id = $(this).data('id');
+        $.ajax({
+            url: '/settings/ht_edit/'+feed_id,
+            type: 'get',
+            success: function(data){ 
+                $('.modal-content').html(data); 
+                $('.modal-content').append(data.htmlresponse);
+                $('#modal_details').modal('show');
+                $('.ht_delete_button').click(function(){
+                    var feed_id = $(this).data('id');
+                    if (confirm("Are You Sure ?")) {
+                        $.ajax({
+                                url: '/settings/ht_delete/'+feed_id,
+                                type: 'post',
+                                data: {},
+                                success: function(data) {
+                                    location.reload(true); 
+                                }
+                            });
+                    }
+                });
+            }
+        });
+    });
+    $('.ft_add_button').on('click',function(){
+        $('.modal-content').load('/feeding/add/',function(){
+            $('#modal_details').modal('show'); 
+        });
+    });
+    $('.ht_add_button').on('click',function(){
+        $('.modal-content').load('/history/add/',function(){
+            $('#modal_details').modal('show'); 
+        });
+    });
+</script>
+{% endblock %}

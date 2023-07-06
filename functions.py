@@ -36,6 +36,7 @@ def date_eu(dates, row_number):
 
 def db_fetch(query, mode = True):
     conn = sqlite3.connect(DATABASE)
+    
     c = conn.cursor()
     c.execute(query)
     
@@ -56,6 +57,58 @@ def db_update(query):
     c.execute(query)
     conn.commit()
     conn.close()
+
+def get_ft():
+    return db_fetch("SELECT id, name, note FROM feeding_type")
+
+def get_ht():
+    return db_fetch("SELECT id, name, note FROM history_type")
+
+def get_setting(name=None):
+    if (name == None):
+        settings = {}
+        settings_list = db_fetch("SELECT id, name, setting FROM settings")
+        for setting in settings_list:
+            settings.update({setting[1]:setting[2]})
+        return settings
+    else:
+        setting = db_fetch(f"SELECT setting FROM settings WHERE name = '{ name }'", False)
+        return setting[0]
+
+def insert_defaults():
+
+    # Add feeding defaults
+    feeding_types = db_fetch("SELECT * FROM feeding_type ORDER BY name DESC")
+    if feeding_types == []:
+        # Insert base data
+        FEEDING_TYPES =  ["Elephant","Toddler","Mouse","Rat","Whale"]
+        for type in FEEDING_TYPES:
+            query = "INSERT INTO feeding_type " \
+                    "(name)" \
+                    f"VALUES ('{type}')"
+            db_update(query)
+    
+    # Add history defaults
+    history_types = db_fetch("SELECT * FROM history_type ORDER BY name DESC")
+    print(f"Types: {history_types}")
+    if history_types == []:
+        # Insert base data
+        EVENT_TYPES =  ["Shed","Weighed","Medical","Miscellaneous"]
+        for type in EVENT_TYPES:
+            query = "INSERT INTO history_type " \
+                    "(name)" \
+                    f"VALUES ('{type}')"
+            db_update(query)
+
+    # Default general settings
+    settings = db_fetch("SELECT * FROM settings DESC")
+    print(f"Types: {settings}")
+    if settings == []:
+        # Weight
+        query = "INSERT INTO settings " \
+                    "(name, setting)" \
+                    f"VALUES ('weight_type','2')"
+        db_update(query)
 
 
 # Create the DATABASE tables
@@ -92,5 +145,17 @@ def create_tables():
                     event TEXT,
                     text TEXT,
                     date DATE DEFAULT CURRENT_DATE)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS feeding_type
+                (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT,
+                    note TEXT)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS history_type
+                (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT,
+                    note TEXT)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS settings
+                (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT,
+                    setting TEXT)''')
     conn.commit()
     conn.close()

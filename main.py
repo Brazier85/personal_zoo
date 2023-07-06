@@ -12,6 +12,7 @@ from momentjs import momentjs
 from blueprints.animal.animal import animal_bp
 from blueprints.feeding.feeding import feeding_bp
 from blueprints.history.history import history_bp
+from blueprints.settings.settings import settings_bp
 
 app = Flask(__name__)
 
@@ -54,6 +55,7 @@ app.jinja_env.globals['momentjs'] = momentjs
 app.register_blueprint(animal_bp, url_prefix="/animal")
 app.register_blueprint(feeding_bp, url_prefix="/feeding")
 app.register_blueprint(history_bp, url_prefix="/history")
+app.register_blueprint(settings_bp, url_prefix="/settings")
 
 @app.after_request
 def logAfterRequest(response):
@@ -76,6 +78,7 @@ def home():
 
     # Create the table if it doesn't exist
     create_tables()
+    insert_defaults()
 
     data = db_fetch("SELECT * FROM animals ORDER BY name ASC")
     formatted_data = date_eu(data, 10)

@@ -19,18 +19,24 @@ def animal(id):
     animal_data = db_fetch(f"SELECT * FROM animals WHERE id={ id }", False)
     formatted_animal_data = date_eu(animal_data,10)
 
-    feeding_data = db_fetch(f"SELECT * FROM feeding WHERE animal={ id } ORDER BY date DESC LIMIT { limit }")
+    feeding_data = db_fetch(f"SELECT f.id as id, f.animal, ft.name, f.count, f.weight, date FROM feeding f LEFT JOIN feeding_type ft ON f.type = ft.id WHERE animal={ id } ORDER BY date DESC LIMIT { limit }")
     formatted_feeding_data = date_eu(feeding_data,5)
 
-    history_data = db_fetch(f"SELECT * FROM history WHERE animal={ id } ORDER BY date DESC LIMIT { limit }")
+    history_data = db_fetch(f"SELECT h.id, h.animal, ht.name, h.text, h.date FROM history h LEFT JOIN history_type ht ON h.event = ht.id WHERE animal={ id } ORDER BY date DESC LIMIT { limit }")
     formatted_history_data = date_eu(history_data,4)
+
+    weight_setting = get_setting("weight_type")
+    try:
+        current_weight = db_fetch(f"SELECT text FROM history WHERE event='{weight_setting}' AND animal='{ id }' ORDER BY date DESC", False)[0]
+    except:
+        current_weight = "0 gr"
 
     if printing == '1':
         html = render_template('animal_print.html', data=formatted_animal_data, feedings=formatted_feeding_data, history=formatted_history_data, location=location)
         return render_pdf(HTML(string=html), "", download_filename=f"{animal_data[1]}.pdf", automatic_download=False)
         #return html
     else:
-        return render_template('animal.html', data=formatted_animal_data, feedings=formatted_feeding_data, history=formatted_history_data, location=location)
+        return render_template('animal.html', data=formatted_animal_data, feedings=formatted_feeding_data, history=formatted_history_data, location=location, current_weight=current_weight)
 
 @animal_bp.route('/add', methods=['POST','GET'])
 def add():
