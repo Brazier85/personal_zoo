@@ -137,6 +137,8 @@ def delete(id):
                     os.remove(image_path)
 
         db_update(f"DELETE FROM animals WHERE id={ id }")
+        db_update(f"DELETE FROM feeding WHERE animal={ id }")
+        db_update(f"DELETE FROM history WHERE animal={ id }")
 
         flash('Animal deleted successfully!', 'success')
 
