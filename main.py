@@ -70,6 +70,10 @@ def logAfterRequest(response):
 
     return response
 
+@app.template_filter(name='linebreaksbr')
+def linebreaksbr_filter(text):
+    return text.replace('\n', '<br \>')
+
 # Main route
 @app.route('/')
 def home():

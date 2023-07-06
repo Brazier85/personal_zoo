@@ -9,7 +9,7 @@
         <tr data-id="{{ row[0] }}" class="history_edit active_row">
             <td>{{ row[4] }}</td>
             <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
+            <td>{{ row[3]|linebreaksbr|safe }}</td>
         </tr>
         {% endfor %}
     </tbody>
