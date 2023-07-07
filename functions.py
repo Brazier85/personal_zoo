@@ -59,13 +59,13 @@ def db_update(query):
     conn.close()
 
 def get_ft():
-    return db_fetch("SELECT id, name, note FROM feeding_type")
+    return db_fetch("SELECT id, name, note FROM feeding_type ORDER BY name ASC")
 
 def get_ht():
-    return db_fetch("SELECT id, name, note FROM history_type")
+    return db_fetch("SELECT id, name, note FROM history_type ORDER BY name ASC")
 
 def get_at():
-    return db_fetch("SELECT id, name, note FROM animal_type")
+    return db_fetch("SELECT id, name, note FROM animal_type ORDER BY name ASC")
 
 def get_setting(name=None):
     if (name == None):
