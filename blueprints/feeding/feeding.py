@@ -7,8 +7,7 @@ feeding_bp = Blueprint("feeding", __name__, template_folder="templates")
 def get_all(id):
     if request.method == 'GET':
         feeding_data= db_fetch(f"SELECT f.id as id, f.animal, ft.name, f.count, f.weight, date FROM feeding f LEFT JOIN feeding_type ft ON f.type = ft.id WHERE animal={ id } ORDER BY date DESC")
-        formatted_feeding_data = date_eu(feeding_data,5)
-        return render_template('feeding_all.html', feedings=formatted_feeding_data)
+        return render_template('feeding_all.html', feedings=feeding_data)
 
 @feeding_bp.route('/get_qr/<int:id>')
 def qr_code(id):

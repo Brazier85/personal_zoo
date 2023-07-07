@@ -7,8 +7,7 @@ history_bp = Blueprint("history", __name__, template_folder="templates")
 def get_all(id):
     if request.method == 'GET':
         history_data = db_fetch(f"SELECT h.id, h.animal, ht.name, h.text, h.date FROM history h LEFT JOIN history_type ht ON h.event = ht.id WHERE animal={ id } ORDER BY date DESC")
-        formatted_history_data = date_eu(history_data,4)
-        return render_template('history_all.html', history=formatted_history_data)
+        return render_template('history_all.html', history=history_data)
     
 
 @history_bp.route('/add/<int:id>', methods=['POST','GET'])
