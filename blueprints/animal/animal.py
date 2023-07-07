@@ -17,13 +17,10 @@ def animal(id):
     location = 'animal'
 
     animal_data = db_fetch(f"SELECT a.id as id, a.name, at.name as art, a.morph, a.gender, a.birth, a.notes, a.image, a.background_color, a.created_date, a.updated_date FROM animals a LEFT JOIN animal_type at ON a.art = at.id WHERE a.id={ id }", False)
-    formatted_animal_data = date_eu(animal_data,10)
 
     feeding_data = db_fetch(f"SELECT f.id as id, f.animal, ft.name, f.count, f.weight, date FROM feeding f LEFT JOIN feeding_type ft ON f.type = ft.id WHERE animal={ id } ORDER BY date DESC LIMIT { limit }")
-    formatted_feeding_data = date_eu(feeding_data,5)
 
     history_data = db_fetch(f"SELECT h.id, h.animal, ht.name, h.text, h.date FROM history h LEFT JOIN history_type ht ON h.event = ht.id WHERE animal={ id } ORDER BY date DESC LIMIT { limit }")
-    formatted_history_data = date_eu(history_data,4)
 
     weight_setting = get_setting("weight_type")
     try:
@@ -45,11 +42,11 @@ def animal(id):
             feeding_size = f"Currently a feeding size between {feed_min:.0f}gr and {feed_max:.0f}gr (10% -> 20%) is recommended!"
 
     if printing == '1':
-        html = render_template('animal_print.html', data=formatted_animal_data, feedings=formatted_feeding_data, history=formatted_history_data, location=location)
+        html = render_template('animal_print.html', data=animal_data, feedings=feeding_data, history=history_data, location=location)
         return render_pdf(HTML(string=html), "", download_filename=f"{animal_data[1]}.pdf", automatic_download=False)
         #return html
     else:
-        return render_template('animal.html', data=formatted_animal_data, feedings=formatted_feeding_data, history=formatted_history_data, location=location, current_weight=current_weight, feeding_size=feeding_size)
+        return render_template('animal.html', data=animal_data, feedings=feeding_data, history=history_data, location=location, current_weight=current_weight, feeding_size=feeding_size)
 
 @animal_bp.route('/add', methods=['POST','GET'])
 def add():

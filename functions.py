@@ -12,28 +12,6 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-#Formate date
-def date_eu(dates, row_number):
-    if type(dates) is tuple:
-        try:
-            data_list = list(dates)
-            data_list[row_number] = datetime.strptime(dates[row_number], '%Y-%m-%d').strftime('%d.%m.%Y')
-            formatted_dates= tuple(data_list)
-            return formatted_dates
-        except Exception as error:
-            return dates
-    else:
-        try:
-            formatted_dates = []
-            for row in dates:
-                formatted_row = list(row)
-                formatted_row[row_number] = datetime.strptime(formatted_row[row_number], '%Y-%m-%d').strftime('%d.%m.%Y')
-                formatted_dates.append(formatted_row)
-            return formatted_dates
-        except Exception as error:
-            return dates
-        
-
 def db_fetch(query, mode = True):
     conn = sqlite3.connect(DATABASE)
     

@@ -35,7 +35,7 @@
                 </tr>
             </table>
             <p>{{ row[6] }}</p>
-            <span class="more">Stand:  {{ row[9] }}</span>
+            <span class="more">Stand:  {{ row[9] | fix_date }}</span>
         </div>
         <div>
             {% set feed_url = feed_url ~ row[0] ~ '?external'%}

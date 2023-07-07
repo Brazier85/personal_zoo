@@ -74,6 +74,14 @@ def logAfterRequest(response):
 def linebreaksbr_filter(text):
     return text.replace('\n', '<br \>')
 
+@app.template_filter(name='fix_date')
+def fix_date_filter(text):
+    try:
+        text = datetime.strptime(text, '%Y-%m-%d').strftime('%d.%m.%Y')
+        return text
+    except:
+        return text
+
 # Main route
 @app.route('/')
 def home():
@@ -85,9 +93,8 @@ def home():
     insert_defaults()
 
     data = db_fetch("SELECT * FROM animals ORDER BY name ASC")
-    formatted_data = date_eu(data, 10)
 
-    return render_template('home.html', data=formatted_data, location=location)
+    return render_template('home.html', data=data, location=location)
 
 # Route for printing
 @app.route('/print')
@@ -100,11 +107,9 @@ def print_data(id=None):
     else:
         data = db_fetch("SELECT * FROM animals ORDER BY name")
 
-    # Convert the date string to the desired format (DD.MM.YYYY)
-    formatted_data = date_eu(data, 9)
     feed_url = f"{request.url_root}feeding/add/"
 
-    return render_template('print.html', data=formatted_data, location=location, feed_url=feed_url)
+    return render_template('print.html', data=data, location=location, feed_url=feed_url)
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):

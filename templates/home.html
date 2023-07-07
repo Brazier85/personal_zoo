@@ -25,7 +25,7 @@
                         <p class="card-text">{{ row[6] }}</p>
                     </div>
                     <div class="card-footer">
-                        <small class="text-muted">Last updated: {{ row[10] }}</small>
+                        <small class="text-muted">Last updated: {{ row[10] | fix_date }}</small>
                     </div>
                     </a>
                 </div>
