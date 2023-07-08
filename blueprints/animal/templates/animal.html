@@ -34,114 +34,97 @@
     <button class="btn rounded-right animal_qr_button green_button" style="-webkit-text-stroke: 0.4px;"><i class="bi bi-qr-code-scan"></i></button>
 </div>
 
-<div class="row row-cols-lg-2 row-cols-sm-1">
-    <div>
-        <div class="mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <div class="flex-grow"> Feedings </div>
-                    <div class="btn-list">
-                        <button class="btn rounded-right feeding_add_button green_button"><i class="bi bi-plus"></i></button>
-                    </div>
-                </div>
-                <div class="card-body feeding_card">
-                    {% if feedings %}
-                    <table class="table table-striped m-0">
-                        <thead>
-                            <th class="w-25">Date</th>
-                            <th>Count</th>
-                            <th>Type</th>
-                            <th>Weight</th>
-                        </thead>
-                        <tbody>
-                            {% for row in feedings %}
-                            <tr data-id="{{ row[0] }}" class="feeding_edit active_row">
-                                <td>{{ row[5] | fix_date }}</td>
-                                <td>{{ row[3] }}</td>
-                                <td>{{ row[2] }}</td>
-                                <td>{% if row[4] > 0 %} {{ row[4] }} gr {% else %} - {% endif %}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    {% else %}
-                        <p class="mb-0">No feedings found!</p>
-                    {% endif %}
-                    {% if feeding_size %}
-                        <div class="text-muted mt-2 text-center">{{ feeding_size }}</div>
-                    {% endif %}
-                </div>
-                <div class="card-footer card-footer-clickable text-right pr-0 show_all_feedings">
-                    <div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>
+<div class="row row-cols-1 row-cols-lg-2 g-4">
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header">
+                <div class="flex-grow"> Feedings </div>
+                <div class="btn-list">
+                    <button class="btn rounded-right feeding_add_button green_button"><i class="bi bi-plus"></i></button>
                 </div>
             </div>
-        </div>
-        <div class="mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <div class="flex-grow"> Events/Actions </div>
-                    <div class="btn-list">
-                        <button class="btn history_add_button green_button"><i class="bi bi-plus"></i></button>
-                    </div>
-                </div>
-                <div class="card-body history_card">
-                    {% if history %}
-                    <table class="table table-striped m-0">
-                        <thead>
-                            <th class="w-25">Date</th>
-                            <th>Event</th>
-                            <th>Details</th>
-                        </thead>
-                        <tbody>
-                            {% for row in history %}
-                            <tr data-id="{{ row[0] }}" class="history_edit active_row">
-                                <td>{{ row[4] | fix_date }}</td>
-                                <td>{{ row[2] }}</td>
-                                <td>{{ row[3]|linebreaksbr|safe }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    {% else %}
-                        <p class="mb-0">No History found!</p>
-                    {% endif %}
-                </div>
-                <div class="card-footer card-footer-clickable text-right pr-0 show_all_history">
-                    <div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>
-                </div>
+            <div class="card-body feeding_card">
+                {% if feedings %}
+                <table class="table table-striped m-0">
+                    <thead>
+                        <th class="w-25">Date</th>
+                        <th>Count</th>
+                        <th>Type</th>
+                        <th>Weight</th>
+                    </thead>
+                    <tbody>
+                        {% for row in feedings %}
+                        <tr data-id="{{ row[0] }}" class="feeding_edit active_row">
+                            <td>{{ row[5] | fix_date }}</td>
+                            <td>{{ row[3] }}</td>
+                            <td>{{ row[2] }}</td>
+                            <td>{% if row[4] > 0 %} {{ row[4] }} gr {% else %} - {% endif %}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p class="mb-0">No feedings found!</p>
+                {% endif %}
+                {% if feeding_size %}
+                    <div class="text-muted mt-2 text-center">{{ feeding_size }}</div>
+                {% endif %}
+            </div>
+            <div class="card-footer card-footer-clickable text-right pr-0 show_all_feedings">
+                <div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>
             </div>
         </div>
     </div>
-    <div>
-        <div class="mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <div class="flex-grow"> Notes </div>
-                    <div class="btn-list">
-                        <!-- no button -->
-                    </div>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header">
+                <div class="flex-grow"> Events/Actions </div>
+                <div class="btn-list">
+                    <button class="btn history_add_button green_button"><i class="bi bi-plus"></i></button>
                 </div>
-                <div class="card-body">
-                    {{ data[6] }}
-                </div>
-                <div class="card-footer text-right pr-0">
-                    <div style="text-transform: uppercase;">Last updated: {{ data[10] | fix_date }}</div>
-                </div>
+            </div>
+            <div class="card-body history_card">
+                {% if history %}
+                <table class="table table-striped m-0">
+                    <thead>
+                        <th class="w-25">Date</th>
+                        <th>Event</th>
+                        <th>Details</th>
+                    </thead>
+                    <tbody>
+                        {% for row in history %}
+                        <tr data-id="{{ row[0] }}" class="history_edit active_row">
+                            <td>{{ row[4] | fix_date }}</td>
+                            <td>{{ row[2] }}</td>
+                            <td>{{ row[3]|linebreaksbr|safe }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p class="mb-0">No History found!</p>
+                {% endif %}
+            </div>
+            <div class="card-footer card-footer-clickable text-right pr-0 show_all_history">
+                <div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>
             </div>
         </div>
-        <!--
-        <div class="mb-3">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <div class="flex-grow"> Image </div>
-                    <div class="btn-list">
-                    </div>
-                </div>
-                <div class="card-body">
-                    <img class="rounded mx-auto d-block show_animal_image" src="{{ image }}">
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header">
+                <div class="flex-grow"> Notes </div>
+                <div class="btn-list">
+                    <!-- no button -->
                 </div>
             </div>
-        </div> -->
+            <div class="card-body">
+                {{ data[6] }}
+            </div>
+            <div class="card-footer text-right pr-0">
+                <div style="text-transform: uppercase;">Last updated: {{ data[10] | fix_date }}</div>
+            </div>
+        </div>
     </div>
 </div>
 
