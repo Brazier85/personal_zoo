@@ -157,13 +157,21 @@ def update():
 
     print("Add new columns")
     try:
-        query= "ALTER TABLE animal_type ADD COLUMN f_min INT"
+        query= "ALTER TABLE animal_type ADD COLUMN f_min INT DEFAULT 0"
         db_update(query)
     except Exception as e:
         print(f"Error: {e}")
         error = error + f"Add f_min -> Error: {e}\n"
+    
     try:
-        query= "ALTER TABLE animal_type ADD COLUMN f_max INT"
+        query= "ALTER TABLE animal_type ADD COLUMN f_max INT DEFAULT 0"
+        db_update(query)
+    except Exception as e:
+        print(f"Error: {e}")
+        error = error + f"Add f_max -> Error: {e}\n"
+
+    try:
+        query = f"UPDATE animal_type SET f_min='0', f_max='0' WHERE f_min IS NULL OR f_max IS NULL"
         db_update(query)
     except Exception as e:
         print(f"Error: {e}")
