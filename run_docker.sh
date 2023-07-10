@@ -24,3 +24,6 @@ echo "Start new container"
 docker run -d -p 5000:5000 -v ./data:/app/data --name personal_zoo personal_zoo
 
 echo "done"
+
+echo ""
+echo "Please visit the update page: http://${hostname}:5000/update

@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request, send_from_directory, flash, redirect
 from flask_qrcode import QRcode
 import os
 import logging
 from logging.config import dictConfig
+from werkzeug.exceptions import HTTPException
+import traceback
 
 # Imports
 from functions import *
@@ -56,6 +58,16 @@ app.register_blueprint(animal_bp, url_prefix="/animal")
 app.register_blueprint(feeding_bp, url_prefix="/feeding")
 app.register_blueprint(history_bp, url_prefix="/history")
 app.register_blueprint(settings_bp, url_prefix="/settings")
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    # pass through HTTP errors
+    if isinstance(e, HTTPException):
+        return render_template("error_html.html", e=e)
+
+    app.logger.error(e)
+    # now you're handling non-HTTP exceptions only
+    return render_template("error_generic.html", e=str(e), traceback=traceback.format_exc())
 
 @app.after_request
 def logAfterRequest(response):
@@ -118,6 +130,51 @@ def uploaded_file(filename):
         return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
     else:
         return send_from_directory(app.config['UPLOAD_FOLDER'], 'dummy.jpg')
+    
+# Do update stuff
+@app.route('/update')
+def update():
+
+    error = ""
+
+    print("Running database updates....")
+    exists = None
+    exists = db_fetch("SELECT * FROM settings WHERE setting='feeding_size'", False)
+    if exists == None:
+        print("Insert new setting feeding_size to database")
+        query = "INSERT INTO settings " \
+                "(setting, value, name, description)" \
+                f"VALUES ('feeding_size','[\"1\"]','Feeding Size','Show feeding size for animal type!')"
+        db_update(query)
+
+    print("Remove old column")
+    try:
+        query= "ALTER TABLE animal_type DROP COLUMN note"
+        db_update(query)
+    except Exception as e:
+        print(f"Error: {e} -> Remove old column")
+        error = error + f"Remove old column 'note' -> Error: {e}\n"
+
+    print("Add new columns")
+    try:
+        query= "ALTER TABLE animal_type ADD COLUMN f_min INT"
+        db_update(query)
+    except Exception as e:
+        print(f"Error: {e}")
+        error = error + f"Add f_min -> Error: {e}\n"
+    try:
+        query= "ALTER TABLE animal_type ADD COLUMN f_max INT"
+        db_update(query)
+    except Exception as e:
+        print(f"Error: {e}")
+        error = error + f"Add f_max -> Error: {e}\n"
+
+    if error != "":
+        flash(f"<strong>Error while doing update!</strong>\n\n{error}", 'danger')
+    else:
+        flash("Update done!", 'success')
+    return redirect('/')
+
 
 ###############
 #     MAIN    #

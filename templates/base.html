@@ -1,3 +1,4 @@
+{% set ns = namespace(error=false) %} 
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,12 +58,15 @@
 
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-        <div class="container mt-4">
+        <div class="container mt-4 fade show" id="flash-message">
             {% for category, message in messages %}
-                <div id="flash-message" class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                <div class="alert alert-{{ category }} alert-dismissible" role="alert">
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    {{ message }}
+                    {{ message | linebreaksbr | safe }}
                 </div>
+                {% if category == "danger" %}
+                    {% set ns.error = true %}
+                {% endif %}
             {% endfor %}
         </div>
     {% endif %}
@@ -78,23 +82,25 @@
     <footer class="footer mt-auto bg-light text-center text-lg-start">
         <!-- Copyright -->
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-          © {{ momentjs().format('YYYY') }} Copyright:
-          <a class="text-dark" target="_blank" href="https://brazier85.de/">Brazier85</a>
+            © {{ momentjs().format('YYYY') }} Copyright:
+            <a class="text-dark" target="_blank" href="https://brazier85.de/">Brazier85</a>
         </div>
         <!-- Copyright -->
     </footer>
 
-    <script>
-        // Add fade-out animation to flash message
-        var flashMessage = document.getElementById('flash-message');
-        if (flashMessage) {
-            setTimeout(function() {
-                flashMessage.addEventListener('animationend', function() {
-                    flashMessage.remove();
-                });
-                flashMessage.classList.add('fade-out');
-            }, 5000); // Fade out after 5 seconds
-        }
-    </script>
+    {% if not ns.error %}
+        <script>
+            // Add fade-out animation to flash message
+            var flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                setTimeout(function() {
+                    flashMessage.addEventListener('animationend', function() {
+                        flashMessage.remove();
+                    });
+                    flashMessage.classList.add('fade-out');
+                }, 5000); // Fade out after 5 seconds
+            }
+        </script>
+    {% endif %}
 </body>
 </html>

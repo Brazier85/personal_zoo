@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Personal Zoo{% endblock %}
+
+{% block content %}
+    <p>&nbsp;</p>
+    <h2>Hey, something went wrong :(</h2>
+    <p>&nbsp;</p>
+    <h4><a href="/">click here to go back</a></h4>
+    <p>&nbsp;</p>
+    <h3>The error you found is:</h3>
+    <p class="ps-5">{{ e }}</p>
+    <p><strong>Traceback:</strong></p>
+    <pre>
+        <code>
+            {{ traceback }}
+        </code>
+    </pre>
+{% endblock %}
