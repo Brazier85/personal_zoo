@@ -77,20 +77,22 @@
                     <table class="table table-striped m-0 ">
                         <thead>
                             <th class="w-50">Name</th>
-                            <th>Note</th>
+                            <th>Feeding size min</th>
+                            <th>Feeding size max</th>
                         </thead>
                         <tbody>
                             {% for row in animal_types %}
                             <tr data-id="{{ row[0] }}" class="at_edit active_row">
                                 <td>{{ row[1] }}</td>
-                                <td>{{ row[2] }}</td>
+                                <td>{% if row[2] > 0 %} {{ row[2] }}% {% else %} - {% endif %}</td>
+                                <td>{% if row[3] > 0 %} {{ row[3] }}% {% else %} - {% endif %}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
                 <div class="card-footer text-right pr-0">
-                    <div>Notes are only visible on this page</div>
+                    <div>Feeding sizes are in %!</div>
                 </div>
             </div>
         </div>

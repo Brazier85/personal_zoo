@@ -49,7 +49,7 @@ def ft_edit(id):
         note = data['ft_note']
 
         query = "UPDATE feeding_type " \
-                    f"SET name='{name}', note='{note}'" \
+                    f"SET name='{name}', note='{note}'"\
                     f"WHERE id='{ id }'"
         db_update(query)
 
@@ -146,10 +146,11 @@ def at_edit(id):
     elif request.method == 'POST':
         data = request.form
         name = data['at_name']
-        note = data['at_note']
+        f_min = data['at_f_min']
+        f_max = data['at_f_max']
 
         query = "UPDATE animal_type " \
-                    f"SET name='{name}', note='{note}'" \
+                    f"SET name='{name}', f_min='{f_min}', f_max='{f_max}'" \
                     f"WHERE id='{ id }'"
         db_update(query)
 
@@ -165,11 +166,12 @@ def at_add():
     elif request.method == 'POST':
         data = request.form
         name = data['at_name']
-        note = data['at_note']
+        f_min = data['at_f_min']
+        f_max = data['at_f_max']
         
         query = "INSERT INTO animal_type " \
-                    "(name, note)" \
-                    f"VALUES ('{name}', '{note}')"
+                    "(name, f_min, f_max)" \
+                    f"VALUES ('{name}', '{f_min}', '{f_max}')"
         db_update(query)
 
         flash('Added animal type successfully!', 'success')

@@ -16,7 +16,7 @@ def animal(id):
 
     location = 'animal'
 
-    animal_data = db_fetch(f"SELECT a.id as id, a.name, at.name as art, a.morph, a.gender, a.birth, a.notes, a.image, a.background_color, a.created_date, a.updated_date, at.id as aid FROM animals a LEFT JOIN animal_type at ON a.art = at.id WHERE a.id={ id }", False)
+    animal_data = db_fetch(f"SELECT a.id as id, a.name, at.name as art, a.morph, a.gender, a.birth, a.notes, a.image, a.background_color, a.created_date, a.updated_date, at.id as aid, at.f_min, at.f_max FROM animals a LEFT JOIN animal_type at ON a.art = at.id WHERE a.id={ id }", False)
 
     feeding_data = db_fetch(f"SELECT f.id as id, f.animal, ft.name, f.count, f.weight, date FROM feeding f LEFT JOIN feeding_type ft ON f.type = ft.id WHERE animal={ id } ORDER BY date DESC LIMIT { limit }")
 
@@ -36,12 +36,12 @@ def animal(id):
         print("true")
         # Calculate feeding size 
         if weight_number > 0:
-            print("Weight bigger than zero")
-            print("Python")
+            f_min_value = animal_data[12]
+            f_max_value = animal_data[13]
             percent = lambda part, whole:float(whole) / 100 * float(part)
-            feed_min = percent(10,weight_number)
-            feed_max = percent(20,weight_number)
-            feeding_size = f"Currently a feeding size between {feed_min:.0f}gr and {feed_max:.0f}gr (10% -> 20%) is recommended!"
+            feed_min = percent(f_min_value,weight_number)
+            feed_max = percent(f_max_value,weight_number)
+            feeding_size = f"Currently a feeding size between {feed_min:.0f}gr and {feed_max:.0f}gr ({f_min_value}% -> {f_max_value}%) is recommended!"
 
     if printing == '1':
         html = render_template('animal_print.html', data=animal_data, feedings=feeding_data, history=history_data, location=location)

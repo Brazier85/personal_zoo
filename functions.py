@@ -43,7 +43,7 @@ def get_ht():
     return db_fetch("SELECT id, name, note FROM history_type ORDER BY name ASC")
 
 def get_at():
-    return db_fetch("SELECT id, name, note FROM animal_type ORDER BY name ASC")
+    return db_fetch("SELECT id, name, f_min, f_max FROM animal_type ORDER BY name ASC")
 
 def get_setting(name=None):
     if (name == None):
@@ -166,6 +166,7 @@ def create_tables():
     c.execute('''CREATE TABLE IF NOT EXISTS animal_type
                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT,
-                    note TEXT)''')
+                    f_min INT DEFAULT 0,
+                    f_max INT DEFAULT 0)''')
     conn.commit()
     conn.close()
