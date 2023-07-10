@@ -49,7 +49,6 @@ def get_setting(name=None):
     if (name == None):
         settings = {}
         settings_list = db_fetch("SELECT id, setting, value, name, description FROM settings")
-        print(settings_list)
         for setting in settings_list:
             settings.update({setting[1]:[ setting[2], setting[3], setting[4] ]})
         return settings
@@ -59,7 +58,7 @@ def get_setting(name=None):
 
 def insert_defaults():
 
-     # Add animal defaults
+    # Add animal defaults
     animal_types = db_fetch("SELECT * FROM animal_type ORDER BY name DESC")
     print(f"Types: {animal_types}")
     if animal_types == []:
@@ -102,6 +101,10 @@ def insert_defaults():
         query = "INSERT INTO settings " \
                     "(setting, value, name, description)" \
                     f"VALUES ('weight_type','2','Weight Option','Last entry will be shown as weight on the animal page!')"
+        db_update(query)
+        query = "INSERT INTO settings " \
+                    "(setting, value, name, description)" \
+                    f"VALUES ('feeding_size','2','Feeding Size','Show feeding size for animal type!')"
         db_update(query)
 
     #Migration stuff

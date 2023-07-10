@@ -2,6 +2,12 @@
 
 {% block title %}Personal Zoo | Settings {% endblock %}
 
+{% block head %}
+<!-- Fancy Dropdown -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-select.min.css') }}">
+<script src="{{ url_for('static', filename='js/bootstrap-select.min.js') }}"></script>
+{% endblock %}
+
 {% block content %}
 <p>&nbsp;</p>
 <div class="row row-cols-lg-2 row-cols-sm-1">
@@ -28,9 +34,22 @@
                                         <div class="text-muted">{{ settings["weight_type"][2] }}</div>
                                     </td>
                                     <td>
-                                        <select class="form-select" class="form-control" id="weight" name="weight" required>
+                                        <select class="form-select form-control" id="weight" name="weight" required>
                                             {% for event_type in ht %}
                                                 <option value="{{ event_type[0] }}" {% if event_type[0]|int == settings["weight_type"][0]|int %} selected {% endif %}>{{ event_type[1] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div>{{ settings["feeding_size"][1] }}</div>
+                                        <div class="text-muted">{{ settings["feeding_size"][2] }}</div>
+                                    </td>
+                                    <td>
+                                        <select class="selectpicker form-control" multiple id="feeding_size" name="feeding_size">
+                                            {% for animal_type in animal_types %}
+                                                <option value="{{ animal_type[0] }}" {% if animal_type[0]|string in settings["feeding_size"][0]|string %} selected {% endif %}>{{ animal_type[1] }}</option>
                                             {% endfor %}
                                         </select>
                                     </td>

@@ -1,5 +1,6 @@
 from flask import current_app, render_template, request, redirect, flash, jsonify, Blueprint
 from functions import *
+import json
 
 settings_bp = Blueprint("settings", __name__, template_folder="templates")
 
@@ -7,6 +8,8 @@ settings_bp = Blueprint("settings", __name__, template_folder="templates")
 def settings():
 
     location = 'settings'
+
+    settings = get_setting()
 
     return render_template('settings.html', feeding_types=get_ft(), history_types=get_ht(), ht=get_ht(), settings=get_setting(), animal_types=get_at(), location=location)
 
@@ -18,8 +21,16 @@ def edit():
     elif request.method == 'POST':
         settings = request.form
         weight = settings["weight"]
+        feeding_size = settings.getlist('feeding_size')
 
+        print(f"Feeding size: {feeding_size}")
+
+        # Weight setting
         query = f"UPDATE settings SET value='{weight}' WHERE setting='weight_type'"
+        db_update(query)
+
+        # Feeding size
+        query = f"UPDATE settings SET value='{json.dumps(feeding_size)}' WHERE setting='feeding_size'"
         db_update(query)
 
         flash('Settings saved!', 'success')

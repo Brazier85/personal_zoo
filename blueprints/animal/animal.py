@@ -1,5 +1,5 @@
 from flask import current_app, render_template, request, redirect, url_for, flash, Blueprint
-import os
+import os, json
 from werkzeug.utils import secure_filename
 from functions import *
 from flask_weasyprint import HTML, render_pdf
@@ -16,7 +16,7 @@ def animal(id):
 
     location = 'animal'
 
-    animal_data = db_fetch(f"SELECT a.id as id, a.name, at.name as art, a.morph, a.gender, a.birth, a.notes, a.image, a.background_color, a.created_date, a.updated_date FROM animals a LEFT JOIN animal_type at ON a.art = at.id WHERE a.id={ id }", False)
+    animal_data = db_fetch(f"SELECT a.id as id, a.name, at.name as art, a.morph, a.gender, a.birth, a.notes, a.image, a.background_color, a.created_date, a.updated_date, at.id as aid FROM animals a LEFT JOIN animal_type at ON a.art = at.id WHERE a.id={ id }", False)
 
     feeding_data = db_fetch(f"SELECT f.id as id, f.animal, ft.name, f.count, f.weight, date FROM feeding f LEFT JOIN feeding_type ft ON f.type = ft.id WHERE animal={ id } ORDER BY date DESC LIMIT { limit }")
 
@@ -29,12 +29,14 @@ def animal(id):
     except:
         current_weight = "0"
         weight_number = 0
-
+    
     feeding_size = ""
-    # Calculate feeding size 
-    if weight_number > 0:
-        print("Weight bigger than zero")
-        if animal_data[2] == "Königspython":
+    setting_feeding_size = json.loads(get_setting("feeding_size"))
+    if str(animal_data[11]) in setting_feeding_size:
+        print("true")
+        # Calculate feeding size 
+        if weight_number > 0:
+            print("Weight bigger than zero")
             print("Python")
             percent = lambda part, whole:float(whole) / 100 * float(part)
             feed_min = percent(10,weight_number)

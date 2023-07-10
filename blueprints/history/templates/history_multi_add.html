@@ -21,7 +21,7 @@
                 <div class="col">
                     <div class="mb-3">
                         <label for="animals" class="form-label">Animals</label>
-                        <select class="selectpicker" multiple id="animals" name="animals"  data-live-search="true" required>       
+                        <select class="selectpicker form-control" multiple id="animals" name="animals"  data-live-search="true" required>       
                             {% for animal in animals %}
                                 <option value="{{ animal[0] }}">{{ animal[1] }}</option>
                             {% endfor %}
@@ -39,7 +39,7 @@
                 <div class="col">
                     <div class="mb-3">
                         <label for="history_event" class="form-label">Event/Action</label>
-                        <select class="form-select" class="form-control" id="history_event" name="history_event" required>
+                        <select class="form-select form-control" id="history_event" name="history_event" required>
                             {% for event_type in event_types %}
                                 <option value="{{ event_type[0] }}">{{ event_type[1] }}</option>
                             {% endfor %}
