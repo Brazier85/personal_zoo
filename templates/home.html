@@ -3,8 +3,11 @@
 {% block title %}Personal Zoo{% endblock %}
 
 {% block content %}
-    <p>&nbsp;</p>
-    <h3>Your animals:</h3>
+    <div class="row">
+        <div class="col mt-4">
+            <h3>Your animals:</h3>
+        </div>
+    </div>
     {% if data %}
         <div class="row row-cols-lg-3 row-cols-1 g-4">
             {% for row in data %}
