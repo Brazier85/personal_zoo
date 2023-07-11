@@ -40,11 +40,9 @@
                             </td>
                             <td class="align-middle">{{ row[2] }}</td>
                             <td class="align-middle text-center">
-                                <div>
-                                    <span class="gender text-center align-middle">
-                                        <i class="bi {% if row[4] == 'female' %} bi-gender-female female {% else %} bi-gender-male male {% endif %} d-none d-sm-inline-block"></i>
-                                    </span>
-                                </div>
+                                <span class="gender text-center align-middle">
+                                    <i class="bi {% if row[4] == 'female' %} bi-gender-female female {% else %} bi-gender-male male {% endif %} d-none d-sm-inline-block" style="display: inline-block!important;"></i>
+                                </span>
                             </td>
                         </tr>
                         {% endfor %}
