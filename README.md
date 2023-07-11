@@ -4,21 +4,11 @@
 
 This webapp is for managing my "personal zoo" @home. You can add animals, there feedings, ect...
 
+A full documentation with more details can be found [here](https://brazier85.de/page/personal_zoo)
+
 Currently the app is still under development and not stable.
 
 ### **The app is NOT production ready!**
-
-## Custom Types
-You can set your custom settings by editing the `data/custom_settings.py` file!
-```python
-# Custom feeding types
-FEEDING_TYPES = ["Elefant",'Heuschrecke',"Kleinkind","Maus","Ratte","Wal"]
-
-# Custom events
-EVENT_TYPES = ["Häutung","Gewogen","Medizinisch","Sonstiges"]
-```
-
-**WARNING**: You must restart the app after this changes!
 
 ## Startup
 
@@ -35,15 +25,17 @@ EVENT_TYPES = ["Häutung","Gewogen","Medizinisch","Sonstiges"]
     ```
 4. Visit `<host/ip>:5000`
 
-## Docker
+### Update
+
+Just start the `run_docker.sh` file again. It will pull the latest changes from github and build a new container.
+
+## Docker manual version
 ```bash
 docker build -t personal_zoo .
 
 docker run -d -p 5000:5000 -v ./data:/app/data --name personal_zoo personal_zoo
-
-# For dev
-docker run -d -p 5000:5000 -v .:/app --name personal_zoo personal_zoo
 ```
+**Note:** The `data` mount is important. Without you will loose your settings after each update!
 
 ## DEVELOPMENT
 
