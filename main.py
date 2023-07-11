@@ -148,28 +148,32 @@ def update():
         db_update(query)
 
     print("Remove old column")
-    try:
-        query= "ALTER TABLE animal_type DROP COLUMN note"
-        db_update(query)
-    except Exception as e:
-        print(f"Error: {e} -> Remove old column")
-        error = error + f"Remove old column 'note' -> Error: {e}\n"
+    if db_col_exists("animal_type","note"):
+        try:
+            query= "ALTER TABLE animal_type DROP COLUMN note"
+            db_update(query)
+        except Exception as e:
+            print(f"Error: {e} -> Remove old column")
+            error = error + f"Remove old column 'note' -> Error: {e}\n"
 
     print("Add new columns")
-    try:
-        query= "ALTER TABLE animal_type ADD COLUMN f_min INT DEFAULT 0"
-        db_update(query)
-    except Exception as e:
-        print(f"Error: {e}")
-        error = error + f"Add f_min -> Error: {e}\n"
+    if not db_col_exists("animal_type","f_min"):
+        try:
+            query= "ALTER TABLE animal_type ADD COLUMN f_min INT DEFAULT 0"
+            db_update(query)
+        except Exception as e:
+            print(f"Error: {e}")
+            error = error + f"Add f_min -> Error: {e}\n"
     
-    try:
-        query= "ALTER TABLE animal_type ADD COLUMN f_max INT DEFAULT 0"
-        db_update(query)
-    except Exception as e:
-        print(f"Error: {e}")
-        error = error + f"Add f_max -> Error: {e}\n"
+    if not db_col_exists("animal_type","f_max"):
+        try:
+            query= "ALTER TABLE animal_type ADD COLUMN f_max INT DEFAULT 0"
+            db_update(query)
+        except Exception as e:
+            print(f"Error: {e}")
+            error = error + f"Add f_max -> Error: {e}\n"
 
+    print("Insert default value")
     try:
         query = f"UPDATE animal_type SET f_min='0', f_max='0' WHERE f_min IS NULL OR f_max IS NULL"
         db_update(query)

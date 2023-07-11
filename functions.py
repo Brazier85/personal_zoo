@@ -36,6 +36,16 @@ def db_update(query):
     conn.commit()
     conn.close()
 
+def db_col_exists(table, col):
+    try:
+        result = db_fetch(f"SELECT COUNT(*) AS column_exists FROM pragma_table_info('{table}') WHERE name='{col}'", False)[0]
+        if result > 0:
+            return True
+        else:
+            return False
+    except:
+        return False
+
 def get_ft():
     return db_fetch("SELECT id, name, note FROM feeding_type ORDER BY name ASC")
 
@@ -60,7 +70,6 @@ def insert_defaults():
 
     # Add animal defaults
     animal_types = db_fetch("SELECT * FROM animal_type ORDER BY name DESC")
-    print(f"Types: {animal_types}")
     if animal_types == []:
         # Insert base data
         ANIMAL_TYPES =  ["Ball Python","Leopard Gecko"]
@@ -83,7 +92,6 @@ def insert_defaults():
     
     # Add history defaults
     history_types = db_fetch("SELECT * FROM history_type ORDER BY name DESC")
-    print(f"Types: {history_types}")
     if history_types == []:
         # Insert base data
         EVENT_TYPES =  ["Shed","Weighed","Medical","Miscellaneous"]
@@ -95,7 +103,6 @@ def insert_defaults():
 
     # Default general settings
     settings = db_fetch("SELECT * FROM settings DESC")
-    print(f"Types: {settings}")
     if settings == []:
         # Weight
         query = "INSERT INTO settings " \
