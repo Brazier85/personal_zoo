@@ -186,6 +186,16 @@ font-size: 10px;
   width: 100px;
 }
 
+.animal-image-small img {
+  background: #ccc;
+  border: 3px solid #fff;
+  border-radius: 100%;
+  height: 50px;
+  position: relative;
+  width: 50px;
+}
+
+
 .card-animal-image img {
   background: #ccc;
   border: 7px solid #fff;
