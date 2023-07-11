@@ -39,6 +39,12 @@
   font-weight: bold;
 }
 
+.no-select {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 @page {
   size: A4;
   margin: 1cm;
