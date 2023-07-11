@@ -12,39 +12,47 @@
     </div>
     {% if data %}
         {% if list %}
-        <div class="row row-cols-lg-3 row-cols-1 mt-2 rounded rounded-3 overflow-hidden">
-            <table class="table table-striped m-0">
-                <thead>
-                    <tr>
-                        <th class="text-center" style="width: 5%;">#ID</th>
-                        <th style="width: 15%; min-width: 150px;">Name</th>
-                        <th width="15%">Type</th>
-                        <th>Notes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in data %}
-                    <tr data-id="{{ row[0] }}" class="active_row show_animal">
-                        <th scope="row" class="text-center align-middle">{{ row[0] }}</th>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div class="img-container animal-image-small">
-                                    <img src="{{ url_for('uploaded_file', filename=row[7]) }}" alt="" style="border-color: {{ row[8] }} !important;">
+        <div class="row row-cols-1 mt-2">
+            <div class="col rounded rounded-3 overflow-hidden" style="max-width: 700px;">
+                <table class="table table-striped m-0" >
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width: 5%;">#ID</th>
+                            <th style="width: 15%; min-width: 150px;">Name</th>
+                            <th width="15%">Type</th>
+                            <th class="text-center" style="width: 5%;">Gender</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in data %}
+                        <tr data-id="{{ row[0] }}" class="active_row show_animal">
+                            <th scope="row" class="text-center align-middle">{{ row[0] }}</th>
+                            <td>
+                                <div class="d-flex align-items-centerv align-middle">
+                                    <div class="img-container animal-image-small">
+                                        <img src="{{ url_for('uploaded_file', filename=row[7]) }}" alt="" style="border-color: {{ row[8] }} !important;">
+                                    </div>
+                                    <div class="ps-3">
+                                        <div class="pb-1 fw-bold">{{ row[1] }}</div>
+                                        <p class="m-0 text-muted">{{ row[3] }}</p>
+                                    </div>
                                 </div>
-                                <div class="ps-3">
-                                    <div class="pb-1 fw-bold">{{ row[1] }}</div>
-                                    <p class="m-0 text-muted">{{ row[3] }}</p>
+                            </td>
+                            <td class="align-middle">{{ row[2] }}</td>
+                            <td class="align-middle text-center">
+                                <div>
+                                    <span class="gender text-center align-middle">
+                                        <i class="bi {% if row[4] == 'female' %} bi-gender-female female {% else %} bi-gender-male male {% endif %} d-none d-sm-inline-block"></i>
+                                    </span>
                                 </div>
-                            </div>
-                        </td>
-                        <td class="align-middle">{{ row[2] }}</td>
-                        <td class="align-middle">{{ row[6] }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    {% else %}
+        {% else %}
         <div class="row row-cols-lg-3 row-cols-1 g-4">
             {% for row in data %}
             <div class="col">
