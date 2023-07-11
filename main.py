@@ -104,9 +104,13 @@ def home():
     create_tables()
     insert_defaults()
 
-    data = db_fetch("SELECT * FROM animals ORDER BY name ASC")
+    order = request.cookies.get('animal_order')
+    if order == None:
+        order = "name"
 
-    return render_template('home.html', data=data, location=location)
+    data = db_fetch(f"SELECT * FROM animals ORDER BY {order} ASC")
+
+    return render_template('home.html', data=get_ad(), location=location)
 
 # Route for printing
 @app.route('/print')
@@ -115,13 +119,13 @@ def print_data(id=None):
     location = 'print'
 
     if id:
-        data = db_fetch(f"SELECT * FROM animals WHERE id='{id}'")
+        animal_data = get_ad(id)
     else:
-        data = db_fetch("SELECT * FROM animals ORDER BY name")
+        animal_data = get_ad()
 
     feed_url = f"{request.url_root}feeding/add/"
 
-    return render_template('print.html', data=data, location=location, feed_url=feed_url)
+    return render_template('print.html', data=animal_data, location=location, feed_url=feed_url)
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):

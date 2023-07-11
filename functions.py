@@ -55,6 +55,13 @@ def get_ht():
 def get_at():
     return db_fetch("SELECT id, name, f_min, f_max FROM animal_type ORDER BY name ASC")
 
+def get_ad(id=None):
+    if id:
+        animal_data = db_fetch(f"SELECT a.id as id, a.name, at.name as art, a.morph, a.gender, a.birth, a.notes, a.image, a.background_color, a.created_date, a.updated_date, at.id as aid, at.f_min, at.f_max FROM animals a LEFT JOIN animal_type at ON a.art = at.id WHERE a.id={ id }", False)
+    else:
+        animal_data = db_fetch(f"SELECT a.id as id, a.name, at.name as art, a.morph, a.gender, a.birth, a.notes, a.image, a.background_color, a.created_date, a.updated_date, at.id as aid, at.f_min, at.f_max FROM animals a LEFT JOIN animal_type at ON a.art = at.id ORDER by a.name")
+    return animal_data
+
 def get_setting(name=None):
     if (name == None):
         settings = {}

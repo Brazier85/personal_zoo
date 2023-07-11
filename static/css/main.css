@@ -22,6 +22,19 @@
     }
 }
 
+:root {
+  --zoo-green: #29a039
+}
+
+.navbar {
+  --bs-navbar-hover-color: var(--zoo-green);
+  --bs-navbar-active-color: var(--zoo-green);
+}
+
+.active {
+  font-weight: bold;
+}
+
 @page {
   size: A4;
   margin: 1cm;

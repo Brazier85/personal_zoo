@@ -35,7 +35,7 @@ def add(id):
 def multi_add():
     if request.method == 'GET':
         animals = db_fetch(f"SELECT id, name FROM animals ORDER BY name DESC")
-        return render_template('history_multi_add.html', animals=animals, event_types=get_ht())
+        return render_template('history_multi_add.html', animals=animals, event_types=get_ht(), location="multi_event")
 
     elif request.method == 'POST':
         history = request.form

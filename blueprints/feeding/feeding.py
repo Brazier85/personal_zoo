@@ -48,7 +48,7 @@ def multi_add():
     if request.method == 'GET':
         # get animals
         animals = db_fetch(f"SELECT id, name FROM animals ORDER BY name DESC")
-        return render_template('feeding_multi_add.html', animals=animals, feeding_types=get_ft())
+        return render_template('feeding_multi_add.html', animals=animals, feeding_types=get_ft(), location="multi_feeding")
         
     elif request.method == 'POST':
         feeding = request.form

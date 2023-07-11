@@ -16,7 +16,7 @@ def animal(id):
 
     location = 'animal'
 
-    animal_data = db_fetch(f"SELECT a.id as id, a.name, at.name as art, a.morph, a.gender, a.birth, a.notes, a.image, a.background_color, a.created_date, a.updated_date, at.id as aid, at.f_min, at.f_max FROM animals a LEFT JOIN animal_type at ON a.art = at.id WHERE a.id={ id }", False)
+    animal_data = get_ad(id)
 
     feeding_data = db_fetch(f"SELECT f.id as id, f.animal, ft.name, f.count, f.weight, date FROM feeding f LEFT JOIN feeding_type ft ON f.type = ft.id WHERE animal={ id } ORDER BY date DESC LIMIT { limit }")
 
@@ -33,7 +33,6 @@ def animal(id):
     feeding_size = ""
     setting_feeding_size = json.loads(get_setting("feeding_size"))
     if str(animal_data[11]) in setting_feeding_size:
-        print("true")
         # Calculate feeding size 
         if weight_number > 0:
             f_min_value = animal_data[12]
