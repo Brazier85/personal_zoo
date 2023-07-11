@@ -26,4 +26,4 @@ docker run -d -p 5000:5000 -v ./data:/app/data --name personal_zoo personal_zoo
 echo "done"
 
 echo ""
-echo "Please visit the update page: http://${hostname}:5000/update"
+echo "Please visit the update page: http://${hostname -I | awk '{print $1}'}:5000/update"
