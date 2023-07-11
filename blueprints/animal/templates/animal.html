@@ -54,7 +54,7 @@
                     </thead>
                     <tbody>
                         {% for row in feedings %}
-                        <tr data-id="{{ row[0] }}" class="feeding_edit active_row">
+                        <tr data-id="{{ row[0] }}" class="feeding_edit active_row no-select">
                             <td>{{ row[5] | fix_date }}</td>
                             <td>{{ row[3] }}</td>
                             <td>{{ row[2] }}</td>
@@ -93,7 +93,7 @@
                     </thead>
                     <tbody>
                         {% for row in history %}
-                        <tr data-id="{{ row[0] }}" class="history_edit active_row">
+                        <tr data-id="{{ row[0] }}" class="history_edit active_row no-select">
                             <td>{{ row[4] | fix_date }}</td>
                             <td>{{ row[2] }}</td>
                             <td>{{ row[3]|linebreaksbr|safe }}</td>
