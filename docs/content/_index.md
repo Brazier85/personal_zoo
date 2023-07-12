@@ -18,7 +18,9 @@ geekdocAnchor: false
 
 Personal Zoo is a web application to keep track of your personal zoo.
 
-{{< button size="large" relref="usage/getting-started/" >}}Getting Started{{< /button >}}
+## This documentation is work in progress!
+
+{{< button size="large" relref="use/getting-started/" >}}Getting Started{{< /button >}}
 
 ## Feature overview
 
@@ -26,18 +28,18 @@ Personal Zoo is a web application to keep track of your personal zoo.
 
 ### Feedings
 
-Keep track of the feedings for your animals
+Keep track of the feedings for your animals. Including feeding weight, type, etc...
 
 <--->
 
 ### Events/Actions
 
-Keep track of action/events like medical events or sheds
+Keep track of action/events like medical events or sheds.
 
 <--->
 
-### Easy customization
+### Easy configuration
 
-You can configure most settings as you need them!
+You can configure most settings via the settings page.
 
 {{< /columns >}}

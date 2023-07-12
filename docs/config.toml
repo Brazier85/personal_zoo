@@ -1,4 +1,4 @@
-baseURL = "http://localhost"
+baseURL = "https://personal-zoo.com"
 title = ""
 theme = "hugo-geekdoc"
 

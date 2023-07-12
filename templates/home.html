@@ -2,54 +2,120 @@
 
 {% block title %}Personal Zoo{% endblock %}
 
+{% block head %}
+<!-- Fancy Dropdown -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-select.min.css') }}">
+<script src="{{ url_for('static', filename='js/bootstrap-select.min.js') }}"></script>
+{% endblock %}
+
 {% set list=True %}
 
 {% block content %}
-    <div class="row">
-        <div class="col mt-4">
-            <h3>Your animals:</h3>
-        </div>
-    </div>
     {% if data %}
         {% set dlengh = data|length %}
         {% set breaker = (dlengh / 2) | round | int %}
         {% if list %}
-        <div class="row row-cols-1 mt-2">
-            <div class="col rounded rounded-3 overflow-hidden" style="max-width: 700px;">
-                <table class="table table-striped m-0" >
-                    <thead>
-                        <tr>
-                            <th class="text-center" style="width: 5%;">#ID</th>
-                            <th style="width: 15%; min-width: 150px;">Name</th>
-                            <th width="15%">Type</th>
-                            <th class="text-center" style="width: 5%;">Gender</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for row in data %}
-                        <tr data-id="{{ row[0] }}" class="active_row show_animal no-select">
-                            <th scope="row" class="text-center align-middle">{{ row[0] }}</th>
-                            <td>
-                                <div class="d-flex align-items-centerv align-middle">
-                                    <div class="img-container animal-image-small">
-                                        <img src="{{ url_for('uploaded_file', filename=row[7]) }}" alt="" style="border-color: {{ row[8] }} !important;">
-                                    </div>
-                                    <div class="ps-3">
-                                        <div class="pb-1 fw-bold">{{ row[1] }}</div>
-                                        <p class="m-0 text-muted">{{ row[3] }}</p>
+        <div class="row row-cols-1 row-cols-lg-2 mt-4">
+            <div class="col">
+                <div class="card" style="background-color: white;">
+                    <div class="card-header">
+                        <div class="flex-grow"> Your Animals </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped m-0" >
+                            <thead>
+                                <tr>
+                                    <th class="text-center" style="width: 5%;">#ID</th>
+                                    <th style="width: 15%; min-width: 150px;">Name</th>
+                                    <th width="15%">Type</th>
+                                    <th class="text-center" style="width: 5%;">Gender</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in data %}
+                                <tr data-id="{{ row[0] }}" class="active_row show_animal no-select">
+                                    <th scope="row" class="text-center align-middle">{{ row[0] }}</th>
+                                    <td>
+                                        <div class="d-flex align-items-centerv align-middle">
+                                            <div class="img-container animal-image-small">
+                                                <img src="{{ url_for('uploaded_file', filename=row[7]) }}" alt="" style="border-color: {{ row[8] }} !important;">
+                                            </div>
+                                            <div class="ps-3">
+                                                <div class="pb-1 fw-bold">{{ row[1] }}</div>
+                                                <p class="m-0 text-muted">{{ row[3] }}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">{{ row[2] }}</td>
+                                    <td class="align-middle text-center">
+                                        <span class="gender text-center align-middle">
+                                            <i class="bi {% if row[4] == 'female' %} bi-gender-female female {% else %} bi-gender-male male {% endif %} d-none d-sm-inline-block" style="display: inline-block!important;"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col d-none d-lg-block">
+                <div class="card" style="background-color: white;">
+                    <div class="card-header">
+                        <div class="flex-grow"> Add multi feeding </div>
+                    </div>
+                    <form action="{{ url_for('feeding.multi_add') }}" method="post" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="feeding_animals" class="form-label">Animals</label>
+                                        <select class="selectpicker form-control" multiple id="animals" name="animals"  data-live-search="true" required>       
+                                            {% for animal in data %}
+                                                <option value="{{ animal[0] }}">{{ animal[1] }}</option>
+                                            {% endfor %}
+                                        </select>
                                     </div>
                                 </div>
-                            </td>
-                            <td class="align-middle">{{ row[2] }}</td>
-                            <td class="align-middle text-center">
-                                <span class="gender text-center align-middle">
-                                    <i class="bi {% if row[4] == 'female' %} bi-gender-female female {% else %} bi-gender-male male {% endif %} d-none d-sm-inline-block" style="display: inline-block!important;"></i>
-                                </span>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="feeding_date" class="form-label">Date</label>
+                                        <input type="date" class="form-control" id="feeding_date" name="feeding_date" required>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="feeding_type" class="form-label">Type</label>
+                                        <select class="form-select" class="form-control" id="feeding_type" name="feeding_type" required>
+                                            {% for feeding_type in feeding_types %}
+                                                <option value="{{ feeding_type[0] }}">{{ feeding_type[1] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="feeding_count" class="form-label">Count</label>
+                                        <input type="number" class="form-control" id="feeding_count" name="feeding_count" required>
+                                    </div>
+                                </div>
+                                <div class="col unit">
+                                    <div class="mb-3">
+                                        <label for="feeding_unit" class="form-label">Unit</label>
+                                        <input type="number" class="form-control" id="feeding_unit" name="feeding_unit">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-end">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
         {% else %}
@@ -98,4 +164,30 @@
         });
     </script>
     {% endif %}
+
+    <script>
+        $('#feeding_date').val(new Date().toISOString().slice(0, 10));
+    
+        $(document).ready(function(){
+            var ft = $('#feeding_type').val();
+            $.ajax({
+                url: '/feeding/get_units/'+ft,
+                type: 'get',
+                success: function(data){
+                    $('.unit').html(data);
+                }
+            })
+        });
+    
+        $('#feeding_type').change(function(){
+            var ft = $(this).val();
+            $.ajax({
+                url: '/feeding/get_units/'+ft,
+                type: 'get',
+                success: function(data){
+                    $('.unit').html(data);
+                }
+            })
+        });
+    </script>
 {% endblock %}

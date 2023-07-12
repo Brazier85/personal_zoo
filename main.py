@@ -110,7 +110,7 @@ def home():
 
     data = db_fetch(f"SELECT * FROM animals ORDER BY {order} ASC")
 
-    return render_template('home.html', data=get_ad(), location=location)
+    return render_template('home.html', data=get_ad(), feeding_types=get_ft(), location=location)
 
 # Route for printing
 @app.route('/print')
