@@ -4,7 +4,7 @@
 
 This webapp is for managing my "personal zoo" @home. You can add animals, there feedings, ect...
 
-A full documentation with more details can be found [here](https://brazier85.de/page/personal_zoo)
+A full documentation with more details can be found [here](https://personal-zoo.com)
 
 Currently the app is still under development and not stable.
 
