@@ -34,18 +34,18 @@
                 {% if feedings %}
                 <table class="table table-striped m-0">
                     <thead>
-                        <th>Date</th>
+                        <th class="w-25">Date</th>
                         <th>Count</th>
                         <th>Type</th>
-                        <th>Weight</th>
+                        <th>Size</th>
                     </thead>
                     <tbody>
                         {% for row in feedings %}
-                        <tr data-id="{{ row[0] }}" class="feeding_edit">
-                            <td>{{ row[5] }}</td>
+                        <tr data-id="{{ row[0] }}" class="feeding_edit active_row no-select">
+                            <td>{{ row[5] | fix_date }}</td>
                             <td>{{ row[3] }}</td>
                             <td>{{ row[2] }}</td>
-                            <td>{% if row[4] > 0 %} {{ row[4] }} gr {% else %} - {% endif %}</td>
+                            <td>{{ row[4] }} {%if row[6] == "weight" %}{{row[7]}}{%endif%}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -53,35 +53,40 @@
                 {% else %}
                     <p class="mb-0">No feedings found!</p>
                 {% endif %}
+                {% if feeding_size %}
+                    <div class="text-muted mt-2 text-center">{{ feeding_size }}</div>
+                {% endif %}
             </div>
         </div>
     </div>
-    <div class="card" >
-        <div class="card">
-            <div class="card-header">
-                <div class="flex-grow"> Events/Actions (last 10)</div>
-            </div>
-            <div class="card-body">
-                {% if history %}
-                <table class="table table-striped m-0">
-                    <thead>
-                        <th>Date</th>
-                        <th>Event</th>
-                        <th>Details</th>
-                    </thead>
-                    <tbody>
-                        {% for row in history %}
-                        <tr data-id="{{ row[0] }}" class="history_edit">
-                            <td>{{ row[4] }}</td>
-                            <td>{{ row[2] }}</td>
-                            <td>{{ row[3] }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                {% else %}
-                    <p class="mb-0">No History found!</p>
-                {% endif %}
+    <div class="col">
+        <div class="card" >
+            <div class="card">
+                <div class="card-header">
+                    <div class="flex-grow"> Events/Actions (last 10)</div>
+                </div>
+                <div class="card-body">
+                    {% if history %}
+                    <table class="table table-striped m-0">
+                        <thead>
+                            <th>Date</th>
+                            <th>Event</th>
+                            <th>Details</th>
+                        </thead>
+                        <tbody>
+                            {% for row in history %}
+                            <tr data-id="{{ row[0] }}" class="history_edit">
+                                <td>{{ row[4] | fix_date }}</td>
+                                <td>{{ row[2] }}</td>
+                                <td>{{ row[3] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                        <p class="mb-0">No History found!</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
@@ -101,7 +106,7 @@
         </div>
         <div class="list-group list-group-clickable"><!----></div>
         <div class="card-footer card-footer-clickable text-right pr-0">
-            <div style="text-transform: uppercase;">Last updated: {{ data[10] }}</div>
+            <div style="text-transform: uppercase;">Last updated: {{ data[10] | fix_date }}</div>
         </div>
     </div>
 </div>
