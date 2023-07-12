@@ -90,12 +90,30 @@ def insert_defaults():
     feeding_types = db_fetch("SELECT * FROM feeding_type ORDER BY name DESC")
     if feeding_types == []:
         # Insert base data
-        FEEDING_TYPES =  ["Elephant","Toddler","Mouse","Rat","Whale"]
-        for type in FEEDING_TYPES:
-            query = "INSERT INTO feeding_type " \
-                    "(name)" \
-                    f"VALUES ('{type}')"
-            db_update(query)
+        query = "INSERT INTO feeding_type " \
+                "(name, unit, detail)" \
+                f"VALUES ('Elephant','weight','t')"
+        db_update(query)
+        query = "INSERT INTO feeding_type " \
+                "(name, unit, detail)" \
+                f"VALUES ('Toddler','text','BMI')"
+        db_update(query)
+        query = "INSERT INTO feeding_type " \
+                "(name, unit, detail)" \
+                f"VALUES ('Mouse','weight','gr')"
+        db_update(query)
+        query = "INSERT INTO feeding_type " \
+                "(name, unit, detail)" \
+                f"VALUES ('Rat','weight','gr')"
+        db_update(query)
+        query = "INSERT INTO feeding_type " \
+                "(name, unit, detail)" \
+                f"VALUES ('Whale','weight','t')"
+        db_update(query)
+        query = "INSERT INTO feeding_type " \
+                "(name, unit, detail)" \
+                f"VALUES ('Grasshopper','size','small,middle,sub,adult')"
+        db_update(query)
     
     # Add history defaults
     history_types = db_fetch("SELECT * FROM history_type ORDER BY name DESC")
