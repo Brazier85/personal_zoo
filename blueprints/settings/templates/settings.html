@@ -112,13 +112,15 @@
                     <table class="table table-striped m-0">
                         <thead>
                             <th class="w-50">Name</th>
-                            <th>Note</th>
+                            <th>Unit</th>
+                            <th>Detail</th>
                         </thead>
                         <tbody>
                             {% for row in feeding_types %}
                             <tr data-id="{{ row[0] }}" class="ft_edit active_row">
                                 <td>{{ row[1] }}</td>
                                 <td>{{ row[2] }}</td>
+                                <td>{{ row[3] }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

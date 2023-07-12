@@ -46,10 +46,11 @@ def ft_edit(id):
     elif request.method == 'POST':
         data = request.form
         name = data['ft_name']
-        note = data['ft_note']
+        unit = data['ft_unit']
+        detail = data['ft_detail']
 
         query = "UPDATE feeding_type " \
-                    f"SET name='{name}', note='{note}'"\
+                    f"SET name='{name}', unit='{unit}', detail='{detail}'"\
                     f"WHERE id='{ id }'"
         db_update(query)
 
@@ -65,11 +66,12 @@ def ft_add():
     elif request.method == 'POST':
         data = request.form
         name = data['ft_name']
-        note = data['ft_note']
+        unit = data['ft_unit']
+        detail = data['ft_detail']
         
         query = "INSERT INTO feeding_type " \
-                    "(name, note)" \
-                    f"VALUES ('{name}', '{note}')"
+                    "(name, unit, detail)" \
+                    f"VALUES ('{name}', '{unit}', '{detail}')"
         db_update(query)
 
         flash('Added feed type successfully!', 'success')

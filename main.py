@@ -160,6 +160,14 @@ def update():
             print(f"Error: {e} -> Remove old column")
             error = error + f"Remove old column 'note' -> Error: {e}\n"
 
+    if db_col_exists("feeding_type","note"):
+        try:
+            query= "ALTER TABLE feeding_type DROP COLUMN note"
+            db_update(query)
+        except Exception as e:
+            print(f"Error: {e} -> Remove old column")
+            error = error + f"Remove old column 'note' -> Error: {e}\n"
+
     print("Add new columns")
     if not db_col_exists("animal_type","f_min"):
         try:
@@ -184,6 +192,30 @@ def update():
     except Exception as e:
         print(f"Error: {e}")
         error = error + f"Add f_max -> Error: {e}\n"
+
+    if not db_col_exists("feeding_type","unit"):
+        try:
+            query= "ALTER TABLE feeding_type ADD COLUMN unit TEXT"
+            db_update(query)
+        except Exception as e:
+            print(f"Error: {e}")
+            error = error + f"Add unit to feeding_type-> Error: {e}\n"
+
+    if not db_col_exists("feeding_type","detail"):
+        try:
+            query= "ALTER TABLE feeding_type ADD COLUMN detail TEXT"
+            db_update(query)
+        except Exception as e:
+            print(f"Error: {e}")
+            error = error + f"Add detail to feeding_type -> Error: {e}\n"
+
+    if not db_col_exists("feeding","unit"):
+        try:
+            query= "ALTER TABLE feeding RENAME COLUMN weight TO unit"
+            db_update(query)
+        except Exception as e:
+            print(f"Error: {e}")
+            error = error + f"Add unit to feeding -> Error: {e}\n"
 
     if error != "":
         flash(f"<strong>Error while doing update!</strong>\n\n{error}", 'danger')

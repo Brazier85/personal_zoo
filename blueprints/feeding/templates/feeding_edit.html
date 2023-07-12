@@ -4,10 +4,10 @@
 <form action="{{ url_for('feeding.edit', id=data[0]) }}" method="post" enctype="multipart/form-data">
     <div class="modal-body" id="modal-body">
         <div class="row">
-            <div class="col-3">
+            <div class="col">
                 <div class="mb-3">
-                    <label for="feeding_count" class="form-label">Count</label>
-                    <input type="number" class="form-control" id="feeding_count" name="feeding_count" value="{{ data[3] }}" required>
+                    <label for="feeding_date" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="feeding_date" name="feeding_date" value="{{ data[5] }}" required>
                 </div>
             </div>
             <div class="col">
@@ -24,14 +24,14 @@
         <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <label for="feeding_weight" class="form-label">Weight (gramm)</label>
-                    <input type="number" class="form-control" id="feeding_weight" name="feeding_weight" value="{{ data[4] }}" required>
+                    <label for="feeding_count" class="form-label">Count</label>
+                    <input type="number" class="form-control" id="feeding_count" name="feeding_count" value="{{ data[3] }}" required>
                 </div>
             </div>
-            <div class="col">
+            <div class="col unit">
                 <div class="mb-3">
-                    <label for="feeding_date" class="form-label">Date</label>
-                    <input type="date" class="form-control" id="feeding_date" name="feeding_date" value="{{ data[5] }}" required>
+                    <label for="feeding_unit" class="form-label">Unit</label>
+                    <input type="number" class="form-control" id="feeding_unit" name="feeding_unit" value="{{ data[4] }}" required>
                 </div>
             </div>
         </div>    
@@ -47,3 +47,29 @@
         </div>
     </div>
 </form>
+
+<script>
+    $(document).ready(function(){
+        var ft = $('#feeding_type').val();
+        var value = $('#feeding_unit').val();
+        $.ajax({
+            url: '/feeding/get_units/'+ft+'?value='+value,
+            type: 'get',
+            success: function(data){
+                $('.unit').html(data);
+            }
+        })
+    });
+
+    $('#feeding_type').change(function(){
+        var ft = $(this).val();
+        var value = $('#feeding_unit').val();
+        $.ajax({
+            url: '/feeding/get_units/'+ft+'?value='+value,
+            type: 'get',
+            success: function(data){
+                $('.unit').html(data);
+            }
+        })
+    });
+</script>

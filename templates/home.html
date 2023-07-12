@@ -11,6 +11,8 @@
         </div>
     </div>
     {% if data %}
+        {% set dlengh = data|length %}
+        {% set breaker = (dlengh / 2) | round | int %}
         {% if list %}
         <div class="row row-cols-1 mt-2">
             <div class="col rounded rounded-3 overflow-hidden" style="max-width: 700px;">

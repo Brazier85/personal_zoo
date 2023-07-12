@@ -25,7 +25,7 @@ docker run -d -p 5000:5000 -v ./data:/app/data --name personal_zoo personal_zoo
 
 echo "done"
 
-IP=hostname -I | awk '{print $1}'
+IP=$(hostname -I | awk '{print $1}')
 
 echo ""
 echo "Please visit the update page: http://$IP:5000/update"

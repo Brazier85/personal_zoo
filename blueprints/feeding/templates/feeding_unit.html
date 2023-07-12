@@ -1,0 +1,23 @@
+
+{% set unit = unit_data[0] %}
+{% if unit == "weight" %}
+<div class="mb-3">
+    <label for="feeding_unit" class="form-label">Weight ({{ unit_data[1] }})</label>
+    <input type="number" class="form-control" id="feeding_unit" name="feeding_unit" value="{{value}}">
+</div>
+{% elif unit == "size" %}
+<div class="mb-3">
+    <label for="feeding_unit" class="form-label">Size</label>
+    <select class="form-select" class="form-control" id="feeding_unit" name="feeding_unit" required>
+        {% set options = unit_data[1].split(',') %}
+        {% for option in options %}
+            <option value="{{ option }} {% if value == option %}selected{%endif%}">{{ option }}</option>
+        {% endfor %}
+    </select>
+</div>
+{% else %}
+<div class="mb-3">
+    <label for="feeding_unit" class="form-label">Text</label>
+    <input type="text" class="form-control" id="feeding_unit" name="feeding_unit" value="{{value}}">
+</div>
+{% endif %}

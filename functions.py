@@ -47,7 +47,7 @@ def db_col_exists(table, col):
         return False
 
 def get_ft():
-    return db_fetch("SELECT id, name, note FROM feeding_type ORDER BY name ASC")
+    return db_fetch("SELECT id, name, unit, detail FROM feeding_type ORDER BY name ASC")
 
 def get_ht():
     return db_fetch("SELECT id, name, note FROM history_type ORDER BY name ASC")
@@ -121,13 +121,6 @@ def insert_defaults():
                     f"VALUES ('feeding_size','2','Feeding Size','Show feeding size for animal type!')"
         db_update(query)
 
-    #Migration stuff
-    #query = "UPDATE animals SET art='1' WHERE art='Königspython'"
-    #db_update(query)
-
-    #query = "UPDATE animals SET art='2' WHERE art='Leopardgecko'"
-    #db_update(query)
-
 
 # Create the DATABASE tables
 def create_tables():
@@ -155,7 +148,7 @@ def create_tables():
                     animal INT,
                     type TEXT,
                     count INT,
-                    weight INT,
+                    unit TEXT,
                     date DATE DEFAULT CURRENT_DATE)''')
     c.execute('''CREATE TABLE IF NOT EXISTS history
                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -166,7 +159,8 @@ def create_tables():
     c.execute('''CREATE TABLE IF NOT EXISTS feeding_type
                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT,
-                    note TEXT)''')
+                    unit TEXT,
+                    detail TEXT)''')
     c.execute('''CREATE TABLE IF NOT EXISTS history_type
                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT,

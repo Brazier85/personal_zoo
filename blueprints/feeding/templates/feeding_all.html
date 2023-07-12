@@ -3,15 +3,15 @@
         <th class="w-25">Date</th>
         <th>Count</th>
         <th>Type</th>
-        <th>Weight</th>
+        <th>Size</th>
     </thead>
     <tbody>
         {% for row in feedings %}
-        <tr data-id="{{ row[0] }}" class="feeding_edit active_row">
+        <tr data-id="{{ row[0] }}" class="feeding_edit active_row no-select">
             <td>{{ row[5] | fix_date }}</td>
             <td>{{ row[3] }}</td>
             <td>{{ row[2] }}</td>
-            <td>{% if row[4] > 0 %} {{ row[4] }} gr {% else %} - {% endif %}</td>
+            <td>{{ row[4] }} {%if row[6] == "weight" %}{{row[7]}}{%endif%}</td>
         </tr>
         {% endfor %}
     </tbody>

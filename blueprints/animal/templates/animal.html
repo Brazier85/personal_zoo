@@ -50,7 +50,7 @@
                         <th class="w-25">Date</th>
                         <th>Count</th>
                         <th>Type</th>
-                        <th>Weight</th>
+                        <th>Size</th>
                     </thead>
                     <tbody>
                         {% for row in feedings %}
@@ -58,7 +58,7 @@
                             <td>{{ row[5] | fix_date }}</td>
                             <td>{{ row[3] }}</td>
                             <td>{{ row[2] }}</td>
-                            <td>{% if row[4]|int > 0 %} {{ row[4] }} gr {% else %} - {% endif %}</td>
+                            <td>{{ row[4] }} {%if row[6] == "weight" %}{{row[7]}}{%endif%}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -218,7 +218,7 @@
     });
     $('.history_add_button').on('click',function(){
         $('.modal-content').load('/history/add/{{ data[0] }}',function(){
-            $('#modal_details').modal('show'); 
+            $('#modal_details').modal('show');
         });
     });
     $('.animal_qr_button').on('click',function(){
