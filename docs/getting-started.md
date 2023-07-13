@@ -1,6 +1,8 @@
-## Install requirements
+# Getting started
 
-You need a recent version of Docker to run the application. Please keep in mind, that this application is **not** ready to be accessible in the public due to the lack of authentication and authorization.
+## Install requirements
+ 
+You need a recent version of Docker to run the application. Please keep in mind, that this application is **not** ready to be accessible in the public due to the lack of authentication and authorization. (See [security](/security))
 
 ### Quick startup
 
@@ -29,4 +31,4 @@ python3 main.py
 
 ## Using the application
 
-After you have successfully started the application you can go to the settings page to change the basic settings as you need them.
+After you have successfully started the application you can go to the settings page to change the basic settings as you need them. Please have a look at the [features](/features/overview)-page

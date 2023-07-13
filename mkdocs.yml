@@ -1,14 +1,22 @@
-site_name: Documentation | Personal Zoo
+site_name: Personal Zoo
+
+# Copyright
+copyright: Copyright &copy; 2023 - 2023 Ferdinand Berger
+
+# Configuration
 theme:
   name: material
-  logo: img/logo-no-background.svg
+  logo: img/logo-white-on-transparent-background.svg
   favicon: img/favicon.png
+  custom_dir: docs/overrides
   palette:
     primary: green
   features:
     - content.code.copy
     - navigation.tabs
     - navigation.tabs.sticky
+
+# Extensions
 markdown_extensions:
   - attr_list
   - md_in_html
@@ -22,3 +30,17 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+
+
+# Page tree
+nav:
+  - Home: index.md
+  - Getting started:
+    - Installation: getting-started.md
+    - Security: security.md
+    - Update: update.md
+  - Features:
+    - Overview: features/overview.md
+    - Events: features/events.md
+    - Feedings: features/feedings.md
+  - Development: development.md
