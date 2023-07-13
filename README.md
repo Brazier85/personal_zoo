@@ -68,3 +68,18 @@ pip freeze > requirements.txt
 deactivate
 
 ```
+
+## Docs
+
+```bash
+
+# Requirements
+python3 m pip install mkdocs-material
+
+# Build docs
+python3 -m mkdocs build
+
+# Test docs
+python3 -m mkdocs serve
+
+```
