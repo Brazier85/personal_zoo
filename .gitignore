@@ -11,8 +11,7 @@ data/uploads/*
 !data/uploads/dummy.jpg
 
 #No built docs
-docs/public
-docs/**/_gen
+site
 
 # Old files
 Original/

@@ -1,0 +1,13 @@
+site_name: Documentation | Personal Zoo
+theme:
+  name: material
+  logo: img/logo-no-background.svg
+  favicon: img/favicon.png
+  palette:
+    primary: green
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
