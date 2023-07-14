@@ -1,6 +1,6 @@
 # How it is made
 
-Personal Zoo is based on Python3 with Flask as Web-Framework. For the documentation I use MkDocs with Material for MkDocs.
+Personal Zoo is based on Python3 with Flask as Web-Framework. For the documentation I use MkDocs with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/){:target="_blank"}.
 
 ## Structure
 
@@ -15,3 +15,7 @@ I am working on this application in my spare time. So please do not expect frequ
 If you like Personal Zoo and want to support me click down below
 
 [![Support me](/img/kofi_bg_tag_white.png)](https://ko-fi.com/brazier85){:target="_blank"}
+
+## Planned features
+
+[Visit my roadmap](/roadmap)

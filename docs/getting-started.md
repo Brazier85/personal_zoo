@@ -1,17 +1,25 @@
 # Getting started
 
-## Install requirements
+## Requirements
  
-You need a recent version of Docker to run the application. Please keep in mind, that this application is **not** ready to be accessible in the public due to the lack of authentication and authorization. (See [security](/security))
+There are two main ways to run this application. First with Docker (recommended) and secondly als local python app. So you must have:
 
-### Quick startup
+ - Docker 
+
+or
+
+- Python3
+
+Please keep in mind, that this application is **not** ready to be accessible in the public due to the lack of authentication and authorization. (See [security](/security))
+
+### Quick startup (Docker)
 
 1. Clone the repo from github
     ``` bash
     git clone https://github.com/Brazier85/personal_zoo.git
     ```
 2. Install docker<br>
-    [See docker docs](https://docs.docker.com/get-docker/)
+    [See docker docs](https://docs.docker.com/get-docker/){:target="_blank"}
 3. Run `run_docker.sh`
     ``` bash
     sh run_docker.sh
@@ -20,6 +28,8 @@ You need a recent version of Docker to run the application. Please keep in mind,
 
 ### Manual installation
 To run the application without docker you need to install Python3 and some Submodules
+
+It is recommended to use a [virtual environment](https://docs.python.org/3/library/venv.html){:target="_blank"}..
 
 ``` bash
 # install submodules
@@ -31,4 +41,4 @@ python3 main.py
 
 ## Using the application
 
-After you have successfully started the application you can go to the settings page to change the basic settings as you need them. Please have a look at the [features](/features/overview)-page
+After you have successfully started the application you can go to the settings page to change the basic settings as you need them. Please have a look at the [features](/features/overview)

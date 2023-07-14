@@ -30,6 +30,9 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
 
 
 # Page tree
@@ -43,4 +46,6 @@ nav:
     - Overview: features/overview.md
     - Events: features/events.md
     - Feedings: features/feedings.md
-  - Development: development.md
+  - Development:
+    - Current State: development.md
+    - Roadmap: roadmap.md
