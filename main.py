@@ -105,6 +105,10 @@ def fix_date_filter(text):
     except:
         return text
 
+@scheduler.task('cron', id='send_notifications', minute='*')
+def send_notifications():
+    send_mail()
+
 # Main route
 @app.route('/')
 def home():
@@ -118,8 +122,6 @@ def home():
     order = request.cookies.get('animal_order')
     if order == None:
         order = "name"
-
-    send_mail()
 
     return render_template('home.html', data=get_ad(), feeding_types=get_ft(), location=location)
 

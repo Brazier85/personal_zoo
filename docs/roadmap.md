@@ -4,9 +4,10 @@ Here you can find a short Roadmap with planned features and also features I alre
 
 ## Planned features
 
-- [ ] Add security
+- [ ] Add reminder/notification function
 - [ ] Create API for SmartHome systems
 - [ ] Add search for animals
+- [ ] Add security
 
 ## Added Features
 - [x] Add pdf for printing

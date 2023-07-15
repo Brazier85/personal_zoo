@@ -77,7 +77,7 @@ def send_mail():
     SMTP_SERVER = os.getenv("PZOO_SMTP_SERVER")
     PORT = os.getenv("PZOO_SMTP_PORT")
 
-    print(f"Found E-Mail config: {EMAIL}, {EMAIL_PASSWORD}, {SMTP_SERVER}, {PORT}")
+    #print(f"Found E-Mail config: {EMAIL}, {EMAIL_PASSWORD}, {SMTP_SERVER}, {PORT}")
 
 def insert_defaults():
 
