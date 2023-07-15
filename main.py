@@ -7,6 +7,7 @@ from logging.config import dictConfig
 from werkzeug.exceptions import HTTPException
 import traceback
 from datetime import datetime
+from flask_apscheduler import APScheduler
 
 # Imports
 from functions import *
@@ -24,6 +25,9 @@ load_dotenv()
 
 app = Flask(__name__)
 mail = Mail(app)
+scheduler = APScheduler()
+scheduler.init_app(app)
+scheduler.start()
 
 # Logging
 logging.getLogger('werkzeug').disabled = True
