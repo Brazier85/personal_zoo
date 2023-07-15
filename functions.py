@@ -53,6 +53,9 @@ def get_ht():
 def get_at():
     return db_fetch("SELECT id, name, f_min, f_max FROM animal_type ORDER BY name ASC")
 
+def get_nf():
+    return db_fetch("SELECT id, date, message, interval FROM notifications ORDER BY DATE")
+
 def get_ad(id=None):
     if id:
         animal_data = db_fetch(f"SELECT a.id as id, a.name, at.name as art, a.morph, a.gender, a.birth, a.notes, a.image, a.background_color, a.created_date, a.updated_date, at.id as aid, at.f_min, at.f_max FROM animals a LEFT JOIN animal_type at ON a.art = at.id WHERE a.id={ id }", False)
@@ -76,6 +79,11 @@ def send_mail():
     EMAIL_PASSWORD = os.getenv("PZOO_EMAIL_PASSWORD")
     SMTP_SERVER = os.getenv("PZOO_SMTP_SERVER")
     PORT = os.getenv("PZOO_SMTP_PORT")
+
+    notifications = get_nf()
+
+    for notification in notifications:
+        print(notification[0])
 
     #print(f"Found E-Mail config: {EMAIL}, {EMAIL_PASSWORD}, {SMTP_SERVER}, {PORT}")
 
@@ -200,5 +208,10 @@ def create_tables():
                     name TEXT,
                     f_min INT DEFAULT 0,
                     f_max INT DEFAULT 0)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS notifications
+                (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    date DATE,
+                    message TEXT,
+                    interval TEXT)''')
     conn.commit()
     conn.close()

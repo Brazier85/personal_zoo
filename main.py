@@ -105,6 +105,7 @@ def fix_date_filter(text):
     except:
         return text
 
+# Check every minute for notifications
 @scheduler.task('cron', id='send_notifications', minute='*')
 def send_notifications():
     send_mail()
