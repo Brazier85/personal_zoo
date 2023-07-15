@@ -16,12 +16,27 @@ Please keep in mind, that this application is **not** ready to be accessible in 
 
 1. Clone the repo from github
     ``` bash
+    cd ~
     git clone https://github.com/Brazier85/personal_zoo.git
     ```
 2. Install docker<br>
     [See docker docs](https://docs.docker.com/get-docker/){:target="_blank"}
+    ```bash
+    # Download install script
+    curl -fsSL https://get.Docker.com -o get-Docker.sh
+
+    # Run script as root
+    sudo sh get-Docker.sh
+
+    # Add current user to docker group
+    sudo usermod -aG docker $USER
+
+    # Switch to group context
+    newgrp docker
+    ```
 3. Run `run_docker.sh`
     ``` bash
+    cd personal_zoo
     sh run_docker.sh
     ```
 4. Visit `<host/ip>:5000`

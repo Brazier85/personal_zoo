@@ -20,6 +20,9 @@ Original/
 __pycache__/
 *.py[cod]
 
+# No env
+.env
+
 
 # No not ignore .gitkeep
 !/**/.gitkeep

@@ -7,10 +7,6 @@ hide:
 
 ![](img/logo-no-background.svg){ width="500" }
 
-!!! warning "Warning"
-    
-    This documentation is work in progress!
-
 ## Why?
 
 Sometimes taking care of an animal requires more then just feeding it. At my home there are living several reptiles like pythons and geckos. For those animals it is important to keep track of there feedings, moldings, weight, etc. For me personal (a classic nerd) I want to use a App/Webapp to take care of my families animals.

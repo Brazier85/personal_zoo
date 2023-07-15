@@ -1,5 +1,3 @@
-from flask import current_app
-from datetime import datetime
 import sqlite3
 import os
 
@@ -72,6 +70,14 @@ def get_setting(name=None):
     else:
         setting = db_fetch(f"SELECT value FROM settings WHERE setting = '{ name }'", False)
         return setting[0]
+
+def send_mail():
+    EMAIL = os.getenv("PZOO_EMAIL")
+    EMAIL_PASSWORD = os.getenv("PZOO_EMAIL_PASSWORD")
+    SMTP_SERVER = os.getenv("PZOO_SMTP_SERVER")
+    PORT = os.getenv("PZOO_SMTP_PORT")
+
+    print(f"Found E-Mail config: {EMAIL}, {EMAIL_PASSWORD}, {SMTP_SERVER}, {PORT}")
 
 def insert_defaults():
 

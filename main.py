@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, send_from_directory, flash, redirect
 from flask_qrcode import QRcode
+from flask_mail import Mail, Message
 import os
 import logging
 from logging.config import dictConfig
 from werkzeug.exceptions import HTTPException
 import traceback
+from datetime import datetime
 
 # Imports
 from functions import *
@@ -16,7 +18,12 @@ from blueprints.feeding.feeding import feeding_bp
 from blueprints.history.history import history_bp
 from blueprints.settings.settings import settings_bp
 
+# Environment file
+from dotenv import load_dotenv
+load_dotenv()
+
 app = Flask(__name__)
+mail = Mail(app)
 
 # Logging
 logging.getLogger('werkzeug').disabled = True
@@ -36,12 +43,12 @@ dictConfig(
                 "formatter": "default",
             }
         },
-        "root": {"level": "DEBUG", "handlers": ["console"]},
+        "root": {"level": "INFO", "handlers": ["console"]},
     }
 )
 
 # Configuration
-if os.environ.get('FLASK_ENV') == 'dev':
+if os.getenv("PZOO_FLASK_ENV") == 'dev':
     app.logger.warning(f"App running in mode: { os.environ.get('FLASK_ENV') }")
     app.config.from_object('config.DevConfig')
 else:
@@ -108,7 +115,7 @@ def home():
     if order == None:
         order = "name"
 
-    data = db_fetch(f"SELECT * FROM animals ORDER BY {order} ASC")
+    send_mail()
 
     return render_template('home.html', data=get_ad(), feeding_types=get_ft(), location=location)
 
