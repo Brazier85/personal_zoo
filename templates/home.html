@@ -6,6 +6,9 @@
 <!-- Fancy Dropdown -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-select.min.css') }}">
 <script src="{{ url_for('static', filename='js/bootstrap-select.min.js') }}"></script>
+<!-- Datatables -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/datatables.min.css') }}">
+<script src="{{ url_for('static', filename='js/datatables.min.js') }}"></script>
 {% endblock %}
 
 {% set list=True %}
@@ -22,7 +25,7 @@
                         <div class="flex-grow"> Your Animals </div>
                     </div>
                     <div class="card-body">
-                        <table class="table table-striped m-0" >
+                        <table id="animals" class="table table-striped m-0" >
                             <thead>
                                 <tr>
                                     <th class="text-center" style="width: 5%;">#ID</th>
@@ -167,6 +170,11 @@
 
     <script>
         $('#feeding_date').val(new Date().toISOString().slice(0, 10));
+
+        $('#animals').dataTable({
+            "paging": false,
+            order: [[1, 'desc']]
+        });
     
         $(document).ready(function(){
             var ft = $('#feeding_type').val();

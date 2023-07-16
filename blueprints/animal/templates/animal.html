@@ -2,6 +2,12 @@
 
 {% block title %}Personal Zoo | {{ data[1] }}{% endblock %}
 
+{% block head %}
+<!-- Datatables -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/datatables.min.css') }}">
+<script src="{{ url_for('static', filename='js/datatables.min.js') }}"></script>
+{% endblock %}
+
 {% block content %}
 
 {% set image = url_for("uploaded_file", filename=data[7]) %}
