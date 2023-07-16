@@ -93,12 +93,14 @@ def insert_defaults():
     animal_types = db_fetch("SELECT * FROM animal_type ORDER BY name DESC")
     if animal_types == []:
         # Insert base data
-        ANIMAL_TYPES =  ["Ball Python","Leopard Gecko"]
-        for type in ANIMAL_TYPES:
-            query = "INSERT INTO animal_type " \
-                    "(name)" \
-                    f"VALUES ('{type}')"
-            db_update(query)
+        query = "INSERT INTO animal_type " \
+                "(name, f_min, f_max)" \
+                f"VALUES ('Ball Python', '10', '20')"
+        db_update(query)
+        query = "INSERT INTO animal_type " \
+                "(name, f_min, f_max)" \
+                f"VALUES ('Leopard Gecko', '0', '0')"
+        db_update(query)
 
     # Add feeding defaults
     feeding_types = db_fetch("SELECT * FROM feeding_type ORDER BY name DESC")
@@ -150,7 +152,7 @@ def insert_defaults():
         db_update(query)
         query = "INSERT INTO settings " \
                     "(setting, value, name, description)" \
-                    f"VALUES ('feeding_size','2','Feeding Size','Show feeding size for animal type!')"
+                    f"VALUES ('feeding_size','[\"1\"]','Feeding Size','Show feeding size for animal type!')"
         db_update(query)
 
 
