@@ -170,6 +170,12 @@ def at_add():
         name = data['at_name']
         f_min = data['at_f_min']
         f_max = data['at_f_max']
+
+        if f_min == "":
+            f_min = 0
+
+        if f_max == "":
+            f_max = 0  
         
         query = "INSERT INTO animal_type " \
                     "(name, f_min, f_max)" \
