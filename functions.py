@@ -1,5 +1,6 @@
 import sqlite3
 import os
+from shutil import copyfile
 
 # Variables
 DATABASE = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/database.db')
@@ -217,3 +218,11 @@ def create_tables():
                     interval TEXT)''')
     conn.commit()
     conn.close()
+
+def create_folders():
+    if not os.path.exists(UPLOAD_FOLDER):
+        print("Create upload folder")
+        os.makedirs(UPLOAD_FOLDER)
+
+    if not os.path.exists(f"{UPLOAD_FOLDER}/dummy.jpg"):
+        copyfile("static/images/dummy.jpg", f"{UPLOAD_FOLDER}/dummy.jpg")

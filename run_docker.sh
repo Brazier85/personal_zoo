@@ -5,8 +5,11 @@ echo "Pull new data"
 git pull
 
 # Built new container
-echo "built new container"
-docker build -t personal_zoo .
+#echo "built new container"
+#docker build -t personal_zoo .
+
+echo "pull latest image"
+docker pull brazier85/personal_zoo:latest
 
 # Stop old container
 echo "Stop old container"
@@ -21,7 +24,7 @@ docker image prune -a --force --filter "until=240h"
 
 # Run new container
 echo "Start new container"
-docker run -d -p 5000:5000 -v ./data:/app/data --name personal_zoo personal_zoo
+docker run -d -p 5000:5000 -v ./data:/app/data --name personal_zoo brazier85/personal_zoo:latest
 
 echo "done"
 
