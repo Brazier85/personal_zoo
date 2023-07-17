@@ -1,7 +1,8 @@
 #/bin/bash
 
-echo "pull latest image"
-docker pull brazier85/personal_zoo:latest
+# Built new container
+echo "built new container"
+docker build -t personal_zoo .
 
 # Stop old container
 echo "Stop old container"

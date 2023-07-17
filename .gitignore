@@ -8,7 +8,6 @@ Backup
 
 # No uploads
 data/uploads/*
-!data/uploads/dummy.jpg
 
 #No built docs
 site
