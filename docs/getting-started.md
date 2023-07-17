@@ -14,6 +14,12 @@ Please keep in mind, that this application is **not** ready to be accessible in 
 
 ### Quick startup (Docker)
 
+Pull and run the `latest` image from dockerhub
+```bash
+docker run -d -p 5000:5000 -v ./data:/app/data --name personal_zoo brazier85/personal_zoo:latest
+```
+
+### Built it by your self
 1. Clone the repo from github
     ``` bash
     cd ~

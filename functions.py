@@ -225,4 +225,5 @@ def create_folders():
         os.makedirs(UPLOAD_FOLDER)
 
     if not os.path.exists(f"{UPLOAD_FOLDER}/dummy.jpg"):
+        print("Copy dummy image")
         copyfile("static/images/dummy.jpg", f"{UPLOAD_FOLDER}/dummy.jpg")
