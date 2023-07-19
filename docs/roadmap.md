@@ -18,4 +18,4 @@ Here you can find a short Roadmap with planned features and also features I alre
 - [x] Add multi feeding/event
 - [x] Add feeding types
     - [x] Add drop down for feedings
-- [x] sorting tables on homepage
+- [x] Add sorting on homepage
