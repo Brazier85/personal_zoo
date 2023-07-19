@@ -28,7 +28,7 @@ jobs:
       - name: Deploy
         uses: andreiio/rclone-action@v1
         env:
-          RCLONE_CONFIG_ALLINKL_TYPE: sftp
+          RCLONE_CONFIG_ALLINKL_TYPE: ftp
           RCLONE_CONFIG_ALLINKL_HOST: ${{ secrets.RCLONE_CONF_SERVER }}
           RCLONE_CONFIG_ALLINKL_USER: ${{ secrets.RCLONE_CONF_USER }}
           RCLONE_CONFIG_ALLINKL_PASS: ${{ secrets.RCLONE_CONF_PASSWORD }}
