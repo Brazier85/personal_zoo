@@ -1,21 +1,14 @@
 # Use the official Python base image
 FROM python:3.9
 
+LABEL maintainer="Ferdinand Berger <ferdy@berger-em.de>" \ 
+      description="Personal Zoo - visit: https://personal-zoo.com"
+
 # Set the working directory inside the container
 WORKDIR /app
 
-# Install git
-RUN apt-get update
-RUN apt-get install -y git
-
-#RUN git clone https://github.com/Brazier85/personal_zoo.git /app
-
 # Copy the required files into the container
-COPY config.py .
-COPY functions.py .
-COPY main.py .
-COPY momentjs.py .
-COPY requirements.txt .
+COPY ["config.py", "functions.py", "main.py", "momentjs.py", "requirements.txt", "."]
 
 # Folders
 COPY blueprints blueprints

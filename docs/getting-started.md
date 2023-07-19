@@ -16,6 +16,13 @@ Please keep in mind, that this application is **not** ready to be accessible in 
 
 Pull and run the `latest` image from dockerhub
 ```bash
+# Create folder
+mkdir ~/personal_zoo
+
+# Move to new folder
+cd ~/personal_zoo
+
+# Pull and start container
 docker run -d -p 5000:5000 -v ./data:/app/data --name personal_zoo brazier85/personal_zoo:latest
 ```
 
