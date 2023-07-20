@@ -1,8 +1,8 @@
-# How to stay up to date?
+# How to Stay Up to Date with Personal Zoo?
 
-Being up to date with Personal Zoo is very important. Not only for security reasons (See [security](/security)) but also to be in sync with the latest improvements I made.
+Staying up to date with Personal Zoo is crucial, not only for security reasons (refer to [security](/security)), but also to benefit from the latest improvements and enhancements I have made.
 
-Run the following commands to update your installation.
+For users running Personal Zoo with Docker, you can update your installation with the following commands:
 ```bash
 # Pull new image
 docker pull brazier85/personal_zoo:latest
@@ -16,13 +16,16 @@ docker rm personal_zoo
 # Start new container
 docker run -d -p 5000:5000 -v ./data:/app/data --name personal_zoo brazier85/personal_zoo:latest
 ```
-Hint: You can use the commands above in a script
+Pro Tip: You can automate these commands in a script to streamline the update process.
 
-## Manual installation
-To update the application you only have to run `git pull` in your application folder or start the `run_docker.sh`-script.
+## Manual Installation
 
-After the update you should visit the `<host/ip>:5000/update`-page. This page will update your database to the latest changes if there are any.
+If you have a manual installation, updating the application is simple. Just run `git pull` in your application folder or start the `run_docker.sh` script.
+
+After updating, it's advisable to visit the `<host/ip>:5000/update` page. This page will automatically update your database to incorporate the latest changes, if any.
 
 ## Automatic updates
 
-At the current time, my application does not have a auto update function implemented.  But you can find this function on my [roadmap](/roadmap).
+As of now, Personal Zoo does not include an auto-update function. However, it is on my [roadmap](/roadmap) for future implementation.
+
+Ensuring your Personal Zoo installation is up to date guarantees you'll have access to the latest features and improvements. Don't hesitate to check for updates regularly to make the most of our application!

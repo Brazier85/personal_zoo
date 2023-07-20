@@ -1,8 +1,8 @@
-# Getting started
+# Getting Started with Personal Zoo
 
 ## Requirements
  
-There are two main ways to run this application. First with Docker (recommended) and secondly als local python app. So you must have:
+To run this application, there are two main methods: using Docker (recommended) or running it as a local Python app. Ensure that you have:
 
  - Docker 
 
@@ -10,29 +10,36 @@ or
 
 - Python3
 
-Please keep in mind, that this application is **not** ready to be accessible in the public due to the lack of authentication and authorization. (See [security](/security))
+Please note that this application is not designed for public access due to the absence of authentication and authorization mechanisms. (See [security](/security))
 
-### Quick startup (Docker)
+### Quick Startup with Docker
 
-Pull and run the `latest` image from dockerhub
+To quickly set up Personal Zoo using Docker, follow these steps:
+
+1. Create a new folder:
 ```bash
-# Create folder
 mkdir ~/personal_zoo
+```
 
-# Move to new folder
+2. Move to the new folder:
+```bash
 cd ~/personal_zoo
+```
 
-# Pull and start container
+3. Pull and run the `latest` image from Docker Hub:
+```bash
 docker run -d -p 5000:5000 -v ./data:/app/data --name personal_zoo brazier85/personal_zoo:latest
 ```
 
-### Built it by your self
-1. Clone the repo from github
+### Build It Yourself
+If you prefer building the application from the source, follow these steps:
+
+1. Clone the repository from GitHub:
     ``` bash
     cd ~
     git clone https://github.com/Brazier85/personal_zoo.git
     ```
-2. Install docker<br>
+2. Install Docker:<br>
     [See docker docs](https://docs.docker.com/get-docker/){:target="_blank"}
     ```bash
     # Download install script
@@ -47,16 +54,17 @@ docker run -d -p 5000:5000 -v ./data:/app/data --name personal_zoo brazier85/per
     # Switch to group context
     newgrp docker
     ```
-3. Run `run_docker.sh`
+3. Run the `run_docker.sh` script:
     ``` bash
     cd personal_zoo
     sh run_docker.sh
     ```
-4. Visit `<host/ip>:5000`
+4. Access the application by visiting `<host/ip>:5000`
 
 ### Manual installation
-To run the application without docker you need to install Python3 and some Submodules
+For running the application without Docker, follow these steps:
 
+1. Install Python3 and necessary submodules.<br>
 It is recommended to use a [virtual environment](https://docs.python.org/3/library/venv.html){:target="_blank"}..
 
 ``` bash
@@ -69,4 +77,4 @@ python3 main.py
 
 ## Using the application
 
-After you have successfully started the application you can go to the settings page to change the basic settings as you need them. Please have a look at the [features](/features/overview)
+Once the application is successfully running, you can access the settings page to modify basic configurations as needed. For additional features, please refer to the [features overview](/features/overview)

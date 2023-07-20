@@ -1,16 +1,19 @@
-To make it short.. at the current time there are **no security** features implemented into Personal Zoo.
+# Security Notice for Personal Zoo
 
-**I know, that this is not the best answer - but it is te only right answer.**
+At present, Personal Zoo does not have any implemented security features.
+
+**Please be aware that this is an honest acknowledgement, as the application currently lacks security measures.**
 
 !!! danger "Attention"
-    **I highly recommend you to make sure your Personal Zoo instance is only reachable from your local network!**
+    **To safeguard your Personal Zoo instance, it is highly recommended to ensure it is only accessible within your local network!**
 
-I have planned some security features for the future of this application. But I do not know when I will have time to take care of those features. At the current time I do not need them for my personal setup because my Personal Zoo instance is only available to my local network.
+I have plans to introduce several security features in the future development of this application. However, I cannot provide an exact timeline for their implementation as my availability is limited. As of now, these features are not essential for my personal setup since my Personal Zoo instance is solely accessible within my local network.
 
-## Planned features
+## Planned Security Features
 
-- Add user authentication and authorization
-- Sessions
-- Access rights
-- Automated testing
-    - Including python module updates
+- User authentication and authorization
+- Session management
+- Access control and permissions
+- Automated testing to include Python module updates
+
+Your understanding and patience are appreciated as I work towards making Personal Zoo a more secure and robust application. In the meantime, I strongly advise you to keep your instance restricted to your local network to minimize potential risks.

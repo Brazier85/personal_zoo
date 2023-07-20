@@ -2,58 +2,61 @@
 title: Feedings
 ---
 
-To add feedings to your animals you have to create feeding types first. They can be created on the settings page.
+To ensure proper feeding documentation for your animals, it's essential to create feeding types first. This can be easily accomplished on the settings page.
 
 ## Feeding types
 
-To add a feeding type, visit the `Settings` page.
+To add a new feeding type, simply navigate to the `Settings` page.
 
 ![Screenshot](img/feeding_settings.png)
 
 ### Feeding type options
 
+When creating a feeding type, you can specify the following details:
+
 #### Name
 Name of the feeding type
 
 #### Unit
-The unit for the feeding type
+Select the appropriate unit for the feeding type.
 
 #### Detail
-The detail depends on the selected unit. Here you can add the following things:
+The specific details vary depending on the selected unit. Here are the available options:
 
-  - Size: comma separated list of options
-  - Text: text without any options
-  - Weight: weight unit
+  - Size: Specify a comma-separated list of options.
+  - Text: Add descriptive text without any additional options.
+  - Weight: Specify the unit for weight measurement.
 
 ### Add Feeding
 
-There are multiple ways to add a feeding to your animal.
+There are multiple methods to add feedings for your animals:
 
 #### Animal Page
 
-Visit the animal page for the animal you want to add the feeding to and then press the `+` button on the top right.
+Access the animal page corresponding to the specific animal you wish to feed, and click on the `+` button located at the top right.
 
 ![Screenshot](img/feeding_animal.png)
 
 #### Multi-Feeding
 
-Visit the Multi Feeding page and select the animals ou did feed.
+Alternatively, visit the Multi-Feeding page to select and feed multiple animals at once.
 
 ![Screenshot](img/feeding_multi.png)
 
 #### QR-Code
-You can use a QR-code to open a separate page for feedings. The QR-Code can be found on the animal page.
+For added convenience, utilize the QR-code feature to access a separate page for feedings. The QR-Code can be found on the respective animal page.
 
 ![Screenshot](img/feeding_qr.png)
 
 ## Recommended feeding weight
-
-For some animals it is required to change the feeding size according to there current weight. The feeding weight will be calculated based on the last recorded weight of the animal.
+To accommodate certain animals' specific needs based on their current weight, it's essential to adjust the feeding size accordingly. The feeding weight will be automatically calculated based on the last recorded weight of the animal.
 
 ![Screenshot](img/feeding_size_view.png)
 
-### Add feeding sizes
+### Modifying Feeding Sizes
 
-You can change the values for feeding sizes per animal type on the settings page.
+To customize feeding sizes for different animal types, head to the settings page.
 
 ![Screenshot](img/animal_types.png)
+
+By incorporating these features, you can optimize and streamline the feeding process for your animals. If you have any further questions or require assistance, please feel free to reach out to us. We're here to help you provide the best care for your animals!

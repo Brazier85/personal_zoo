@@ -1,18 +1,17 @@
-# Maintenance
+# Maintenance Mode in the App
 
-There is a maintenance mode included into the app. You can visit it via `/maintenance`.
+Our app comes equipped with a convenient maintenance mode, accessible via the `/maintenance` route. This feature serves a critical purpose: it allows for manual modifications to the database when necessary.
 
-## Why?
+## Purpose
+In certain situations, you may encounter scenarios that demand manual intervention to alter the database. Hence, I have implemented this maintenance mode to enable direct changes within the app itself.
 
-In some cases it is required to do manual changes to the database. So I tought it would be nice to be able to do this changes direct in the app.
-
-## Database changes
-
-Here you can change values in the database.
+## Database Modifications
+Within the maintenance mode, you have the capability to make adjustments to the database values. This functionality covers a range of operations, including updating, inserting, or deleting records.
 
 ### Tables
+To facilitate these tasks, I provide access to the skeleton structures of the most vital tables. This ensures a smooth and secure process when making necessary changes to the database.
 
-Here you can see the skeleton for the most important tables.
+Should you have any specific inquiries or require assistance with utilizing the maintenance mode or implementing database changes, please don't hesitate to reach out to me.
 
 #### animal
 ```yaml
