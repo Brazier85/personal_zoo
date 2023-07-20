@@ -1,4 +1,5 @@
 from flask import current_app, render_template, request, redirect, flash, jsonify, Blueprint
+from datetime import datetime
 from functions import *
 
 feeding_bp = Blueprint("feeding", __name__, template_folder="templates")
@@ -80,23 +81,31 @@ def multi_add():
     
 @feeding_bp.route('/edit/<int:id>', methods=['POST','GET'])
 def edit(id):
+
+    feeding = Feeding.query.filter(Feeding.id==id).first()
+
     if request.method == 'GET':
-        feeding = Feeding.query.filter(Feeding.id==id).first()
-        print(f"F: {feeding}")
         return jsonify({'htmlresponse': render_template('feeding_edit.html', data=feeding, feeding_types=get_ft())})
     
     elif request.method == 'POST':
-        feeding = request.form
-        count = feeding['feeding_count']
-        type = feeding['feeding_type']
-        unit = feeding['feeding_unit']
-        date = feeding['feeding_date']
-        animal_id = feeding['animal_id']
 
-        query = "UPDATE feeding " \
-                    f"SET type='{type}', count='{count}', unit='{unit}', date='{date}'" \
-                    f"WHERE id='{ id }'"
-        db_update(query)
+        feeding_data = request.form
+        count = feeding_data['feeding_count']
+        type = feeding_data['feeding_type']
+        unit = feeding_data['feeding_unit']
+        date = feeding_data['feeding_date']
+        animal_id = feeding_data['animal_id']
+
+        date = datetime.strptime(date, '%Y-%m-%d')
+
+        feeding.count = count
+        feeding.type = type
+        feeding.unit = unit
+        feeding.date = date
+        feeding.animal = animal_id
+
+        db.session.add(feeding)
+        db.session.commit()
         
         flash('Changes to feeding saved!', 'success')
         current_app.logger.info(f"Modified feeding with id: {id} !")
