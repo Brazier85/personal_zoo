@@ -55,7 +55,7 @@ def add(id):
 def multi_add():
     if request.method == 'GET':
         # get animals
-        animals = db_fetch(f"SELECT id, name FROM animals ORDER BY name DESC")
+        animals = Animal.query.add_columns(Animal.id, Animal.name).all()
         return render_template('feeding_multi_add.html', animals=animals, feeding_types=get_ft(), location="multi_feeding")
         
     elif request.method == 'POST':
@@ -81,7 +81,9 @@ def multi_add():
 @feeding_bp.route('/edit/<int:id>', methods=['POST','GET'])
 def edit(id):
     if request.method == 'GET':
-        return jsonify({'htmlresponse': render_template('feeding_edit.html', data=db_fetch(f"SELECT * FROM feeding WHERE  id={ id }", False), feeding_types=get_ft())})
+        feeding = Feeding.query.filter(Feeding.id==id).first()
+        print(f"F: {feeding}")
+        return jsonify({'htmlresponse': render_template('feeding_edit.html', data=feeding, feeding_types=get_ft())})
     
     elif request.method == 'POST':
         feeding = request.form

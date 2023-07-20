@@ -32,11 +32,11 @@ def animal(id):
     
     feeding_size = ""
     setting_feeding_size = json.loads(get_setting("feeding_size"))
-    if str(animal_data[11]) in setting_feeding_size:
+    if str(animal_data["art"]) in setting_feeding_size:
         # Calculate feeding size 
         if weight_number > 0:
-            f_min_value = animal_data[12]
-            f_max_value = animal_data[13]
+            f_min_value = animal_data.f_min
+            f_max_value = animal_data.f_max
             percent = lambda part, whole:float(whole) / 100 * float(part)
             feed_min = percent(f_min_value,weight_number)
             feed_max = percent(f_max_value,weight_number)
@@ -47,7 +47,7 @@ def animal(id):
         return render_pdf(HTML(string=html), "", download_filename=f"{animal_data[1]}.pdf", automatic_download=False)
         #return html
     else:
-        return render_template('animal.html', data=animal_data, feedings=feeding_data, history=history_data, location=location, current_weight=current_weight, feeding_size=feeding_size)
+        return render_template('animal.html', animal=animal_data, feedings=feeding_data, history=history_data, location=location, current_weight=current_weight, feeding_size=feeding_size)
 
 @animal_bp.route('/add', methods=['POST','GET'])
 def add():

@@ -10,6 +10,7 @@ from datetime import datetime
 from flask_apscheduler import APScheduler
 
 # Imports
+from models import *
 from functions import *
 from momentjs import momentjs
 
@@ -61,6 +62,11 @@ else:
     app.logger.info(f"App running in mode: { os.environ.get('FLASK_ENV') }")
     app.config.from_object('config.ProdConfig')
 
+# Init DB
+db.init_app(app)
+
+with app.app_context():
+    db.create_all()
 
 QRcode(app)
 # MomentJS
@@ -72,7 +78,6 @@ app.register_blueprint(feeding_bp, url_prefix="/feeding")
 app.register_blueprint(history_bp, url_prefix="/history")
 app.register_blueprint(settings_bp, url_prefix="/settings")
 app.register_blueprint(maintenance_bp, url_prefix="/maintenance")
-
 
 @app.errorhandler(Exception)
 def handle_exception(e):
@@ -128,7 +133,20 @@ def home():
     if order == None:
         order = "name"
 
-    return render_template('home.html', data=get_ad(), feeding_types=get_ft(), location=location)
+    animals_with_type = db.session.query(Animal, AnimalType).join(AnimalType, AnimalType.id == Animal.art).all()
+
+    animals = []
+    for vAnimal, vAnimalType in animals_with_type:
+        animals.append({
+            'id': vAnimal.id,
+            'name': vAnimal.name,
+            'art': vAnimalType.name,
+            'morph': vAnimal.morph,
+            'image': vAnimal.image,
+            'background_color': vAnimal.background_color
+        })
+
+    return render_template('home.html', data=animals, feeding_types=get_ft(), location=location)
 
 # Route for printing
 @app.route('/print')

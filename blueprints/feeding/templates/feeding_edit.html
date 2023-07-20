@@ -1,13 +1,13 @@
 <div class="modal-header">
     <h5 class="modal-title" id="itemLabel">Edit feeding</h5>
 </div>
-<form action="{{ url_for('feeding.edit', id=data[0]) }}" method="post" enctype="multipart/form-data">
+<form action="{{ url_for('feeding.edit', id=data.id) }}" method="post" enctype="multipart/form-data">
     <div class="modal-body" id="modal-body">
         <div class="row">
             <div class="col">
                 <div class="mb-3">
                     <label for="feeding_date" class="form-label">Date</label>
-                    <input type="date" class="form-control" id="feeding_date" name="feeding_date" value="{{ data[5] }}" required>
+                    <input type="date" class="form-control" id="feeding_date" name="feeding_date" value="{{ data.date }}" required>
                 </div>
             </div>
             <div class="col">
@@ -15,7 +15,7 @@
                     <label for="feeding_type" class="form-label">Type</label>
                     <select class="form-select" class="form-control" id="feeding_type" name="feeding_type" required>
                         {% for feeding_type in feeding_types %}
-                            <option value="{{ feeding_type[0] }}" {% if data[2]|int == feeding_type[0]|int %}selected{% endif %}>{{ feeding_type[1] }}</option>
+                            <option value="{{ feeding_type.id }}" {% if data.type|int == feeding_type.id|int %}selected{% endif %}>{{ feeding_type.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -25,18 +25,18 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="feeding_count" class="form-label">Count</label>
-                    <input type="number" class="form-control" id="feeding_count" name="feeding_count" value="{{ data[3] }}" required>
+                    <input type="number" class="form-control" id="feeding_count" name="feeding_count" value="{{ data.count }}" required>
                 </div>
             </div>
             <div class="col unit">
                 <div class="mb-3">
                     <label for="feeding_unit" class="form-label">Unit</label>
-                    <input type="text" class="form-control" id="feeding_unit" name="feeding_unit" value="{{ data[4] }}" required>
+                    <input type="text" class="form-control" id="feeding_unit" name="feeding_unit" value="{{ data.unit }}" required>
                 </div>
             </div>
         </div>    
     </div>
-    <input type="hidden" id="animal_id" name="animal_id" value="{{ data[1] }}" />
+    <input type="hidden" id="animal_id" name="animal_id" value="{{ data.animal }}" />
     <div class="modal-footer">
         <div pos="start">
             <button type="button" data-id="{{ data[0] }}" class="btn btn-danger text-left feeding_delete_button">Delete</button>

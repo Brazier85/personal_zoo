@@ -23,7 +23,7 @@
                         <label for="feeding_animals" class="form-label">Animals</label>
                         <select class="selectpicker form-control" multiple id="animals" name="animals"  data-live-search="true" required>       
                             {% for animal in animals %}
-                                <option value="{{ animal[0] }}">{{ animal[1] }}</option>
+                                <option value="{{ animal.id }}">{{ animal.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -41,7 +41,7 @@
                         <label for="feeding_type" class="form-label">Type</label>
                         <select class="form-select" class="form-control" id="feeding_type" name="feeding_type" required>
                             {% for feeding_type in feeding_types %}
-                                <option value="{{ feeding_type[0] }}">{{ feeding_type[1] }}</option>
+                                <option value="{{ feeding_type.id }}">{{ feeding_type.name }}</option>
                             {% endfor %}
                         </select>
                     </div>

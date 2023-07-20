@@ -1,6 +1,7 @@
 import sqlite3
 import os
 from shutil import copyfile
+from models import *
 
 # Variables
 DATABASE = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/database.db')
@@ -46,7 +47,8 @@ def db_col_exists(table, col):
         return False
 
 def get_ft():
-    return db_fetch("SELECT id, name, unit, detail FROM feeding_type ORDER BY name ASC")
+    return FeedingType.query.all()
+    #return db_fetch("SELECT id, name, unit, detail FROM feeding_type ORDER BY name ASC")
 
 def get_ht():
     return db_fetch("SELECT id, name, note FROM history_type ORDER BY name ASC")
@@ -59,10 +61,41 @@ def get_nf():
 
 def get_ad(id=None):
     if id:
-        animal_data = db_fetch(f"SELECT a.id as id, a.name, at.name as art, a.morph, a.gender, a.birth, a.notes, a.image, a.background_color, a.created_date, a.updated_date, at.id as aid, at.f_min, at.f_max FROM animals a LEFT JOIN animal_type at ON a.art = at.id WHERE a.id={ id }", False)
+        animal_with_type = db.session.query(Animal, AnimalType).join(AnimalType, AnimalType.id == Animal.art).one()
+        vAnimal = animal_with_type[0]
+        vAnimalType = animal_with_type[1]
+        animal = {
+            'id': vAnimal.id,
+            'name': vAnimal.name,
+            'art': vAnimalType.name,
+            'morph': vAnimal.morph,
+            'gender': vAnimal.gender,
+            'birth': vAnimal.birth,
+            'notes': vAnimal.notes,
+            'image': vAnimal.image,
+            'background_color': vAnimal.background_color,
+            'f_min': vAnimalType.f_min,
+            'f_max': vAnimalType.f_max
+        }
+        return animal
     else:
-        animal_data = db_fetch(f"SELECT a.id as id, a.name, at.name as art, a.morph, a.gender, a.birth, a.notes, a.image, a.background_color, a.created_date, a.updated_date, at.id as aid, at.f_min, at.f_max FROM animals a LEFT JOIN animal_type at ON a.art = at.id ORDER by a.name")
-    return animal_data
+        animals_with_type = db.session.query(Animal, AnimalType).join(AnimalType, AnimalType.id == Animal.art).all()   
+        animals = []
+        for vAnimal, vAnimalType in animals_with_type:
+            animals.append({
+                'id': vAnimal.id,
+                'name': vAnimal.name,
+                'art': vAnimalType.name,
+                'morph': vAnimal.morph,
+                'gender': vAnimal.gender,
+                'birth': vAnimal.birth,
+                'notes': vAnimal.notes,
+                'image': vAnimal.image,
+                'background_color': vAnimal.background_color,
+                'f_min': vAnimalType.f_min,
+                'f_max': vAnimalType.f_max
+            })
+        return animals
 
 def get_setting(name=None):
     if (name == None):

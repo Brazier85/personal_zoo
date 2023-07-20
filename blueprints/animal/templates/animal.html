@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Personal Zoo | {{ data[1] }}{% endblock %}
+{% block title %}Personal Zoo | {{ animal.name }}{% endblock %}
 
 {% block head %}
 <!-- Datatables -->
@@ -10,21 +10,21 @@
 
 {% block content %}
 
-{% set image = url_for("uploaded_file", filename=data[7]) %}
+{% set image = url_for("uploaded_file", filename=animal.image) %}
 
 <div class="d-flex flex-row align-items-center flex-wrap mt-3 mb-3">
     <div class="animal-image"><!---->
-        <img class="show_animal_image" src="{{ image }}"  style="border-color: {{ data[8] }} !important;">
+        <img class="show_animal_image" src="{{ image }}"  style="border-color: {{ animal.background_color }} !important;">
     </div>
     <div class="px-4">
         <div>
-            <h2 class="d-inline">{{ data[1] }}</h2>
+            <h2 class="d-inline">{{ animal.name }}</h2>
             <span class="gender text-center ml-3">
-                <i class="bi {% if data[4] == 'female' %} bi-gender-female female {% else %} bi-gender-male male {% endif %} d-none d-sm-inline-block"></i>
+                <i class="bi {% if animal.gender == 'female' %} bi-gender-female female {% else %} bi-gender-male male {% endif %} d-none d-sm-inline-block"></i>
             </span>
         </div>
-        <div>{{ data[3] }}</div>
-        <div class="text-muted">{{ data[2] }} (*{{ data[5] }})</div>
+        <div>{{ animal.morph }}</div>
+        <div class="text-muted">{{ animal.art }} (*{{ animal.birth }})</div>
     </div>
     {% if current_weight != "0" %}
     <div class="px-4 text-center border-start border-danger">
@@ -125,10 +125,10 @@
                 </div>
             </div>
             <div class="card-body">
-                {{ data[6] }}
+                {{ animal.notes }}
             </div>
             <div class="card-footer text-right pr-0">
-                <div style="text-transform: uppercase;">Last updated: {{ data[10] | fix_date }}</div>
+                <div style="text-transform: uppercase;">Last updated: {{ animal.last_updated | fix_date }}</div>
             </div>
         </div>
     </div>
@@ -150,7 +150,7 @@
         });
         $('.show_all_history').click(function(){
             $.ajax({
-                url: '/history/get_all/{{ data[0] }}',
+                url: '/history/get_all/{{ animal.id }}',
                 type: 'get',
                 success: function(data){
                     $('.history_card').html(data);
@@ -159,7 +159,7 @@
         });
         $('.show_all_feedings').click(function(){
             $.ajax({
-                url: '/feeding/get_all/{{ data[0] }}',
+                url: '/feeding/get_all/{{ animal.id }}',
                 type: 'get',
                 success: function(data){
                     $('.feeding_card').html(data);
@@ -182,7 +182,7 @@
                         $.ajax({
                                 url: '/feeding/delete/'+feed_id,
                                 type: 'post',
-                                data: {animal_id: {{ data[0] }}},
+                                data: {animal_id: {{ animal.id }}},
                                 success: function(data) {
                                     location.reload(true); 
                                 }
@@ -207,7 +207,7 @@
                         $.ajax({
                                 url: '/history/delete/'+feed_id,
                                 type: 'post',
-                                data: {animal_id: {{ data[0] }}},
+                                data: {animal_id: {{ animal.id }}},
                                 success: function(data) {
                                     location.reload(true); 
                                 }
@@ -218,25 +218,25 @@
         });
     });
     $('.feeding_add_button').on('click',function(){
-        $('.modal-content').load('/feeding/add/{{ data[0] }}',function(){
+        $('.modal-content').load('/feeding/add/{{ animal.id }}',function(){
             $('#modal_details').modal('show'); 
         });
     });
     $('.history_add_button').on('click',function(){
-        $('.modal-content').load('/history/add/{{ data[0] }}',function(){
+        $('.modal-content').load('/history/add/{{ animal.id }}',function(){
             $('#modal_details').modal('show');
         });
     });
     $('.animal_qr_button').on('click',function(){
-        $('.modal-content').load('/feeding/get_qr/{{ data[0] }}',function(){
+        $('.modal-content').load('/feeding/get_qr/{{ animal.id }}',function(){
             $('#modal_details').modal('show'); 
         });
     })
     $('.animal_print_button').on('click',function(){
-        window.open('/animal/{{ data[0] }}?print=1', '_blank'); 
+        window.open('/animal/{{ animal.id }}?print=1', '_blank'); 
     });
     $('.animal_edit_button').on('click',function(){
-        $('.modal-content').load('/animal/edit/{{ data[0] }}',function(){
+        $('.modal-content').load('/animal/edit/{{ animal.id }}',function(){
             $('#modal_details').modal('show'); 
             $('.animal_delete_button').click(function(){
                                 var animal_id = $(this).data('id');
@@ -244,7 +244,7 @@
                                     $.ajax({
                                             url: '/animal/delete/'+animal_id,
                                             type: 'post',
-                                            data: {animal_id: {{ data[0] }}},
+                                            data: {animal_id: {{ animal.id }}},
                                             success: function(data) {
                                                 window.location.replace("/"); 
                                             }

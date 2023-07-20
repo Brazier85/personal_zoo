@@ -12,6 +12,9 @@ class Config(object):
     TEMPLATES_FOLDER = 'templates'
     DATABASE = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/database.db')
 
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///'+os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/database.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
 class DevConfig(Config):      
     FLASK_ENV = "development"
     DEBUG = True
