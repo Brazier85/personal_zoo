@@ -1,6 +1,6 @@
-# Maintainance
+# Maintenance
 
-There is a maintainance mode included into the app. You can visit it via `/maintainance`.
+There is a maintenance mode included into the app. You can visit it via `/maintenance`.
 
 ## Why?
 

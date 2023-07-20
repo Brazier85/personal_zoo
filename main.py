@@ -18,7 +18,7 @@ from blueprints.animal.animal import animal_bp
 from blueprints.feeding.feeding import feeding_bp
 from blueprints.history.history import history_bp
 from blueprints.settings.settings import settings_bp
-from blueprints.maintainance.maintainance import maintainance_bp
+from blueprints.maintenance.maintenance import maintenance_bp
 
 
 # Environment file
@@ -71,7 +71,7 @@ app.register_blueprint(animal_bp, url_prefix="/animal")
 app.register_blueprint(feeding_bp, url_prefix="/feeding")
 app.register_blueprint(history_bp, url_prefix="/history")
 app.register_blueprint(settings_bp, url_prefix="/settings")
-app.register_blueprint(maintainance_bp, url_prefix="/maintainance")
+app.register_blueprint(maintenance_bp, url_prefix="/maintenance")
 
 
 @app.errorhandler(Exception)
