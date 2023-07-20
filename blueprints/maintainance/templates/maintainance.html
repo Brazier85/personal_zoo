@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Personal Zoo | Settings {% endblock %}
+{% block title %}Personal Zoo | Maintainance {% endblock %}
 
 {% block content %}
 <p>&nbsp;</p>
@@ -27,12 +27,13 @@
                         <div class="mt-2">
                             <strong>Examples:</strong>
                             <ul>
-                                <li><code>UPDATE feeding SET unit='medium' WHERE unit='middle'</code></li>
+                                <li><code>UPDATE feeding SET unit='medium' WHERE unit LIKE 'middle%'</code></li>
+                                <li><code>UPDATE feeding SET type='6' WHERE type='5'</code></li>
                             </ul>
                         </div>
                     </div>
                     <div class="card-footer text-end pr-0">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">Send</button>
                     </div>
                 </form>
             </div>
