@@ -7,11 +7,13 @@ hide:
 
 ![](img/logo-no-background.svg){ width="500" }
 
-## Why?
+## Why Use Personal Zoo?
 
-Sometimes taking care of an animal requires more then just feeding it. At my home there are living several reptiles like pythons and geckos. For those animals it is important to keep track of there feedings, moldings, weight, etc. For me personal (a classic nerd) I want to use a App/Webapp to take care of my families animals.
+Caring for animals often involves more than just feeding them. At my home, we have several reptiles, including pythons and geckos. These animals require meticulous tracking of their feedings, sheddings, weight, and other essential data. As a classic nerd, I wanted an easy-to-use app/web application to manage my family's animals.
 
-Sadly I did not find the right and easy to use application just for my home. There are great apps out there for keeping track of breeding, etc. Which can also be used to keep track of our feedings, etc.. but they are mostly cloud based and do cost money. I wanted to have something local. So I created "Personal Zoo" to fill this gap. Personal Zoo is a web application to keep track of my (your) personal zoo. It can track **feedings**, **shedding**, **weight**, etc...
+I searched for an application tailored to my needs, but I couldn't find one that suited my requirements. Many existing apps are designed for breeding purposes and offer tracking capabilities, but they are often cloud-based and come with subscription fees. I desired a local solution, and that's when I decided to create "Personal Zoo" to bridge this gap.
+
+Personal Zoo is a dedicated web application designed to manage your personal zoo effectively. With its user-friendly interface, you can easily track essential data such as feedings, shedding, weight, and more.
 
 [Get started](getting-started){ .md-button .md-button--primary }
 
