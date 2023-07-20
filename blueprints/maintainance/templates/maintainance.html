@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Personal Zoo | Settings {% endblock %}
+
+{% block content %}
+<p>&nbsp;</p>
+<div class="row row-cols-1">
+    <div class="col mb-3">
+        <div class="bg-warning p-3 fw-bold">Please use this page only if you know what you are doing!</div>
+    </div>
+</div>
+<div class="row row-cols-lg-2 row-cols-sm-1">
+    <div>
+        <div class="mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="flex-grow"> Database changes </div>
+                    <div class="btn-list">
+                        <!-- no button -->
+                    </div>
+                </div>
+                <form action="{{ url_for('maintainance.do_sql') }}" method="post" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <label for="sqlquery" class="form-label">SQL Query</label>
+                        <input type="text" class="form-control" name="sqlquery" id="sqlquery" />
+
+                        <div class="mt-2">
+                            <strong>Examples:</strong>
+                            <ul>
+                                <li><code>UPDATE feeding SET unit='medium' WHERE unit='middle'</code></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-footer text-end pr-0">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

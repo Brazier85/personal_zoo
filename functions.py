@@ -129,7 +129,7 @@ def insert_defaults():
         db_update(query)
         query = "INSERT INTO feeding_type " \
                 "(name, unit, detail)" \
-                f"VALUES ('Grasshopper','size','small,middle,sub,adult')"
+                f"VALUES ('Grasshopper','size','small,medium,sub,adult')"
         db_update(query)
     
     # Add history defaults

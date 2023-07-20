@@ -11,7 +11,7 @@
     <select class="form-select" class="form-control" id="feeding_unit" name="feeding_unit" required>
         {% set options = unit_data[1].split(',') %}
         {% for option in options %}
-            <option value="{{ option }} {% if value == option %}selected{%endif%}">{{ option }}</option>
+            <option value="{{ option }}" {% if value == option %}selected{%endif%}>{{ option }}</option>
         {% endfor %}
     </select>
 </div>
