@@ -117,7 +117,6 @@ def get_ad(id=None):
                 'f_max': vAnimalType.f_max,
                 'updated_date': vAnimal.updated_date
             })
-        print(animals)
         return animals
 
 def get_setting(name=None):

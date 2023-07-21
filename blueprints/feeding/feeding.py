@@ -45,8 +45,6 @@ def add(id):
         unit = feeding['feeding_unit']
         date = feeding['feeding_date']
 
-        print(type)
-
         date = datetime.datetime.strptime(date, '%Y-%m-%d')
         
         feeding = Feeding(animal=id,
@@ -128,7 +126,6 @@ def edit(id):
     
 @feeding_bp.route('/delete/<int:id>', methods=['POST'])
 def delete(id):
-    print(id)
     if request.method == 'POST': 
         # Delete data into the database
         feeding = Feeding.query.get_or_404(id)

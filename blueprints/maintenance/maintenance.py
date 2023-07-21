@@ -16,7 +16,12 @@ def do_sql():
         query = data['sqlquery']
         print(query)
         try:
-            db_update(query)
+            DATABASE = current_app.config.get('DATABASE')
+            conn = sqlite3.connect(DATABASE)
+            c = conn.cursor()
+            c.execute(query)
+            conn.commit()
+            conn.close()
         except:
             return "Fehler"
         

@@ -142,7 +142,6 @@ def delete(id):
         result = Animal.query.filter(Animal.id==id).add_columns(Animal.image).first()
 
         image_filename = result.image
-        print(image_filename)
 
         # Delete the image file
         if image_filename != 'dummy.png':
