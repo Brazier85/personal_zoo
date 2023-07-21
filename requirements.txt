@@ -1,5 +1,5 @@
 APScheduler==3.10.1
-backports.zoneinfo==0.2.1;python_version<"3.9"
+backports.zoneinfo==0.2.1
 blinker==1.6.2
 Brotli==1.0.9
 cffi==1.15.1
@@ -10,8 +10,10 @@ Flask-APScheduler==1.12.4
 Flask-Mail==0.9.1
 Flask-Moment==1.0.5
 Flask-QRcode==3.1.0
+flask-sqlalchemy==3.0.5
 flask-weasyprint==1.0.0
 fonttools==4.40.0
+greenlet==2.0.2
 html5lib==1.1
 importlib-metadata==6.6.0
 itsdangerous==2.1.2
@@ -29,6 +31,7 @@ python-dotenv==1.0.0
 pytz==2023.3
 qrcode==7.4.2
 six==1.16.0
+SQLAlchemy==2.0.19
 tinycss2==1.2.1
 typing-extensions==4.6.3
 tzlocal==5.0.1
