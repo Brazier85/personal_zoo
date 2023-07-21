@@ -17,8 +17,8 @@ def animal(id):
     location = 'animal'
 
     animal_data = get_ad(id)
-    feeding_data = get_fd(None, id, 5)
-    history_data = get_hd(None, id, 5)
+    feeding_data = get_fd(None, id, limit)
+    history_data = get_hd(None, id, limit)
 
     weight_setting = get_setting("weight_type")
     try:
