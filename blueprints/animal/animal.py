@@ -146,20 +146,16 @@ def edit(id):
 def delete(id):
     if request.method == 'POST':
 
-        result = Animal.query.filter(Animal.id==id).add_columns(Animal.image).all()
+        result = Animal.query.filter(Animal.id==id).add_columns(Animal.image).first()
 
-        if result:
-            image_filename = result.image
-        else:
-            flash('Record not found!', 'error')
-            return redirect('/')
+        image_filename = result.image
+        print(image_filename)
 
         # Delete the image file
         if image_filename != 'dummy.png':
-            if image_filename:
-                image_path = os.path.join(UPLOAD_FOLDER, str(image_filename))
-                if os.path.exists(image_path):
-                    os.remove(image_path)
+            image_path = os.path.join(UPLOAD_FOLDER, str(image_filename))
+            if os.path.exists(image_path):
+                os.remove(image_path)
 
         animal = Animal.query.get_or_404(id)
         db.session.delete(animal)

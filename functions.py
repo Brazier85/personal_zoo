@@ -249,69 +249,6 @@ def insert_defaults():
                     f"VALUES ('feeding_size','[\"1\"]','Feeding Size','Show feeding size for animal type!')"
         db_update(query)
 
-
-# Create the DATABASE tables
-def create_tables():
-    conn = sqlite3.connect(DATABASE)
-    c = conn.cursor()
-
-    # Debug clear feeding table
-    # c.execute('''DROP TABLE settings''')
-
-    # Create animal table
-    c.execute('''CREATE TABLE IF NOT EXISTS animals
-                (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT,
-                    art TEXT,
-                    morph TEXT,
-                    gender TEXT,
-                    birth DATE,
-                    notes TEXT,
-                    image TEXT,
-                    background_color TEXT,
-                    created_date DATE DEFAULT CURRENT_DATE,
-                    updated_date DATE DEFAULT CURRENT_DATE)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS feeding
-                (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    animal INT,
-                    type TEXT,
-                    count INT,
-                    unit TEXT,
-                    date DATE DEFAULT CURRENT_DATE)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS history
-                (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    animal INT,
-                    event TEXT,
-                    text TEXT,
-                    date DATE DEFAULT CURRENT_DATE)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS feeding_type
-                (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT,
-                    unit TEXT,
-                    detail TEXT)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS history_type
-                (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT,
-                    note TEXT)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS settings
-                (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    setting TEXT,
-                    value TEXT,
-                    name TEXT, 
-                    description TEXT)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS animal_type
-                (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT,
-                    f_min INT DEFAULT 0,
-                    f_max INT DEFAULT 0)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS notifications
-                (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    date DATE,
-                    message TEXT,
-                    interval TEXT)''')
-    conn.commit()
-    conn.close()
-
 def create_folders():
     if not os.path.exists(UPLOAD_FOLDER):
         print("Create upload folder")

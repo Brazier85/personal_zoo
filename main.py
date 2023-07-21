@@ -134,7 +134,6 @@ def home():
     location = 'home'  # Set the current location (e.g., 'Home')
 
     # Create the table if it doesn't exist
-    create_tables()
     insert_defaults()
 
     order = request.cookies.get('animal_order')
