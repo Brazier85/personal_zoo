@@ -17,7 +17,7 @@ docker image prune -a --force --filter "until=240h"
 
 # Run new container
 echo "Start new container"
-docker run -d -p 5000:5000 -v ./data:/app/data --name personal_zoo brazier85/personal_zoo:latest
+docker run -d -p 5000:5000 -v ./data:/app/data --name personal_zoo personal_zoo
 
 echo "done"
 
