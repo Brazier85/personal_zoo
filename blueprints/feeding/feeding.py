@@ -15,8 +15,8 @@ def get_units(id):
 @feeding_bp.route('/get_all/<int:id>', methods=['POST','GET'])
 def get_all(id):
     if request.method == 'GET':
-        feeding_data= db_fetch(f"SELECT f.id as id, f.animal, ft.name, f.count, f.unit, date, ft.unit, ft.detail FROM feeding f LEFT JOIN feeding_type ft ON f.type = ft.id WHERE animal={ id } ORDER BY date DESC")
-        return render_template('feeding_all.html', feedings=feeding_data)
+        #feeding_data= db_fetch(f"SELECT f.id as id, f.animal, ft.name, f.count, f.unit, date, ft.unit, ft.detail FROM feeding f LEFT JOIN feeding_type ft ON f.type = ft.id WHERE animal={ id } ORDER BY date DESC")
+        return render_template('feeding_all.html', feedings=get_fd(None,id))
 
 @feeding_bp.route('/get_qr/<int:id>')
 def qr_code(id):
@@ -31,8 +31,8 @@ def add(id):
         if external is None:
             return render_template('feeding_add.html', id=id, feeding_types=get_ft())
         else:
-            animal = db_fetch(f"SELECT name FROM animals WHERE id={ id }", False)
-            return render_template('feeding_add_external.html', id=id, animal=animal[0], feeding_types=get_ft())
+            animal = Animal.query.add_columns(Animal.name).filter(Animal.id==id).one()
+            return render_template('feeding_add_external.html', id=id, animal=animal.name, feeding_types=get_ft())
         
     elif request.method == 'POST':
         feeding = request.form
@@ -40,12 +40,18 @@ def add(id):
         type = feeding['feeding_type']
         unit = feeding['feeding_unit']
         date = feeding['feeding_date']
-        
 
-        query = "INSERT INTO feeding " \
-                    "(animal, type, count, unit, date)" \
-                    f"VALUES ('{id}', '{type}', '{count}', '{unit}', '{date}')"
-        db_update(query)
+        print(type)
+
+        date = datetime.datetime.strptime(date, '%Y-%m-%d')
+        
+        feeding = Feeding(animal=id,
+                            type=type,
+                            count=count,
+                            unit=unit,
+                            date=date)
+        db.session.add(feeding)
+        db.session.commit()
 
         flash('Added feeding successfully!', 'success')
         current_app.logger.info("Added feeding!")
@@ -67,11 +73,16 @@ def multi_add():
         unit = feeding['feeding_unit']
         date = feeding['feeding_date']
 
+        date = datetime.datetime.strptime(date, '%Y-%m-%d')
+
         for animal in animals:
-            query = "INSERT INTO feeding " \
-                        "(animal, type, count, unit, date)" \
-                        f"VALUES ('{animal}', '{type}', '{count}', '{unit}', '{date}')"
-            db_update(query)
+            feeding = Feeding(animal=animal,
+                            type=type,
+                            count=count,
+                            unit=unit,
+                            date=date)
+            db.session.add(feeding)
+            db.session.commit()
 
         flash('Added multi feeding successfully!', 'success')
         current_app.logger.info("Added multi feeding!")
@@ -96,7 +107,7 @@ def edit(id):
         date = feeding_data['feeding_date']
         animal_id = feeding_data['animal_id']
 
-        date = datetime.strptime(date, '%Y-%m-%d')
+        date = datetime.datetime.strptime(date, '%Y-%m-%d')
 
         feeding.count = count
         feeding.type = type
@@ -113,9 +124,12 @@ def edit(id):
     
 @feeding_bp.route('/delete/<int:id>', methods=['POST'])
 def delete(id):
+    print(id)
     if request.method == 'POST': 
         # Delete data into the database
-        db_update(f"DELETE FROM feeding WHERE id={ id }")
+        feeding = Feeding.query.get_or_404(id)
+        db.session.delete(feeding)
+        db.session.commit()
         flash('Deleted feeding successfully!', 'success')
         current_app.logger.info(f"Deleted feeding with id: {id} !")
 

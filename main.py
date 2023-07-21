@@ -56,10 +56,10 @@ dictConfig(
 
 # Configuration
 if os.getenv("PZOO_FLASK_ENV") == 'dev':
-    app.logger.warning(f"App running in mode: { os.environ.get('FLASK_ENV') }")
+    app.logger.warning(f"App running in mode: { os.environ.get('PZOO_FLASK_ENV') }")
     app.config.from_object('config.DevConfig')
 else:
-    app.logger.info(f"App running in mode: { os.environ.get('FLASK_ENV') }")
+    app.logger.info(f"App running in mode: { os.environ.get('PZOO_FLASK_ENV') }")
     app.config.from_object('config.ProdConfig')
 
 # Init DB
@@ -109,10 +109,18 @@ def linebreaksbr_filter(text):
 @app.template_filter(name='fix_date')
 def fix_date_filter(text):
     try:
-        text = datetime.strptime(text, '%Y-%m-%d').strftime('%d.%m.%Y')
-        return text
+        new_text = datetime.strptime(text, '%Y-%m-%d').strftime('%d.%m.%Y')
+        return new_text
     except:
-        return text
+        text = text
+
+    try:
+        new_text = text.strftime('%d.%m.%Y')
+        return new_text
+    except:
+        text = text
+
+    return text
 
 # Check every minute for notifications
 @scheduler.task('cron', id='send_notifications', minute='*')
@@ -133,20 +141,7 @@ def home():
     if order == None:
         order = "name"
 
-    animals_with_type = db.session.query(Animal, AnimalType).join(AnimalType, AnimalType.id == Animal.art).all()
-
-    animals = []
-    for vAnimal, vAnimalType in animals_with_type:
-        animals.append({
-            'id': vAnimal.id,
-            'name': vAnimal.name,
-            'art': vAnimalType.name,
-            'morph': vAnimal.morph,
-            'image': vAnimal.image,
-            'background_color': vAnimal.background_color
-        })
-
-    return render_template('home.html', data=animals, feeding_types=get_ft(), location=location)
+    return render_template('home.html', data=get_ad(), feeding_types=get_ft(), location=location)
 
 # Route for printing
 @app.route('/print')

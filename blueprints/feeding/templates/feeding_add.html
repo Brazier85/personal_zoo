@@ -15,7 +15,7 @@
                     <label for="feeding_type" class="form-label">Type</label>
                     <select class="form-select" class="form-control" id="feeding_type" name="feeding_type" required>
                         {% for feeding_type in feeding_types %}
-                            <option value="{{ feeding_type[0] }}">{{ feeding_type[1] }}</option>
+                            <option value="{{ feeding_type.id }}">{{ feeding_type.name }}</option>
                         {% endfor %}
                     </select>
                 </div>

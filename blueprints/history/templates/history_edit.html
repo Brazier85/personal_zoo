@@ -1,13 +1,13 @@
 <div class="modal-header">
     <h5 class="modal-title" id="itemLabel">Edit event/action</h5>
 </div>
-<form action="{{ url_for('history.edit', id=data[0]) }}" method="post" enctype="multipart/form-data">
+<form action="{{ url_for('history.edit', id=data.id) }}" method="post" enctype="multipart/form-data">
     <div class="modal-body" id="modal-body">
         <div class="row">
             <div class="col-4">
                 <div class="mb-3">
                     <label for="history_date" class="form-label">Date</label>
-                    <input type="date" class="form-control" id="history_date" name="history_date" value="{{ data[4] }}" required>
+                    <input type="date" class="form-control" id="history_date" name="history_date" value="{{ data.date }}" required>
                 </div>
             </div>
             <div class="col">
@@ -15,7 +15,7 @@
                     <label for="history_event" class="form-label">Event/Action</label>
                     <select class="form-select" class="form-control" id="history_event" name="history_event" required>
                         {% for event_type in event_types %}
-                            <option value="{{ event_type[0] }}" {% if data[2]|int == event_type[0]|int %}selected{% endif %}>{{ event_type[1] }}</option>
+                            <option value="{{ event_type.id }}" {% if data.event|int == event_type.id|int %}selected{% endif %}>{{ event_type.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -25,16 +25,16 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="history_text" class="form-label">Text</label>
-                    <textarea class="form-control" id="history_text" name="history_text" rows="3" required>{{ data[3] }}</textarea>
+                    <textarea class="form-control" id="history_text" name="history_text" rows="3" required>{{ data.text }}</textarea>
                 </div>
             </div>
         </div>
     
     </div>
-    <input type="hidden" id="animal_id" name="animal_id" value="{{ data[1] }}" />
+    <input type="hidden" id="animal_id" name="animal_id" value="{{ data.animal }}" />
     <div class="modal-footer">
         <div pos="start">
-            <button type="button" data-id="{{ data[0] }}" class="btn btn-danger text-left history_delete_button">Delete</button>
+            <button type="button" data-id="{{ data.id }}" class="btn btn-danger text-left history_delete_button">Delete</button>
         </div>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Save</button>

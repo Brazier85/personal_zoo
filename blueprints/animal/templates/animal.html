@@ -59,12 +59,12 @@
                         <th>Size</th>
                     </thead>
                     <tbody>
-                        {% for row in feedings %}
-                        <tr data-id="{{ row[0] }}" class="feeding_edit active_row no-select">
-                            <td>{{ row[5] | fix_date }}</td>
-                            <td>{{ row[3] }}</td>
-                            <td>{{ row[2] }}</td>
-                            <td>{{ row[4] }} {%if row[6] == "weight" %}{{row[7]}}{%endif%}</td>
+                        {% for feeding in feedings %}
+                        <tr data-id="{{ feeding.id }}" class="feeding_edit active_row no-select">
+                            <td>{{ feeding.date | fix_date }}</td>
+                            <td>{{ feeding.count }}</td>
+                            <td>{{ feeding.type }}</td>
+                            <td>{{ feeding.unit }} {%if feeding.ftunit == "weight" %}{{feeding.detail}}{%endif%}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -98,11 +98,11 @@
                         <th>Details</th>
                     </thead>
                     <tbody>
-                        {% for row in history %}
-                        <tr data-id="{{ row[0] }}" class="history_edit active_row no-select">
-                            <td>{{ row[4] | fix_date }}</td>
-                            <td>{{ row[2] }}</td>
-                            <td>{{ row[3]|linebreaksbr|safe }}</td>
+                        {% for event in history %}
+                        <tr data-id="{{ event.id }}" class="history_edit active_row no-select">
+                            <td>{{ event.date | fix_date }}</td>
+                            <td>{{ event.name }}</td>
+                            <td>{{ event.text|linebreaksbr|safe }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -125,7 +125,7 @@
                 </div>
             </div>
             <div class="card-body">
-                {{ animal.notes }}
+                {{ animal.notes|linebreaksbr|safe }}
             </div>
             <div class="card-footer text-right pr-0">
                 <div style="text-transform: uppercase;">Last updated: {{ animal.last_updated | fix_date }}</div>
@@ -179,6 +179,7 @@
                 $('.feeding_delete_button').click(function(){
                     var feed_id = $(this).data('id');
                     if (confirm("Are You Sure ?")) {
+                        alert(feed_id);
                         $.ajax({
                                 url: '/feeding/delete/'+feed_id,
                                 type: 'post',

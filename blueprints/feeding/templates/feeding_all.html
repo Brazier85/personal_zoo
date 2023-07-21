@@ -6,12 +6,12 @@
         <th>Size</th>
     </thead>
     <tbody>
-        {% for row in feedings %}
-        <tr data-id="{{ row[0] }}" class="feeding_edit active_row no-select">
-            <td>{{ row[5] | fix_date }}</td>
-            <td>{{ row[3] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[4] }} {%if row[6] == "weight" %}{{row[7]}}{%endif%}</td>
+        {% for feeding in feedings %}
+        <tr data-id="{{ feeding.id }}" class="feeding_edit active_row no-select">
+            <td>{{ feeding.date | fix_date }}</td>
+            <td>{{ feeding.count }}</td>
+            <td>{{ feeding.type }}</td>
+            <td>{{ feeding.unit }} {%if feeding.ftunit == "weight" %}{{feeding.detail}}{%endif%}</td>
         </tr>
         {% endfor %}
     </tbody>

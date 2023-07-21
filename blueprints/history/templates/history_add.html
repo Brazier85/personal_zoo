@@ -15,7 +15,7 @@
                     <label for="history_event" class="form-label">Event/Action</label>
                     <select class="form-select" class="form-control" id="history_event" name="history_event" required>
                         {% for event_type in event_types %}
-                            <option value="{{ event_type[0] }}">{{ event_type[1] }}</option>
+                            <option value="{{ event_type.id }}">{{ event_type.name }}</option>
                         {% endfor %}
                     </select>
                 </div>

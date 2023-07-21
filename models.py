@@ -30,10 +30,10 @@ class Animal(db.Model):
     __tablename__ = 'animals'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String)
-    art = db.db.Column(db.Integer, db.ForeignKey('AnimalType.id'))
+    art = db.db.Column(db.Integer)
     morph = db.Column(db.String)
     gender = db.Column(db.String)
-    birth = db.Column(db.Date)
+    birth = db.Column(db.String)
     notes = db.Column(db.String)
     image = db.Column(db.String)
     background_color = db.Column(db.String)
@@ -47,7 +47,7 @@ class Feeding(db.Model):
     __tablename__ = 'feeding'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     animal = db.Column(db.Integer)
-    type = db.Column(db.String)
+    type = db.Column(db.Integer)
     count = db.Column(db.Integer)
     unit = db.Column(db.String)
     date = db.Column(db.Date, default=datetime.datetime.utcnow)

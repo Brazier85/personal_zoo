@@ -18,6 +18,7 @@ class Config(object):
 class DevConfig(Config):      
     FLASK_ENV = "development"
     DEBUG = True
+    TESTING = True
 
 class ProdConfig(Config):
     FLASK_ENV = "production"

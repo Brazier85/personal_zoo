@@ -5,11 +5,11 @@
         <th>Details</th>
     </thead>
     <tbody>
-        {% for row in history %}
-        <tr data-id="{{ row[0] }}" class="history_edit active_row">
-            <td>{{ row[4] | fix_date }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3]|linebreaksbr|safe }}</td>
+        {% for event in history %}
+        <tr data-id="{{ event.id }}" class="history_edit active_row no-select">
+            <td>{{ event.date | fix_date }}</td>
+            <td>{{ event.name }}</td>
+            <td>{{ event.text|linebreaksbr|safe }}</td>
         </tr>
         {% endfor %}
     </tbody>

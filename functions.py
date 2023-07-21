@@ -48,10 +48,9 @@ def db_col_exists(table, col):
 
 def get_ft():
     return FeedingType.query.all()
-    #return db_fetch("SELECT id, name, unit, detail FROM feeding_type ORDER BY name ASC")
 
 def get_ht():
-    return db_fetch("SELECT id, name, note FROM history_type ORDER BY name ASC")
+    return HistoryType.query.all()
 
 def get_at():
     return db_fetch("SELECT id, name, f_min, f_max FROM animal_type ORDER BY name ASC")
@@ -59,9 +58,67 @@ def get_at():
 def get_nf():
     return db_fetch("SELECT id, date, message, interval FROM notifications ORDER BY DATE")
 
+def get_hd(id=None, animal_id=None, limit=None):
+    if id:
+        event_with_type = db.session.query(History, HistoryType).join(HistoryType, HistoryType.id == History.event).filter(History.animal == animal_id).first()
+        vEvent= event_with_type[0]
+        vEventType = event_with_type[1]
+        event = {
+            'id': vEvent.id,
+            'animal': vEvent.animal,
+            'name': vEventType.name,
+            'text': vEvent.text,
+            'date': vEvent.date
+        }
+        return event
+    else:
+        events_with_type = db.session.query(History, HistoryType).join(HistoryType, HistoryType.id == History.event).filter(History.animal == animal_id).order_by(History.date.desc()).limit(limit).all()   
+        events = []
+        for vEvent, vEventType in events_with_type:
+            events.append({
+                'id': vEvent.id,
+                'animal': vEvent.animal,
+                'name': vEventType.name,
+                'text': vEvent.text,
+                'date': vEvent.date
+            })
+        return events
+
+def get_fd(id=None, animal_id=None, limit=None):
+    if id:
+        feeding_with_type = db.session.query(Feeding, FeedingType).join(FeedingType, FeedingType.id == Feeding.type).filter(Feeding.id==id).first()
+        vFeeding = feeding_with_type[0]
+        vFeedingType = feeding_with_type[1]
+        feeding = {
+            'id': vFeeding.id,
+            'animal': vFeeding.animal,
+            'type': vFeedingType.name,
+            'ftunit': vFeedingType.unit,
+            'detail': vFeedingType.detail,
+            'count': vFeeding.count,
+            'unit': vFeeding.unit,
+            'date': vFeeding.date
+        }
+        return feeding
+    else:
+        feedings_with_type = db.session.query(Feeding, FeedingType).join(FeedingType, FeedingType.id == Feeding.type).filter(Feeding.animal == animal_id).order_by(Feeding.date.desc()).limit(limit).all()   
+        feedings = []
+        for vFeeding, vFeedingType in feedings_with_type:
+            feedings.append({
+                'id': vFeeding.id,
+                'animal': vFeeding.animal,
+                'type': vFeedingType.name,
+                'ftunit': vFeedingType.unit,
+                'detail': vFeedingType.detail,
+                'count': vFeeding.count,
+                'unit': vFeeding.unit,
+                'date': vFeeding.date
+            })
+        return feedings
+
 def get_ad(id=None):
     if id:
-        animal_with_type = db.session.query(Animal, AnimalType).join(AnimalType, AnimalType.id == Animal.art).one()
+        animal_with_type = db.session.query(Animal, AnimalType).join(AnimalType, AnimalType.id == Animal.art).filter(Animal.id==id).first()
         vAnimal = animal_with_type[0]
         vAnimalType = animal_with_type[1]
         animal = {
@@ -95,6 +152,7 @@ def get_ad(id=None):
                 'f_min': vAnimalType.f_min,
                 'f_max': vAnimalType.f_max
             })
+        print(animals)
         return animals
 
 def get_setting(name=None):
