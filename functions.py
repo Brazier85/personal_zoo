@@ -12,40 +12,6 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def db_fetch(query, mode = True):
-    conn = sqlite3.connect(DATABASE)
-    
-    c = conn.cursor()
-    c.execute(query)
-    
-    # Fetch all
-    if (mode):
-        data = c.fetchall()
-    else:
-        data = c.fetchone()
-
-    # Close connection
-    conn.close()
-
-    return data
-
-def db_update(query):
-    conn = sqlite3.connect(DATABASE)
-    c = conn.cursor()
-    c.execute(query)
-    conn.commit()
-    conn.close()
-
-def db_col_exists(table, col):
-    try:
-        result = db_fetch(f"SELECT COUNT(*) AS column_exists FROM pragma_table_info('{table}') WHERE name='{col}'", False)[0]
-        if result > 0:
-            return True
-        else:
-            return False
-    except:
-        return False
-
 def get_ft():
     return FeedingType.query.all()
 
@@ -54,9 +20,6 @@ def get_ht():
 
 def get_at():
     return AnimalType.query.all()
-
-def get_nf():
-    return db_fetch("SELECT id, date, message, interval FROM notifications ORDER BY DATE")
 
 def get_hd(id=None, animal_id=None, limit=None):
     if id:
@@ -174,7 +137,7 @@ def send_mail():
     SMTP_SERVER = os.getenv("PZOO_SMTP_SERVER")
     PORT = os.getenv("PZOO_SMTP_PORT")
 
-    notifications = get_nf()
+    notifications = ""
 
     for notification in notifications:
         print(notification[0])
@@ -184,70 +147,54 @@ def send_mail():
 def insert_defaults():
 
     # Add animal defaults
-    animal_types = db_fetch("SELECT * FROM animal_type ORDER BY name DESC")
+    animal_types = AnimalType.query.all()
     if animal_types == []:
         # Insert base data
-        query = "INSERT INTO animal_type " \
-                "(name, f_min, f_max)" \
-                f"VALUES ('Ball Python', '10', '20')"
-        db_update(query)
-        query = "INSERT INTO animal_type " \
-                "(name, f_min, f_max)" \
-                f"VALUES ('Leopard Gecko', '0', '0')"
-        db_update(query)
+        type = AnimalType(name='Ball Python', f_min=10, f_max=20)
+        db.session.add(type)
+        type = AnimalType(name='Leopard Gecko', f_min=0, f_max=0)
+        db.session.add(type)
+        db.session.commit()
 
     # Add feeding defaults
-    feeding_types = db_fetch("SELECT * FROM feeding_type ORDER BY name DESC")
+    feeding_types = FeedingType.query.all()
     if feeding_types == []:
         # Insert base data
-        query = "INSERT INTO feeding_type " \
-                "(name, unit, detail)" \
-                f"VALUES ('Elephant','weight','t')"
-        db_update(query)
-        query = "INSERT INTO feeding_type " \
-                "(name, unit, detail)" \
-                f"VALUES ('Toddler','text','BMI')"
-        db_update(query)
-        query = "INSERT INTO feeding_type " \
-                "(name, unit, detail)" \
-                f"VALUES ('Mouse','weight','gr')"
-        db_update(query)
-        query = "INSERT INTO feeding_type " \
-                "(name, unit, detail)" \
-                f"VALUES ('Rat','weight','gr')"
-        db_update(query)
-        query = "INSERT INTO feeding_type " \
-                "(name, unit, detail)" \
-                f"VALUES ('Whale','weight','t')"
-        db_update(query)
-        query = "INSERT INTO feeding_type " \
-                "(name, unit, detail)" \
-                f"VALUES ('Grasshopper','size','small,medium,sub,adult')"
-        db_update(query)
+        type = FeedingType(name='Elephant', unit='weight', detail='t')
+        db.session.add(type)
+        type = FeedingType(name='Toddler', unit='text', detail='BMI')
+        db.session.add(type)
+        type = FeedingType(name='Mouse', unit='weight', detail='gr')
+        db.session.add(type)
+        type = FeedingType(name='Rat', unit='weight', detail='gr')
+        db.session.add(type)
+        type = FeedingType(name='Whale', unit='weight', detail='t')
+        db.session.add(type)
+        type = FeedingType(name='Grasshopper', unit='size', detail='small,medium,sub,adult')
+        db.session.add(type)
+        db.session.commit()
     
     # Add history defaults
-    history_types = db_fetch("SELECT * FROM history_type ORDER BY name DESC")
+    history_types = HistoryType.query.all()
     if history_types == []:
         # Insert base data
         EVENT_TYPES =  ["Shed","Weighed","Medical","Miscellaneous"]
-        for type in EVENT_TYPES:
-            query = "INSERT INTO history_type " \
-                    "(name)" \
-                    f"VALUES ('{type}')"
-            db_update(query)
+        for e_type in EVENT_TYPES:
+            type = HistoryType(name=e_type)
+            db.session.add(type)
+            db.session.commit()
 
     # Default general settings
-    settings = db_fetch("SELECT * FROM settings DESC")
+    settings = Settings.query.all()
     if settings == []:
         # Weight
-        query = "INSERT INTO settings " \
-                    "(setting, value, name, description)" \
-                    f"VALUES ('weight_type','2','Weight Option','Last entry will be shown as weight on the animal page!')"
-        db_update(query)
-        query = "INSERT INTO settings " \
-                    "(setting, value, name, description)" \
-                    f"VALUES ('feeding_size','[\"1\"]','Feeding Size','Show feeding size for animal type!')"
-        db_update(query)
+        type = Settings(setting='weight_type', value='2', name='Weight Option', description='Last entry will be shown as weight on the animal page!')
+        db.session.add(type)
+        # Feeding size
+        type = Settings(setting='feeding_size', value='[\"1\"]', name='Feeding Size', description='Show feeding size for animal type!')
+        db.session.add(type)
+        db.session.commit()
+
 
 def create_folders():
     if not os.path.exists(UPLOAD_FOLDER):

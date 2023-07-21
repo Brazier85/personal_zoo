@@ -173,79 +173,12 @@ def update():
 
     print("Running database updates....")
     exists = None
-    exists = db_fetch("SELECT * FROM settings WHERE setting='feeding_size'", False)
+    exists = Settings.query.filter(Settings.setting == 'feeding_size').first()
     if exists == None:
         print("Insert new setting feeding_size to database")
-        query = "INSERT INTO settings " \
-                "(setting, value, name, description)" \
-                f"VALUES ('feeding_size','[\"1\"]','Feeding Size','Show feeding size for animal type!')"
-        db_update(query)
-
-    print("Remove old column")
-    if db_col_exists("animal_type","note"):
-        try:
-            query= "ALTER TABLE animal_type DROP COLUMN note"
-            db_update(query)
-        except Exception as e:
-            print(f"Error: {e} -> Remove old column")
-            error = error + f"Remove old column 'note' -> Error: {e}\n"
-
-    if db_col_exists("feeding_type","note"):
-        try:
-            query= "ALTER TABLE feeding_type DROP COLUMN note"
-            db_update(query)
-        except Exception as e:
-            print(f"Error: {e} -> Remove old column")
-            error = error + f"Remove old column 'note' -> Error: {e}\n"
-
-    print("Add new columns")
-    if not db_col_exists("animal_type","f_min"):
-        try:
-            query= "ALTER TABLE animal_type ADD COLUMN f_min INT DEFAULT 0"
-            db_update(query)
-        except Exception as e:
-            print(f"Error: {e}")
-            error = error + f"Add f_min -> Error: {e}\n"
-    
-    if not db_col_exists("animal_type","f_max"):
-        try:
-            query= "ALTER TABLE animal_type ADD COLUMN f_max INT DEFAULT 0"
-            db_update(query)
-        except Exception as e:
-            print(f"Error: {e}")
-            error = error + f"Add f_max -> Error: {e}\n"
-
-    print("Insert default value")
-    try:
-        query = f"UPDATE animal_type SET f_min='0', f_max='0' WHERE f_min IS NULL OR f_max IS NULL"
-        db_update(query)
-    except Exception as e:
-        print(f"Error: {e}")
-        error = error + f"Add f_max -> Error: {e}\n"
-
-    if not db_col_exists("feeding_type","unit"):
-        try:
-            query= "ALTER TABLE feeding_type ADD COLUMN unit TEXT"
-            db_update(query)
-        except Exception as e:
-            print(f"Error: {e}")
-            error = error + f"Add unit to feeding_type-> Error: {e}\n"
-
-    if not db_col_exists("feeding_type","detail"):
-        try:
-            query= "ALTER TABLE feeding_type ADD COLUMN detail TEXT"
-            db_update(query)
-        except Exception as e:
-            print(f"Error: {e}")
-            error = error + f"Add detail to feeding_type -> Error: {e}\n"
-
-    if not db_col_exists("feeding","unit"):
-        try:
-            query= "ALTER TABLE feeding RENAME COLUMN weight TO unit"
-            db_update(query)
-        except Exception as e:
-            print(f"Error: {e}")
-            error = error + f"Add unit to feeding -> Error: {e}\n"
+        type = Settings(setting='feeding_size', value='[\"1\"]', name='Feeding Size', description='Show feeding size for animal type!')
+        db.session.add(type)
+        db.session.commit()
 
     if error != "":
         flash(f"<strong>Error while doing update!</strong>\n\n{error}", 'danger')

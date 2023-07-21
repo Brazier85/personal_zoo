@@ -93,19 +93,19 @@ def add():
 @animal_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
 
-    animal = get_ad(id)
+    current_animal = Animal.query.filter(Animal.id==id).first()
 
     if request.method == 'GET':
-        return render_template('animal_edit.html', data=animal, animal_types=get_at())
+        return render_template('animal_edit.html', data=current_animal, animal_types=get_at())
     
     elif request.method == 'POST':
-        name = request.form['name']
-        art = request.form['art']
-        morph = request.form['morph']
-        background_color = request.form['background-color']
-        gender = request.form['gender']
-        birth = request.form['birth']
-        notes = request.form['notes']
+        current_animal.name = request.form['name']
+        current_animal.art = request.form['art']
+        current_animal.morph = request.form['morph']
+        current_animal.background_color = request.form['background-color']
+        current_animal.gender = request.form['gender']
+        current_animal.birth = request.form['birth']
+        current_animal.notes = request.form['notes']
         current_image = request.form['current_image']
 
         # Check if a new image file is provided
@@ -126,17 +126,10 @@ def edit(id):
             # No new image provided
             filename = current_image
 
-        animal = Animal(name=name,
-                        image=filename,
-                        art=art,
-                        morph=morph,
-                        background_color=background_color,
-                        gender=gender,
-                        birth=birth,
-                        notes=notes,
-                        updated_date=datetime.datetime.utcnow)
+        current_animal.image=filename
+        current_animal.updated_date=datetime.date.today()
 
-        db.session.add(animal)
+        db.session.add(current_animal)
         db.session.commit()
 
         flash('Data submitted successfully!', 'success')
