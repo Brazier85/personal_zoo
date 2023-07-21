@@ -156,7 +156,7 @@ def print_data(id=None):
 
     feed_url = f"{request.url_root}feeding/add/"
 
-    return render_template('print.html', data=animal_data, location=location, feed_url=feed_url)
+    return render_template('print.html', animals=animal_data, location=location, feed_url=feed_url)
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):

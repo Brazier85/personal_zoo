@@ -17,16 +17,13 @@ def animal(id):
     location = 'animal'
 
     animal_data = get_ad(id)
-
-    #feeding_data = db_fetch(f"SELECT f.id as id, f.animal, ft.name, f.count, f.unit, date, ft.unit, ft.detail FROM feeding f LEFT JOIN feeding_type ft ON f.type = ft.id WHERE animal={ id } ORDER BY date DESC LIMIT { limit }")
     feeding_data = get_fd(None, id, 5)
-
-    #history_data = db_fetch(f"SELECT h.id, h.animal, ht.name, h.text, h.date FROM history h LEFT JOIN history_type ht ON h.event = ht.id WHERE animal={ id } ORDER BY date DESC LIMIT { limit }")
     history_data = get_hd(None, id, 5)
 
     weight_setting = get_setting("weight_type")
     try:
-        current_weight = db_fetch(f"SELECT text FROM history WHERE event='{weight_setting}' AND animal='{ id }' ORDER BY date DESC", False)[0]
+        #current_weight = db_fetch(f"SELECT text FROM history WHERE event='{weight_setting}' AND animal='{ id }' ORDER BY date DESC", False)[0]
+        current_weight = History.query.filter(History.event==weight_setting).filter(History.animal==id).order_by(History.date.desc()).add_columns(History.text).first().text
         weight_number = float(current_weight.split(' ')[0].replace(',','.'))
     except:
         current_weight = "0"
@@ -45,9 +42,8 @@ def animal(id):
             feeding_size = f"Currently a feeding size between {feed_min:.0f}gr and {feed_max:.0f}gr ({f_min_value}% -> {f_max_value}%) is recommended!"
 
     if printing == '1':
-        html = render_template('animal_print.html', data=animal_data, feedings=feeding_data, history=history_data, location=location)
-        return render_pdf(HTML(string=html), "", download_filename=f"{animal_data[1]}.pdf", automatic_download=False)
-        #return html
+        html = render_template('animal_print.html', animal=animal_data, feedings=feeding_data, history=history_data, location=location)
+        return render_pdf(HTML(string=html), "", download_filename=f"{animal_data['name']}.pdf", automatic_download=False)
     else:
         return render_template('animal.html', animal=animal_data, feedings=feeding_data, history=history_data, location=location, current_weight=current_weight, feeding_size=feeding_size)
 
@@ -80,18 +76,27 @@ def add():
         else:
             filename = "dummy.jpg"
 
-        query = "INSERT INTO animals" \
-                    "(name, image, art, morph, background_color, gender, birth, notes)" \
-                    f"VALUES ('{ name }', '{ filename }', '{ art }', '{ morph }', '{ background_color }', '{ gender }', '{ birth }', '{ notes }')"
-        db_update(query)
+        animal = Animal(name=name,
+                        image=filename,
+                        art=art,
+                        morph=morph,
+                        background_color=background_color,
+                        gender=gender,
+                        birth=birth,
+                        notes=notes)
+        db.session.add(animal)
+        db.session.commit()
 
         flash('Data submitted successfully!', 'success')
         return redirect('/')
 
 @animal_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
+
+    animal = get_ad(id)
+
     if request.method == 'GET':
-        return render_template('animal_edit.html', data=db_fetch(f"SELECT * FROM animals WHERE id={ id }", False), animal_types=get_at())
+        return render_template('animal_edit.html', data=animal, animal_types=get_at())
     
     elif request.method == 'POST':
         name = request.form['name']
@@ -121,11 +126,18 @@ def edit(id):
             # No new image provided
             filename = current_image
 
-        query = "UPDATE animals " \
-                    f"SET name='{ name }', art='{ art }', morph='{ morph }', background_color='{ background_color }'," \
-                    f"gender='{ gender }', birth='{ birth }', notes='{ notes }', image='{ filename }', updated_date=CURRENT_DATE " \
-                    f"WHERE id='{ id }'"
-        db_update(query)
+        animal = Animal(name=name,
+                        image=filename,
+                        art=art,
+                        morph=morph,
+                        background_color=background_color,
+                        gender=gender,
+                        birth=birth,
+                        notes=notes,
+                        updated_date=datetime.datetime.utcnow)
+
+        db.session.add(animal)
+        db.session.commit()
 
         flash('Data submitted successfully!', 'success')
         return redirect("/animal/"+str(id))
@@ -134,10 +146,10 @@ def edit(id):
 def delete(id):
     if request.method == 'POST':
 
-        result = db_fetch(f"SELECT image FROM animals WHERE id={ id }")
+        result = Animal.query.filter(Animal.id==id).add_columns(Animal.image).all()
 
         if result:
-            image_filename = result[0]
+            image_filename = result.image
         else:
             flash('Record not found!', 'error')
             return redirect('/')
@@ -149,9 +161,17 @@ def delete(id):
                 if os.path.exists(image_path):
                     os.remove(image_path)
 
-        db_update(f"DELETE FROM animals WHERE id={ id }")
-        db_update(f"DELETE FROM feeding WHERE animal={ id }")
-        db_update(f"DELETE FROM history WHERE animal={ id }")
+        animal = Animal.query.get_or_404(id)
+        db.session.delete(animal)
+        db.session.commit()
+
+        feedings = Feeding.query.get_or_404(Feeding.animal==id)
+        db.session.delete(feedings)
+        db.session.commit()
+
+        history = History.query.get_or_404(History.animal==id)
+        db.session.delete(history)
+        db.session.commit()
 
         flash('Animal deleted successfully!', 'success')
 

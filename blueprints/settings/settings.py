@@ -9,8 +9,6 @@ def settings():
 
     location = 'settings'
 
-    settings = get_setting()
-
     return render_template('settings.html', feeding_types=get_ft(), history_types=get_ht(), ht=get_ht(), settings=get_setting(), animal_types=get_at(), location=location)
 
 @settings_bp.route('/edit', methods=['POST','GET'])
@@ -26,12 +24,16 @@ def edit():
         print(f"Feeding size: {feeding_size}")
 
         # Weight setting
-        query = f"UPDATE settings SET value='{weight}' WHERE setting='weight_type'"
-        db_update(query)
+        setting = Settings.query.filter(Settings.setting=='weight_type')
+        setting.value = weight
+        db.session.add(setting)
+        db.session.commit()
 
         # Feeding size
-        query = f"UPDATE settings SET value='{json.dumps(feeding_size)}' WHERE setting='feeding_size'"
-        db_update(query)
+        setting = Settings.query.filter(Settings.setting=='feeding_size')
+        setting.value = json.dumps(feeding_size)
+        db.session.add(setting)
+        db.session.commit()
 
         flash('Settings saved!', 'success')
         current_app.logger.info("Settings saved")
@@ -40,19 +42,20 @@ def edit():
 
 @settings_bp.route('/ft_edit/<int:id>', methods=['POST','GET'])
 def ft_edit(id):
+
+    feeding_type = FeedingType.query.filter(FeedingType.id==id).first()
+
     if request.method == 'GET':
-        return jsonify({'htmlresponse': render_template('ft_edit.html', data=db_fetch(f"SELECT * FROM feeding_type WHERE id={ id }", False))})
+        return jsonify({'htmlresponse': render_template('ft_edit.html', data=feeding_type)})
     
     elif request.method == 'POST':
         data = request.form
-        name = data['ft_name']
-        unit = data['ft_unit']
-        detail = data['ft_detail']
+        feeding_type.name = data['ft_name']
+        feeding_type.unit = data['ft_unit']
+        feeding_type.detail = data['ft_detail']
 
-        query = "UPDATE feeding_type " \
-                    f"SET name='{name}', unit='{unit}', detail='{detail}'"\
-                    f"WHERE id='{ id }'"
-        db_update(query)
+        db.session.add(feeding_type)
+        db.session.commit()
 
         flash('Changes to feeding type saved!', 'success')
         current_app.logger.info(f"Modified feeding type with id: {id} !")
@@ -65,14 +68,11 @@ def ft_add():
 
     elif request.method == 'POST':
         data = request.form
-        name = data['ft_name']
-        unit = data['ft_unit']
-        detail = data['ft_detail']
-        
-        query = "INSERT INTO feeding_type " \
-                    "(name, unit, detail)" \
-                    f"VALUES ('{name}', '{unit}', '{detail}')"
-        db_update(query)
+        feeding_type = FeedingType(name=data['ft_name'],
+                                unit=data['ft_unit'],
+                                detail=data['ft_detail'])
+        db.session.add(feeding_type)
+        db.session.commit()
 
         flash('Added feed type successfully!', 'success')
         current_app.logger.info("Added feed type !")
@@ -83,7 +83,9 @@ def ft_add():
 def ft_delete(id):
     if request.method == 'POST': 
         # Delete data into the database
-        db_update(f"DELETE FROM feeding_type WHERE id={ id }")
+        feeding_type = FeedingType.query.get_or_404(id)
+        db.session.delete(feeding_type)
+        db.session.commit()
 
         flash('Deleted feeding type successfully!', 'success')
         current_app.logger.info(f"Deleted feeding type with id: {id} !")
@@ -92,18 +94,19 @@ def ft_delete(id):
     
 @settings_bp.route('/ht_edit/<int:id>', methods=['POST','GET'])
 def ht_edit(id):
+
+    history_type = HistoryType.query.filter(HistoryType.id==id).first()
+
     if request.method == 'GET':
-        return jsonify({'htmlresponse': render_template('ht_edit.html', data=db_fetch(f"SELECT * FROM history_type WHERE id={ id }", False))})
+        return jsonify({'htmlresponse': render_template('ht_edit.html', data=history_type)})
     
     elif request.method == 'POST':
         history = request.form
-        name = history['ht_name']
-        note = history['ht_note']
+        history_type.name = history['ht_name']
+        history_type.note = history['ht_note']
 
-        query = "UPDATE history_type " \
-                    f"SET name='{name}', note='{note}'" \
-                    f"WHERE id='{ id }'"
-        db_update(query)
+        db.session.add(history_type)
+        db.session.commit()
 
         flash('Changes to history type saved!', 'success')
         current_app.logger.info(f"Modified history type with id: {id} !")
@@ -116,14 +119,11 @@ def ht_add():
 
     elif request.method == 'POST':
         data = request.form
-        name = data['ht_name']
-        note = data['ht_note']
+        history_type = HistoryType(name=data['ht_name'],
+                                    note=data['ht_note'])
+        db.session.add(history_type)
+        db.session.commit()
         
-        query = "INSERT INTO history_type " \
-                    "(name, note)" \
-                    f"VALUES ('{name}', '{note}')"
-        db_update(query)
-
         flash('Added history type successfully!', 'success')
         current_app.logger.info("Added history type !")
 
@@ -133,7 +133,9 @@ def ht_add():
 def ht_delete(id):
     if request.method == 'POST': 
         # Delete data into the database
-        db_update(f"DELETE FROM history_type WHERE id={ id }")
+        history_type = HistoryType.query.get_or_404(id)
+        db.session.delete(history_type)
+        db.session.commit()
 
         flash('Deleted history type successfully!', 'success')
         current_app.logger.info(f"Deleted history type with id: {id} !")
@@ -142,19 +144,20 @@ def ht_delete(id):
     
 @settings_bp.route('/at_edit/<int:id>', methods=['POST','GET'])
 def at_edit(id):
+
+    animal_type = AnimalType.query.filter(AnimalType.id==id).first()
+
     if request.method == 'GET':
-        return jsonify({'htmlresponse': render_template('at_edit.html', data=db_fetch(f"SELECT * FROM animal_type WHERE id={ id }", False))})
+        return jsonify({'htmlresponse': render_template('at_edit.html', data=animal_type)})
     
     elif request.method == 'POST':
         data = request.form
-        name = data['at_name']
-        f_min = data['at_f_min']
-        f_max = data['at_f_max']
+        animal_type.name = data['at_name']
+        animal_type.f_min = data['at_f_min']
+        animal_type.f_max = data['at_f_max']
 
-        query = "UPDATE animal_type " \
-                    f"SET name='{name}', f_min='{f_min}', f_max='{f_max}'" \
-                    f"WHERE id='{ id }'"
-        db_update(query)
+        db.session.add(animal_type)
+        db.session.commit()
 
         flash('Changes to animal type saved!', 'success')
         current_app.logger.info(f"Modified animal type with id: {id} !")
@@ -175,12 +178,13 @@ def at_add():
             f_min = 0
 
         if f_max == "":
-            f_max = 0  
-        
-        query = "INSERT INTO animal_type " \
-                    "(name, f_min, f_max)" \
-                    f"VALUES ('{name}', '{f_min}', '{f_max}')"
-        db_update(query)
+            f_max = 0 
+
+        animal_type = AnimalType(name=name,
+                                f_min=f_min,
+                                f_max=f_max)
+        db.session.add(animal_type)
+        db.session.commit()
 
         flash('Added animal type successfully!', 'success')
         current_app.logger.info("Added animal type !")
@@ -191,7 +195,9 @@ def at_add():
 def at_delete(id):
     if request.method == 'POST': 
         # Delete data into the database
-        db_update(f"DELETE FROM animal_type WHERE id={ id }")
+        animal_type = AnimalType.query.get_or_404(id)
+        db.session.delete(animal_type)
+        db.session.commit()
 
         flash('Deleted animal type successfully!', 'success')
         current_app.logger.info(f"Deleted animal type with id: {id} !")

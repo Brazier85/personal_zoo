@@ -6,7 +6,12 @@ history_bp = Blueprint("history", __name__, template_folder="templates")
 @history_bp.route('/get_all/<int:id>', methods=['POST','GET'])
 def get_all(id):
     if request.method == 'GET':
-        return render_template('history_all.html', history=get_hd(None, id))
+        less = request.args.get('less')
+        if (less):
+            history=get_hd(None,id,5)
+        else:
+            history=get_hd(None,id)
+        return render_template('history_all.html', history=history)
     
 
 @history_bp.route('/add/<int:id>', methods=['POST','GET'])

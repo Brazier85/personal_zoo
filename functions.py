@@ -53,7 +53,7 @@ def get_ht():
     return HistoryType.query.all()
 
 def get_at():
-    return db_fetch("SELECT id, name, f_min, f_max FROM animal_type ORDER BY name ASC")
+    return AnimalType.query.all()
 
 def get_nf():
     return db_fetch("SELECT id, date, message, interval FROM notifications ORDER BY DATE")
@@ -132,7 +132,8 @@ def get_ad(id=None):
             'image': vAnimal.image,
             'background_color': vAnimal.background_color,
             'f_min': vAnimalType.f_min,
-            'f_max': vAnimalType.f_max
+            'f_max': vAnimalType.f_max,
+            'updated_date': vAnimal.updated_date
         }
         return animal
     else:
@@ -150,7 +151,8 @@ def get_ad(id=None):
                 'image': vAnimal.image,
                 'background_color': vAnimal.background_color,
                 'f_min': vAnimalType.f_min,
-                'f_max': vAnimalType.f_max
+                'f_max': vAnimalType.f_max,
+                'updated_date': vAnimal.updated_date
             })
         print(animals)
         return animals
@@ -158,13 +160,13 @@ def get_ad(id=None):
 def get_setting(name=None):
     if (name == None):
         settings = {}
-        settings_list = db_fetch("SELECT id, setting, value, name, description FROM settings")
+        settings_list = Settings.query.add_columns(Settings.id, Settings.setting, Settings.value, Settings.name, Settings.description).all()
         for setting in settings_list:
-            settings.update({setting[1]:[ setting[2], setting[3], setting[4] ]})
+            settings.update({setting.setting:[ setting.value, setting.name, setting.description ]})
         return settings
     else:
-        setting = db_fetch(f"SELECT value FROM settings WHERE setting = '{ name }'", False)
-        return setting[0]
+        setting = Settings.query.filter(Settings.setting==name).add_columns(Settings.value).first()
+        return setting.value
 
 def send_mail():
     EMAIL = os.getenv("PZOO_EMAIL")

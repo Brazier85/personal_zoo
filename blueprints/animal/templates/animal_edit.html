@@ -1,12 +1,12 @@
 <div class="card" style="background-color: white;">
   <div class="card-header">
-      <h3>Edit {{ data[1] }}</h3>
+      <h3>Edit {{ data.name }}</h3>
   </div>
-  <form action="{{ url_for('animal.edit', id=data[0]) }}" method="post" enctype="multipart/form-data">
+  <form action="{{ url_for('animal.edit', id=data.id) }}" method="post" enctype="multipart/form-data">
     <div class="card-body">
       <div class="mb-3">
           <label for="name" class="form-label">Name</label>
-          <input type="text" class="form-control" id="name" name="name" value="{{ data[1] }}">
+          <input type="text" class="form-control" id="name" name="name" value="{{ data.name }}">
       </div>
       <div class="row">
           <div class="col">
@@ -14,7 +14,7 @@
                   <label for="art" class="form-label">Type</label>
                   <select class="form-select" id="art" name="art" required>
                     {% for row in animal_types %}
-                        <option value="{{ row[0] }}" {% if row[0]|int == data[2]|int %}selected{% endif %}>{{ row[1] }}</option>
+                        <option value="{{ row.id }}" {% if row.id|int == data.art|int %}selected{% endif %}>{{ row.name }}</option>
                     {% endfor %}
                   </select>
               </div>
@@ -22,7 +22,7 @@
             <div class="col">
               <div class="mb-3">
                   <label for="morph" class="form-label">Morph</label>
-                  <input type="text" class="form-control" id="morph" name="morph" value="{{ data[3] }}">
+                  <input type="text" class="form-control" id="morph" name="morph" value="{{ data.morph }}">
               </div>
           </div>
       </div>
@@ -31,40 +31,40 @@
           <div class="mb-3">
               <label for="gender" class="form-label">Gender</label>
               <select class="form-select" id="gender" name="gender">
-                  <option value="male" {% if data[4] == 'male' %}selected{% endif %}>Male</option>
-                  <option value="female" {% if data[4] == 'female' %}selected{% endif %}>Female</option>
-                  <option value="other" {% if data[4] == 'other' %}selected{% endif %}>Other</option>
+                  <option value="male" {% if data.gender == 'male' %}selected{% endif %}>Male</option>
+                  <option value="female" {% if data.gender == 'female' %}selected{% endif %}>Female</option>
+                  <option value="other" {% if data.gender == 'other' %}selected{% endif %}>Other</option>
               </select>
           </div>
         </div>
         <div class="col">
           <div class="mb-3">
               <label for="birth" class="form-label">Birth</label>
-              <input type="text" class="form-control" id="birth" name="birth" value="{{ data[5] }}">
+              <input type="text" class="form-control" id="birth" name="birth" value="{{ data.birth}}">
           </div>
         </div>
       </div>
       <div class="mb-3">
           <label for="notes" class="form-label">Notes</label>
-          <textarea class="form-control" id="notes" name="notes" rows="3">{{ data[6] }}</textarea>
+          <textarea class="form-control" id="notes" name="notes" rows="3">{{ data.notes }}</textarea>
       </div>
       <div class="row">
         <div class="col">
           <div class="mb-3">
               <label for="image" class="form-label">New Image</label>
               <input type="file" accept="image/*" class="form-control" id="image" name="image">
-              <input type="hidden" name="current_image" value="{{ data[7] }}">
+              <input type="hidden" name="current_image" value="{{ data.image }}">
           </div>
           <div class="mb-3">
             <label for="background-color" class="form-label">Background Color</label>
-            <input type="color" class="form-control" id="background-color" name="background-color"  value="{{ data[8] }}">
+            <input type="color" class="form-control" id="background-color" name="background-color"  value="{{ data.background_color }}">
           </div>
         </div>
       </div>
     </div>
     <div class="modal-footer">
       <div pos="start">
-        <button type="button" data-id="{{ data[0] }}" class="btn btn-danger text-left animal_delete_button">Delete</button>
+        <button type="button" data-id="{{ data.id }}" class="btn btn-danger text-left animal_delete_button">Delete</button>
       </div>
       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       <button type="submit" class="btn btn-primary">Save</button>

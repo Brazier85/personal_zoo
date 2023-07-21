@@ -1,24 +1,24 @@
 {% extends 'base_print.html' %}
 
-{% block title %}Animal | Print | {{ data[1] }}{% endblock %}
+{% block title %}Animal | Print | {{ animal.name }}{% endblock %}
 
 {% block content %}
 
-{% set image = url_for("uploaded_file", filename=data[7]) %}
+{% set image = url_for("uploaded_file", filename=animal.image) %}
 
 <div class="d-flex flex-row rounded" style="background-color: #d7d7d7; padding: 5px;">
     <div class="animal-image"><!---->
-        <img src="{{ image }}"  style="border-color: {{ data[8] }} !important;">
+        <img src="{{ image }}"  style="border-color: {{ animal.background_color }} !important;">
     </div>
     <div class="px-4">
         <div>
-            <h2 class="d-inline">{{ data[1] }}</h2>
+            <h2 class="d-inline">{{ animal.name }}</h2>
             <span class="gender text-center ml-3">
-                <i class="bi {% if data[4] == 'female' %} bi-gender-female female {% else %} bi-gender-male male {% endif %} d-none d-sm-inline-block"></i>
+                <i class="bi {% if animal.gender == 'female' %} bi-gender-female female {% else %} bi-gender-male male {% endif %} d-none d-sm-inline-block"></i>
             </span>
         </div>
-        <div>{{ data[3] }}</div>
-        <div class="text-muted">{{ data[2] }} (*{{ data[5] }})</div>
+        <div>{{ animal.name }}</div>
+        <div class="text-muted">{{ animal.art }} (*{{ animal.birth }})</div>
     </div>
 </div>
 
@@ -40,12 +40,12 @@
                         <th>Size</th>
                     </thead>
                     <tbody>
-                        {% for row in feedings %}
-                        <tr data-id="{{ row[0] }}" class="feeding_edit active_row no-select">
-                            <td>{{ row[5] | fix_date }}</td>
-                            <td>{{ row[3] }}</td>
-                            <td>{{ row[2] }}</td>
-                            <td>{{ row[4] }} {%if row[6] == "weight" %}{{row[7]}}{%endif%}</td>
+                        {% for feeding in feedings %}
+                        <tr data-id="{{ feeding.id }}" class="feeding_edit active_row no-select">
+                            <td>{{ feeding.date | fix_date }}</td>
+                            <td>{{ feeding.count }}</td>
+                            <td>{{ feeding.type }}</td>
+                            <td>{{ feeding.unit }} {%if feeding.ftunit == "weight" %}{{feeding.detail}}{%endif%}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -74,13 +74,13 @@
                             <th>Details</th>
                         </thead>
                         <tbody>
-                            {% for row in history %}
-                            <tr data-id="{{ row[0] }}" class="history_edit">
-                                <td>{{ row[4] | fix_date }}</td>
-                                <td>{{ row[2] }}</td>
-                                <td>{{ row[3] }}</td>
-                            </tr>
-                            {% endfor %}
+                            {% for event in history %}
+                        <tr data-id="{{ event.id }}" class="history_edit active_row no-select">
+                            <td>{{ event.date | fix_date }}</td>
+                            <td>{{ event.name }}</td>
+                            <td>{{ event.text|linebreaksbr|safe }}</td>
+                        </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                     {% else %}
@@ -102,11 +102,11 @@
             </div>
         </div>
         <div class="card-body">
-            <p>{{ data[6] }}</p>
+            <p>{{ animal.notes|linebreaksbr|safe }}</p>
         </div>
         <div class="list-group list-group-clickable"><!----></div>
         <div class="card-footer card-footer-clickable text-right pr-0">
-            <div style="text-transform: uppercase;">Last updated: {{ data[10] | fix_date }}</div>
+            <div style="text-transform: uppercase;">Last updated: {{ animal.updated_date | fix_date }}</div>
         </div>
     </div>
 </div>

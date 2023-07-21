@@ -9,20 +9,24 @@ feeding_bp = Blueprint("feeding", __name__, template_folder="templates")
 def get_units(id):
     if request.method == 'GET':
         value = request.args.get('value', default="")
-        unit_data = db_fetch(f"SELECT unit, detail from feeding_type WHERE id={ id }", False)
+        unit_data = FeedingType.query.filter(FeedingType.id==id).add_columns(FeedingType.unit, FeedingType.detail).first()
         return render_template('feeding_unit.html', unit_data=unit_data, value=value)
 
 @feeding_bp.route('/get_all/<int:id>', methods=['POST','GET'])
 def get_all(id):
     if request.method == 'GET':
-        #feeding_data= db_fetch(f"SELECT f.id as id, f.animal, ft.name, f.count, f.unit, date, ft.unit, ft.detail FROM feeding f LEFT JOIN feeding_type ft ON f.type = ft.id WHERE animal={ id } ORDER BY date DESC")
-        return render_template('feeding_all.html', feedings=get_fd(None,id))
+        less = request.args.get('less')
+        if (less):
+            feedings=get_fd(None,id,5)
+        else:
+            feedings=get_fd(None,id)
+        return render_template('feeding_all.html', feedings=feedings)
 
 @feeding_bp.route('/get_qr/<int:id>')
 def qr_code(id):
-    animal = db_fetch(f"SELECT name FROM animals WHERE id={ id }", False)
+    animal = Animal.query.add_columns(Animal.id, Animal.name).all()
     feed_url = f"{request.url_root}feeding/add/{ id }?external"
-    return render_template('feeding_qr.html', id=id, animal=animal[0], feed_url=feed_url)
+    return render_template('feeding_qr.html', id=id, animal=animal.name, feed_url=feed_url)
 
 @feeding_bp.route('/add/<int:id>', methods=['POST','GET'])
 def add(id):

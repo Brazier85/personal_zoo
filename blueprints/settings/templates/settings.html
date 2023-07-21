@@ -36,7 +36,7 @@
                                     <td>
                                         <select class="form-select form-control" id="weight" name="weight" required>
                                             {% for event_type in ht %}
-                                                <option value="{{ event_type[0] }}" {% if event_type[0]|int == settings["weight_type"][0]|int %} selected {% endif %}>{{ event_type[1] }}</option>
+                                                <option value="{{ event_type.id }}" {% if event_type.id|int == settings["weight_type"][0]|int %} selected {% endif %}>{{ event_type.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </td>
@@ -49,7 +49,7 @@
                                     <td>
                                         <select class="selectpicker form-control" multiple id="feeding_size" name="feeding_size">
                                             {% for animal_type in animal_types %}
-                                                <option value="{{ animal_type[0] }}" {% if animal_type[0]|string in settings["feeding_size"][0]|string %} selected {% endif %}>{{ animal_type[1] }}</option>
+                                                <option value="{{ animal_type.id }}" {% if animal_type.id|string in settings["feeding_size"][0]|string %} selected {% endif %}>{{ animal_type.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </td>
@@ -81,11 +81,11 @@
                             <th>Feeding size max</th>
                         </thead>
                         <tbody>
-                            {% for row in animal_types %}
-                            <tr data-id="{{ row[0] }}" class="at_edit active_row">
-                                <td>{{ row[1] }}</td>
-                                <td>{% if row[2] > 0 %} {{ row[2] }}% {% else %} - {% endif %}</td>
-                                <td>{% if row[3] > 0 %} {{ row[3] }}% {% else %} - {% endif %}</td>
+                            {% for type in animal_types %}
+                            <tr data-id="{{ type.id }}" class="at_edit active_row">
+                                <td>{{ type.name }}</td>
+                                <td>{% if type.f_min > 0 %} {{ type.f_min }}% {% else %} - {% endif %}</td>
+                                <td>{% if type.f_max > 0 %} {{ type.f_max }}% {% else %} - {% endif %}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -116,11 +116,11 @@
                             <th>Detail</th>
                         </thead>
                         <tbody>
-                            {% for row in feeding_types %}
-                            <tr data-id="{{ row[0] }}" class="ft_edit active_row">
-                                <td>{{ row[1] }}</td>
-                                <td>{{ row[2] }}</td>
-                                <td>{{ row[3] }}</td>
+                            {% for type in feeding_types %}
+                            <tr data-id="{{ type.id }}" class="ft_edit active_row">
+                                <td>{{ type.name }}</td>
+                                <td>{{ type.unit }}</td>
+                                <td>{{ type.detail }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -148,10 +148,10 @@
                             <th>Note</th>
                         </thead>
                         <tbody>
-                            {% for row in history_types %}
-                            <tr data-id="{{ row[0] }}" class="ht_edit active_row">
-                                <td>{{ row[1] }}</td>
-                                <td>{{ row[2] }}</td>
+                            {% for type in history_types %}
+                            <tr data-id="{{ type.id }}" class="ht_edit active_row">
+                                <td>{{ type.name }}</td>
+                                <td>{{ type.note }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

@@ -19,8 +19,8 @@
                     <div class="mb-3">
                         <label for="art" class="form-label">Type</label>
                         <select class="form-select" id="art" name="art" required>
-                        {% for row in animal_types %}
-                            <option value="{{ row[0] }}" >{{ row[1] }}</option>
+                        {% for type in animal_types %}
+                            <option value="{{ type.id }}" >{{ type.name }}</option>
                         {% endfor %}
                         </select>
                     </div>
