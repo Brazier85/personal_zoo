@@ -24,7 +24,7 @@ def get_all(id):
 
 @feeding_bp.route('/get_qr/<int:id>')
 def qr_code(id):
-    animal = Animal.query.add_columns(Animal.id, Animal.name).all()
+    animal = Animal.query.filter(Animal.id==id).add_columns(Animal.id, Animal.name).first()
     feed_url = f"{request.url_root}feeding/add/{ id }?external"
     return render_template('feeding_qr.html', id=id, animal=animal.name, feed_url=feed_url)
 
