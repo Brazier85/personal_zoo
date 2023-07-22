@@ -30,9 +30,18 @@
   --zoo-green: #29a039
 }
 
+:root[data-bs-theme=light] {
+  --body-bg: #d7d7d7;
+  --body-bg-rgb: 215, 215, 215;
+}
+
+:root[data-bs-theme=dark] {
+  --body-bg: #4d4c4c;
+  --body-bg-rgb: rgb(77, 76, 76);
+}
+
 .navbar {
-  --bs-navbar-hover-color: var(--zoo-green);
-  --bs-navbar-active-color: var(--zoo-green);
+  background-color: var(--zoo-green);;
 }
 
 .active {
@@ -68,8 +77,8 @@ html, body {
 /* background: #FCEEB5; */
 font-family: PersonalZoo, Arial, Verdana, sans-serif;
 font-size: 14px;
-background-color: #d7d7d7;
 height: 100%;
+background-color: var(--body-bg);
 }
 
 .center {
@@ -80,30 +89,30 @@ left: 50%;
 }
 
 .print_card {
-width: 650px;
-height: 250px;
-background-color: #d7d7d7;
-/* background: linear-gradient(#e9e3e3, #fff); */
-/* box-shadow: 0 8px 16px -8px rgba(0,0,0,0.4); */
-border-radius: 10px;
-border-color: black;
-border-width: 2px;
-border-style: solid;
-overflow: hidden;
-position: relative;
-margin: 1.5rem;
-font-size: 15px;
+  width: 650px;
+  height: 250px;
+  background-color: #d7d7d7;
+  /* background: linear-gradient(#e9e3e3, #fff); */
+  /* box-shadow: 0 8px 16px -8px rgba(0,0,0,0.4); */
+  border-radius: 10px;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  overflow: hidden;
+  position: relative;
+  margin: 1.5rem;
+  font-size: 15px;
 }
 
 .print_card h1 {
-display: block;
-text-align: center;
-font-size: 2em;
-font-weight: bold;
-margin-block-start: 0.67em;
-margin-block-end: 0.67em;
-margin-inline-start: 0px;
-margin-inline-end: 0px;
+  display: block;
+  text-align: center;
+  font-size: 2em;
+  font-weight: bold;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
 }
 
 .print_card p {
@@ -115,43 +124,43 @@ margin-inline-end: 0px;
 }
 
 .print_card .user-card {
-width: 250px;
-height: 100%;
-position: absolute;
-overflow: hidden;
-z-index: 2;
-/*background: linear-gradient(#dE685E, #EE786E);*/
-/*background-color: #dE685E;*/
-background-color: rgb(49, 47, 47);
+  width: 250px;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+  z-index: 2;
+  /*background: linear-gradient(#dE685E, #EE786E);*/
+  /*background-color: #dE685E;*/
+  background-color: rgb(49, 47, 47);
 }
 
 .print_card .user-card img {
-width: 220px;
-height: 220px;
-border-radius: 50%;
-display: block;
-margin-left: auto;
-margin-right: auto;
-margin-top: 15px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
 }
 
 .print_card .general {
-width: 400px;
-height: 100%;
-position: absolute;
-top: 0;
-right: 0;
-z-index: 1;
-box-sizing: border-box;
-padding: 1rem;
-padding-top: 0;
+  width: 400px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  padding: 1rem;
+  padding-top: 0;
 }
 
 .print_card .general .more {
-position: absolute;
-bottom: 1rem;
-right: 1rem;
-font-size: 10px;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 10px;
 }
 
 .tbl_title {
@@ -160,14 +169,14 @@ font-size: 10px;
 }
 
 .buttons {
-    float: left;
-    width: 100%;
+  float: left;
+  width: 100%;
 }
 
 .img-cover{
-    object-fit: cover;
-    object-position: center;
-  }
+  object-fit: cover;
+  object-position: center;
+}
 
 .card img {
   width: 50%;
@@ -250,7 +259,7 @@ font-size: 10px;
 
 .card .card-header {
   align-items: stretch;
-  background-color: #fff!important;
+  
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   display: flex;
@@ -281,7 +290,7 @@ font-size: 10px;
   margin: 0;
   padding-left: 0.75rem!important;
   padding-right: 0.75rem!important;
-  -webkit-text-stroke: 1px;
+  /* -webkit-text-stroke: 1px; */
 }
 
 .flex-grow {
@@ -314,4 +323,8 @@ font-size: 10px;
 .active_row:hover {
   border-left: #29a039 solid 5px;
   cursor: pointer;
+}
+
+button[data-id="animals"] {
+  border: var(--bs-border-width) solid var(--bs-border-color);
 }

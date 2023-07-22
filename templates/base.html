@@ -16,6 +16,9 @@
     <!-- MomentJS -->
     <script src="{{ url_for('static', filename='js/moment-with-locales.js') }}"></script>
 
+    <!-- ColorMode -->
+    <script src="{{ url_for('static', filename='js/color_mode.js') }}"></script>
+
     <!-- mobile render fix -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -23,9 +26,9 @@
     {% block head %}{% endblock %}
 </head>
 <body class="d-flex flex-column h-100">
-    <nav class="navbar fixed-top navbar-expand-lg bg-light no-print ">
+    <nav class="navbar fixed-top navbar-expand-lg no-print">
         <div class="container">
-            <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='images/logo-no-background.svg') }}" alt="Logo" height="24" class="d-inline-block align-text-top"></a>
+            <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='images/logo-no-background.svg') }}" alt="Logo" height="24" class="d-inline-block align-text-top nav-logo"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -48,6 +51,39 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if location == 'settings' %}active{% endif %}" href="/settings"><i class="bi bi-gear-fill"></i> Settings</a>
+                    </li>
+                </ul>
+                
+
+                <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+                    <li class="nav-item dropdown">
+                      <button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (dark)">
+                        <i class="theme-icon-active bi bi-moon-stars-fill"><use href="bi-moon-stars-fill"></use></i>
+                        <span class="d-lg-none ms-2" id="bd-theme-text">Toggle theme</span>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+                        <li>
+                          <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                            <i class="bi bi-sun-fill"><use href="bi-sun-fill"></use></i>
+                            Light
+                            <i class="bi bi-check2 ms-auto d-none"></i>
+                          </button>
+                        </li>
+                        <li>
+                          <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="dark" aria-pressed="true">
+                            <i class="bi bi-moon-stars-fill"><use href="bi-moon-stars-fill"></use></i>
+                            Dark
+                            <i class="bi bi-check2 ms-auto d-none"></i>
+                          </button>
+                        </li>
+                        <li>
+                          <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="false">
+                            <i class="bi bi-circle-half"><use href="bi-circle-half"></use></i>
+                            Auto
+                            <i class="bi bi-check2 ms-auto d-none"></i>
+                          </button>
+                        </li>
+                      </ul>
                     </li>
                 </ul>
             </div>
@@ -80,11 +116,11 @@
     <!-- spacer for nav -->
     <div class="no-print" style="margin-top: 10px;"></div>
 
-    <footer class="footer mt-auto bg-light text-center text-lg-start">
+    <footer class="footer mt-auto text-center text-lg-start">
         <!-- Copyright -->
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
             © {{ momentjs().format('YYYY') }} Copyright:
-            <a class="text-dark" target="_blank" href="https://personal-zoo.com/">personal-zoo.com</a>
+            <a target="_blank" href="https://personal-zoo.com/">personal-zoo.com</a>
         </div>
         <!-- Copyright -->
     </footer>
