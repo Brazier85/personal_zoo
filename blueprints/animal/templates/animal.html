@@ -51,24 +51,26 @@
             </div>
             <div class="card-body feeding_card">
                 {% if feedings %}
-                <table class="table table-striped m-0">
-                    <thead>
-                        <th class="w-25">Date</th>
-                        <th>Count</th>
-                        <th>Type</th>
-                        <th>Size</th>
-                    </thead>
-                    <tbody>
-                        {% for feeding in feedings %}
-                        <tr data-id="{{ feeding.id }}" class="feeding_edit active_row no-select">
-                            <td>{{ feeding.date | fix_date }}</td>
-                            <td>{{ feeding.count }}</td>
-                            <td>{{ feeding.type }}</td>
-                            <td>{{ feeding.unit }} {%if feeding.ftunit == "weight" %}{{feeding.detail}}{%endif%}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                <div class="feeding_card_table">
+                    <table class="table table-striped m-0">
+                        <thead>
+                            <th class="w-25">Date</th>
+                            <th>Count</th>
+                            <th>Type</th>
+                            <th>Size</th>
+                        </thead>
+                        <tbody>
+                            {% for feeding in feedings %}
+                            <tr data-id="{{ feeding.id }}" class="feeding_edit active_row no-select">
+                                <td>{{ feeding.date | fix_date }}</td>
+                                <td>{{ feeding.count }}</td>
+                                <td>{{ feeding.type }}</td>
+                                <td>{{ feeding.unit }} {%if feeding.ftunit == "weight" %}{{feeding.detail}}{%endif%}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                 {% else %}
                     <p class="mb-0">No feedings found!</p>
                 {% endif %}
@@ -176,7 +178,7 @@
                 url: url,
                 type: 'get',
                 success: function(data){
-                    $('.feeding_card').html(data);
+                    $('.feeding_card_table').html(data);
                 }
             })
         });
@@ -193,7 +195,6 @@
                 $('.feeding_delete_button').click(function(){
                     var feed_id = $(this).data('id');
                     if (confirm("Are You Sure ?")) {
-                        alert(feed_id);
                         $.ajax({
                                 url: '/feeding/delete/'+feed_id,
                                 type: 'post',

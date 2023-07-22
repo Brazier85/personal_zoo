@@ -88,6 +88,7 @@ def get_ad(id=None):
             'id': vAnimal.id,
             'name': vAnimal.name,
             'art': vAnimalType.name,
+            'art_id': vAnimalType.id,
             'morph': vAnimal.morph,
             'gender': vAnimal.gender,
             'birth': vAnimal.birth,

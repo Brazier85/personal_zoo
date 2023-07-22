@@ -31,11 +31,11 @@ def animal(id):
     
     feeding_size = ""
     setting_feeding_size = json.loads(get_setting("feeding_size"))
-    if str(animal_data["art"]) in setting_feeding_size:
+    if str(animal_data["art_id"]) in setting_feeding_size:
         # Calculate feeding size 
         if weight_number > 0:
-            f_min_value = animal_data.f_min
-            f_max_value = animal_data.f_max
+            f_min_value = animal_data['f_min']
+            f_max_value = animal_data['f_max']
             percent = lambda part, whole:float(whole) / 100 * float(part)
             feed_min = percent(f_min_value,weight_number)
             feed_max = percent(f_max_value,weight_number)
