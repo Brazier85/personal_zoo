@@ -8,7 +8,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: docker.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository.string.outputs.lowercase }}
+  IMAGE_NAME: brazier85/persona_zoo
 
 jobs:
   build:
