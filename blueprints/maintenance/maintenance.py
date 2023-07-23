@@ -92,7 +92,7 @@ def do_update():
             db_update(query)
         except Exception as e:
             print(f"Error: {e} -> Remove old column")
-            error = error + f"Remove old column 'note' -> Error: {e}\n"
+            error = error + f"Remove old column 'note' from animal_type -> Error: {e}\n"
 
     if db_col_exists("feeding_type","note"):
         try:
@@ -100,7 +100,7 @@ def do_update():
             db_update(query)
         except Exception as e:
             print(f"Error: {e} -> Remove old column")
-            error = error + f"Remove old column 'note' -> Error: {e}\n"
+            error = error + f"Remove old column 'note' from feeding_type -> Error: {e}\n"
 
     # Add new cols
     print("Add new columns")
@@ -110,7 +110,7 @@ def do_update():
             db_update(query)
         except Exception as e:
             print(f"Error: {e}")
-            error = error + f"Add f_min -> Error: {e}\n"
+            error = error + f"Add default_ft to animals -> Error: {e}\n"
 
     # Checking for new defaults
     print("Insert default values")
@@ -119,7 +119,7 @@ def do_update():
         db_update(query)
     except Exception as e:
         print(f"Error: {e}")
-        error = error + f"Add f_max -> Error: {e}\n"
+        error = error + f"Add defaults for animal_type -> Error: {e}\n"
 
     # Done Updateing
     if error != "":
