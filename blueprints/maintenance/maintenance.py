@@ -106,7 +106,7 @@ def do_update():
     print("Add new columns")
     if not db_col_exists("animals","default_ft"):
         try:
-            query= "ALTER TABLE feeding ADD COLUMN default_ft INTEGER"
+            query= "ALTER TABLE animals ADD default_ft INTEGER"
             db_update(query)
         except Exception as e:
             print(f"Error: {e}")
