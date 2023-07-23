@@ -40,9 +40,10 @@
 :root[data-bs-theme=dark] {
   --body-bg: #4d4c4c;
   --body-bg-rgb: rgb(77, 76, 76);
-  --bs-body-color: #eeeaea !important;
+  --animal-head-color: #eeeaea !important;
   --bs-secondary-color: rgb(173, 181, 189);
   --footer-link: #ddd;
+  --footer-color: var(--animal-head-color);
 }
 
 .navbar {
@@ -88,6 +89,7 @@ background-color: var(--body-bg);
 
 footer {
   background-color: var(--zoo-green);
+  color: var(--footer-color);
 }
 
 footer a {
@@ -99,6 +101,10 @@ position: absolute;
 top: 50%;
 left: 50%;
 -webkit-transform: translate(-50%, -50%);
+}
+
+.animal-head {
+  color: var(--animal-head-color)
 }
 
 .print_card {

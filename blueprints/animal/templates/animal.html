@@ -12,7 +12,7 @@
 
 {% set image = url_for("uploaded_file", filename=animal.image) %}
 
-<div class="d-flex flex-row align-items-center flex-wrap mt-3 mb-3">
+<div class="d-flex flex-row align-items-center flex-wrap mt-3 mb-3 animal-head">
     <div class="animal-image"><!---->
         <img class="show_animal_image" src="{{ image }}"  style="border-color: {{ animal.background_color }} !important;">
     </div>
