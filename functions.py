@@ -97,6 +97,7 @@ def get_ad(id=None):
             'background_color': vAnimal.background_color,
             'f_min': vAnimalType.f_min,
             'f_max': vAnimalType.f_max,
+            'default_ft': vAnimal.default_ft,
             'updated_date': vAnimal.updated_date
         }
         return animal
@@ -116,6 +117,7 @@ def get_ad(id=None):
                 'background_color': vAnimal.background_color,
                 'f_min': vAnimalType.f_min,
                 'f_max': vAnimalType.f_max,
+                'default_ft': vAnimal.default_ft,
                 'updated_date': vAnimal.updated_date
             })
         return animals
@@ -204,3 +206,19 @@ def create_folders():
     if not os.path.exists(f"{UPLOAD_FOLDER}/dummy.jpg"):
         print("Copy dummy image")
         copyfile("static/images/dummy.jpg", f"{UPLOAD_FOLDER}/dummy.jpg")
+
+def add_col(table, col, type):
+    conn = sqlite3.connect(DATABASE)
+    c = conn.cursor()
+    exists = None
+    exists = c.execute(f"SELECT COUNT(*) AS column_exists FROM pragma_table_info('{table}') WHERE name='{col}'")
+    print(f"Exist: {exists}")
+    try:
+        conn = sqlite3.connect(DATABASE)
+        c = conn.cursor()
+        c.execute(query)
+        conn.commit()
+        conn.close()
+    except:
+        print("Error creating col")
+

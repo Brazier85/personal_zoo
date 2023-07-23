@@ -68,6 +68,14 @@
                     </div>
                 </div>
             </div>
+            <div class="mb-3">
+                <label for="dft" class="form-label">Default feeding type</label>
+                <select class="form-select" id="dft" name="dft" required>
+                  {% for row in feeding_types %}
+                      <option value="{{ row.id }}">{{ row.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
         </div>
         <div class="card-footer text-end">
             <button type="submit" class="btn btn-primary">Save</button>

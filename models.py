@@ -36,6 +36,7 @@ class Animal(db.Model):
     birth = db.Column(db.String)
     notes = db.Column(db.String)
     image = db.Column(db.String)
+    default_ft = db.Column(db.Integer)
     background_color = db.Column(db.String)
     created_date = db.Column(db.Date, default=datetime.datetime.utcnow)
     updated_date = db.Column(db.Date, default=datetime.datetime.utcnow)

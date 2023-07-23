@@ -167,24 +167,8 @@ def uploaded_file(filename):
 
 # Do update stuff
 @app.route('/update')
-def update():
-
-    error = ""
-
-    print("Running database updates....")
-    exists = None
-    exists = Settings.query.filter(Settings.setting == 'feeding_size').first()
-    if exists == None:
-        print("Insert new setting feeding_size to database")
-        type = Settings(setting='feeding_size', value='[\"1\"]', name='Feeding Size', description='Show feeding size for animal type!')
-        db.session.add(type)
-        db.session.commit()
-
-    if error != "":
-        flash(f"<strong>Error while doing update!</strong>\n\n{error}", 'danger')
-    else:
-        flash("Update done!", 'success')
-    return redirect('/')
+def old_update():
+    return redirect("/maintenance/update")
 
 
 ###############

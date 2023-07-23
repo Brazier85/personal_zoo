@@ -32,11 +32,11 @@ def qr_code(id):
 def add(id):
     if request.method == 'GET':
         external = request.args.get('external')
+        animal = Animal.query.add_columns(Animal.name, Animal.default_ft).filter(Animal.id==id).one()
         if external is None:
-            return render_template('feeding_add.html', id=id, feeding_types=get_ft())
+            return render_template('feeding_add.html', id=id, animal=animal, feeding_types=get_ft())
         else:
-            animal = Animal.query.add_columns(Animal.name).filter(Animal.id==id).one()
-            return render_template('feeding_add_external.html', id=id, animal=animal.name, feeding_types=get_ft())
+            return render_template('feeding_add_external.html', id=id, animal=animal, feeding_types=get_ft())
         
     elif request.method == 'POST':
         feeding = request.form

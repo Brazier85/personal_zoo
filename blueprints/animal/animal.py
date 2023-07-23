@@ -52,7 +52,7 @@ def add():
 
     location = 'add'
     if request.method == 'GET':
-        return render_template('animal_add.html', location=location, animal_types=get_at())
+        return render_template('animal_add.html', location=location, animal_types=get_at(), feeding_types=get_ft())
     
     elif request.method == 'POST':
         name = request.form.get('name')
@@ -63,6 +63,7 @@ def add():
         gender = request.form['gender']
         birth = request.form['birth']
         notes = request.form['notes']
+        default_ft = request.form['dft']
 
         # Check if an image was uploaded
         if image.filename != '':
@@ -83,7 +84,8 @@ def add():
                         background_color=background_color,
                         gender=gender,
                         birth=birth,
-                        notes=notes)
+                        notes=notes,
+                        default_ft=default_ft)
         db.session.add(animal)
         db.session.commit()
 
@@ -96,7 +98,7 @@ def edit(id):
     current_animal = Animal.query.filter(Animal.id==id).first()
 
     if request.method == 'GET':
-        return render_template('animal_edit.html', data=current_animal, animal_types=get_at())
+        return render_template('animal_edit.html', data=current_animal, animal_types=get_at(), feeding_types=get_ft())
     
     elif request.method == 'POST':
         current_animal.name = request.form['name']
@@ -106,6 +108,7 @@ def edit(id):
         current_animal.gender = request.form['gender']
         current_animal.birth = request.form['birth']
         current_animal.notes = request.form['notes']
+        current_animal.default_ft = request.form['dft']
         current_image = request.form['current_image']
 
         # Check if a new image file is provided

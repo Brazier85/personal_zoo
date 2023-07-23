@@ -61,6 +61,14 @@
           </div>
         </div>
       </div>
+      <div class="mb-3">
+        <label for="dft" class="form-label">Default feeding type</label>
+        <select class="form-select" id="dft" name="dft" required>
+          {% for row in feeding_types %}
+              <option value="{{ row.id }}" {% if row.id|int == data.default_ft|int %}selected{% endif %}>{{ row.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
     </div>
     <div class="modal-footer">
       <div pos="start">
