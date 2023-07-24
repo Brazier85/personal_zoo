@@ -81,3 +81,29 @@ class Terrarium(db.Model):
     __tablename__ = 'terrariums'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String)
+    size = db.Column(db.String)
+    type = db.Column(db.Integer)
+    notes = db.Column(db.Text)
+    image = db.Column(db.String)
+
+class TerrariumType(db.Model):
+    __tablename__ = 'terrarium_type'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String)
+
+class TerrariumDetails(db.Model):
+    __tablename__ = 'terrarium_details'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    terrarium = db.Column(db.Integer)
+    name = db.Column(db.String)
+    text = db.Column(db.Text)
+
+class TerrariumLamps(db.Model):
+    __tablename__ = 'terrarium_lamps'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    terrarium = db.Column(db.Integer)
+    type = db.Column(db.String)
+    watt = db.Column(db.Text)
+    changed = db.Column(db.Date)
+
+

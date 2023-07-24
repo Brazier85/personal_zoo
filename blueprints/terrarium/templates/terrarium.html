@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+
+{% block title %}Personal Zoo | {{ terrarium.name }}{% endblock %}
+
+{% block head %}
+<!-- Datatables -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/datatables.min.css') }}">
+<script src="{{ url_for('static', filename='js/datatables.min.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+
+{% set image = url_for("uploaded_file", filename='terrarium/'+terrarium.image) %}
+
+<div class="d-flex flex-row align-items-center flex-wrap mt-3 mb-3 terrarium-head">
+    <div class="terrarium-image"><!---->
+        <img class="show_terrarium_image" src="{{ image }}" />
+    </div>
+    <div class="px-4">
+        <div>
+            <h2 class="d-inline">{{ terrarium.name }}</h2>
+        </div>
+        <div>{{ terrarium.type }}</div>
+        <div class="text-muted">Size: {{ terrarium.size }}</div>
+    </div>
+</div>
+
+<div class="btn-list">
+    <button class="btn rounded-right terrarium_edit_button green_button"><i class="bi bi-pencil-square"></i></button>
+</div>
+
+<div class="row row-cols-1 row-cols-lg-2 g-4">
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header">
+                <div class="flex-grow"> Lamps </div>
+                <div class="btn-list">
+                    <button class="btn rounded-right lamp_add_button green_button"><i class="bi bi-plus"></i></button>
+                </div>
+            </div>
+            <div class="card-body lamp_card">
+                {% if lamps %}
+                <div class="lamp_card_table">
+                    <table class="table table-striped m-0">
+                        <thead>
+                            <th>Type</th>
+                            <th>Watt</th>
+                            <th>Changed</th>
+                        </thead>
+                        <tbody>
+                            {% for lamp in lamps %}
+                            <tr data-id="{{ lamp.id }}" class="lamp_edit active_row no-select">
+                                <td>{{ lamp.type }}</td>
+                                <td>{{ lamp.watt}}</td>
+                                <td>{{ lamp.changed | fix_date }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                    <p class="mb-0">No lamps found!</p>
+                {% endif %}
+            </div>
+            <div class="card-footer card-footer-clickable text-right pr-0 show_all_feedings">
+                <div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header">
+                <div class="flex-grow"> Details </div>
+                <div class="btn-list">
+                    <button class="btn detail_add_button green_button"><i class="bi bi-plus"></i></button>
+                </div>
+            </div>
+            <div class="card-body detail_card">
+                {% if details %}
+                <table class="table table-striped m-0">
+                    <thead>
+                        <th>Name</th>
+                        <th>Text</th>
+                    </thead>
+                    <tbody>
+                        {% for detail in details %}
+                        <tr data-id="{{ detail.id }}" class="detail_edit active_row no-select">
+                            <td>{{ detail.name }}</td>
+                            <td>{{ detail.text|linebreaksbr|safe }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p class="mb-0">No Details found!</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header">
+                <div class="flex-grow"> Notes </div>
+                <div class="btn-list">
+                    <!-- no button -->
+                </div>
+            </div>
+            <div class="card-body">
+                {{ terrarium.notes|linebreaksbr|safe }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Will be loaded later -->
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" >
+    $(document).ready(function(){
+        $('.show_terrarium_image').click(function(){
+            $('.modal-content').html('<div class="modal-body"><img src="{{ image }}" class="rounded img-fluid mx-auto"></div>')
+            $('#modal_details').modal('show'); 
+        });
+    });
+    $('.terrarium_edit_button').on('click',function(){
+        $('.modal-content').load('/terrarium/edit/{{ terrarium.id }}',function(){
+            $('#modal_details').modal('show'); 
+            $('.terrarium_delete_button').click(function(){
+                                var terrarium_id = $(this).data('id');
+                                if (confirm("Are You Sure ?")) {
+                                    $.ajax({
+                                            url: '/terrarium/delete/'+terrarium_id,
+                                            type: 'post',
+                                            data: {terrarium_id: {{ terrarium.id }}},
+                                            success: function(data) {
+                                                window.location.replace("/"); 
+                                            }
+                                        });
+                                }
+                            });
+        });
+    });
+
+    $(document).on("click",".detail_edit",function(){
+        var feed_id = $(this).data('id');
+        $.ajax({
+            url: '/terrarium/detail/edit/'+feed_id,
+            type: 'get',
+            success: function(data){ 
+                $('.modal-content').html(data); 
+                $('.modal-content').append(data.htmlresponse);
+                $('#modal_details').modal('show');
+                $('.detail_delete_button').click(function(){
+                    var feed_id = $(this).data('id');
+                    if (confirm("Are You Sure ?")) {
+                        $.ajax({
+                                url: '/terrarium/detail/delete/'+feed_id,
+                                type: 'post',
+                                data: {terrarium_id: {{ terrarium.id }}},
+                                success: function(data) {
+                                    location.reload(true); 
+                                }
+                            });
+                    }
+                });
+            }
+        });
+    });
+
+    $(document).on("click",".lamp_edit",function(){
+        var feed_id = $(this).data('id');
+        $.ajax({
+            url: '/terrarium/lamp/edit/'+feed_id,
+            type: 'get',
+            success: function(data){ 
+                $('.modal-content').html(data); 
+                $('.modal-content').append(data.htmlresponse);
+                $('#modal_details').modal('show');
+                $('.lamp_delete_button').click(function(){
+                    var feed_id = $(this).data('id');
+                    if (confirm("Are You Sure ?")) {
+                        $.ajax({
+                                url: '/terrarium/lamp/delete/'+feed_id,
+                                type: 'post',
+                                data: {terrarium_id: {{ terrarium.id }}},
+                                success: function(data) {
+                                    location.reload(true); 
+                                }
+                            });
+                    }
+                });
+            }
+        });
+    });
+
+    $('.detail_add_button').on('click',function(){
+        $('.modal-content').load('/terrarium/detail/add/{{ terrarium.id }}',function(){
+            $('#modal_details').modal('show'); 
+        });
+    });
+
+    $('.lamp_add_button').on('click',function(){
+        $('.modal-content').load('/terrarium/lamp/add/{{ terrarium.id }}',function(){
+            $('#modal_details').modal('show'); 
+        });
+    });
+</script>
+{% endblock %}

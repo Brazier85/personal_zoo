@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Add{% endblock %}
+
+{% block content %}
+<p>&nbsp;</p>
+<div class="card">
+    <div class="card-header">
+        <h3>Add new Terrarium</h3>
+    </div>
+    <form action="{{ url_for('terrarium.add') }}" method="post" enctype="multipart/form-data">
+        <div class="card-body">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="type" class="form-label">Type</label>
+                        <select class="form-select" id="type" name="type" required>
+                        {% for type in terrarium_types %}
+                            <option value="{{ type.id }}" >{{ type.name }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="morph" class="form-label">Size</label>
+                        <input type="text" class="form-control" id="size" name="size">
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="notes" class="form-label">Notes</label>
+                <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+            </div>    
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image:</label>
+                        <input type="file" accept="image/*" class="form-control" id="image" name="image">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-end">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

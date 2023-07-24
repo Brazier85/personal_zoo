@@ -50,7 +50,7 @@ def animal(id):
 @animal_bp.route('/add', methods=['POST','GET'])
 def add():
 
-    location = 'add'
+    location = 'animal_add'
     if request.method == 'GET':
         return render_template('animal_add.html', location=location, animal_types=get_at(), feeding_types=get_ft())
     

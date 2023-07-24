@@ -9,7 +9,7 @@ def settings():
 
     location = 'settings'
 
-    return render_template('settings.html', feeding_types=get_ft(), history_types=get_ht(), ht=get_ht(), settings=get_setting(), animal_types=get_at(), terrariums=get_tr(), location=location)
+    return render_template('settings.html', feeding_types=get_ft(), history_types=get_ht(), ht=get_ht(), settings=get_setting(), animal_types=get_at(), terrarium_types=get_tt(), location=location)
 
 @settings_bp.route('/edit', methods=['POST','GET'])
 def edit():
@@ -204,50 +204,50 @@ def at_delete(id):
 
         return "", 200
     
-@settings_bp.route('/tr_edit/<int:id>', methods=['POST','GET'])
-def tr_edit(id):
+@settings_bp.route('/tt_edit/<int:id>', methods=['POST','GET'])
+def tt_edit(id):
 
-    terrariums = Terrarium.query.filter(Terrarium.id==id).first()
+    terrarium_type = TerrariumType.query.filter(TerrariumType.id==id).first()
 
     if request.method == 'GET':
-        return jsonify({'htmlresponse': render_template('tr_edit.html', data=terrariums)})
+        return jsonify({'htmlresponse': render_template('tt_edit.html', data=terrarium_type)})
     
     elif request.method == 'POST':
-        terrarium = request.form
-        terrariums.name = terrarium['tr_name']
+        data = request.form
+        terrarium_type.name = data['tt_name']
 
-        db.session.add(terrariums)
+        db.session.add(terrarium_type)
         db.session.commit()
 
-        flash('Changes to terrarium saved!', 'success')
-        current_app.logger.info(f"Modified terrarium with id: {id} !")
+        flash('Changes to terrarium type saved!', 'success')
+        current_app.logger.info(f"Modified terrarium type with id: {id} !")
         return redirect("/settings")
     
-@settings_bp.route('/tr_add', methods=['POST','GET'])
-def tr_add():
+@settings_bp.route('/tt_add', methods=['POST','GET'])
+def tt_add():
     if request.method == 'GET':
-        return render_template('tr_add.html')
+        return render_template('tt_add.html')
 
     elif request.method == 'POST':
         data = request.form
-        terrarium = Terrarium(name=data['tr_name'])
-        db.session.add(terrarium)
+        terrarium_type = TerrariumType(name=data['tt_name'])
+        db.session.add(terrarium_type)
         db.session.commit()
         
-        flash('Added terrarium successfully!', 'success')
+        flash('Added terrarium type successfully!', 'success')
         current_app.logger.info("Added terrarium type !")
 
         return redirect("/settings")
     
-@settings_bp.route('/tr_delete/<int:id>', methods=['POST'])
-def tr_delete(id):
+@settings_bp.route('/tt_delete/<int:id>', methods=['POST'])
+def tt_delete(id):
     if request.method == 'POST': 
         # Delete data into the database
-        terrarium = Terrarium.query.get_or_404(id)
-        db.session.delete(terrarium)
+        terrarium_type = TerrariumType.query.get_or_404(id)
+        db.session.delete(terrarium_type)
         db.session.commit()
 
-        flash('Deleted terrarium successfully!', 'success')
-        current_app.logger.info(f"Deleted terrarium with id: {id} !")
+        flash('Deleted terrarium type successfully!', 'success')
+        current_app.logger.info(f"Deleted terrarium type with id: {id} !")
 
         return "", 200

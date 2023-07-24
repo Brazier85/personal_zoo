@@ -21,9 +21,6 @@ def get_ht():
 def get_at():
     return AnimalType.query.all()
 
-def get_tr():
-    return Terrarium.query.all()
-
 def get_hd(id=None, animal_id=None, limit=None):
     if id:
         event_with_type = db.session.query(History, HistoryType).join(HistoryType, HistoryType.id == History.event).filter(History.animal == animal_id).first()
@@ -127,6 +124,51 @@ def get_ad(id=None):
             })
         return animals
 
+def get_tt():
+    return TerrariumType.query.all()
+
+def get_td(id=None, terrarium_id=None):
+    if id:
+        return TerrariumDetails.query.filter(TerrariumDetails.terrarium == terrarium_id).first()
+    else:
+        return TerrariumDetails.query.filter(TerrariumDetails.terrarium == terrarium_id).order_by(TerrariumDetails.name.desc()).order_by(TerrariumDetails.text.asc()).all()
+    
+def get_tl(id=None, terrarium_id=None):
+    if id:
+        return TerrariumLamps.query.filter(TerrariumLamps.terrarium == terrarium_id).first()
+    else:
+        return TerrariumLamps.query.filter(TerrariumLamps.terrarium == terrarium_id).order_by(TerrariumLamps.type.desc()).all() 
+
+def get_tr(id=None):
+    if id:
+        terrarium_with_type = db.session.query(Terrarium, TerrariumType).join(TerrariumType, TerrariumType.id == Terrarium.type).filter(Terrarium.id==id).first()
+        vTerrarium = terrarium_with_type[0]
+        vTerrariumType = terrarium_with_type[1]
+        terrarium = {
+            'id': vTerrarium.id,
+            'name': vTerrarium.name,
+            'size': vTerrarium.size,
+            'type_id': vTerrariumType.id,
+            'type': vTerrariumType.name,
+            'notes': vTerrarium.notes,
+            'image': vTerrarium.image
+        }
+        return terrarium
+    else:
+        terrariums_with_type = db.session.query(Terrarium, TerrariumType).join(TerrariumType, TerrariumType.id == Terrarium.type).all()   
+        terrariums = []
+        for vTerrarium, vTerrariumType in terrariums_with_type:
+            terrariums.append({
+                'id': vTerrarium.id,
+                'name': vTerrarium.name,
+                'size': vTerrarium.size,
+                'type_id': vTerrariumType.id,
+                'type': vTerrariumType.name,
+                'notes': vTerrarium.notes,
+                'image': vTerrarium.image
+            })
+        return terrariums
+
 def get_setting(name=None):
     if (name == None):
         settings = {}
@@ -202,11 +244,25 @@ def insert_defaults():
         db.session.add(type)
         db.session.commit()
 
+    # Add animal defaults
+    terrarium_types = TerrariumType.query.all()
+    if terrarium_types == []:
+        # Insert base data
+        type = TerrariumType(name='Tropical')
+        db.session.add(type)
+        type = TerrariumType(name='Desert')
+        db.session.add(type)
+        db.session.commit()
+
 
 def create_folders():
     if not os.path.exists(UPLOAD_FOLDER):
         print("Create upload folder")
         os.makedirs(UPLOAD_FOLDER)
+
+    if not os.path.exists(f"{UPLOAD_FOLDER}/terrariums"):
+        print("Create terrarium upload folder")
+        os.makedirs(f"{UPLOAD_FOLDER}/terrariums")
 
     if not os.path.exists(f"{UPLOAD_FOLDER}/dummy.jpg"):
         print("Copy dummy image")

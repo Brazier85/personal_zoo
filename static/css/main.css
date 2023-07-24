@@ -229,6 +229,21 @@ left: 50%;
   width: 50px;
 }
 
+.terrarium-image img {
+  background: #ccc;
+  border: 1px solid #fff;
+  height: 100px;
+  position: relative;
+  width: 200px;
+}
+
+.terrarium-image-small img {
+  background: #ccc;
+  border: 1px solid #fff;
+  height: 50px;
+  position: relative;
+  width: 100px;
+}
 
 .card-animal-image img {
   background: #ccc;

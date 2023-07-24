@@ -16,6 +16,7 @@ from momentjs import momentjs
 
 # Import Blueprints
 from blueprints.animal.animal import animal_bp
+from blueprints.terrarium.terrarium import terrarium_bp
 from blueprints.feeding.feeding import feeding_bp
 from blueprints.history.history import history_bp
 from blueprints.settings.settings import settings_bp
@@ -77,6 +78,7 @@ app.register_blueprint(animal_bp, url_prefix="/animal")
 app.register_blueprint(feeding_bp, url_prefix="/feeding")
 app.register_blueprint(history_bp, url_prefix="/history")
 app.register_blueprint(settings_bp, url_prefix="/settings")
+app.register_blueprint(terrarium_bp, url_prefix="/terrarium")
 app.register_blueprint(maintenance_bp, url_prefix="/maintenance")
 
 @app.errorhandler(Exception)
@@ -104,7 +106,10 @@ def logAfterRequest(response):
 
 @app.template_filter(name='linebreaksbr')
 def linebreaksbr_filter(text):
-    return text.replace('\n', '<br \>')
+    try:
+        return text.replace('\n', '<br \>')
+    except:
+        return text
 
 @app.template_filter(name='fix_date')
 def fix_date_filter(text):
@@ -140,7 +145,7 @@ def home():
     if order == None:
         order = "name"
 
-    return render_template('home.html', data=get_ad(), feeding_types=get_ft(), location=location)
+    return render_template('home.html', animals=get_ad(), feeding_types=get_ft(), terrariums=get_tr(), location=location)
 
 # Route for printing
 @app.route('/print')

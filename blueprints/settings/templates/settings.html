@@ -169,27 +169,27 @@
         <div class="mb-3">
             <div class="card">
                 <div class="card-header">
-                    <div class="flex-grow"> Terrariums </div>
+                    <div class="flex-grow"> Terrarium Types </div>
                     <div class="btn-list">
-                        <button class="btn rounded-right tr_add_button green_button"><i class="bi bi-plus"></i></button>
+                        <button class="btn rounded-right tt_add_button green_button"><i class="bi bi-plus"></i></button>
                     </div>
                 </div>
                 <div class="card-body terrarium_card">
-                    {% if terrariums %}
+                    {% if terrarium_types %}
                     <table class="table table-striped m-0">
                         <thead>
                             <th class="w-50">Name</th>
                         </thead>
                         <tbody>
-                            {% for type in terrariums %}
-                            <tr data-id="{{ type.id }}" class="tr_edit active_row">
+                            {% for type in terrarium_types %}
+                            <tr data-id="{{ type.id }}" class="tt_edit active_row">
                                 <td>{{ type.name }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                     {% else %}
-                        <p>No terrarium found!</p>
+                        <p>No Terrarium types found!</p>
                     {% endif %}
                 </div>
                 <div class="card-footer text-right pr-0">
@@ -284,10 +284,10 @@
             }
         });
     });
-    $(document).on("click",".tr_edit",function(){
+    $(document).on("click",".tt_edit",function(){
         var feed_id = $(this).data('id');
         $.ajax({
-            url: '/settings/tr_edit/'+feed_id,
+            url: '/settings/tt_edit/'+feed_id,
             type: 'get',
             success: function(data){ 
                 $('.modal-content').html(data); 
@@ -297,7 +297,7 @@
                     var feed_id = $(this).data('id');
                     if (confirm("Are You Sure ?")) {
                         $.ajax({
-                                url: '/settings/tr_delete/'+feed_id,
+                                url: '/settings/tt_delete/'+feed_id,
                                 type: 'post',
                                 data: {},
                                 success: function(data) {
@@ -324,8 +324,8 @@
             $('#modal_details').modal('show'); 
         });
     });
-    $('.tr_add_button').on('click',function(){
-        $('.modal-content').load('/settings/tr_add',function(){
+    $('.tt_add_button').on('click',function(){
+        $('.modal-content').load('/settings/tt_add',function(){
             $('#modal_details').modal('show'); 
         });
     });

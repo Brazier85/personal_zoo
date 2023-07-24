@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="itemLabel">Add lamp</h5>
+</div>
+<form action="{{ url_for('terrarium.lamp_add', id=data.id) }}" method="post" enctype="multipart/form-data">
+    <div class="modal-body" id="modal-body">
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="lamp_type" class="form-label">Type</label>
+                    <input type="text" class="form-control" id="lamp_type" name="lamp_type" required>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="lamp_watt" class="form-label">Watt</label>
+                    <input type="text" class="form-control" id="lamp_watt" name="lamp_watt" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="lamp_changed" class="form-label">changed</label>
+                    <input type="date" class="form-control" id="lamp_changed" name="lamp_changed" required>
+                </div>
+            </div>
+        </div>    
+    </div>
+    <input type="hidden" id="terrarium_id" name="terrarium_id" value="{{ data.terrarium }}" />
+    <div class="modal-footer">
+        <div class="text-end">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>
