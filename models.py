@@ -104,6 +104,7 @@ class TerrariumLamps(db.Model):
     terrarium = db.Column(db.Integer)
     type = db.Column(db.String)
     watt = db.Column(db.Text)
+    position = db.Column(db.String)
     changed = db.Column(db.Date)
 
 

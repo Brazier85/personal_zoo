@@ -181,11 +181,13 @@ def lamp_add(id):
     elif request.method == 'POST':
         type = request.form['lamp_type']
         watt = request.form['lamp_watt']
+        position = request.form['lamp_position']
         changed = datetime.datetime.strptime(request.form['lamp_changed'], '%Y-%m-%d')
         
         lamp = TerrariumLamps(terrarium=id,
                             type=type,
                             watt=watt,
+                            position=position
                             changed=changed)
         db.session.add(lamp)
         db.session.commit()
@@ -207,6 +209,7 @@ def lamp_edit(id):
 
         lamp.type = request.form['lamp_type']
         lamp.watt = request.form['lamp_watt']
+        lamp.position = request.form['lamp_position']
         lamp.changed = datetime.datetime.strptime(request.form['lamp_changed'], '%Y-%m-%d')
 
         db.session.add(lamp)

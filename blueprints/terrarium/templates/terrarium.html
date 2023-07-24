@@ -45,6 +45,7 @@
                         <thead>
                             <th>Type</th>
                             <th>Watt</th>
+                            <th>Position</th>
                             <th>Changed</th>
                         </thead>
                         <tbody>
@@ -52,6 +53,7 @@
                             <tr data-id="{{ lamp.id }}" class="lamp_edit active_row no-select">
                                 <td>{{ lamp.type }}</td>
                                 <td>{{ lamp.watt}}</td>
+                                <td>{{ lamp.position}}</td>
                                 <td>{{ lamp.changed | fix_date }}</td>
                             </tr>
                             {% endfor %}
