@@ -26,15 +26,24 @@
         document.documentElement.setAttribute('data-bs-theme', theme);
       }
     }
+
+    const setIcon = (theme) => {
+      if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector(".nav-logo").setAttribute('src', `/static/images/logo-dark-no-background.svg`)
+      } else {
+        document.querySelector(".nav-logo").setAttribute('src', `/static/images/logo-${theme}-no-background.svg`)
+      }
+    }
+  
   
     setTheme(getPreferredTheme())
 
-    function removeClassByPrefix(node, prefix) {
-        var regx = new RegExp('\\b' + prefix + '[^ ]*[ ]?\\b', 'g');
-        node.className = node.className.replace(regx, '');
-        return node;
+    const removeClassByPrefix = (node, prefix) => {
+      var regx = new RegExp('\\b' + prefix + '[^ ]*[ ]?\\b', 'g');
+      node.className = node.className.replace(regx, '');
+      return node;
     }
-  
+
     const showActiveTheme = (theme, focus = false) => {
       const themeSwitcher = document.querySelector('#bd-theme')
   
@@ -58,7 +67,6 @@
       activeThemeIcon.classList.add(svgOfActiveBtn)
       const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`
       themeSwitcher.setAttribute('aria-label', themeSwitcherLabel)
-      document.querySelector(".nav-logo").setAttribute('src', `/static/images/logo-${theme}-no-background.svg`)
   
       if (focus) {
         themeSwitcher.focus()
@@ -74,6 +82,7 @@
   
     window.addEventListener('DOMContentLoaded', () => {
       showActiveTheme(getPreferredTheme())
+      setIcon(getPreferredTheme())
   
       document.querySelectorAll('[data-bs-theme-value]')
         .forEach(toggle => {
@@ -81,6 +90,7 @@
             const theme = toggle.getAttribute('data-bs-theme-value')
             setStoredTheme(theme)
             setTheme(theme)
+            setIcon(theme)
             showActiveTheme(theme, true)
           })
         })
