@@ -21,6 +21,9 @@ def get_ht():
 def get_at():
     return AnimalType.query.all()
 
+def get_tr():
+    return Terrarium.query.all()
+
 def get_hd(id=None, animal_id=None, limit=None):
     if id:
         event_with_type = db.session.query(History, HistoryType).join(HistoryType, HistoryType.id == History.event).filter(History.animal == animal_id).first()
@@ -98,6 +101,7 @@ def get_ad(id=None):
             'f_min': vAnimalType.f_min,
             'f_max': vAnimalType.f_max,
             'default_ft': vAnimal.default_ft,
+            'terrarium': vAnimal.terrarium,
             'updated_date': vAnimal.updated_date
         }
         return animal
@@ -118,6 +122,7 @@ def get_ad(id=None):
                 'f_min': vAnimalType.f_min,
                 'f_max': vAnimalType.f_max,
                 'default_ft': vAnimal.default_ft,
+                'terrarium': vAnimal.terrarium,
                 'updated_date': vAnimal.updated_date
             })
         return animals

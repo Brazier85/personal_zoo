@@ -37,6 +37,7 @@ class Animal(db.Model):
     notes = db.Column(db.String)
     image = db.Column(db.String)
     default_ft = db.Column(db.Integer)
+    terrarium = db.Column(db.Integer)
     background_color = db.Column(db.String)
     created_date = db.Column(db.Date, default=datetime.datetime.utcnow)
     updated_date = db.Column(db.Date, default=datetime.datetime.utcnow)
@@ -45,7 +46,7 @@ class Animal(db.Model):
         return '<Animal %r>' % self.name
 
 class Feeding(db.Model):
-    __tablename__ = 'feeding'
+    __tablename__ = 'feedings'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     animal = db.Column(db.Integer)
     type = db.Column(db.Integer)
@@ -75,3 +76,8 @@ class Notifications(db.Model):
     date = db.Column(db.Date)
     message = db.Column(db.String)
     interval = db.Column(db.String)
+
+class Terrarium(db.Model):
+    __tablename__ = 'terrariums'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String)

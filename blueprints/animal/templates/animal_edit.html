@@ -61,14 +61,30 @@
           </div>
         </div>
       </div>
-      <div class="mb-3">
-        <label for="dft" class="form-label">Default feeding type</label>
-        <select class="form-select" id="dft" name="dft" required>
-          {% for row in feeding_types %}
-              <option value="{{ row.id }}" {% if row.id|int == data.default_ft|int %}selected{% endif %}>{{ row.name }}</option>
-          {% endfor %}
-        </select>
-      </div>
+      <div class="row">
+        <div class="col">
+            <div class="mb-3">
+                <label for="dft" class="form-label">Default feeding type</label>
+                <select class="form-select" id="dft" name="dft" required>
+                    {% for row in feeding_types %}
+                        <option value="{{ row.id }}" {%if row.id|int == data.default_ft|int %}selected{% endif %}>{{ row.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        {% if terrariums %}
+        <div class="col">
+            <div class="mb-3">
+                <label for="terrarium" class="form-label">Terrarium</label>
+                <select class="form-select" id="terrarium" name="terrarium" required>
+                    {% for row in terrariums %}
+                        <option value="{{ row.id }}" {%if row.id|int == data.terrarium|int %}selected{% endif %}>{{ row.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        {% endif %}
+    </div>
     </div>
     <div class="modal-footer">
       <div pos="start">

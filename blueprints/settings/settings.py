@@ -9,7 +9,7 @@ def settings():
 
     location = 'settings'
 
-    return render_template('settings.html', feeding_types=get_ft(), history_types=get_ht(), ht=get_ht(), settings=get_setting(), animal_types=get_at(), location=location)
+    return render_template('settings.html', feeding_types=get_ft(), history_types=get_ht(), ht=get_ht(), settings=get_setting(), animal_types=get_at(), terrariums=get_tr(), location=location)
 
 @settings_bp.route('/edit', methods=['POST','GET'])
 def edit():
@@ -201,5 +201,53 @@ def at_delete(id):
 
         flash('Deleted animal type successfully!', 'success')
         current_app.logger.info(f"Deleted animal type with id: {id} !")
+
+        return "", 200
+    
+@settings_bp.route('/tr_edit/<int:id>', methods=['POST','GET'])
+def tr_edit(id):
+
+    terrariums = Terrarium.query.filter(Terrarium.id==id).first()
+
+    if request.method == 'GET':
+        return jsonify({'htmlresponse': render_template('tr_edit.html', data=terrariums)})
+    
+    elif request.method == 'POST':
+        terrarium = request.form
+        terrariums.name = terrarium['tr_name']
+
+        db.session.add(terrariums)
+        db.session.commit()
+
+        flash('Changes to terrarium saved!', 'success')
+        current_app.logger.info(f"Modified terrarium with id: {id} !")
+        return redirect("/settings")
+    
+@settings_bp.route('/tr_add', methods=['POST','GET'])
+def tr_add():
+    if request.method == 'GET':
+        return render_template('tr_add.html')
+
+    elif request.method == 'POST':
+        data = request.form
+        terrarium = Terrarium(name=data['tr_name'])
+        db.session.add(terrarium)
+        db.session.commit()
+        
+        flash('Added terrarium successfully!', 'success')
+        current_app.logger.info("Added terrarium type !")
+
+        return redirect("/settings")
+    
+@settings_bp.route('/tr_delete/<int:id>', methods=['POST'])
+def tr_delete(id):
+    if request.method == 'POST': 
+        # Delete data into the database
+        terrarium = Terrarium.query.get_or_404(id)
+        db.session.delete(terrarium)
+        db.session.commit()
+
+        flash('Deleted terrarium successfully!', 'success')
+        current_app.logger.info(f"Deleted terrarium with id: {id} !")
 
         return "", 200

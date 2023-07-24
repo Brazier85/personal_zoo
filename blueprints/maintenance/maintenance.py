@@ -74,6 +74,26 @@ def do_update():
     print("Running Update...")
     error = ""
 
+    # Rename feeding Table
+    exists = None
+    exists = db_fetch("SELECT * FROM feeding LIMIT 1")
+    if exists != None:
+        try:
+            print("DROP auto-generated table feedings")
+            query = "DROP TABLE feedings"
+            db_update(query)
+        except:
+            print(f"Error: {e} -> DROP generated table feedings")
+            error = error + f"DROP generated table feedings -> Error: {e}\n"
+
+        try:
+            print("Rename feeding table to feedings")
+            query = "ALTER TABLE feeding RENAME TO feedings"
+            db_update(query)
+        except:
+            print(f"Error: {e} -> Renaming Table")
+            error = error + f"Renaming Table feeding to feedings -> Error: {e}\n"
+
     # Check for feeding size setting
     exists = None
     exists = db_fetch("SELECT * FROM settings WHERE setting='feeding_size'", False)
@@ -111,6 +131,14 @@ def do_update():
         except Exception as e:
             print(f"Error: {e}")
             error = error + f"Add default_ft to animals -> Error: {e}\n"
+
+    if not db_col_exists("animals","terrarium"):
+        try:
+            query= "ALTER TABLE animals ADD terrarium INTEGER"
+            db_update(query)
+        except Exception as e:
+            print(f"Error: {e}")
+            error = error + f"Add terrarium to animals -> Error: {e}\n"
 
     # Checking for new defaults
     print("Insert default values")
