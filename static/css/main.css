@@ -362,3 +362,25 @@ left: 50%;
 button[data-id="animals"] {
   border: var(--bs-border-width) solid var(--bs-border-color);
 }
+
+table .small-cell {
+  width: auto;
+  text-align: left;
+}
+
+table .wide-cell {
+  width: 100%;
+  text-align: left;
+}
+
+.settings-title {
+  font-size: 1.2rem;
+}
+
+.nav-link {
+  font-size: 1rem;
+}
+
+.active .card {
+  font-weight: normal;
+}

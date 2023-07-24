@@ -9,7 +9,7 @@ def settings():
 
     location = 'settings'
 
-    return render_template('settings.html', feeding_types=get_ft(), history_types=get_ht(), ht=get_ht(), settings=get_setting(), animal_types=get_at(), terrarium_types=get_tt(), location=location)
+    return render_template('settings.html', feeding_types=get_ft(), history_types=get_ht(), ht=get_ht(), settings=get_setting(), animal_types=get_at(), terrarium_types=get_tt(), terrarium_history_types=get_htt(), location=location)
 
 @settings_bp.route('/edit', methods=['POST','GET'])
 def edit():
@@ -249,5 +249,55 @@ def tt_delete(id):
 
         flash('Deleted terrarium type successfully!', 'success')
         current_app.logger.info(f"Deleted terrarium type with id: {id} !")
+
+        return "", 200
+    
+@settings_bp.route('/htt_edit/<int:id>', methods=['POST','GET'])
+def htt_edit(id):
+
+    history_type = TerrariumHistoryType.query.filter(TerrariumHistoryType.id==id).first()
+
+    if request.method == 'GET':
+        return jsonify({'htmlresponse': render_template('htt_edit.html', data=history_type)})
+    
+    elif request.method == 'POST':
+        history = request.form
+        history_type.name = history['htt_name']
+        history_type.note = history['htt_note']
+
+        db.session.add(history_type)
+        db.session.commit()
+
+        flash('Changes to terrarium history type saved!', 'success')
+        current_app.logger.info(f"Modified terrarium history type with id: {id} !")
+        return redirect("/settings")
+    
+@settings_bp.route('/htt_add', methods=['POST','GET'])
+def htt_add():
+    if request.method == 'GET':
+        return render_template('htt_add.html')
+
+    elif request.method == 'POST':
+        data = request.form
+        history_type = TerrariumHistoryType(name=data['htt_name'],
+                                    note=data['htt_note'])
+        db.session.add(history_type)
+        db.session.commit()
+        
+        flash('Added terrarium history type successfully!', 'success')
+        current_app.logger.info("Added terrarium history type !")
+
+        return redirect("/settings")
+    
+@settings_bp.route('/htt_delete/<int:id>', methods=['POST'])
+def htt_delete(id):
+    if request.method == 'POST': 
+        # Delete data into the database
+        history_type = TerrariumHistoryType.query.get_or_404(id)
+        db.session.delete(history_type)
+        db.session.commit()
+
+        flash('Deleted terrarium history type successfully!', 'success')
+        current_app.logger.info(f"Deleted terrarium history type with id: {id} !")
 
         return "", 200

@@ -1,21 +1,21 @@
 <div class="modal-header">
-    <h5 class="modal-title" id="itemLabel">Edit detail</h5>
+    <h5 class="modal-title" id="itemLabel">Edit equipment</h5>
 </div>
-<form action="{{ url_for('terrarium.detail_edit', id=data.id) }}" method="post" enctype="multipart/form-data">
+<form action="{{ url_for('terrarium.equipment_edit', id=data.id) }}" method="post" enctype="multipart/form-data">
     <div class="modal-body" id="modal-body">
         <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <label for="detail_name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="detail_name" name="detail_name" value="{{ data.name }}" required>
+                    <label for="equipment_name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="equipment_name" name="equipment_name" value="{{ data.name }}" required>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <label for="detail_text" class="form-label">Text</label>
-                    <input type="text" class="form-control" id="detail_text" name="detail_text" value="{{ data.text }}" required>
+                    <label for="equipment_text" class="form-label">Text</label>
+                    <input type="text" class="form-control" id="equipment_text" name="equipment_text" value="{{ data.text }}" required>
                 </div>
             </div>
         </div>    
@@ -23,7 +23,7 @@
     <input type="hidden" id="terrarium_id" name="terrarium_id" value="{{ data.terrarium }}" />
     <div class="modal-footer">
         <div pos="start">
-            <button type="button" data-id="{{ data.id }}" class="btn btn-danger text-left detail_delete_button">Delete</button>
+            <button type="button" data-id="{{ data.id }}" class="btn btn-danger text-left equipment_delete_button">Delete</button>
         </div>
         <div class="text-end">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

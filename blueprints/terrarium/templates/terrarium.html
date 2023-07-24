@@ -64,38 +64,69 @@
                     <p class="mb-0">No lamps found!</p>
                 {% endif %}
             </div>
-            <div class="card-footer card-footer-clickable text-right pr-0 show_all_feedings">
-                <div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>
+            <div class="card-footer text-right pr-0">
+                <div style="text-transform: uppercase;">Light it up!</div>
             </div>
         </div>
     </div>
     <div class="col">
         <div class="card h-100">
             <div class="card-header">
-                <div class="flex-grow"> Details </div>
+                <div class="flex-grow"> Equipment </div>
                 <div class="btn-list">
-                    <button class="btn detail_add_button green_button"><i class="bi bi-plus"></i></button>
+                    <button class="btn equipment_add_button green_button"><i class="bi bi-plus"></i></button>
                 </div>
             </div>
-            <div class="card-body detail_card">
-                {% if details %}
+            <div class="card-body equipment_card">
+                {% if equipment %}
                 <table class="table table-striped m-0">
-                    <thead>
-                        <th>Name</th>
-                        <th>Text</th>
-                    </thead>
                     <tbody>
-                        {% for detail in details %}
-                        <tr data-id="{{ detail.id }}" class="detail_edit active_row no-select">
-                            <td>{{ detail.name }}</td>
-                            <td>{{ detail.text|linebreaksbr|safe }}</td>
+                        {% for part in equipment %}
+                        <tr data-id="{{ part.id }}" class="equipment_edit active_row no-select">
+                            <td class="small-cell">{{ part.name }}</td>
+                            <td class="wide-cell">{{ part.text|linebreaksbr|safe }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
                 {% else %}
-                    <p class="mb-0">No Details found!</p>
+                    <p class="mb-0">No equipment found!</p>
                 {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header">
+                <div class="flex-grow"> Events/Actions </div>
+                <div class="btn-list">
+                    <button class="btn history_add_button green_button"><i class="bi bi-plus"></i></button>
+                </div>
+            </div>
+            <div class="card-body history_card">
+                {% if terrarium_history %}
+                <table class="table table-striped m-0">
+                    <thead>
+                        <th class="w-25">Date</th>
+                        <th>Event</th>
+                        <th>Details</th>
+                    </thead>
+                    <tbody>
+                        {% for event in terrarium_history %}
+                        <tr data-id="{{ event.id }}" class="history_edit active_row no-select">
+                            <td>{{ event.date | fix_date }}</td>
+                            <td>{{ event.name }}</td>
+                            <td>{{ event.text|linebreaksbr|safe }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p class="mb-0">No History found!</p>
+                {% endif %}
+            </div>
+            <div class="card-footer card-footer-clickable text-right pr-0 show_all_history">
+                <div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>
             </div>
         </div>
     </div>
@@ -128,6 +159,22 @@
             $('.modal-content').html('<div class="modal-body"><img src="{{ image }}" class="rounded img-fluid mx-auto"></div>')
             $('#modal_details').modal('show'); 
         });
+        $('.show_all_history').click(function(){
+            if ($(this).html().includes("less")) {
+                url = '/terrarium/history/get_all/{{ terrarium.id }}?less=1'
+                $('.show_all_history').html('<div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>');                
+            } else {
+                url = '/terrarium/history/get_all/{{ terrarium.id }}'
+                $('.show_all_history').html('<div style="text-transform: uppercase;"> <i class="bi bi-chevron-left"></i> Show less</div>');
+            }
+            $.ajax({
+                url: url,
+                type: 'get',
+                success: function(data){
+                    $('.history_card').html(data);
+                }
+            })
+        });
     });
     $('.terrarium_edit_button').on('click',function(){
         $('.modal-content').load('/terrarium/edit/{{ terrarium.id }}',function(){
@@ -148,20 +195,20 @@
         });
     });
 
-    $(document).on("click",".detail_edit",function(){
+    $(document).on("click",".equipment_edit",function(){
         var feed_id = $(this).data('id');
         $.ajax({
-            url: '/terrarium/detail/edit/'+feed_id,
+            url: '/terrarium/equipment/edit/'+feed_id,
             type: 'get',
             success: function(data){ 
                 $('.modal-content').html(data); 
                 $('.modal-content').append(data.htmlresponse);
                 $('#modal_details').modal('show');
-                $('.detail_delete_button').click(function(){
+                $('.equipment_delete_button').click(function(){
                     var feed_id = $(this).data('id');
                     if (confirm("Are You Sure ?")) {
                         $.ajax({
-                                url: '/terrarium/detail/delete/'+feed_id,
+                                url: '/terrarium/equipment/delete/'+feed_id,
                                 type: 'post',
                                 data: {terrarium_id: {{ terrarium.id }}},
                                 success: function(data) {
@@ -200,8 +247,34 @@
         });
     });
 
-    $('.detail_add_button').on('click',function(){
-        $('.modal-content').load('/terrarium/detail/add/{{ terrarium.id }}',function(){
+    $(document).on("click",".history_edit",function(){
+        var feed_id = $(this).data('id');
+        $.ajax({
+            url: '/terrarium/history/edit/'+feed_id,
+            type: 'get',
+            success: function(data){ 
+                $('.modal-content').html(data); 
+                $('.modal-content').append(data.htmlresponse);
+                $('#modal_details').modal('show');
+                $('.history_delete_button').click(function(){
+                    var feed_id = $(this).data('id');
+                    if (confirm("Are You Sure ?")) {
+                        $.ajax({
+                                url: '/terrarium/history/delete/'+feed_id,
+                                type: 'post',
+                                data: {animal_id: {{ terrarium.id }}},
+                                success: function(data) {
+                                    location.reload(true); 
+                                }
+                            });
+                    }
+                });
+            }
+        });
+    });
+
+    $('.equipment_add_button').on('click',function(){
+        $('.modal-content').load('/terrarium/equipment/add/{{ terrarium.id }}',function(){
             $('#modal_details').modal('show'); 
         });
     });
@@ -209,6 +282,12 @@
     $('.lamp_add_button').on('click',function(){
         $('.modal-content').load('/terrarium/lamp/add/{{ terrarium.id }}',function(){
             $('#modal_details').modal('show'); 
+        });
+    });
+
+    $('.history_add_button').on('click',function(){
+        $('.modal-content').load('/terrarium/history/add/{{ terrarium.id }}',function(){
+            $('#modal_details').modal('show');
         });
     });
 </script>

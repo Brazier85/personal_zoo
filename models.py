@@ -91,8 +91,8 @@ class TerrariumType(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String)
 
-class TerrariumDetails(db.Model):
-    __tablename__ = 'terrarium_details'
+class TerrariumEquipment(db.Model):
+    __tablename__ = 'terrarium_equipment'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     terrarium = db.Column(db.Integer)
     name = db.Column(db.String)
@@ -107,4 +107,17 @@ class TerrariumLamps(db.Model):
     position = db.Column(db.String)
     changed = db.Column(db.Date)
 
+class TerrariumHistory(db.Model):
+    __tablename__ = 'terrarium_history'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    terrarium = db.Column(db.Integer)
+    event = db.Column(db.String)
+    text = db.Column(db.String)
+    date = db.Column(db.Date, default=datetime.datetime.utcnow)
+
+class TerrariumHistoryType(db.Model):
+    __tablename__ = 'terrarium_history_type'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String)
+    note = db.Column(db.String)
 

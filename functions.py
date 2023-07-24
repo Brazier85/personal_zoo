@@ -18,6 +18,9 @@ def get_ft():
 def get_ht():
     return HistoryType.query.all()
 
+def get_htt():
+    return TerrariumHistoryType.query.all()
+
 def get_at():
     return AnimalType.query.all()
 
@@ -41,6 +44,32 @@ def get_hd(id=None, animal_id=None, limit=None):
             events.append({
                 'id': vEvent.id,
                 'animal': vEvent.animal,
+                'name': vEventType.name,
+                'text': vEvent.text,
+                'date': vEvent.date
+            })
+        return events
+
+def get_thd(id=None, terrarium_id=None, limit=None):
+    if id:
+        event_with_type = db.session.query(TerrariumHistory, TerrariumHistoryType).join(TerrariumHistoryType, TerrariumHistoryType.id == TerrariumHistory.event).filter(TerrariumHistory.terrarium == terrarium_id).first()
+        vEvent= event_with_type[0]
+        vEventType = event_with_type[1]
+        event = {
+            'id': vEvent.id,
+            'terrarium': vEvent.terrarium,
+            'name': vEventType.name,
+            'text': vEvent.text,
+            'date': vEvent.date
+        }
+        return event
+    else:
+        events_with_type = db.session.query(TerrariumHistory, TerrariumHistoryType).join(TerrariumHistoryType, TerrariumHistoryType.id == TerrariumHistory.event).filter(TerrariumHistory.terrarium == terrarium_id).order_by(TerrariumHistory.date.desc()).limit(limit).all()   
+        events = []
+        for vEvent, vEventType in events_with_type:
+            events.append({
+                'id': vEvent.id,
+                'terrarium': vEvent.terrarium,
                 'name': vEventType.name,
                 'text': vEvent.text,
                 'date': vEvent.date
@@ -127,11 +156,11 @@ def get_ad(id=None):
 def get_tt():
     return TerrariumType.query.all()
 
-def get_td(id=None, terrarium_id=None):
+def get_te(id=None, terrarium_id=None):
     if id:
-        return TerrariumDetails.query.filter(TerrariumDetails.terrarium == terrarium_id).first()
+        return TerrariumEquipment.query.filter(TerrariumEquipment.terrarium == terrarium_id).first()
     else:
-        return TerrariumDetails.query.filter(TerrariumDetails.terrarium == terrarium_id).order_by(TerrariumDetails.name.desc()).order_by(TerrariumDetails.text.asc()).all()
+        return TerrariumEquipment.query.filter(TerrariumEquipment.terrarium == terrarium_id).order_by(TerrariumEquipment.name.desc()).order_by(TerrariumEquipment.text.asc()).all()
     
 def get_tl(id=None, terrarium_id=None):
     if id:

@@ -1,0 +1,16 @@
+<table class="table table-striped m-0">
+    <thead>
+        <th class="w-25">Date</th>
+        <th>Event</th>
+        <th>Details</th>
+    </thead>
+    <tbody>
+        {% for event in terrarium_history %}
+        <tr data-id="{{ event.id }}" class="ht_edit active_row no-select">
+            <td>{{ event.date | fix_date }}</td>
+            <td>{{ event.name }}</td>
+            <td>{{ event.text|linebreaksbr|safe }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -164,7 +164,6 @@ def print_data(id=None):
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    print(filename)
     file_path = os.path.join(UPLOAD_FOLDER, filename)
     print(file_path)
     if os.path.exists(file_path):
@@ -174,7 +173,6 @@ def uploaded_file(filename):
     
 @app.route('/uploads/terrarium/<filename>')
 def uploaded_file_terrarium(filename):
-    print(filename)
     file_path = os.path.join(f"{app.config['UPLOAD_FOLDER']}/terrariums", filename)
     print(file_path)
     if os.path.exists(file_path):
