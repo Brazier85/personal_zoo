@@ -79,7 +79,7 @@
                                         <tr data-id="{{ terrarium.id }}" class="active_row show_terrarium no-select">
                                             <td>
                                                 <div class="img-container terrarium-image-small">
-                                                    <img src="{{ url_for('uploaded_file', filename='terrarium/'+terrarium.image) }}" alt="Image for {{ terrarium.name }}">
+                                                    <img src="{{ url_for('uploaded_file_terrarium', filename=terrarium.image) }}" alt="Image for {{ terrarium.name }}">
                                                 </div>
                                             </td>
                                             <td class="align-middle">{{ terrarium.name }}</td>

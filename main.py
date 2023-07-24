@@ -164,11 +164,23 @@ def print_data(id=None):
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
+    print(filename)
     file_path = os.path.join(UPLOAD_FOLDER, filename)
+    print(file_path)
     if os.path.exists(file_path):
         return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
     else:
         return send_from_directory(app.config['UPLOAD_FOLDER'], 'dummy.jpg')
+    
+@app.route('/uploads/terrarium/<filename>')
+def uploaded_file_terrarium(filename):
+    print(filename)
+    file_path = os.path.join(f"{app.config['UPLOAD_FOLDER']}/terrariums", filename)
+    print(file_path)
+    if os.path.exists(file_path):
+        return send_from_directory(f"{app.config['UPLOAD_FOLDER']}/terrariums", filename)
+    else:
+        return send_from_directory(f"{app.config['UPLOAD_FOLDER']}/terrariums", 'dummy.jpg')
 
 # Do update stuff
 @app.route('/update')
