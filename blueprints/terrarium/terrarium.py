@@ -12,7 +12,7 @@ def terrarium(id):
 
     terrarium_data = get_tr(id)
 
-    return render_template('terrarium.html', location=location, terrarium=terrarium_data, equipment=get_te(None, terrarium_data["id"]), lamps=get_tl(None, terrarium_data["id"]), terrarium_history=get_thd(None, terrarium_data["id"]))
+    return render_template('terrarium.html', location=location, animals=get_ad(None, terrarium_data["id"]), terrarium=terrarium_data, equipment=get_te(None, terrarium_data["id"]), lamps=get_tl(None, terrarium_data["id"]), terrarium_history=get_thd(None, terrarium_data["id"]))
 
 @terrarium_bp.route('/add', methods=['POST','GET'])
 def add():

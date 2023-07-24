@@ -33,6 +33,53 @@
     <div class="col">
         <div class="card h-100">
             <div class="card-header">
+                <div class="flex-grow"> Animals </div>
+                <div class="btn-list">
+                    <button class="btn rounded-right animal_add_button green_button"><i class="bi bi-plus"></i></button>
+                </div>
+            </div>
+            <div class="card-body animal_card">
+                {% if animals %}
+                <div class="lamp_card_table">
+                    <table id="animals" class="table table-striped dt-responsive"  style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for animal in animals %}
+                            <tr data-id="{{ animal.id }}" class="active_row show_animal no-select">
+                                <td>
+                                    <div class="d-flex align-items-center align-middle">
+                                        <div class="img-container animal-image-small">
+                                            <img src="{{ url_for('uploaded_file', filename=animal.image) }}" alt="Image for {{ animal.name }}" style="border-color: {{ animal.background_color }} !important;">
+                                        </div>
+                                        <div class="ps-3 flex-shrink-1">
+                                            <div class="pb-1 fw-bold">{{ animal.name }}</div>
+                                            <p class="m-0 text-muted">{{ animal.morph }}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="align-middle">{{ animal.art }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                    <p class="mb-0">No animals found!</p>
+                {% endif %}
+            </div>
+            <div class="card-footer text-right pr-0">
+                <div style="text-transform: uppercase;">Light it up!</div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header">
                 <div class="flex-grow"> Lamps </div>
                 <div class="btn-list">
                     <button class="btn rounded-right lamp_add_button green_button"><i class="bi bi-plus"></i></button>

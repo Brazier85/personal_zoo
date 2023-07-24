@@ -108,7 +108,7 @@ def get_fd(id=None, animal_id=None, limit=None):
             })
         return feedings
 
-def get_ad(id=None):
+def get_ad(id=None, terrarium=None):
     if id:
         animal_with_type = db.session.query(Animal, AnimalType).join(AnimalType, AnimalType.id == Animal.art).filter(Animal.id==id).first()
         vAnimal = animal_with_type[0]
@@ -131,6 +131,27 @@ def get_ad(id=None):
             'updated_date': vAnimal.updated_date
         }
         return animal
+    elif terrarium:
+        animals_with_type = db.session.query(Animal, AnimalType).join(AnimalType, AnimalType.id == Animal.art).filter(Animal.terrarium==terrarium).all()   
+        animals = []
+        for vAnimal, vAnimalType in animals_with_type:
+            animals.append({
+                'id': vAnimal.id,
+                'name': vAnimal.name,
+                'art': vAnimalType.name,
+                'morph': vAnimal.morph,
+                'gender': vAnimal.gender,
+                'birth': vAnimal.birth,
+                'notes': vAnimal.notes,
+                'image': vAnimal.image,
+                'background_color': vAnimal.background_color,
+                'f_min': vAnimalType.f_min,
+                'f_max': vAnimalType.f_max,
+                'default_ft': vAnimal.default_ft,
+                'terrarium': vAnimal.terrarium,
+                'updated_date': vAnimal.updated_date
+            })
+        return animals
     else:
         animals_with_type = db.session.query(Animal, AnimalType).join(AnimalType, AnimalType.id == Animal.art).all()   
         animals = []
