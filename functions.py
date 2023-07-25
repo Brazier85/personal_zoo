@@ -294,7 +294,7 @@ def insert_defaults():
         db.session.add(type)
         db.session.commit()
 
-    # Add animal defaults
+    # Add terrarium defaults
     terrarium_types = TerrariumType.query.all()
     if terrarium_types == []:
         # Insert base data
@@ -303,6 +303,16 @@ def insert_defaults():
         type = TerrariumType(name='Desert')
         db.session.add(type)
         db.session.commit()
+
+    # Add terrarium event defaults
+    terrarium_history_types = TerrariumHistoryType.query.all()
+    if terrarium_history_types == []:
+        # Insert base data
+        T_EVENT_TYPES =  ["Cleaning","Maintenance"]
+        for e_type in EVENT_TYPES:
+            type = TerrariumHistoryType(name=e_type)
+            db.session.add(type)
+            db.session.commit()
 
 
 def create_folders():

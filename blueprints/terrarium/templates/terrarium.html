@@ -34,9 +34,6 @@
         <div class="card h-100">
             <div class="card-header">
                 <div class="flex-grow"> Animals </div>
-                <div class="btn-list">
-                    <button class="btn rounded-right animal_add_button green_button"><i class="bi bi-plus"></i></button>
-                </div>
             </div>
             <div class="card-body animal_card">
                 {% if animals %}
@@ -201,6 +198,18 @@
 </div>
 
 <script type="text/javascript" >
+    $(document).on("click",".show_animal",function(){
+            var animal_id = $(this).data('id');
+            window.location.assign("/animal/"+animal_id); 
+        });
+
+    $('#animals').dataTable({
+        "responsive": true,
+        "paging": false,
+        "order": [[0, 'asc']],
+        "stateSave": true
+    });
+
     $(document).ready(function(){
         $('.show_terrarium_image').click(function(){
             $('.modal-content').html('<div class="modal-body"><img src="{{ image }}" class="rounded img-fluid mx-auto"></div>')

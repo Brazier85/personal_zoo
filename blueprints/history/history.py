@@ -43,20 +43,29 @@ def add(id):
 def multi_add():
     if request.method == 'GET':
         animals = Animal.query.add_columns(Animal.id, Animal.name).all()
-        return render_template('history_multi_add.html', animals=animals, event_types=get_ht(), location="multi_event")
+        return render_template('history_multi_add.html', animals=animals, event_types=get_ht(), terrariums=get_tr(), location="multi_event")
 
     elif request.method == 'POST':
         history = request.form
         animals = history.getlist('animals')
-        event = history['history_event']
+        terrariums = history.getlist('terrariums')
+        f_event = history['history_event']
         text = history['history_text']
         date = history['history_date']
 
         date = datetime.datetime.strptime(date, '%Y-%m-%d')
 
+        # Get terrarium animals
+        if terrariums != []:
+            for terrarium in terrariums:
+                additional_animals = Animal.query.filter(Animal.terrarium == terrarium).add_columns(Animal.id).all()
+                for animal in additional_animals:
+                    if str(animal.id) not in animals:
+                        animals.append(f"{animal.id}")
+
         for animal in animals:
             event = History(animal=animal,
-                            event=event,
+                            event=f_event,
                             text=text,
                             date=date)
             db.session.add(event)

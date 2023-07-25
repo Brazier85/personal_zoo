@@ -363,6 +363,10 @@ button[data-id="animals"] {
   border: var(--bs-border-width) solid var(--bs-border-color);
 }
 
+button[data-id="terrariums"] {
+  border: var(--bs-border-width) solid var(--bs-border-color);
+}
+
 table .small-cell {
   width: auto;
   text-align: left;

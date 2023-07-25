@@ -65,21 +65,30 @@ def multi_add():
     if request.method == 'GET':
         # get animals
         animals = Animal.query.add_columns(Animal.id, Animal.name).all()
-        return render_template('feeding_multi_add.html', animals=animals, feeding_types=get_ft(), location="multi_feeding")
+        return render_template('feeding_multi_add.html', animals=animals, feeding_types=get_ft(), terrariums=get_tr(), location="multi_feeding")
         
     elif request.method == 'POST':
         feeding = request.form
         animals = feeding.getlist('animals')
+        terrariums = feeding.getlist('terrariums')
         count = feeding['feeding_count']
-        type = feeding['feeding_type']
+        ftype = feeding['feeding_type']
         unit = feeding['feeding_unit']
         date = feeding['feeding_date']
 
         date = datetime.datetime.strptime(date, '%Y-%m-%d')
 
+        # Get terrarium animals
+        if terrariums != []:
+            for terrarium in terrariums:
+                additional_animals = Animal.query.filter(Animal.terrarium == terrarium).add_columns(Animal.id).all()
+                for animal in additional_animals:
+                    if str(animal.id) not in animals:
+                        animals.append(f"{animal.id}")
+
         for animal in animals:
             feeding = Feeding(animal=animal,
-                            type=type,
+                            type=ftype,
                             count=count,
                             unit=unit,
                             date=date)

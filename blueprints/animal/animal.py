@@ -146,11 +146,10 @@ def delete(id):
     if request.method == 'POST':
 
         result = Animal.query.filter(Animal.id==id).add_columns(Animal.image).first()
-
         image_filename = result.image
-
+        
         # Delete the image file
-        if image_filename != 'dummy.png':
+        if image_filename != 'dummy.jpg':
             image_path = os.path.join(UPLOAD_FOLDER, str(image_filename))
             if os.path.exists(image_path):
                 os.remove(image_path)

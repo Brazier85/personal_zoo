@@ -14,24 +14,24 @@
 {% set list=True %}
 
 {% block content %}
-    {% if animals %}
-        {% if list %}
-        <div class="row row-cols-1 row-cols-lg-2 mt-4">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs" id="mainTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="animal-tab" data-bs-toggle="tab" data-bs-target="#animal" type="button" role="tab" aria-controls="animal" aria-selected="true">Your Animals</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="terrarium-tab" data-bs-toggle="tab" data-bs-target="#terrarium" type="button" role="tab" aria-controls="terrarium" aria-selected="false">Your Terrariums</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-content" id="mainTabContent">
-                            <div class="tab-pane fade show active" id="animal" role="tabpanel" aria-labelledby="animal-tab">
+    {% if list %}
+    <div class="row row-cols-1 row-cols-lg-2 mt-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="mainTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="animal-tab" data-bs-toggle="tab" data-bs-target="#animal" type="button" role="tab" aria-controls="animal" aria-selected="true">Your Animals</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="terrarium-tab" data-bs-toggle="tab" data-bs-target="#terrarium" type="button" role="tab" aria-controls="terrarium" aria-selected="false">Your Terrariums</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="mainTabContent">
+                        <div class="tab-pane fade show active" id="animal" role="tabpanel" aria-labelledby="animal-tab">
+                            {% if animals %}
                                 <table id="animals" class="table table-striped dt-responsive"  style="width:100%">
                                     <thead>
                                         <tr>
@@ -64,8 +64,16 @@
                                         {% endfor %}
                                     </tbody>
                                 </table>
-                            </div>
-                            <div class="tab-pane fade" id="terrarium" role="tabpanel" aria-labelledby="terrarium-tab">
+                            {% else %}
+                                <div class="text-center">
+                                    <h5 class="card-title">No animals found!</h5>
+                                    <p>You can add your first animal here:</p>
+                                    <a href="{{ url_for('animal.add')}}" class="btn btn-primary">Add animal</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="tab-pane fade" id="terrarium" role="tabpanel" aria-labelledby="terrarium-tab">
+                            {% if terrariums %}
                                 <table id="terrariums" class="table table-striped dt-responsive"  style="width:100%">
                                     <thead>
                                         <tr>
@@ -88,106 +96,104 @@
                                         {% endfor %}
                                     </tbody>
                                 </table>
-                            </div>
+                            {% else %}
+                                <div class="text-center">
+                                    <h5 class="card-title">No terrariums found!</h5>
+                                    <p>You can add your first terrarium here:</p>
+                                    <a href="{{ url_for('terrarium.add')}}" class="btn btn-primary">Add terrarium</a>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col d-none d-lg-block">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="flex-grow"> Add multi feeding </div>
-                    </div>
-                    <form action="{{ url_for('feeding.multi_add') }}" method="post" enctype="multipart/form-data">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="mb-3">
-                                        <label for="feeding_animals" class="form-label">Animals</label>
-                                        <select class="selectpicker form-control" multiple id="animals" name="animals"  data-live-search="true" required>       
-                                            {% for animal in data %}
-                                                <option value="{{ animal.id }}">{{ animal.name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="mb-3">
-                                        <label for="feeding_date" class="form-label">Date</label>
-                                        <input type="date" class="form-control" id="feeding_date" name="feeding_date" required>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="mb-3">
-                                        <label for="feeding_type" class="form-label">Type</label>
-                                        <select class="form-select" class="form-control" id="feeding_type" name="feeding_type" required>
-                                            {% for feeding_type in feeding_types %}
-                                                <option value="{{ feeding_type.id }}">{{ feeding_type.name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="mb-3">
-                                        <label for="feeding_count" class="form-label">Count</label>
-                                        <input type="number" class="form-control" id="feeding_count" name="feeding_count" required>
-                                    </div>
-                                </div>
-                                <div class="col unit">
-                                    <div class="mb-3">
-                                        <label for="feeding_unit" class="form-label">Unit</label>
-                                        <input type="number" class="form-control" id="feeding_unit" name="feeding_unit">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer text-end">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
-        {% else %}
-        <div class="row row-cols-lg-3 row-cols-1 g-4">
-            {% for row in data %}
-            <div class="col">
-                <div class="card card-animal">
-                    <a href="{{ url_for('animal.animal', id=animal.id) }}" class="card-link">
-                    <div class="container">
-                        <div class="row row-cols-3 align-items-center">
-                            <div class="col col-1"></div>
-                            <div class="card-animal-image col-5 mx-auto">
-                                <img src="{{ url_for('uploaded_file', filename=animal.image) }}" style="border-color: {{ animal.background_color }} !important;">
+        <div class="col d-none d-lg-block">
+            <div class="card">
+                <div class="card-header">
+                    <div class="flex-grow"> Add multi feeding </div>
+                </div>
+                <form action="{{ url_for('feeding.multi_add') }}" method="post" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label for="feeding_animals" class="form-label">Animals</label>
+                                    <select class="selectpicker form-control" multiple id="animals" name="animals"  data-live-search="true" required>       
+                                        {% for animal in data %}
+                                            <option value="{{ animal.id }}">{{ animal.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
-                            <div class="col col-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label for="feeding_date" class="form-label">Date</label>
+                                    <input type="date" class="form-control" id="feeding_date" name="feeding_date" required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label for="feeding_type" class="form-label">Type</label>
+                                    <select class="form-select" class="form-control" id="feeding_type" name="feeding_type" required>
+                                        {% for feeding_type in feeding_types %}
+                                            <option value="{{ feeding_type.id }}">{{ feeding_type.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label for="feeding_count" class="form-label">Count</label>
+                                    <input type="number" class="form-control" id="feeding_count" name="feeding_count" required>
+                                </div>
+                            </div>
+                            <div class="col unit">
+                                <div class="mb-3">
+                                    <label for="feeding_unit" class="form-label">Unit</label>
+                                    <input type="number" class="form-control" id="feeding_unit" name="feeding_unit">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body card-body-clickable" style="min-height: 116.9px !important;">
-                        <h5 class="card-title text-center">{{ animal.name }}</h5>
-                        <p class="card-text">{{ row[6] }}</p>
+                    <div class="card-footer text-end">
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Last updated: {{ row[10] | fix_date }}</small>
-                    </div>
-                    </a>
-                </div>
+                </form>
             </div>
-            {% endfor %}
         </div>
-        {% endif %}
+    </div>
     {% else %}
-        <div class="card text-center mb-3 mt-4">
-            <div class="card-body">
-                <h5 class="card-title">No animals found!</h5>
-                <p>You can add your first animal here:</p>
-                <a href="{{ url_for('animal.add')}}" class="btn btn-primary">Add animal</a>
+    <div class="row row-cols-lg-3 row-cols-1 g-4">
+        {% for row in data %}
+        <div class="col">
+            <div class="card card-animal">
+                <a href="{{ url_for('animal.animal', id=animal.id) }}" class="card-link">
+                <div class="container">
+                    <div class="row row-cols-3 align-items-center">
+                        <div class="col col-1"></div>
+                        <div class="card-animal-image col-5 mx-auto">
+                            <img src="{{ url_for('uploaded_file', filename=animal.image) }}" style="border-color: {{ animal.background_color }} !important;">
+                        </div>
+                        <div class="col col-1"></div>
+                    </div>
+                </div>
+                <div class="card-body card-body-clickable" style="min-height: 116.9px !important;">
+                    <h5 class="card-title text-center">{{ animal.name }}</h5>
+                    <p class="card-text">{{ row[6] }}</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated: {{ row[10] | fix_date }}</small>
+                </div>
+                </a>
             </div>
         </div>
+        {% endfor %}
+    </div>
     {% endif %}
 
     {% if list %}
@@ -243,4 +249,7 @@
             })
         });
     </script>
+
+<!-- Home Tabs controller-->
+<script src="{{ url_for('static', filename='js/pages/homeTabs.js') }}"></script>
 {% endblock %}
