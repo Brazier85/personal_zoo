@@ -14,7 +14,7 @@
 
 <div class="d-flex flex-row align-items-center flex-wrap mt-3 mb-3 terrarium-head">
     <div class="terrarium-image"><!---->
-        <img class="show_terrarium_image" src="{{ image }}" />
+        <img class="show_terrarium_image rounded" src="{{ image }}" />
     </div>
     <div class="px-4">
         <div>
@@ -27,6 +27,8 @@
 
 <div class="btn-list">
     <button class="btn rounded-right terrarium_edit_button green_button"><i class="bi bi-pencil-square"></i></button>
+    <button class="btn rounded-right terrarium_feeding_button green_button"><i class="bi bi-egg-fill"></i></button>
+    <button class="btn rounded-right terrarium_history_button green_button"><i class="bi bi-calendar-event"></i></button>
 </div>
 
 <div class="row row-cols-1 row-cols-lg-2 g-4">
@@ -70,7 +72,7 @@
                 {% endif %}
             </div>
             <div class="card-footer text-right pr-0">
-                <div style="text-transform: uppercase;">Light it up!</div>
+                <div style="text-transform: uppercase;">Anyone in here?</div>
             </div>
         </div>
     </div>
@@ -249,6 +251,14 @@
                                 }
                             });
         });
+    });
+
+    $('.terrarium_feeding_button').on('click',function(){
+        window.location.assign("/feeding/multi?terrarium={{ terrarium.id }}");
+    });
+
+    $('.terrarium_history_button').on('click',function(){
+        window.location.assign("/history/multi?terrarium={{ terrarium.id }}");
     });
 
     $(document).on("click",".equipment_edit",function(){

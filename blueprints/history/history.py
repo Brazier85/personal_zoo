@@ -42,8 +42,13 @@ def add(id):
 @history_bp.route('/multi', methods=['POST','GET'])
 def multi_add():
     if request.method == 'GET':
+        terrarium = request.args.get('terrarium')
         animals = Animal.query.add_columns(Animal.id, Animal.name).all()
-        return render_template('history_multi_add.html', animals=animals, event_types=get_ht(), terrariums=get_tr(), location="multi_event")
+
+        if terrarium is None:
+            return render_template('history_multi_add.html', animals=animals, event_types=get_ht(), terrariums=get_tr(), location="multi_event")
+        else:
+            return render_template('history_multi_add.html', animals=animals, event_types=get_ht(), terrariums=get_tr(), t_select=terrarium, location="multi_event")
 
     elif request.method == 'POST':
         history = request.form

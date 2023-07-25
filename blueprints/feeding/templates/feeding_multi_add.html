@@ -33,7 +33,11 @@
                         <label for="terrariums" class="form-label">Terrariums</label>
                         <select class="selectpicker form-control" multiple id="terrariums" name="terrariums"  data-live-search="false">       
                             {% for terrarium in terrariums %}
-                                <option value="{{ terrarium.id }}">{{ terrarium.name }}</option>
+                                {% if t_select %}
+                                    <option value="{{ terrarium.id }}" {% if terrarium.id|int == t_select|int %}selected{% endif %}>{{ terrarium.name }}</option>
+                                {% else %}
+                                    <option value="{{ terrarium.id }}">{{ terrarium.name }}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>
