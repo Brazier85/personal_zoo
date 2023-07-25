@@ -309,7 +309,7 @@ def insert_defaults():
     if terrarium_history_types == []:
         # Insert base data
         T_EVENT_TYPES =  ["Cleaning","Maintenance"]
-        for e_type in EVENT_TYPES:
+        for e_type in T_EVENT_TYPES:
             type = TerrariumHistoryType(name=e_type)
             db.session.add(type)
             db.session.commit()
