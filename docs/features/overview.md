@@ -13,3 +13,13 @@ In the app's events/actions section, you can conveniently document various occur
 With our feeding tracking feature, you can easily monitor and manage your animals' feedings. You have the flexibility to add feedings with specific size and weight measurements, or simply input descriptive text for each feeding.
 
 [read more](/features/feedings)
+
+## Terrariums
+
+The newly added feature, Terrariums, provides you with a powerful tool to manage and monitor your reptile habitats. Keep track of various aspects such as cleaning, lighting, and more. You can create, edit, and document changes to your terrarium setups, ensuring optimal living conditions for your reptile friends.
+
+[read more](/features/terrariums)
+
+<br>
+<br>
+Now, you have a comprehensive overview of the main functionalities of the app, including the recently added Terrariums feature. Enjoy using Personal Zoo to take care of your animals and terrariums with ease and precision!

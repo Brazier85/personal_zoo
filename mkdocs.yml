@@ -46,6 +46,7 @@ nav:
     - Overview: features/overview.md
     - Events: features/events.md
     - Feedings: features/feedings.md
+    - Terrariums: features/terrariums.md
   - Development:
     - Current State: development.md
     - Roadmap: roadmap.md

@@ -17,6 +17,24 @@ Personal Zoo is a dedicated web application designed to manage your personal zoo
 
 [Get started](getting-started){ .md-button .md-button--primary }
 
+## Introducing Terrarium Management
+
+I understand that reptile habitats, like terrariums, play a crucial role in providing a comfortable environment for your scaly friends. That's why I've added a new feature to Personal Zoo - Terrariums!
+
+With the Terrariums feature, you can keep track of changes, make adjustments to provide the best living conditions for your reptile companions.
+
+## No Cloud, No Hassle
+
+Personal Zoo stays true to its local nature, ensuring your data remains securely stored on your own system. We believe in privacy and keeping things simple. No cloud-based subscriptions, no third-party access. Just you and your animals, under your care and control.
+
+## User-Friendly and Ever-Improving
+
+Designed with both beginners and experienced reptile enthusiasts in mind, Personal Zoo continues to evolve based on user feedback and needs. We value your input and strive to make your zoo management experience as seamless as possible.
+
+## Join the Personal Zoo Community
+
+Start using Personal Zoo today to take care of your animals and terrariums with ease and precision. Join the community of animal enthusiasts who enjoy the benefits of a local, tailored, and user-friendly zoo management application. Happy zoo-keeping!
+
 ## About me
 
 ```yaml
