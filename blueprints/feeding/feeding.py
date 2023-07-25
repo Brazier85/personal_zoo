@@ -64,8 +64,13 @@ def add(id):
 def multi_add():
     if request.method == 'GET':
         # get animals
+        terrarium = request.args.get('terrarium')
         animals = Animal.query.add_columns(Animal.id, Animal.name).all()
-        return render_template('feeding_multi_add.html', animals=animals, feeding_types=get_ft(), terrariums=get_tr(), location="multi_feeding")
+
+        if terrarium is None:
+            return render_template('feeding_multi_add.html', animals=animals, feeding_types=get_ft(), terrariums=get_tr(), location="multi_feeding")
+        else:
+            return render_template('feeding_multi_add.html', animals=animals, feeding_types=get_ft(), terrariums=get_tr(), t_select=terrarium, location="multi_feeding")
         
     elif request.method == 'POST':
         feeding = request.form
