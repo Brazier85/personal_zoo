@@ -52,10 +52,12 @@ def add():
 
     location = 'animal_add'
     if request.method == 'GET':
-        return render_template('animal_add.html', location=location, animal_types=get_at(), feeding_types=get_ft())
+        return render_template('animal_add.html', location=location, animal_types=get_at(), feeding_types=get_ft(), terrariums=get_tr())
     
     elif request.method == 'POST':
-        name = request.form.get('name')
+        print(request.form)
+
+        name = request.form['name']
         image = request.files['image']
         art = request.form['art']
         morph = request.form['morph']
@@ -64,7 +66,10 @@ def add():
         birth = request.form['birth']
         notes = request.form['notes']
         default_ft = request.form['dft']
-        terrarium = request.form['terrarium']
+        try:
+            terrarium = request.form['terrarium']
+        except:
+            terrarium = 0
 
         # Check if an image was uploaded
         if image.filename != '':
