@@ -12,23 +12,32 @@
 
 {% set image = url_for("uploaded_file", folder='terrariums', filename=terrarium.image) %}
 
-<div class="d-flex flex-row align-items-center flex-wrap mt-3 mb-3 terrarium-head">
-    <div class="terrarium-image"><!---->
-        <img class="show_terrarium_image rounded" src="{{ image }}" />
-    </div>
-    <div class="px-4">
-        <div>
-            <h2 class="d-inline">{{ terrarium.name }}</h2>
+<div class="row mt-3 mb-4 ">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center align-middle flex-wrap terrarium-head justify-content-center">
+                    <div class="terrarium-image"><!---->
+                        <img class="show_terrarium_image rounded" src="{{ image }}" alt="Image for {{ terrarium.name }}" />
+                    </div>
+                    <div class="px-4">
+                        <div>
+                            <h2 class="d-inline">{{ terrarium.name }}</h2>
+                        </div>
+                        <div>{{ terrarium.type }}</div>
+                        <div class="text-muted">Size: {{ terrarium.size }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="btn-list">
+                    <button class="btn rounded-right terrarium_edit_button green_button"><i class="bi bi-pencil-square"></i></button>
+                    <button class="btn rounded-right terrarium_feeding_button green_button"><i class="bi bi-egg-fill"></i></button>
+                    <button class="btn rounded-right terrarium_history_button green_button"><i class="bi bi-calendar-event"></i></button>
+                </div>
+            </div>
         </div>
-        <div>{{ terrarium.type }}</div>
-        <div class="text-muted">Size: {{ terrarium.size }}</div>
     </div>
-</div>
-
-<div class="btn-list">
-    <button class="btn rounded-right terrarium_edit_button green_button"><i class="bi bi-pencil-square"></i></button>
-    <button class="btn rounded-right terrarium_feeding_button green_button"><i class="bi bi-egg-fill"></i></button>
-    <button class="btn rounded-right terrarium_history_button green_button"><i class="bi bi-calendar-event"></i></button>
 </div>
 
 <div class="row row-cols-1 row-cols-lg-2 g-4">

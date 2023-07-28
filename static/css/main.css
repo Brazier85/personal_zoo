@@ -104,8 +104,15 @@ left: 50%;
 }
 
 .animal-head {
-  color: var(--animal-head-color)
+  color: var(--animal-head-color);
+  row-gap: 10px;
 }
+
+.terrarium-head {
+  color: var(--animal-head-color);
+  row-gap: 10px;
+}
+
 
 .print_card {
   width: 650px;

@@ -12,32 +12,41 @@
 
 {% set image = url_for("uploaded_file", filename=animal.image) %}
 
-<div class="d-flex flex-row align-items-center flex-wrap mt-3 mb-3 animal-head">
-    <div class="animal-image"><!---->
-        <img class="show_animal_image" src="{{ image }}"  style="border-color: {{ animal.background_color }} !important;">
-    </div>
-    <div class="px-4">
-        <div>
-            <h2 class="d-inline">{{ animal.name }}</h2>
-            <span class="gender text-center ml-3">
-                <i class="bi {% if animal.gender == 'female' %} bi-gender-female female {% else %} bi-gender-male male {% endif %} d-none d-sm-inline-block"></i>
-            </span>
+<div class="row mt-3 mb-4 ">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center align-middle flex-wrap animal-head">
+                    <div class="animal-image"><!---->
+                        <img class="show_animal_image" src="{{ image }}" alt="Image for {{ animal.name }}"  style="border-color: {{ animal.background_color }} !important;">
+                    </div>
+                    <div class="px-4">
+                        <div>
+                            <h2 class="d-inline">{{ animal.name }}</h2>
+                            <span class="gender text-center ml-3">
+                                <i class="bi {% if animal.gender == 'female' %} bi-gender-female female {% else %} bi-gender-male male {% endif %} d-none d-sm-inline-block"></i>
+                            </span>
+                        </div>
+                        <div>{{ animal.morph }}</div>
+                        <div class="text-muted">{{ animal.art }} (*{{ animal.birth }})</div>
+                    </div>
+                    {% if current_weight != "0" %}
+                    <div class="px-4 text-center border-start border-danger">
+                        <div class="fs-4">{{ current_weight }}</div>
+                        <div class="text-muted text-lowercase"> Current Weight </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="btn-list">
+                    <button class="btn rounded-right animal_edit_button green_button"><i class="bi bi-pencil-square"></i></button>
+                    <button class="btn rounded-right animal_print_button green_button"><i class="bi bi-printer"></i></button>
+                    <button class="btn rounded-right animal_qr_button green_button"><i class="bi bi-qr-code-scan"></i></button>
+                </div>
+            </div>
         </div>
-        <div>{{ animal.morph }}</div>
-        <div class="text-muted">{{ animal.art }} (*{{ animal.birth }})</div>
     </div>
-    {% if current_weight != "0" %}
-    <div class="px-4 text-center border-start border-danger">
-        <div class="fs-4">{{ current_weight }}</div>
-        <div class="text-muted text-lowercase"> Current Weight </div>
-    </div>
-    {% endif %}
-</div>
-
-<div class="btn-list">
-    <button class="btn rounded-right animal_edit_button green_button"><i class="bi bi-pencil-square"></i></button>
-    <button class="btn rounded-right animal_print_button green_button"><i class="bi bi-printer"></i></button>
-    <button class="btn rounded-right animal_qr_button green_button"><i class="bi bi-qr-code-scan"></i></button>
 </div>
 
 <div class="row row-cols-1 row-cols-lg-2 g-4">
