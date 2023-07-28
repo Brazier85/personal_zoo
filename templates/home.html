@@ -57,7 +57,7 @@
                                             <td class="align-middle">{{ animal.art }}</td>
                                             <td class="align-middle text-center">
                                                 <span class="gender text-center align-middle">
-                                                    <i class="bi {% if animal.gender == 'female' %} bi-gender-female female {% else %} bi-gender-male male {% endif %} d-none d-sm-inline-block" style="display: inline-block!important;"></i>
+                                                    <i class="bi {% if animal.gender == 'female' %} bi-gender-female female {% elif animal.gender == 'male' %} bi-gender-male male {% else %}  bi-gender-ambiguous ambiguous {% endif %} d-none d-sm-inline-block" style="display: inline-block!important;"></i>
                                                 </span>
                                             </td>
                                         </tr>

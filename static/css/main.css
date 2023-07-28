@@ -299,6 +299,11 @@ left: 50%;
   -webkit-text-stroke: 1px;
 }
 
+.ambiguous {
+  color: var(--zoo-green);
+  -webkit-text-stroke: 1px;  
+}
+
 .card .card-header {
   align-items: stretch;
   
