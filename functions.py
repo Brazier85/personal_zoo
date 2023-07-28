@@ -181,13 +181,13 @@ def get_te(id=None, terrarium_id=None):
     if id:
         return TerrariumEquipment.query.filter(TerrariumEquipment.terrarium == terrarium_id).first()
     else:
-        return TerrariumEquipment.query.filter(TerrariumEquipment.terrarium == terrarium_id).order_by(TerrariumEquipment.name.desc()).order_by(TerrariumEquipment.text.asc()).all()
+        return TerrariumEquipment.query.filter(TerrariumEquipment.terrarium == terrarium_id).order_by(TerrariumEquipment.name.asc()).order_by(TerrariumEquipment.text.asc()).all()
     
 def get_tl(id=None, terrarium_id=None):
     if id:
         return TerrariumLamps.query.filter(TerrariumLamps.terrarium == terrarium_id).first()
     else:
-        return TerrariumLamps.query.filter(TerrariumLamps.terrarium == terrarium_id).order_by(TerrariumLamps.type.desc()).all() 
+        return TerrariumLamps.query.filter(TerrariumLamps.terrarium == terrarium_id).order_by(TerrariumLamps.type.asc()).order_by(TerrariumLamps.watt.asc()).all() 
 
 def get_tr(id=None):
     if id:

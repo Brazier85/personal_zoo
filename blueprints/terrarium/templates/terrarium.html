@@ -138,7 +138,7 @@
                     <tbody>
                         {% for part in equipment %}
                         <tr data-id="{{ part.id }}" class="equipment_edit active_row no-select">
-                            <td class="small-cell">{{ part.name }}</td>
+                            <td class="small-cell text-nowrap">{{ part.name }}</td>
                             <td class="wide-cell">{{ part.text|linebreaksbr|safe }}</td>
                         </tr>
                         {% endfor %}

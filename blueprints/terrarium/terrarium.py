@@ -147,11 +147,8 @@ def equipment_edit(id):
     
     elif request.method == 'POST':
 
-        name = request.form['detail_name']
-        text = request.form['detail_text']
-
-        equipment.name = name
-        equipment.text = text
+        equipment.name = request.form['equipment_name']
+        equipment.text = request.form['equipment_text']
 
         db.session.add(equipment)
         db.session.commit()

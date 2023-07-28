@@ -12,7 +12,7 @@ echo "Remove old container"
 docker rm personal_zoo
 
 echo "Remove old images"
-docker image prune -a --force --filter "until=240h"
+docker image prune -a --force
 
 # Run new container
 echo "Start new container"
