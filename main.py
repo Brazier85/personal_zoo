@@ -162,21 +162,20 @@ def print_data(id=None):
 
     return render_template('print.html', animals=animal_data, location=location, feed_url=feed_url)
 
+@app.route('/uploads/<folder>/<filename>')
 @app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    file_path = os.path.join(UPLOAD_FOLDER, filename)
-    if os.path.exists(file_path):
-        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+def uploaded_file(folder='', filename=''):
+    if folder != '':
+        path = f"{app.config['UPLOAD_FOLDER']}/{folder}"
     else:
-        return send_from_directory(app.config['UPLOAD_FOLDER'], 'dummy.jpg')
-    
-@app.route('/uploads/terrarium/<filename>')
-def uploaded_file_terrarium(filename):
-    file_path = os.path.join(f"{app.config['UPLOAD_FOLDER']}/terrariums", filename)
+        path = app.config['UPLOAD_FOLDER']
+
+    # Check if image exists
+    file_path = os.path.join(path, filename)
     if os.path.exists(file_path):
-        return send_from_directory(f"{app.config['UPLOAD_FOLDER']}/terrariums", filename)
+        return send_from_directory(path, filename)
     else:
-        return send_from_directory(f"{app.config['UPLOAD_FOLDER']}/terrariums", 'dummy.jpg')
+        return send_from_directory(path, 'dummy.jpg')
 
 # Do update stuff
 @app.route('/update')

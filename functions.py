@@ -328,6 +328,10 @@ def create_folders():
         print("Copy dummy image")
         copyfile("static/images/dummy.jpg", f"{UPLOAD_FOLDER}/dummy.jpg")
 
+    if not os.path.exists(f"{UPLOAD_FOLDER}/terrariums/dummy.jpg"):
+        print("Copy dummy image")
+        copyfile("static/images/dummy_big.jpg", f"{UPLOAD_FOLDER}/terrariums/dummy.jpg")
+
 def add_col(table, col, type):
     conn = sqlite3.connect(DATABASE)
     c = conn.cursor()

@@ -10,7 +10,7 @@
 
 {% block content %}
 
-{% set image = url_for("uploaded_file_terrarium", filename=terrarium.image) %}
+{% set image = url_for("uploaded_file", folder='terrariums', filename=terrarium.image) %}
 
 <div class="d-flex flex-row align-items-center flex-wrap mt-3 mb-3 terrarium-head">
     <div class="terrarium-image"><!---->
