@@ -46,7 +46,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center align-middle">
                                                     <div class="img-container animal-image-small">
-                                                        <img src="{{ url_for('uploaded_file', filename=animal.image) }}" alt="Image for {{ animal.name }}" style="border-color: {{ animal.background_color }} !important;">
+                                                        <img src="{{ url_for('uploaded_file', folder='animals', filename=animal.image) }}" alt="Image for {{ animal.name }}" style="border-color: {{ animal.background_color }} !important;">
                                                     </div>
                                                     <div class="ps-3 flex-shrink-1">
                                                         <div class="pb-1 fw-bold">{{ animal.name }}</div>

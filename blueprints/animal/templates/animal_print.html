@@ -4,7 +4,7 @@
 
 {% block content %}
 
-{% set image = url_for("uploaded_file", filename=animal.image) %}
+{% set image = url_for("uploaded_file", folder='animals', filename=animal.image) %}
 
 <div class="d-flex flex-row rounded" style="background-color: #d7d7d7; padding: 5px;">
     <div class="animal-image"><!---->

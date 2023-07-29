@@ -1,8 +1,10 @@
 from flask import current_app, render_template, request, redirect, url_for, flash, Blueprint
 import os, json
+import base64
 from werkzeug.utils import secure_filename
 from functions import *
 from flask_weasyprint import HTML, render_pdf
+from sqlalchemy.exc import SQLAlchemyError
 
 animal_bp = Blueprint("animal", __name__, template_folder="templates")
 
@@ -76,7 +78,7 @@ def add():
             # Save the image to a folder
             if image and allowed_file(image.filename):
                 filename = secure_filename(image.filename)
-                image.save(os.path.join(UPLOAD_FOLDER, filename))
+                image.save(os.path.join(f"{UPLOAD_FOLDER}/animals", filename))
             else:
                 flash('Invalid file. Please upload an image file.', 'error')
                 return redirect(url_for('animal.add'))
@@ -128,7 +130,7 @@ def edit(id):
             elif allowed_file(image.filename):
                 # New valid image provided
                 filename = secure_filename(image.filename)
-                image.save(os.path.join(UPLOAD_FOLDER, filename))
+                image.save(os.path.join(f"{UPLOAD_FOLDER}/animals", filename))
             else:
                 # Invalid file format
                 flash('Invalid file format. Please upload an image file.', 'error')
@@ -155,7 +157,7 @@ def delete(id):
         
         # Delete the image file
         if image_filename != 'dummy.jpg':
-            image_path = os.path.join(UPLOAD_FOLDER, str(image_filename))
+            image_path = os.path.join(f"{UPLOAD_FOLDER}/animals", str(image_filename))
             if os.path.exists(image_path):
                 os.remove(image_path)
 

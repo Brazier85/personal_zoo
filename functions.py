@@ -6,24 +6,29 @@ from models import *
 # Variables
 DATABASE = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/database.db')
 UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/uploads')
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf'}
 
 # Check if a file has an allowed extension
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+# Get feeding types
 def get_ft():
     return FeedingType.query.all()
 
+# Get history types
 def get_ht():
     return HistoryType.query.all()
 
+# get terrarium history types
 def get_htt():
     return TerrariumHistoryType.query.all()
 
+# Get animal types
 def get_at():
     return AnimalType.query.all()
 
+# Get animal history data
 def get_hd(id=None, animal_id=None, limit=None):
     if id:
         event_with_type = db.session.query(History, HistoryType).join(HistoryType, HistoryType.id == History.event).filter(History.animal == animal_id).first()
@@ -50,6 +55,7 @@ def get_hd(id=None, animal_id=None, limit=None):
             })
         return events
 
+# Get terrarium history data
 def get_thd(id=None, terrarium_id=None, limit=None):
     if id:
         event_with_type = db.session.query(TerrariumHistory, TerrariumHistoryType).join(TerrariumHistoryType, TerrariumHistoryType.id == TerrariumHistory.event).filter(TerrariumHistory.terrarium == terrarium_id).first()
@@ -76,6 +82,7 @@ def get_thd(id=None, terrarium_id=None, limit=None):
             })
         return events
 
+# Get feeding data
 def get_fd(id=None, animal_id=None, limit=None):
     if id:
         feeding_with_type = db.session.query(Feeding, FeedingType).join(FeedingType, FeedingType.id == Feeding.type).filter(Feeding.id==id).first()
@@ -108,6 +115,7 @@ def get_fd(id=None, animal_id=None, limit=None):
             })
         return feedings
 
+# Get animal data
 def get_ad(id=None, terrarium=None):
     if id:
         animal_with_type = db.session.query(Animal, AnimalType).join(AnimalType, AnimalType.id == Animal.art).filter(Animal.id==id).first()
@@ -174,21 +182,25 @@ def get_ad(id=None, terrarium=None):
             })
         return animals
 
+# Get terrarium types
 def get_tt():
     return TerrariumType.query.all()
 
+# Get terrarium equipment
 def get_te(id=None, terrarium_id=None):
     if id:
         return TerrariumEquipment.query.filter(TerrariumEquipment.terrarium == terrarium_id).first()
     else:
         return TerrariumEquipment.query.filter(TerrariumEquipment.terrarium == terrarium_id).order_by(TerrariumEquipment.name.asc()).order_by(TerrariumEquipment.text.asc()).all()
-    
+
+# Get terrarium lamps    
 def get_tl(id=None, terrarium_id=None):
     if id:
         return TerrariumLamps.query.filter(TerrariumLamps.terrarium == terrarium_id).first()
     else:
         return TerrariumLamps.query.filter(TerrariumLamps.terrarium == terrarium_id).order_by(TerrariumLamps.type.asc()).order_by(TerrariumLamps.watt.asc()).all() 
 
+# Get terrarium data
 def get_tr(id=None):
     if id:
         terrarium_with_type = db.session.query(Terrarium, TerrariumType).join(TerrariumType, TerrariumType.id == Terrarium.type).filter(Terrarium.id==id).first()
@@ -219,6 +231,7 @@ def get_tr(id=None):
             })
         return terrariums
 
+# get setting values
 def get_setting(name=None):
     if (name == None):
         settings = {}
@@ -230,6 +243,8 @@ def get_setting(name=None):
         setting = Settings.query.filter(Settings.setting==name).add_columns(Settings.value).first()
         return setting.value
 
+# Send a mail
+# Alpha function - not working
 def send_mail():
     EMAIL = os.getenv("PZOO_EMAIL")
     EMAIL_PASSWORD = os.getenv("PZOO_EMAIL_PASSWORD")
@@ -243,6 +258,7 @@ def send_mail():
 
     #print(f"Found E-Mail config: {EMAIL}, {EMAIL_PASSWORD}, {SMTP_SERVER}, {PORT}")
 
+# Insert database defaults
 def insert_defaults():
 
     # Add animal defaults
@@ -314,8 +330,8 @@ def insert_defaults():
             db.session.add(type)
             db.session.commit()
 
-
-def create_folders():
+# Create required folders
+def create_folders(name=None):
     if not os.path.exists(UPLOAD_FOLDER):
         print("Create upload folder")
         os.makedirs(UPLOAD_FOLDER)
@@ -324,14 +340,23 @@ def create_folders():
         print("Create terrarium upload folder")
         os.makedirs(f"{UPLOAD_FOLDER}/terrariums")
 
-    if not os.path.exists(f"{UPLOAD_FOLDER}/dummy.jpg"):
+    if not os.path.exists(f"{UPLOAD_FOLDER}/animals"):
+        print("Create animal upload folder")
+        os.makedirs(f"{UPLOAD_FOLDER}/animals")
+
+    if not os.path.exists(f"{UPLOAD_FOLDER}/documents"):
+        print("Create document upload folder")
+        os.makedirs(f"{UPLOAD_FOLDER}/documents")
+
+    if not os.path.exists(f"{UPLOAD_FOLDER}/animals/dummy.jpg"):
         print("Copy dummy image")
-        copyfile("static/images/dummy.jpg", f"{UPLOAD_FOLDER}/dummy.jpg")
+        copyfile("static/images/dummy.jpg", f"{UPLOAD_FOLDER}/animals/dummy.jpg")
 
     if not os.path.exists(f"{UPLOAD_FOLDER}/terrariums/dummy.jpg"):
         print("Copy dummy image")
         copyfile("static/images/dummy_big.jpg", f"{UPLOAD_FOLDER}/terrariums/dummy.jpg")
 
+# Add col to table
 def add_col(table, col, type):
     conn = sqlite3.connect(DATABASE)
     c = conn.cursor()

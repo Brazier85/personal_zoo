@@ -11,7 +11,7 @@
     <div class="print_card">
         <div class="user-card" style="background-color: {{ animal.background_color }} !important;">
             {% if animal.image %}
-            <img src="{{ url_for('uploaded_file', filename=animal.image) }}" alt="Uploaded Image">
+            <img src="{{ url_for('uploaded_file', folder='animals', filename=animal.image) }}" alt="Uploaded Image">
             {% endif %}
         </div>
         <div class="general">

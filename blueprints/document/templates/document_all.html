@@ -1,0 +1,18 @@
+<table class="table table-striped m-0">
+    <thead>
+        <th class="w-25">Date</th>
+        <th>Count</th>
+        <th>Type</th>
+        <th>Size</th>
+    </thead>
+    <tbody>
+        {% for feeding in feedings %}
+        <tr data-id="{{ feeding.id }}" class="feeding_edit active_row no-select">
+            <td>{{ feeding.date | fix_date }}</td>
+            <td>{{ feeding.count }}</td>
+            <td>{{ feeding.type }}</td>
+            <td>{{ feeding.unit }} {%if feeding.ftunit == "weight" %}{{feeding.detail}}{%endif%}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -10,7 +10,7 @@
 
 {% block content %}
 
-{% set image = url_for("uploaded_file", filename=animal.image) %}
+{% set image = url_for("uploaded_file", folder='animals', filename=animal.image) %}
 
 <div class="row mt-3 mb-4 ">
     <div class="col">

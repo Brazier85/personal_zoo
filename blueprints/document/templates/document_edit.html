@@ -1,0 +1,75 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="itemLabel">Edit feeding</h5>
+</div>
+<form action="{{ url_for('feeding.edit', id=data.id) }}" method="post" enctype="multipart/form-data">
+    <div class="modal-body" id="modal-body">
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="feeding_date" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="feeding_date" name="feeding_date" value="{{ data.date }}" required>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="feeding_type" class="form-label">Type</label>
+                    <select class="form-select" class="form-control" id="feeding_type" name="feeding_type" required>
+                        {% for feeding_type in feeding_types %}
+                            <option value="{{ feeding_type.id }}" {% if data.type|int == feeding_type.id|int %}selected{% endif %}>{{ feeding_type.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="feeding_count" class="form-label">Count</label>
+                    <input type="number" class="form-control" id="feeding_count" name="feeding_count" value="{{ data.count }}" required>
+                </div>
+            </div>
+            <div class="col unit">
+                <div class="mb-3">
+                    <label for="feeding_unit" class="form-label">Unit</label>
+                    <input type="text" class="form-control" id="feeding_unit" name="feeding_unit" value="{{ data.unit }}" required>
+                </div>
+            </div>
+        </div>    
+    </div>
+    <input type="hidden" id="animal_id" name="animal_id" value="{{ data.animal }}" />
+    <div class="modal-footer">
+        <div pos="start">
+            <button type="button" data-id="{{ data.id }}" class="btn btn-danger text-left feeding_delete_button">Delete</button>
+        </div>
+        <div class="text-end">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function(){
+        var ft = $('#feeding_type').val();
+        var value = $('#feeding_unit').val();
+        $.ajax({
+            url: '/feeding/get_units/'+ft+'?value='+value,
+            type: 'get',
+            success: function(data){
+                $('.unit').html(data);
+            }
+        })
+    });
+
+    $('#feeding_type').change(function(){
+        var ft = $(this).val();
+        var value = $('#feeding_unit').val();
+        $.ajax({
+            url: '/feeding/get_units/'+ft+'?value='+value,
+            type: 'get',
+            success: function(data){
+                $('.unit').html(data);
+            }
+        })
+    });
+</script>

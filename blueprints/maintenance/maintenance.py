@@ -1,4 +1,5 @@
 from flask import current_app, render_template, request, redirect, flash, Blueprint
+import os, shutil
 from functions import *
 
 maintenance_bp = Blueprint("maintenance", __name__, template_folder="templates")
@@ -75,9 +76,9 @@ def do_update():
     error = ""
 
     # Rename feeding Table
-    exists = None
+    exists = False
     exists = db_fetch("SELECT * FROM feeding LIMIT 1")
-    if exists != None:
+    if exists:
         try:
             print("DROP auto-generated table feedings")
             query = "DROP TABLE feedings"
@@ -148,6 +149,19 @@ def do_update():
     except Exception as e:
         print(f"Error: {e}")
         error = error + f"Add defaults for animal_type -> Error: {e}\n"
+
+    # Migrate images
+    print("Migrating images")
+    try:
+        for image in os.listdir(UPLOAD_FOLDER):
+            if allowed_file(image):
+                print(f"migrating {image}")
+                src = os.path.join(UPLOAD_FOLDER, image)
+                dst = os.path.join(f"{UPLOAD_FOLDER}/animals", image)
+                shutil.move(src,dst)
+    except Exception as e:
+        print(f"Error: {e}")
+        error = error + f"Migrate animal images to new path -> Error: {e}\n"
 
     # Done Updateing
     if error != "":
