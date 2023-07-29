@@ -1,70 +1,26 @@
 <div class="modal-header">
-    <h5 class="modal-title" id="itemLabel">Add feeding</h5>
+    <h5 class="modal-title" id="itemLabel">Add document to {% if animal %}{{animal.name}}{%else%}{{terrarium.name}}{%endif%}</h5>
 </div>
-<form action="{{ url_for('feeding.add', id=id) }}" method="post" enctype="multipart/form-data">
+{% if animal %}{%set target='animal'%}{%else%}{$ set target='terrarium'%}{%endif%}
+<form action="{{ url_for('document.add', target=target, id=id) }}" method="post" enctype="multipart/form-data">
     <div class="modal-body" id="modal-body">
         <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <label for="feeding_date" class="form-label">Date</label>
-                    <input type="date" class="form-control" id="feeding_date" name="feeding_date" required>
+                    <label for="file_name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="file_name" name="file_name" required>
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
-                    <label for="feeding_type" class="form-label">Type</label>
-                    <select class="form-select" class="form-control" id="feeding_type" name="feeding_type" required>
-                        {% for feeding_type in feeding_types %}
-                            <option value="{{ feeding_type.id }}" {%if feeding_type.id|int == animal.default_ft|int %}selected{% endif %}>{{ feeding_type.name }}</option>
-                        {% endfor %}
-                    </select>
+                    <label for="file" class="form-label">PDF-File:</label>
+                    <input type="file" accept="file/*" class="form-control" id="file" name="file">
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="mb-3">
-                    <label for="feeding_count" class="form-label">Count</label>
-                    <input type="number" class="form-control" id="feeding_count" name="feeding_count" required>
-                </div>
-            </div>
-            <div class="col">
-                <div class="mb-3">
-                    <label for="feeding_unit" class="form-label">Unit</label>
-                    <input type="number" class="form-control" id="feeding_unit" name="feeding_unit">
-                </div>
-            </div>
-        </div>
-    
+        </div>    
     </div>
     <div class="modal-footer text-end">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Save</button>
     </div>
 </form>
-
-<script>
-    $('#feeding_date').val(new Date().toISOString().slice(0, 10));
-
-    $(document).ready(function(){
-        var ft = $('#feeding_type').val();
-        $.ajax({
-            url: '/feeding/get_units/'+ft,
-            type: 'get',
-            success: function(data){
-                $('.unit').html(data);
-            }
-        })
-    });
-
-    $('#feeding_type').change(function(){
-        var ft = $(this).val();
-        $.ajax({
-            url: '/feeding/get_units/'+ft,
-            type: 'get',
-            success: function(data){
-                $('.unit').html(data);
-            }
-        })
-    });
-</script>

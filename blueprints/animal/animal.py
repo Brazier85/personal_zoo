@@ -1,6 +1,5 @@
 from flask import current_app, render_template, request, redirect, url_for, flash, Blueprint
 import os, json
-import base64
 from werkzeug.utils import secure_filename
 from functions import *
 from flask_weasyprint import HTML, render_pdf
@@ -21,6 +20,7 @@ def animal(id):
     animal_data = get_ad(id)
     feeding_data = get_fd(None, id, limit)
     history_data = get_hd(None, id, limit)
+    documents = get_docs('animal', id)
 
     weight_setting = get_setting("weight_type")
     try:
@@ -47,7 +47,10 @@ def animal(id):
         html = render_template('animal_print.html', animal=animal_data, feedings=feeding_data, history=history_data, location=location)
         return render_pdf(HTML(string=html), "", download_filename=f"{animal_data['name']}.pdf", automatic_download=False)
     else:
-        return render_template('animal.html', animal=animal_data, feedings=feeding_data, history=history_data, location=location, current_weight=current_weight, feeding_size=feeding_size)
+        return render_template('animal.html', animal=animal_data,
+                               feedings=feeding_data, history=history_data,
+                               location=location, current_weight=current_weight,
+                               feeding_size=feeding_size, documents=documents)
 
 @animal_bp.route('/add', methods=['POST','GET'])
 def add():

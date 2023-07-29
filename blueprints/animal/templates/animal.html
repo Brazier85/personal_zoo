@@ -130,6 +130,39 @@
     <div class="col">
         <div class="card h-100">
             <div class="card-header">
+                <div class="flex-grow"> Documents </div>
+                <div class="btn-list">
+                    <button class="btn document_add_button green_button"><i class="bi bi-plus"></i></button>
+                </div>
+            </div>
+            <div class="card-body document_card">
+                {% if documents %}
+                <table class="table table-striped m-0">
+                    <thead>
+                        <th>Name</th>
+                        <th width="25%">Download</th>
+                    </thead>
+                    <tbody>
+                        {% for document in documents %}
+                        <tr data-id="{{ document.id }}" class="document_edit no-select">
+                            <td class="active_row">{{ document.name }}</td>
+                            <td><a href="{{ url_for('document.download', id=document.id) }}" target="_blank">Download</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p class="mb-0">No Documents found!</p>
+                {% endif %}
+            </div>
+            <div class="card-footer card-footer-clickable text-right pr-0">
+                <div style="text-transform: uppercase;">Files must be in pdf format!</div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header">
                 <div class="flex-grow"> Notes </div>
                 <div class="btn-list">
                     <!-- no button -->
@@ -207,7 +240,7 @@
                         $.ajax({
                                 url: '/feeding/delete/'+feed_id,
                                 type: 'post',
-                                data: {animal_id: {{ animal.id }}},
+                                data: {},
                                 success: function(data) {
                                     location.reload(true); 
                                 }
@@ -232,7 +265,32 @@
                         $.ajax({
                                 url: '/history/delete/'+feed_id,
                                 type: 'post',
-                                data: {animal_id: {{ animal.id }}},
+                                data: {},
+                                success: function(data) {
+                                    location.reload(true); 
+                                }
+                            });
+                    }
+                });
+            }
+        });
+    });
+    $(document).on("click",".document_edit",function(){
+        var feed_id = $(this).data('id');
+        $.ajax({
+            url: '/document/edit/'+feed_id,
+            type: 'get',
+            success: function(data){ 
+                $('.modal-content').html(data); 
+                $('.modal-content').append(data.htmlresponse);
+                $('#modal_details').modal('show');
+                $('.document_delete_button').click(function(){
+                    var feed_id = $(this).data('id');
+                    if (confirm("Are You Sure ?")) {
+                        $.ajax({
+                                url: '/document/delete/'+feed_id,
+                                type: 'post',
+                                data: {},
                                 success: function(data) {
                                     location.reload(true); 
                                 }
@@ -257,6 +315,11 @@
             $('#modal_details').modal('show'); 
         });
     })
+    $('.document_add_button').on('click',function(){
+        $('.modal-content').load('/document/add/animal/{{ animal.id }}',function(){
+            $('#modal_details').modal('show'); 
+        });
+    });
     $('.animal_print_button').on('click',function(){
         window.open('/animal/{{ animal.id }}?print=1', '_blank'); 
     });

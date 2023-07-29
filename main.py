@@ -16,6 +16,7 @@ from momentjs import momentjs
 
 # Import Blueprints
 from blueprints.animal.animal import animal_bp
+from blueprints.document.document import document_bp
 from blueprints.terrarium.terrarium import terrarium_bp
 from blueprints.feeding.feeding import feeding_bp
 from blueprints.history.history import history_bp
@@ -76,6 +77,7 @@ app.jinja_env.globals['momentjs'] = momentjs
 # Blueprints
 app.register_blueprint(animal_bp, url_prefix="/animal")
 app.register_blueprint(feeding_bp, url_prefix="/feeding")
+app.register_blueprint(document_bp, url_prefix="/document")
 app.register_blueprint(history_bp, url_prefix="/history")
 app.register_blueprint(settings_bp, url_prefix="/settings")
 app.register_blueprint(terrarium_bp, url_prefix="/terrarium")

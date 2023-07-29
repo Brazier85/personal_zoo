@@ -1,8 +1,15 @@
-from flask import current_app, render_template, request, redirect, flash, jsonify, Blueprint
+from flask import current_app, render_template, request, redirect, flash, jsonify, send_from_directory, Blueprint
+from werkzeug.utils import secure_filename
 from datetime import datetime
 from functions import *
+import uuid
 
 document_bp = Blueprint("document", __name__, template_folder="templates")
+
+@document_bp.route('/download/<int:id>')
+def download(id):
+    file = Document.query.filter(Document.id==id).first()
+    return send_from_directory(f"{UPLOAD_FOLDER}/documents", file.filename)
 
 @document_bp.route('/get_all/<int:id>', methods=['POST','GET'])
 def get_all(id):
@@ -14,74 +21,94 @@ def get_all(id):
             feedings=get_fd(None,id)
         return render_template('document_all.html', feedings=feedings)
 
-@document_bp.route('/add/<int:id>', methods=['POST','GET'])
-def add(id):
+@document_bp.route('/add/<string:target>/<int:id>', methods=['POST','GET'])
+def add(target, id):
     if request.method == 'GET':
-        animal = Animal.query.add_columns(Animal.name, Animal.default_ft).filter(Animal.id==id).one()
-        return render_template('document_add.html', id=id, animal=animal, feeding_types=get_ft())
-        
+        if target == 'animal':
+            animal = Animal.query.add_columns(Animal.id, Animal.name).filter(Animal.id==id).one()
+            return render_template('document_add.html', id=id, animal=animal)
+        elif target == 'terrarium':
+            terrarium = Terrarium.query.add_columns(Terrarium.id, Terrarium.name).filter(Terrarium.id==id).one()
+            return render_template('document_add.html', id=id, terrarium=terrarium)
+            
     elif request.method == 'POST':
-        feeding = request.form
-        count = feeding['feeding_count']
-        type = feeding['feeding_type']
-        unit = feeding['feeding_unit']
-        date = feeding['feeding_date']
+        form_file = request.files['file']
+        name = request.form['file_name']
+        if target == 'animal':
+            animal_id = id
+            terrarium_id = 'NULL'
+        elif target == 'terrarium':
+            terrarium_id = id
+            animal_id = 'NULL'
 
-        date = datetime.datetime.strptime(date, '%Y-%m-%d')
+        # Check if an image was uploaded
+        if form_file.filename != '':
+            # Save the image to a folder
+            if form_file and allowed_file(form_file.filename):
+                filename = f"{uuid.uuid4().hex[:8]}_{secure_filename(form_file.filename)}"
+                form_file.save(os.path.join(f"{UPLOAD_FOLDER}/documents", filename))
+            else:
+                flash('Invalid file. Please upload an pdf file.', 'danger')
+                if target == 'animal':
+                    return redirect("/animal/"+str(animal_id))
+                elif target == 'terrarium':
+                    return redirect("/terrarium/"+str(animal_id))
         
-        feeding = Feeding(animal=id,
-                            type=type,
-                            count=count,
-                            unit=unit,
-                            date=date)
-        db.session.add(feeding)
-        db.session.commit()
+            file = Document(name=name,
+                            filename=filename,
+                            animal_id=animal_id,
+                            terrarium_id=terrarium_id)
+            db.session.add(file)
+            db.session.commit()
 
-        flash('Added feeding successfully!', 'success')
-        current_app.logger.info("Added feeding!")
+            flash('Added document successfully!', 'success')
+            current_app.logger.info("Added document!")  
+        else:
+            flash('No file found!', 'danger')
+            current_app.logger.info("Error adding document!")
 
-        return redirect("/animal/"+str(id))   
+        if target == 'animal':
+            return redirect("/animal/"+str(animal_id))
+        elif target == 'terrarium':
+            return redirect("/terrarium/"+str(animal_id))
     
 @document_bp.route('/edit/<int:id>', methods=['POST','GET'])
 def edit(id):
 
-    feeding = Feeding.query.filter(Feeding.id==id).first()
+    document = Document.query.filter(Document.id==id).first()
 
     if request.method == 'GET':
-        return jsonify({'htmlresponse': render_template('document_edit.html', data=feeding, feeding_types=get_ft())})
+        return jsonify({'htmlresponse': render_template('document_edit.html', data=document)})
     
     elif request.method == 'POST':
 
-        feeding_data = request.form
-        count = feeding_data['feeding_count']
-        type = feeding_data['feeding_type']
-        unit = feeding_data['feeding_unit']
-        date = feeding_data['feeding_date']
-        animal_id = feeding_data['animal_id']
+        document.name = request.form['file_name']
 
-        date = datetime.datetime.strptime(date, '%Y-%m-%d')
-
-        feeding.count = count
-        feeding.type = type
-        feeding.unit = unit
-        feeding.date = date
-        feeding.animal = animal_id
-
-        db.session.add(feeding)
+        db.session.add(document)
         db.session.commit()
         
-        flash('Changes to feeding saved!', 'success')
-        current_app.logger.info(f"Modified feeding with id: {id} !")
-        return redirect("/animal/"+str(animal_id))
+        flash('Changes to document saved!', 'success')
+        current_app.logger.info(f"Modified document with id: {id} !")
+
+        if int(document.animal_id) > 0:
+            return redirect("/animal/"+str(document.animal_id))
+        else:
+            return redirect("/terrarium/"+str(document.terrarium_id))
     
 @document_bp.route('/delete/<int:id>', methods=['POST'])
 def delete(id):
     if request.method == 'POST': 
+        document = Document.query.get_or_404(id)
+
+        # Delete the file
+        file_path = os.path.join(f"{UPLOAD_FOLDER}/documents", str(document.filename))
+        if os.path.exists(file_path):
+            os.remove(file_path)
+
         # Delete data into the database
-        feeding = Feeding.query.get_or_404(id)
-        db.session.delete(feeding)
+        db.session.delete(document)
         db.session.commit()
-        flash('Deleted feeding successfully!', 'success')
-        current_app.logger.info(f"Deleted feeding with id: {id} !")
+        flash('Deleted document successfully!', 'success')
+        current_app.logger.info(f"Deleted document with id: {id} !")
 
         return "", 200

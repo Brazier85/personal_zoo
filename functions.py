@@ -231,6 +231,13 @@ def get_tr(id=None):
             })
         return terrariums
 
+def get_docs(target, id):
+    if target == 'animal':
+        return Document.query.filter(Document.animal_id==id).all()
+    elif target == 'terrarium':
+        return Document.query.filter(Document.terrarium_id==id).all()
+            
+
 # get setting values
 def get_setting(name=None):
     if (name == None):
