@@ -122,25 +122,29 @@ def edit(id):
         current_animal.notes = request.form['notes']
         current_animal.default_ft = request.form['dft']
         current_animal.terrarium = request.form['terrarium']
-        current_image = request.form['current_image']
+        new_image = request.form['current_image']
 
         # Check if a new image file is provided
         if 'image' in request.files:
             image = request.files['image']
             if image.filename == '':
                 # No new image provided
-                filename = current_image
+                filename = new_image
             elif allowed_file(image.filename):
                 # New valid image provided
                 filename = secure_filename(image.filename)
                 image.save(os.path.join(f"{UPLOAD_FOLDER}/animals", filename))
+                # Delete old file
+                file_path = os.path.join(f"{UPLOAD_FOLDER}/animals", str(current_animal.image))
+                if os.path.exists(file_path):
+                    os.remove(file_path)
             else:
                 # Invalid file format
                 flash('Invalid file format. Please upload an image file.', 'error')
                 return redirect(url_for('animal_edit', id=id))
         else:
             # No new image provided
-            filename = current_image
+            filename = current_animal.image
 
         current_animal.image=filename
         current_animal.updated_date=datetime.date.today()

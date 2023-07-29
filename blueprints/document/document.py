@@ -1,4 +1,4 @@
-from flask import current_app, render_template, request, redirect, flash, jsonify, send_from_directory, Blueprint
+from flask import current_app, render_template, request, redirect, flash, jsonify, send_from_directory, url_for, Blueprint
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from functions import *
@@ -10,16 +10,6 @@ document_bp = Blueprint("document", __name__, template_folder="templates")
 def download(id):
     file = Document.query.filter(Document.id==id).first()
     return send_from_directory(f"{UPLOAD_FOLDER}/documents", file.filename)
-
-@document_bp.route('/get_all/<int:id>', methods=['POST','GET'])
-def get_all(id):
-    if request.method == 'GET':
-        less = request.args.get('less')
-        if (less):
-            feedings=get_fd(None,id,5)
-        else:
-            feedings=get_fd(None,id)
-        return render_template('document_all.html', feedings=feedings)
 
 @document_bp.route('/add/<string:target>/<int:id>', methods=['POST','GET'])
 def add(target, id):
@@ -83,6 +73,29 @@ def edit(id):
     elif request.method == 'POST':
 
         document.name = request.form['file_name']
+        print(f"animal: {document.animal_id}")
+        print(f"terrarium: {document.terrarium_id}")
+
+        # Check if a new image file is provided
+        if 'file' in request.files:
+            file = request.files['file']
+            if file.filename == '':
+                # No new file provided
+                filename = document.filename
+            elif allowed_file(file.filename):
+                # New valid file provided
+                filename = f"{uuid.uuid4().hex[:8]}_{secure_filename(file.filename)}"
+                file.save(os.path.join(f"{UPLOAD_FOLDER}/documents", filename))
+                # Delete old file
+                file_path = os.path.join(f"{UPLOAD_FOLDER}/documents", str(document.filename))
+                if os.path.exists(file_path):
+                    os.remove(file_path)
+            else:
+                # Invalid file format
+                flash('Invalid file format. Please upload an image file.', 'error')
+                return redirect(url_for('animal_edit', id=id))
+            
+        document.filename = filename
 
         db.session.add(document)
         db.session.commit()
