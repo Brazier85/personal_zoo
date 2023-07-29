@@ -228,6 +228,10 @@ left: 50%;
   width: 100px;
 }
 
+.animal-image-small {
+  position:relative;
+}
+
 .animal-image-small img {
   background: #ccc;
   border: 3px solid #fff;
@@ -287,21 +291,19 @@ left: 50%;
 
 .gender {
   font-size: 1.5rem;
+  -webkit-text-stroke: 1px;
 }
 
 .female {
   color: violet;
-  -webkit-text-stroke: 1px;
 }
 
 .male {
-  color: rgb(74, 74, 250);
-  -webkit-text-stroke: 1px;
+  color: #89cff0;
 }
 
 .ambiguous {
-  color: var(--zoo-green);
-  -webkit-text-stroke: 1px;  
+  color: var(--zoo-green); 
 }
 
 .card .card-header {
@@ -400,4 +402,14 @@ table .wide-cell {
 
 .active .card {
   font-weight: normal;
+}
+
+.notify-badge{
+  position: absolute;
+  right:-11px;
+  top: -8px;
+  text-align: center;
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
 }

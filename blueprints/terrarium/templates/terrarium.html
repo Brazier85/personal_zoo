@@ -65,12 +65,14 @@
                                             <img src="{{ url_for('uploaded_file', folder='animals', filename=animal.image) }}" alt="Image for {{ animal.name }}" style="border-color: {{ animal.background_color }} !important;">
                                         </div>
                                         <div class="ps-3 flex-shrink-1">
-                                            <div class="pb-1 fw-bold">{{ animal.name }}</div>
-                                            <p class="m-0 text-muted">{{ animal.morph }}</p>
+                                            <div class="pb-1 fw-bold {% if animal.gender == 'female' %}female{% elif animal.gender == 'male' %}male{% else %}ambiguous{% endif %}">
+                                                {{ animal.name }}
+                                            </div>
+                                            <p class="m-0 text-muted fw-normal">{{ animal.morph }}</p>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="align-middle">{{ animal.art }}</td>
+                                <td class="align-middle"><div class="flex-shrink-1 text-break fw-normal">{{ animal.art }}</div></td>
                             </tr>
                             {% endfor %}
                         </tbody>
