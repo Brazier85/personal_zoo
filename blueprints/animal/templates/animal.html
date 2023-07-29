@@ -144,8 +144,8 @@
                     </thead>
                     <tbody>
                         {% for document in documents %}
-                        <tr data-id="{{ document.id }}" class="document_edit no-select">
-                            <td class="active_row">{{ document.name }}</td>
+                        <tr class="no-select">
+                            <td data-id="{{ document.id }}" class="active_row document_edit">{{ document.name }}</td>
                             <td><a href="{{ url_for('document.download', id=document.id) }}" target="_blank">Download</a></td>
                         </tr>
                         {% endfor %}
