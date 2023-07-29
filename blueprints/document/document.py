@@ -48,7 +48,7 @@ def add(target, id):
                 filename = f"{uuid.uuid4().hex[:8]}_{secure_filename(form_file.filename)}"
                 form_file.save(os.path.join(f"{UPLOAD_FOLDER}/documents", filename))
             else:
-                flash('Invalid file. Please upload an pdf file.', 'danger')
+                flash('Invalid file type. Please upload an valid file. (pdf, png, jpg)', 'danger')
                 if target == 'animal':
                     return redirect("/animal/"+str(animal_id))
                 elif target == 'terrarium':
