@@ -6,7 +6,7 @@
 <p>&nbsp;</p>
 <div class="row row-cols-1">
     <div class="col mb-3">
-        <div class="bg-warning p-3 fw-bold">Please use this page only if you know what you are doing!</div>
+        <div class="bg-warning p-3 fw-bold rounded text-dark">Please use this page only if you know what you are doing!</div>
     </div>
 </div>
 <div class="row row-cols-lg-2 row-cols-sm-1">
@@ -49,8 +49,10 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <p>Clean old images</p>
-                    <button type="button" class="btn btn-primary">Cleanup images</button>
+                    <div>
+                        Delete old images: 
+                        <button type="button" class="btn btn-danger image_cleanup" id="image_cleanup" name="image_cleanup">Cleanup images</button>
+                    </div>
                 </div>
                 <div class="card-footer text-end pr-0">
                     <button type="submit" class="btn btn-primary">Send</button>
@@ -59,4 +61,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('.image_cleanup').click(function(){
+        window.location.replace("/maintenance/cleanup_images");
+    });
+</script>
 {% endblock %}

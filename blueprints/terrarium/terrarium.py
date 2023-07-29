@@ -62,25 +62,33 @@ def edit(id):
         current_terrarium.type = request.form['type']
         current_terrarium.size = request.form['size']
         current_terrarium.notes = request.form['notes']
-        current_image = request.form['current_image']
+        new_image = request.form['current_image']
 
         # Check if a new image file is provided
         if 'image' in request.files:
             image = request.files['image']
             if image.filename == '':
                 # No new image provided
-                filename = current_image
+                filename = new_image
             elif allowed_file(image.filename):
                 # New valid image provided
                 filename = secure_filename(image.filename)
                 image.save(os.path.join(f"{UPLOAD_FOLDER}/terrariums", filename))
+                # Delete old file
+                if str(current_terrarium.image) != 'dummy.jpg':
+                    try:
+                        file_path = os.path.join(f"{UPLOAD_FOLDER}/terrariums", str(current_terrarium.image))
+                        if os.path.exists(file_path):
+                            os.remove(file_path)
+                    except:
+                        print(f"Could not delete old file: {current_terrarium.image}")
             else:
                 # Invalid file format
                 flash('Invalid file format. Please upload an image file.', 'error')
                 return redirect(url_for('terrarium_edit', id=id))
         else:
             # No new image provided
-            filename = current_image
+            filename = current_terrarium.image
 
         current_terrarium.image=filename
 
