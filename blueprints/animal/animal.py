@@ -135,9 +135,12 @@ def edit(id):
                 filename = secure_filename(image.filename)
                 image.save(os.path.join(f"{UPLOAD_FOLDER}/animals", filename))
                 # Delete old file
-                file_path = os.path.join(f"{UPLOAD_FOLDER}/animals", str(current_animal.image))
-                if os.path.exists(file_path):
-                    os.remove(file_path)
+                try:
+                    file_path = os.path.join(f"{UPLOAD_FOLDER}/animals", str(current_animal.image))
+                    if os.path.exists(file_path):
+                        os.remove(file_path)
+                except:
+                    print(f"Could not delete old file: {current_animal.image}")
             else:
                 # Invalid file format
                 flash('Invalid file format. Please upload an image file.', 'error')

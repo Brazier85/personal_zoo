@@ -87,13 +87,19 @@ def edit(id):
                 filename = f"{uuid.uuid4().hex[:8]}_{secure_filename(file.filename)}"
                 file.save(os.path.join(f"{UPLOAD_FOLDER}/documents", filename))
                 # Delete old file
-                file_path = os.path.join(f"{UPLOAD_FOLDER}/documents", str(document.filename))
-                if os.path.exists(file_path):
-                    os.remove(file_path)
+                try:
+                    file_path = os.path.join(f"{UPLOAD_FOLDER}/documents", str(document.filename))
+                    if os.path.exists(file_path):
+                        os.remove(file_path)
+                except:
+                    print(f"Could not delete old file: {document.filename}")
             else:
                 # Invalid file format
                 flash('Invalid file format. Please upload an image file.', 'error')
-                return redirect(url_for('animal_edit', id=id))
+                if int(document.animal_id) > 0:
+                    return redirect("/animal/"+str(document.animal_id))
+                else:
+                    return redirect("/terrarium/"+str(document.terrarium_id))
             
         document.filename = filename
 
