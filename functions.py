@@ -316,7 +316,7 @@ def insert_defaults():
         type = Settings(setting='feeding_size', value='[\"1\"]', name='Feeding Size', description='Show feeding size for animal type!')
         db.session.add(type)
         # Color female
-        type = Settings(setting='color_female', value='#E481E4', name='Female Color', description='Color for female animals!')
+        type = Settings(setting='color_female', value='#e481e4', name='Female Color', description='Color for female animals!')
         db.session.add(type)
         # Color male
         type = Settings(setting='color_male', value='#89cff0', name='Male Color', description='Color for male animals!')

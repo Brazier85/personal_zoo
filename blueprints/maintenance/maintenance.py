@@ -147,7 +147,7 @@ def do_update():
     if exists == None:
         print("Insert new setting gender_colors to database")
         # Color female
-        type = Settings(setting='color_female', value='violet', name='Female Color', description='Color for female animals!')
+        type = Settings(setting='color_female', value='#e481e4', name='Female Color', description='Color for female animals!')
         db.session.add(type)
         # Color male
         type = Settings(setting='color_male', value='#89cff0', name='Male Color', description='Color for male animals!')
