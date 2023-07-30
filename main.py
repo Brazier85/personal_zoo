@@ -147,7 +147,7 @@ def home():
     if order == None:
         order = "name"
 
-    return render_template('home.html', animals=get_ad(), feeding_types=get_ft(), terrariums=get_tr(), location=location)
+    return render_template('home.html', animals=get_ad(), feeding_types=get_ft(), terrariums=get_tr(), settings=get_setting(), location=location)
 
 # Route for printing
 @app.route('/print')

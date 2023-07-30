@@ -141,6 +141,21 @@ def do_update():
                 "(setting, value, name, description)" \
                 f"VALUES ('feeding_size','[\"1\"]','Feeding Size','Show feeding size for animal type!')"
         db_update(query)
+
+    exists = None
+    exists = db_fetch("SELECT * FROM settings WHERE setting='color_female'", False)
+    if exists == None:
+        print("Insert new setting gender_colors to database")
+        # Color female
+        type = Settings(setting='color_female', value='violet', name='Female Color', description='Color for female animals!')
+        db.session.add(type)
+        # Color male
+        type = Settings(setting='color_male', value='#89cff0', name='Male Color', description='Color for male animals!')
+        db.session.add(type)
+        # Color other
+        type = Settings(setting='color_other', value='#29a039', name='Other Color', description='Color for other animals!')
+        db.session.add(type)
+        db.session.commit()
     
     ## Delete old cols
     print("Remove old columns....")

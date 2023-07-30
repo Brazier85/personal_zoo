@@ -9,6 +9,19 @@
 <!-- Datatables -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/datatables.min.css') }}">
 <script src="{{ url_for('static', filename='js/datatables.min.js') }}"></script>
+
+<!-- custom gender colors -->
+<style>
+    .female {
+        color: {{ settings['color_female'][0] }};
+    }
+    .male {
+        color: {{ settings['color_male'][0] }};
+    }
+    .ambiguous {
+        color: {{ settings['color_other'][0] }};
+    }
+</style>
 {% endblock %}
 
 {% set list=True %}

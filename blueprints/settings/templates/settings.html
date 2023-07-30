@@ -47,11 +47,38 @@
                                         <div class="text-muted">{{ settings["feeding_size"][2] }}</div>
                                     </td>
                                     <td>
-                                        <select class="selectpicker form-control" multiple id="feeding_size" name="feeding_size">
+                                        <select class="form-control selectpicker" multiple id="feeding_size" name="feeding_size">
                                             {% for animal_type in animal_types %}
                                                 <option value="{{ animal_type.id }}" {% if animal_type.id|string in settings["feeding_size"][0]|string %} selected {% endif %}>{{ animal_type.name }}</option>
                                             {% endfor %}
                                         </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div>{{ settings["color_female"][1] }}</div>
+                                        <div class="text-muted">{{ settings["color_female"][2] }}</div>
+                                    </td>
+                                    <td>
+                                        <input type="color" class="form-control" id="color_female" name="color_female" value="{{ settings['color_female'][0] }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div>{{ settings["color_male"][1] }}</div>
+                                        <div class="text-muted">{{ settings["color_male"][2] }}</div>
+                                    </td>
+                                    <td>
+                                        <input type="color" class="form-control" id="color_male" name="color_male" value="{{ settings['color_male'][0] }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div>{{ settings["color_other"][1] }}</div>
+                                        <div class="text-muted">{{ settings["color_other"][2] }}</div>
+                                    </td>
+                                    <td>
+                                        <input type="color" class="form-control" id="color_other" name="color_other" value="{{ settings['color_other'][0] }}">
                                     </td>
                                 </tr>
                             </tbody>

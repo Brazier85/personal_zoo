@@ -315,6 +315,15 @@ def insert_defaults():
         # Feeding size
         type = Settings(setting='feeding_size', value='[\"1\"]', name='Feeding Size', description='Show feeding size for animal type!')
         db.session.add(type)
+        # Color female
+        type = Settings(setting='color_female', value='#DDA0DD', name='Female Color', description='Color for female animals!')
+        db.session.add(type)
+        # Color male
+        type = Settings(setting='color_male', value='#89cff0', name='Male Color', description='Color for male animals!')
+        db.session.add(type)
+        # Color other
+        type = Settings(setting='color_other', value='#29a039', name='Other Color', description='Color for other animals!')
+        db.session.add(type)
         db.session.commit()
 
     # Add terrarium defaults

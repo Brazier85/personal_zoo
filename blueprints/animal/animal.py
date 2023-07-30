@@ -50,7 +50,8 @@ def animal(id):
         return render_template('animal.html', animal=animal_data,
                                feedings=feeding_data, history=history_data,
                                location=location, current_weight=current_weight,
-                               feeding_size=feeding_size, documents=documents)
+                               feeding_size=feeding_size, settings=get_setting(),
+                               documents=documents)
 
 @animal_bp.route('/add', methods=['POST','GET'])
 def add():

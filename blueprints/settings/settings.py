@@ -20,18 +20,39 @@ def edit():
         settings = request.form
         weight = settings["weight"]
         feeding_size = settings.getlist('feeding_size')
+        color_male = settings["color_male"]
+        color_female = settings["color_female"]
+        color_other = settings["color_other"]
 
-        print(f"Feeding size: {feeding_size}")
+        print(f"Feeding size: {weight}")
 
         # Weight setting
-        setting = Settings.query.filter(Settings.setting=='weight_type')
+        setting = Settings.query.filter(Settings.setting=='weight_type').first()
         setting.value = weight
         db.session.add(setting)
         db.session.commit()
 
         # Feeding size
-        setting = Settings.query.filter(Settings.setting=='feeding_size')
+        setting = Settings.query.filter(Settings.setting=='feeding_size').first()
         setting.value = json.dumps(feeding_size)
+        db.session.add(setting)
+        db.session.commit()
+
+        # Color male
+        setting = Settings.query.filter(Settings.setting=='color_male').first()
+        setting.value = color_male
+        db.session.add(setting)
+        db.session.commit()
+
+        # Color female
+        setting = Settings.query.filter(Settings.setting=='color_female').first()
+        setting.value = color_female
+        db.session.add(setting)
+        db.session.commit()
+
+        # Color other
+        setting = Settings.query.filter(Settings.setting=='color_other').first()
+        setting.value = color_other
         db.session.add(setting)
         db.session.commit()
 
