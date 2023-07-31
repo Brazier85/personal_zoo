@@ -43,19 +43,25 @@
         <div class="mb-3">
             <div class="card">
                 <div class="card-header">
-                    <div class="flex-grow"> Cleanup tasks </div>
+                    <div class="flex-grow"> Tasks </div>
                     <div class="btn-list">
                         <!-- no button -->
                     </div>
                 </div>
                 <div class="card-body">
-                    <div>
-                        Delete old images: 
-                        <button type="button" class="btn btn-danger image_cleanup" id="image_cleanup" name="image_cleanup">Cleanup images</button>
-                    </div>
+                    <table class="table align-middle">
+                        <tr>
+                            <td>Delete old images</td>
+                            <td class="text-start"><button type="button" class="btn btn-danger image_cleanup" id="image_cleanup" name="image_cleanup">Cleanup images</button></td>
+                        </tr>
+                        <tr>
+                            <td>Reset to default colors</td>
+                            <td class="text-start"><button type="button" class="btn btn-danger color_reset" id="color_reset" name="color_reset">Color reset</button></td>
+                        </tr>
+                    </table>                  
                 </div>
-                <div class="card-footer text-end pr-0">
-                    <button type="submit" class="btn btn-primary">Send</button>
+                <div class="card-footer text-start">
+                    Be careful using the button above!
                 </div>
             </div>
         </div>
@@ -64,7 +70,10 @@
 
 <script>
     $('.image_cleanup').click(function(){
-        window.location.replace("/maintenance/cleanup_images");
+        window.location.replace("/maintenance/tasks/cleanup_images");
+    });
+    $('.color_reset').click(function(){
+        window.location.replace("/maintenance/tasks/color_reset");
     });
 </script>
 {% endblock %}

@@ -48,10 +48,10 @@ def animal(id):
         return render_pdf(HTML(string=html), "", download_filename=f"{animal_data['name']}.pdf", automatic_download=False)
     else:
         return render_template('animal.html', animal=animal_data,
-                               feedings=feeding_data, history=history_data,
-                               location=location, current_weight=current_weight,
-                               feeding_size=feeding_size, settings=get_setting(),
-                               documents=documents)
+                                feedings=feeding_data, history=history_data,
+                                location=location, current_weight=current_weight,
+                                feeding_size=feeding_size, settings=get_setting(),
+                                documents=documents)
 
 @animal_bp.route('/add', methods=['POST','GET'])
 def add():

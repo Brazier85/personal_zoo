@@ -70,42 +70,61 @@ def do_sql():
         current_app.logger.info(f"SQL query executed!")
         return redirect("/maintenance")
     
-@maintenance_bp.route("/cleanup_images")
-def clean_images():
+@maintenance_bp.route("/tasks/<string:task>")
+def tasks(task):
+    print(task)
+    if task == 'cleanup_images':
+        # Get all animal images
+        animal_images = Animal.query.add_columns(Animal.image).all()
+        terrarium_images = Terrarium.query.add_columns(Terrarium.image).all()
 
-    # Get all animal images
-    animal_images = Animal.query.add_columns(Animal.image).all()
-    terrarium_images = Terrarium.query.add_columns(Terrarium.image).all()
+        for image in os.listdir(f"{UPLOAD_FOLDER}/animals"):
+            if str(image) != 'dummy.jpg':
+                if any(image in filename for filename in animal_images):
+                    print(f"Found {image} in table!")
+                else:
+                    print(f"Could not find {image} in table!")
+                    try:
+                        file_path = os.path.join(f"{UPLOAD_FOLDER}/animals", str(image))
+                        if os.path.exists(file_path):
+                            os.remove(file_path)
+                    except:
+                        print(f"Could not delete old file: {image}")
 
-    for image in os.listdir(f"{UPLOAD_FOLDER}/animals"):
-        if str(image) != 'dummy.jpg':
-            if any(image in filename for filename in animal_images):
-                print(f"Found {image} in table!")
-            else:
-                print(f"Could not find {image} in table!")
-                try:
-                    file_path = os.path.join(f"{UPLOAD_FOLDER}/animals", str(image))
-                    if os.path.exists(file_path):
-                        os.remove(file_path)
-                except:
-                    print(f"Could not delete old file: {image}")
-
-    for image in os.listdir(f"{UPLOAD_FOLDER}/terrariums"):
-        if str(image) != 'dummy.jpg':
-            if any(image in filename for filename in terrarium_images):
-                print(f"Found {image} in table!")
-            else:
-                print(f"Could not find {image} in table!")
-                try:
-                    file_path = os.path.join(f"{UPLOAD_FOLDER}/terrariums", str(image))
-                    if os.path.exists(file_path):
-                        os.remove(file_path)
-                except:
-                    print(f"Could not delete old file: {image}")
+        for image in os.listdir(f"{UPLOAD_FOLDER}/terrariums"):
+            if str(image) != 'dummy.jpg':
+                if any(image in filename for filename in terrarium_images):
+                    print(f"Found {image} in table!")
+                else:
+                    print(f"Could not find {image} in table!")
+                    try:
+                        file_path = os.path.join(f"{UPLOAD_FOLDER}/terrariums", str(image))
+                        if os.path.exists(file_path):
+                            os.remove(file_path)
+                    except:
+                        print(f"Could not delete old file: {image}")
 
 
-    flash('Deleted old images!', 'success')
-    return redirect("/maintenance")
+        flash('Deleted old images!', 'success')
+        return redirect("/maintenance")
+    
+    if task == 'color_reset':
+        # Color female
+        setting = Settings.query.filter(Settings.setting=='color_female').first()
+        setting.value='#e481e4'
+        db.session.add(setting)
+        # Color male
+        setting = Settings.query.filter(Settings.setting=='color_male').first()
+        setting.value='#89cff0'
+        db.session.add(setting)
+        # Color other
+        setting = Settings.query.filter(Settings.setting=='color_other').first()
+        setting.value='#29a039'
+        db.session.add(setting)
+        db.session.commit()
+
+        flash('Reset colors to default!', 'success')
+        return redirect("/maintenance")
     
 @maintenance_bp.route("/update")
 def do_update():
