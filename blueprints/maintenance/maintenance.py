@@ -155,26 +155,33 @@ def do_update():
     exists = None
     exists = db_fetch("SELECT * FROM settings WHERE setting='feeding_size'", False)
     if exists == None:
-        print("Insert new setting feeding_size to database")
-        query = "INSERT INTO settings " \
-                "(setting, value, name, description)" \
-                f"VALUES ('feeding_size','[\"1\"]','Feeding Size','Show feeding size for animal type!')"
-        db_update(query)
+        try:
+            print("Insert new setting feeding_size to database")
+            type = Settings(setting='feeding_size', value='[\"1\"]', name='Feeding Size', description='Show feeding size for animal type!')
+            db.session.add(type)
+            db.session.commit()
+        except:
+            print(f"Error: {e} -> add default feeding_size")
+            error = error + f"Could not add default for feeding_size -> Error: {e}\n"
 
     exists = None
     exists = db_fetch("SELECT * FROM settings WHERE setting='color_female'", False)
     if exists == None:
-        print("Insert new setting gender_colors to database")
-        # Color female
-        type = Settings(setting='color_female', value='#e481e4', name='Female Color', description='Color for female animals!')
-        db.session.add(type)
-        # Color male
-        type = Settings(setting='color_male', value='#89cff0', name='Male Color', description='Color for male animals!')
-        db.session.add(type)
-        # Color other
-        type = Settings(setting='color_other', value='#29a039', name='Other Color', description='Color for other animals!')
-        db.session.add(type)
-        db.session.commit()
+        try:
+            print("Insert new setting gender_colors to database")
+            # Color female
+            type = Settings(setting='color_female', value='#e481e4', name='Female Color', description='Color for female animals!')
+            db.session.add(type)
+            # Color male
+            type = Settings(setting='color_male', value='#89cff0', name='Male Color', description='Color for male animals!')
+            db.session.add(type)
+            # Color other
+            type = Settings(setting='color_other', value='#29a039', name='Other Color', description='Color for other animals!')
+            db.session.add(type)
+            db.session.commit()
+        except:
+            print(f"Error: {e} -> add default colors")
+            error = error + f"Could not add default colors -> Error: {e}\n"
     
     ## Delete old cols
     print("Remove old columns....")
@@ -234,7 +241,7 @@ def do_update():
         print(f"Error: {e}")
         error = error + f"Migrate animal images to new path -> Error: {e}\n"
 
-    # Done Updateing
+    # Done Updating
     if error != "":
         flash(f"<strong>Error while doing update!</strong>\n\n{error}", 'danger')
     else:
