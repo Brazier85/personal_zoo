@@ -8,13 +8,7 @@ LABEL maintainer="Ferdinand Berger <ferdy@berger-em.de>" \
 WORKDIR /app
 
 # Copy the required files into the container
-COPY ["config.py", "functions.py", "main.py", "momentjs.py", "requirements.txt", "models.py", "."]
-
-# Folders
-COPY blueprints blueprints
-COPY data data
-COPY static static
-COPY templates templates
+COPY . ./
 
 # Install the dependencies
 RUN pip install --no-cache-dir -r requirements.txt
