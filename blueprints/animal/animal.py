@@ -1,4 +1,5 @@
 from flask import current_app, render_template, request, redirect, url_for, flash, Blueprint
+from flask_login import login_required
 import os, json
 from werkzeug.utils import secure_filename
 from functions import *
@@ -54,6 +55,7 @@ def animal(id):
                                 documents=documents)
 
 @animal_bp.route('/add', methods=['POST','GET'])
+@login_required
 def add():
 
     location = 'animal_add'
@@ -106,6 +108,7 @@ def add():
         return redirect('/')
 
 @animal_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
 def edit(id):
 
     current_animal = Animal.query.filter(Animal.id==id).first()
@@ -161,6 +164,7 @@ def edit(id):
         return redirect("/animal/"+str(id))
 
 @animal_bp.route('/delete/<int:id>', methods=['POST'])
+@login_required
 def delete(id):
     if request.method == 'POST':
 

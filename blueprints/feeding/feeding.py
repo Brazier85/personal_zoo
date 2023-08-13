@@ -1,4 +1,5 @@
 from flask import current_app, render_template, request, redirect, flash, jsonify, Blueprint
+from flask_login import login_required
 from datetime import datetime
 from functions import *
 
@@ -29,6 +30,7 @@ def qr_code(id):
     return render_template('feeding_qr.html', id=id, animal=animal.name, feed_url=feed_url)
 
 @feeding_bp.route('/add/<int:id>', methods=['POST','GET'])
+@login_required
 def add(id):
     if request.method == 'GET':
         external = request.args.get('external')
@@ -61,6 +63,7 @@ def add(id):
         return redirect("/animal/"+str(id))
     
 @feeding_bp.route('/multi', methods=['POST','GET'])
+@login_required
 def multi_add():
     if request.method == 'GET':
         # get animals
@@ -107,6 +110,7 @@ def multi_add():
     
     
 @feeding_bp.route('/edit/<int:id>', methods=['POST','GET'])
+@login_required
 def edit(id):
 
     feeding = Feeding.query.filter(Feeding.id==id).first()
@@ -139,6 +143,7 @@ def edit(id):
         return redirect("/animal/"+str(animal_id))
     
 @feeding_bp.route('/delete/<int:id>', methods=['POST'])
+@login_required
 def delete(id):
     if request.method == 'POST': 
         # Delete data into the database

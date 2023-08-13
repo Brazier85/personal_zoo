@@ -1,4 +1,5 @@
 from flask import current_app, render_template, request, redirect, flash, jsonify, Blueprint
+from flask_login import login_required
 from functions import *
 
 history_bp = Blueprint("history", __name__, template_folder="templates")
@@ -15,6 +16,7 @@ def get_all(id):
     
 
 @history_bp.route('/add/<int:id>', methods=['POST','GET'])
+@login_required
 def add(id):
     if request.method == 'GET':
         return render_template('history_add.html', id=id, event_types=get_ht())
@@ -40,6 +42,7 @@ def add(id):
         return redirect("/animal/"+str(id))
     
 @history_bp.route('/multi', methods=['POST','GET'])
+@login_required
 def multi_add():
     if request.method == 'GET':
         terrarium = request.args.get('terrarium')
@@ -82,6 +85,7 @@ def multi_add():
         return redirect("/")
     
 @history_bp.route('/edit/<int:id>', methods=['POST','GET'])
+@login_required
 def edit(id):
 
     event = History.query.filter(History.id==id).first()
@@ -112,6 +116,7 @@ def edit(id):
         return redirect("/animal/"+str(animal_id))
 
 @history_bp.route('/delete/<int:id>', methods=['POST'])
+@login_required
 def delete(id):
     if request.method == 'POST': 
         # Delete data into the database

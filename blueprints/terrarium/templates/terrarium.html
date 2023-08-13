@@ -42,13 +42,15 @@
                     </div>
                 </div>
             </div>
+            {% if current_user.is_authenticated %}
             <div class="card-footer">
-                <div class="btn-list">
+                <div class="btn-list">  
                     <button class="btn rounded-right terrarium_edit_button green_button"><i class="bi bi-pencil-square"></i></button>
                     <button class="btn rounded-right terrarium_feeding_button green_button"><i class="bi bi-egg-fill"></i></button>
                     <button class="btn rounded-right terrarium_history_button green_button"><i class="bi bi-calendar-event"></i></button>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -105,7 +107,9 @@
             <div class="card-header">
                 <div class="flex-grow"> Lamps </div>
                 <div class="btn-list">
+                    {% if current_user.is_authenticated %}
                     <button class="btn rounded-right lamp_add_button green_button"><i class="bi bi-plus"></i></button>
+                    {% endif %}
                 </div>
             </div>
             <div class="card-body lamp_card">
@@ -144,7 +148,9 @@
             <div class="card-header">
                 <div class="flex-grow"> Equipment </div>
                 <div class="btn-list">
+                    {% if current_user.is_authenticated %}
                     <button class="btn equipment_add_button green_button"><i class="bi bi-plus"></i></button>
+                    {% endif %}
                 </div>
             </div>
             <div class="card-body equipment_card">
@@ -170,7 +176,9 @@
             <div class="card-header">
                 <div class="flex-grow"> Events/Actions </div>
                 <div class="btn-list">
+                    {% if current_user.is_authenticated %}
                     <button class="btn history_add_button green_button"><i class="bi bi-plus"></i></button>
+                    {% endif %}
                 </div>
             </div>
             <div class="card-body history_card">
@@ -233,7 +241,9 @@
         "responsive": true,
         "paging": false,
         "order": [[0, 'asc']],
-        "stateSave": true
+        "stateSave": true,
+        "searching": false,
+        "info": false
     });
 
     $(document).ready(function(){
@@ -258,6 +268,7 @@
             })
         });
     });
+    {% if current_user.is_authenticated %}
     $('.terrarium_edit_button').on('click',function(){
         $('.modal-content').load('/terrarium/edit/{{ terrarium.id }}',function(){
             $('#modal_details').modal('show'); 
@@ -380,5 +391,6 @@
             $('#modal_details').modal('show');
         });
     });
+    {% endif %}
 </script>
 {% endblock %}

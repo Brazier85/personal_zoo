@@ -1,0 +1,35 @@
+{% set ns = namespace(error=false) %} 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}" />
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    <!-- Include Bootstrap JavaScript -->
+    <script src="{{ url_for('static', filename='js/jquery-3.7.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- ColorMode -->
+    <script src="{{ url_for('static', filename='js/color_mode.js') }}"></script>
+
+    <!-- mobile render fix -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Add something if needed -->
+    {% block head %}{% endblock %}
+</head>
+<body class="d-flex flex-column h-100">
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- spacer for nav -->
+    <div class="no-print" style="margin-top: 10px;"></div>
+
+</body>
+</html>

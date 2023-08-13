@@ -1,4 +1,7 @@
+from flask import current_app
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
+from flask_bcrypt import generate_password_hash
 import datetime
 
 db = SQLAlchemy()
@@ -129,3 +132,21 @@ class Document(db.Model):
     animal_id = db.Column(db.Integer)
     terrarium_id = db.Column(db.Integer)
 
+# Create user model
+class User(UserMixin, db.Model):
+    __tablename__ = "user"
+    
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String, unique=True, nullable=False)
+    password = db.Column(db.String, nullable=False)
+    created_on = db.Column(db.DateTime, nullable=False)
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
+
+    def __init__(self, email, password, is_admin=False):
+        self.email = email
+        self.password = generate_password_hash(password)
+        self.created_on = datetime.datetime.now()
+        self.is_admin = is_admin
+
+    def __repr__(self):
+        return '<User %r>' % self.username

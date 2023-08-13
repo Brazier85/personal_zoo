@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request, send_from_directory, flash, redirect
 from flask_qrcode import QRcode
 from flask_mail import Mail, Message
+from flask_login import (
+    LoginManager,
+    current_user
+)
 import os
 import logging
 from logging.config import dictConfig
@@ -8,6 +12,7 @@ from werkzeug.exceptions import HTTPException
 import traceback
 from datetime import datetime
 from flask_apscheduler import APScheduler
+from flask_bcrypt import Bcrypt
 
 # Imports
 from models import *
@@ -22,6 +27,7 @@ from blueprints.feeding.feeding import feeding_bp
 from blueprints.history.history import history_bp
 from blueprints.settings.settings import settings_bp
 from blueprints.maintenance.maintenance import maintenance_bp
+from blueprints.accounts.accounts import accounts_bp
 
 
 # Environment file
@@ -64,13 +70,23 @@ else:
     app.logger.info(f"App running in mode: { os.environ.get('PZOO_FLASK_ENV') }")
     app.config.from_object('config.ProdConfig')
 
+# Login management
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+bcrypt = Bcrypt(app)
+
 # Init DB
 db.init_app(app)
+
+session = []
 
 with app.app_context():
     db.create_all()
 
+#QRCodes
 QRcode(app)
+
 # MomentJS
 app.jinja_env.globals['momentjs'] = momentjs
 
@@ -82,19 +98,23 @@ app.register_blueprint(history_bp, url_prefix="/history")
 app.register_blueprint(settings_bp, url_prefix="/settings")
 app.register_blueprint(terrarium_bp, url_prefix="/terrarium")
 app.register_blueprint(maintenance_bp, url_prefix="/maintenance")
+app.register_blueprint(accounts_bp, url_prefix="/account")
 
 @app.errorhandler(Exception)
 def handle_exception(e):
     # pass through HTTP errors
     if isinstance(e, HTTPException):
-        return render_template("error_html.html", e=e)
+        if e.code == 401:
+            return render_template("error_401.html")
+        else:
+            return render_template("error_html.html", e=e)
 
     app.logger.error(e)
     # now you're handling non-HTTP exceptions only
     return render_template("error_generic.html", e=str(e), traceback=traceback.format_exc())
 
 @app.after_request
-def logAfterRequest(response):
+def AfterRequest(response):
 
     app.logger.info(
         "path: %s | method: %s | status: %s | size: %s",
@@ -133,6 +153,20 @@ def fix_date_filter(text):
 @scheduler.task('cron', id='send_notifications', minute='*')
 def send_notifications():
     send_mail()
+
+# Load users
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.filter(User.id == int(user_id)).first()
+
+def check_pw(hash, pw):
+    if bcrypt.check_password_hash(hash, pw):
+        return True
+    else:
+        return False
+    
+def gen_hash(pw):
+    return bcrypt.generate_password_hash(pw)
 
 # Main route
 @app.route('/')

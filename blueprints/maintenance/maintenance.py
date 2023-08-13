@@ -1,4 +1,5 @@
 from flask import current_app, render_template, request, redirect, flash, Blueprint
+from flask_login import login_required
 import os, shutil
 from functions import *
 
@@ -47,6 +48,7 @@ def db_col_exists(table, col):
     
 
 @maintenance_bp.route("/")
+@login_required
 def main():
     location = 'maintenance'
     return render_template('maintenance.html', location=location)
@@ -71,6 +73,7 @@ def do_sql():
         return redirect("/maintenance")
     
 @maintenance_bp.route("/tasks/<string:task>")
+@login_required
 def tasks(task):
     print(task)
     if task == 'cleanup_images':

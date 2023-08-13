@@ -1,10 +1,12 @@
 from flask import current_app, render_template, request, redirect, flash, jsonify, Blueprint
+from flask_login import login_required
 from functions import *
 import json
 
 settings_bp = Blueprint("settings", __name__, template_folder="templates")
 
 @settings_bp.route("/")
+@login_required
 def settings():
 
     location = 'settings'
@@ -12,6 +14,7 @@ def settings():
     return render_template('settings.html', feeding_types=get_ft(), history_types=get_ht(), ht=get_ht(), settings=get_setting(), animal_types=get_at(), terrarium_types=get_tt(), terrarium_history_types=get_htt(), location=location)
 
 @settings_bp.route('/edit', methods=['POST','GET'])
+@login_required
 def edit():
     if request.method == 'GET':
         return 200
@@ -62,6 +65,7 @@ def edit():
     
 
 @settings_bp.route('/ft_edit/<int:id>', methods=['POST','GET'])
+@login_required
 def ft_edit(id):
 
     feeding_type = FeedingType.query.filter(FeedingType.id==id).first()
@@ -83,6 +87,7 @@ def ft_edit(id):
         return redirect("/settings")
     
 @settings_bp.route('/ft_add', methods=['POST','GET'])
+@login_required
 def ft_add():
     if request.method == 'GET':
         return render_template('ft_add.html')
@@ -101,6 +106,7 @@ def ft_add():
         return redirect("/settings")
     
 @settings_bp.route('/ft_delete/<int:id>', methods=['POST'])
+@login_required
 def ft_delete(id):
     if request.method == 'POST': 
         # Delete data into the database
@@ -114,6 +120,7 @@ def ft_delete(id):
         return "", 200
     
 @settings_bp.route('/ht_edit/<int:id>', methods=['POST','GET'])
+@login_required
 def ht_edit(id):
 
     history_type = HistoryType.query.filter(HistoryType.id==id).first()
@@ -134,6 +141,7 @@ def ht_edit(id):
         return redirect("/settings")
     
 @settings_bp.route('/ht_add', methods=['POST','GET'])
+@login_required
 def ht_add():
     if request.method == 'GET':
         return render_template('ht_add.html')
@@ -151,6 +159,7 @@ def ht_add():
         return redirect("/settings")
     
 @settings_bp.route('/ht_delete/<int:id>', methods=['POST'])
+@login_required
 def ht_delete(id):
     if request.method == 'POST': 
         # Delete data into the database
@@ -164,6 +173,7 @@ def ht_delete(id):
         return "", 200
     
 @settings_bp.route('/at_edit/<int:id>', methods=['POST','GET'])
+@login_required
 def at_edit(id):
 
     animal_type = AnimalType.query.filter(AnimalType.id==id).first()
@@ -185,6 +195,7 @@ def at_edit(id):
         return redirect("/settings")
     
 @settings_bp.route('/at_add', methods=['POST','GET'])
+@login_required
 def at_add():
     if request.method == 'GET':
         return render_template('at_add.html')
@@ -213,6 +224,7 @@ def at_add():
         return redirect("/settings")
     
 @settings_bp.route('/at_delete/<int:id>', methods=['POST'])
+@login_required
 def at_delete(id):
     if request.method == 'POST': 
         # Delete data into the database
@@ -226,6 +238,7 @@ def at_delete(id):
         return "", 200
     
 @settings_bp.route('/tt_edit/<int:id>', methods=['POST','GET'])
+@login_required
 def tt_edit(id):
 
     terrarium_type = TerrariumType.query.filter(TerrariumType.id==id).first()
@@ -245,6 +258,7 @@ def tt_edit(id):
         return redirect("/settings")
     
 @settings_bp.route('/tt_add', methods=['POST','GET'])
+@login_required
 def tt_add():
     if request.method == 'GET':
         return render_template('tt_add.html')
@@ -261,6 +275,7 @@ def tt_add():
         return redirect("/settings")
     
 @settings_bp.route('/tt_delete/<int:id>', methods=['POST'])
+@login_required
 def tt_delete(id):
     if request.method == 'POST': 
         # Delete data into the database
@@ -274,6 +289,7 @@ def tt_delete(id):
         return "", 200
     
 @settings_bp.route('/htt_edit/<int:id>', methods=['POST','GET'])
+@login_required
 def htt_edit(id):
 
     history_type = TerrariumHistoryType.query.filter(TerrariumHistoryType.id==id).first()
@@ -294,6 +310,7 @@ def htt_edit(id):
         return redirect("/settings")
     
 @settings_bp.route('/htt_add', methods=['POST','GET'])
+@login_required
 def htt_add():
     if request.method == 'GET':
         return render_template('htt_add.html')
@@ -311,6 +328,7 @@ def htt_add():
         return redirect("/settings")
     
 @settings_bp.route('/htt_delete/<int:id>', methods=['POST'])
+@login_required
 def htt_delete(id):
     if request.method == 'POST': 
         # Delete data into the database
