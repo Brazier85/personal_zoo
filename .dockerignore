@@ -19,8 +19,13 @@ Dockerfile
 # Docs
 mkdocs.yml
 docs
-site
+README.md
 
 # Scripts
 build_docker.sh
 run_docker.sh
+
+# For local builds
+Backup
+site
+venv
