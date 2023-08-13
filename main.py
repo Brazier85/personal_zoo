@@ -218,6 +218,11 @@ def uploaded_file(folder='', filename=''):
 def old_update():
     return redirect("/maintenance/update")
 
+# Login
+@app.route('/login')
+def to_login():
+    return redirect("/account/login")
+
 
 ###############
 #     MAIN    #
