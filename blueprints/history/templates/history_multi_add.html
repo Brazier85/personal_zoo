@@ -1,6 +1,8 @@
+{% from "macros/fields.html" import render_text_field, render_select_field, render_selectpicker_field %}
+
 {% extends 'base.html' %}
 
-{% block title %}Personal Zoo | Add Multi Feeding{% endblock %}
+{% block title %}Personal Zoo | Add Multi Event{% endblock %}
 
 {% block head %}
 <!-- Fancy Dropdown -->
@@ -15,60 +17,32 @@
     <div class="card-header">
         <div class="flex-grow"> Add multi history/event</div>
     </div>
-    <form action="{{ url_for('history.multi_add') }}" method="post" enctype="multipart/form-data">
+    <form role="form" method="post" action="{{ target }}" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+    
         <div class="card-body">
             <div class="row">
                 <div class="col">
-                    <div class="mb-3">
-                        <label for="animals" class="form-label">Animals</label>
-                        <select class="selectpicker form-control" multiple id="animals" name="animals"  data-live-search="true">       
-                            {% for animal in animals %}
-                                <option value="{{ animal.id }}">{{ animal.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                    {{ render_selectpicker_field(form.animals) }}
                 </div>
                 <div class="col">
-                    <div class="mb-3">
-                        <label for="terrariums" class="form-label">Terrariums</label>
-                        <select class="selectpicker form-control" multiple id="terrariums" name="terrariums"  data-live-search="false">       
-                            {% for terrarium in terrariums %}
-                                {% if t_select %}
-                                    <option value="{{ terrarium.id }}" {% if terrarium.id|int == t_select|int %}selected{% endif %}>{{ terrarium.name }}</option>
-                                {% else %}
-                                    <option value="{{ terrarium.id }}">{{ terrarium.name }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                    </div>
+                    {{ render_selectpicker_field(form.terrariums) }}
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <div class="mb-3">
-                        <label for="history_date" class="form-label">Date</label>
-                        <input type="date" class="form-control" id="history_date" name="history_date" required>
-                    </div>
+                    {{ render_text_field(form.date) }}
                 </div>
                 <div class="col">
-                    <div class="mb-3">
-                        <label for="history_event" class="form-label">Event/Action</label>
-                        <select class="form-select form-control" id="history_event" name="history_event" required>
-                            {% for event_type in event_types %}
-                                <option value="{{ event_type.id }}">{{ event_type.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                    {{ render_select_field(form.event) }}
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <div class="mb-3">
-                        <label for="history_text" class="form-label">Text</label>
-                        <textarea class="form-control" id="history_text" name="history_text" rows="3" required></textarea>
-                    </div>
+                    {{ render_text_field(form.text) }}
                 </div>
             </div>
+        
         </div>
         <div class="mb-3 ms-3 fs-6"><strong>Note:</strong> You can select both, animals and/or terrariums.</div>
         <div class="card-footer text-end">
@@ -78,7 +52,9 @@
 </div>
 
 <script>
-    $('#history_date').val(new Date().toISOString().slice(0, 10));
-</script>
+    $('#date').val(new Date().toISOString().slice(0, 10));
 
+    $('select[name=terrariums]').val({{terrarium}});
+    $('.selectpicker').selectpicker('refresh');
+</script>
 {% endblock %}

@@ -29,6 +29,9 @@ from blueprints.settings.settings import settings_bp
 from blueprints.maintenance.maintenance import maintenance_bp
 from blueprints.accounts.accounts import accounts_bp
 
+# Feeding Form
+from blueprints.feeding.forms import FeedingMultiForm
+
 
 # Environment file
 from dotenv import load_dotenv
@@ -181,7 +184,7 @@ def home():
     if order == None:
         order = "name"
 
-    return render_template('home.html', animals=get_ad(), feeding_types=get_ft(), terrariums=get_tr(), settings=get_setting(), location=location)
+    return render_template('home.html', animals=get_ad(), terrariums=get_tr(), settings=get_setting(), location=location)
 
 # Route for printing
 @app.route('/print')

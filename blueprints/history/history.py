@@ -1,6 +1,8 @@
-from flask import current_app, render_template, request, redirect, flash, jsonify, Blueprint
+from flask import current_app, render_template, request, redirect, flash, jsonify, url_for, Blueprint
 from flask_login import login_required
 from functions import *
+
+from .forms import HistoryForm, HistoryMultiForm
 
 history_bp = Blueprint("history", __name__, template_folder="templates")
 
@@ -18,16 +20,16 @@ def get_all(id):
 @history_bp.route('/add/<int:id>', methods=['POST','GET'])
 @login_required
 def add(id):
-    if request.method == 'GET':
-        return render_template('history_add.html', id=id, event_types=get_ht())
 
-    elif request.method == 'POST':
-        history = request.form
-        event = history['history_event']
-        text = history['history_text']
-        date = history['history_date']
+    form = HistoryForm(request.form)
 
-        date = datetime.datetime.strptime(date, '%Y-%m-%d')
+    # Adding select values
+    form.event.choices = [(i.id, i.name) for i in get_ht()]
+
+    if form.validate_on_submit():
+        event = form.event.data
+        text = form.text.data
+        date = form.date.data
 
         event = History(animal=id,
                             event=event,
@@ -41,27 +43,27 @@ def add(id):
 
         return redirect("/animal/"+str(id))
     
+    return render_template('history_add.html', id=id, form=form, target=url_for('history.add', id=id))
+    
 @history_bp.route('/multi', methods=['POST','GET'])
 @login_required
 def multi_add():
-    if request.method == 'GET':
-        terrarium = request.args.get('terrarium')
-        animals = Animal.query.add_columns(Animal.id, Animal.name).all()
 
-        if terrarium is None:
-            return render_template('history_multi_add.html', animals=animals, event_types=get_ht(), terrariums=get_tr(), location="multi_event")
-        else:
-            return render_template('history_multi_add.html', animals=animals, event_types=get_ht(), terrariums=get_tr(), t_select=terrarium, location="multi_event")
+    terrarium = request.args.get('terrarium')
 
-    elif request.method == 'POST':
-        history = request.form
-        animals = history.getlist('animals')
-        terrariums = history.getlist('terrariums')
-        f_event = history['history_event']
-        text = history['history_text']
-        date = history['history_date']
+    form = HistoryMultiForm(request.form)
 
-        date = datetime.datetime.strptime(date, '%Y-%m-%d')
+    # Adding select values
+    form.event.choices = [(i.id, i.name) for i in get_ht()]
+    form.animals.choices = [(i.id, i.name) for i in Animal.query.add_columns(Animal.id, Animal.name).all()]
+    form.terrariums.choices = [(i["id"], i["name"]) for i in get_tr()]
+
+    if form.validate_on_submit():
+        animals = form.animals.data
+        terrariums = form.terrariums.data
+        f_event = form.event.data
+        text = form.text.data
+        date = form.date.data
 
         # Get terrarium animals
         if terrariums != []:
@@ -84,36 +86,38 @@ def multi_add():
 
         return redirect("/")
     
+    terrarium = request.args.get('terrarium')
+    animals = Animal.query.add_columns(Animal.id, Animal.name).all()
+
+    if terrarium is None:
+        return render_template('history_multi_add.html', form=form, location="multi_event")
+    else:
+        return render_template('history_multi_add.html', form=form, terrarium=terrarium, location="multi_event")
+    
 @history_bp.route('/edit/<int:id>', methods=['POST','GET'])
 @login_required
 def edit(id):
 
     event = History.query.filter(History.id==id).first()
 
-    if request.method == 'GET':
-        return jsonify({'htmlresponse': render_template('history_edit.html', data=event, event_types=get_ht())})
-    
-    elif request.method == 'POST':
-        history = request.form
-        event_type = history['history_event']
-        text = history['history_text']
-        date = history['history_date']
-        animal_id = history['animal_id']
+    form = HistoryForm(request.form, obj=event)
 
-        date = datetime.datetime.strptime(date, '%Y-%m-%d')
+    # Adding select values
+    form.event.choices = [(i.id, i.name) for i in get_ht()]
 
-        event.animal = animal_id
-        event.event = event_type
-        event.text = text
-        event.date = date
+    if form.validate_on_submit():
+        event.event = form.event.data
+        event.text = form.text.data
+        event.date = form.date.data
         
-
         db.session.add(event)
         db.session.commit()
 
         flash('Changes to history saved!', 'success')
         current_app.logger.info(f"Modified history with id: {id} !")
-        return redirect("/animal/"+str(animal_id))
+        return redirect("/animal/"+str(event.animal))
+    
+    return jsonify({'htmlresponse': render_template('history_edit.html', form=form, target=url_for('history.edit', id=id), id=id)})
 
 @history_bp.route('/delete/<int:id>', methods=['POST'])
 @login_required

@@ -1,42 +1,33 @@
+{% from "macros/fields.html" import render_text_field, render_select_field %}
+
 <div class="modal-header">
     <h5 class="modal-title" id="itemLabel">Add event/action</h5>
 </div>
-<form action="{{ url_for('history.add', id=id) }}" method="post" enctype="multipart/form-data">
+<form role="form" method="post" action="{{ target }}" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+
     <div class="modal-body" id="modal-body">
         <div class="row">
             <div class="col">
-                <div class="mb-3">
-                    <label for="history_date" class="form-label">Date</label>
-                    <input type="date" class="form-control" id="history_date" name="history_date" required>
-                </div>
+                {{ render_text_field(form.date) }}
             </div>
             <div class="col">
-                <div class="mb-3">
-                    <label for="history_event" class="form-label">Event/Action</label>
-                    <select class="form-select" class="form-control" id="history_event" name="history_event" required>
-                        {% for event_type in event_types %}
-                            <option value="{{ event_type.id }}">{{ event_type.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+                {{ render_select_field(form.event) }}
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <div class="mb-3">
-                    <label for="history_text" class="form-label">Text</label>
-                    <textarea class="form-control" id="history_text" name="history_text" rows="3" required></textarea>
-                </div>
+                {{ render_text_field(form.text) }}
             </div>
         </div>
     
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer text-end">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Save</button>
     </div>
 </form>
 
 <script>
-    $('#history_date').val(new Date().toISOString().slice(0, 10));
+    $('#date').val(new Date().toISOString().slice(0, 10));
 </script>

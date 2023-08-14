@@ -1,7 +1,9 @@
-from flask import current_app, render_template, request, redirect, flash, jsonify, Blueprint
+from flask import current_app, render_template, request, redirect, flash, jsonify, url_for, Blueprint
 from flask_login import login_required
 from datetime import datetime
 from functions import *
+
+from .forms import FeedingForm, FeedingMultiForm
 
 feeding_bp = Blueprint("feeding", __name__, template_folder="templates")
 
@@ -32,22 +34,18 @@ def qr_code(id):
 @feeding_bp.route('/add/<int:id>', methods=['POST','GET'])
 @login_required
 def add(id):
-    if request.method == 'GET':
-        external = request.args.get('external')
-        animal = Animal.query.add_columns(Animal.name, Animal.default_ft).filter(Animal.id==id).one()
-        if external is None:
-            return render_template('feeding_add.html', id=id, animal=animal, feeding_types=get_ft())
-        else:
-            return render_template('feeding_add_external.html', id=id, animal=animal, feeding_types=get_ft())
-        
-    elif request.method == 'POST':
-        feeding = request.form
-        count = feeding['feeding_count']
-        type = feeding['feeding_type']
-        unit = feeding['feeding_unit']
-        date = feeding['feeding_date']
 
-        date = datetime.datetime.strptime(date, '%Y-%m-%d')
+    form = FeedingForm(request.form)
+
+    # Adding select values
+    form.type.choices = [(i.id, i.name) for i in get_ft()]
+
+    if form.validate_on_submit():
+        feeding = request.form
+        count = form.count.data
+        type = form.type.data
+        unit = form.unit.data
+        date = form.date.data
         
         feeding = Feeding(animal=id,
                             type=type,
@@ -62,29 +60,34 @@ def add(id):
 
         return redirect("/animal/"+str(id))
     
+    
+    external = request.args.get('external')
+    animal = Animal.query.add_columns(Animal.name, Animal.default_ft).filter(Animal.id==id).one()
+    if external is None:
+        return render_template('feeding_add.html', id=id, form=form, target=url_for("feeding.add", id=id), dft=animal.default_ft)
+    else:
+        return render_template('feeding_add_external.html', id=id, animal=animal.name, form=form, target=url_for("feeding.add", id=id), dft=animal.default_ft)
+    
 @feeding_bp.route('/multi', methods=['POST','GET'])
 @login_required
 def multi_add():
-    if request.method == 'GET':
-        # get animals
-        terrarium = request.args.get('terrarium')
-        animals = Animal.query.add_columns(Animal.id, Animal.name).all()
 
-        if terrarium is None:
-            return render_template('feeding_multi_add.html', animals=animals, feeding_types=get_ft(), terrariums=get_tr(), location="multi_feeding")
-        else:
-            return render_template('feeding_multi_add.html', animals=animals, feeding_types=get_ft(), terrariums=get_tr(), t_select=terrarium, location="multi_feeding")
-        
-    elif request.method == 'POST':
-        feeding = request.form
-        animals = feeding.getlist('animals')
-        terrariums = feeding.getlist('terrariums')
-        count = feeding['feeding_count']
-        ftype = feeding['feeding_type']
-        unit = feeding['feeding_unit']
-        date = feeding['feeding_date']
+    terrarium = request.args.get('terrarium')
 
-        date = datetime.datetime.strptime(date, '%Y-%m-%d')
+    form = FeedingMultiForm(request.form)
+
+    # Adding select values
+    form.type.choices = [(i.id, i.name) for i in get_ft()]
+    form.animals.choices = [(i.id, i.name) for i in Animal.query.add_columns(Animal.id, Animal.name).all()]
+    form.terrariums.choices = [(i["id"], i["name"]) for i in get_tr()]
+
+    if form.validate_on_submit():
+        animals = form.animals.data
+        terrariums = form.terrariums.data
+        count = form.count.data
+        ftype = form.type.data
+        unit = form.unit.data
+        date = form.date.data
 
         # Get terrarium animals
         if terrariums != []:
@@ -109,38 +112,39 @@ def multi_add():
         return redirect("/")
     
     
+
+    if terrarium is None:
+        return render_template('feeding_multi_add.html', form=form, location="multi_feeding")
+    else:
+        return render_template('feeding_multi_add.html', form=form, terrarium=terrarium, location="multi_feeding")
+    
+    
 @feeding_bp.route('/edit/<int:id>', methods=['POST','GET'])
 @login_required
 def edit(id):
 
     feeding = Feeding.query.filter(Feeding.id==id).first()
 
-    if request.method == 'GET':
-        return jsonify({'htmlresponse': render_template('feeding_edit.html', data=feeding, feeding_types=get_ft())})
-    
-    elif request.method == 'POST':
+    form = FeedingForm(request.form, obj=feeding)
 
-        feeding_data = request.form
-        count = feeding_data['feeding_count']
-        type = feeding_data['feeding_type']
-        unit = feeding_data['feeding_unit']
-        date = feeding_data['feeding_date']
-        animal_id = feeding_data['animal_id']
+    # Adding select values
+    form.type.choices = [(i.id, i.name) for i in get_ft()]
 
-        date = datetime.datetime.strptime(date, '%Y-%m-%d')
+    if form.validate_on_submit():
 
-        feeding.count = count
-        feeding.type = type
-        feeding.unit = unit
-        feeding.date = date
-        feeding.animal = animal_id
+        feeding.count = form.count.data
+        feeding.type = form.type.data
+        feeding.unit = form.unit.data
+        feeding.date = form.date.data
 
         db.session.add(feeding)
         db.session.commit()
         
         flash('Changes to feeding saved!', 'success')
         current_app.logger.info(f"Modified feeding with id: {id} !")
-        return redirect("/animal/"+str(animal_id))
+        return redirect("/animal/"+str(feeding.animal))
+    
+    return jsonify({'htmlresponse': render_template('feeding_edit.html', form=form, target=url_for("feeding.edit", id=id), id=id)})
     
 @feeding_bp.route('/delete/<int:id>', methods=['POST'])
 @login_required

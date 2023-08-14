@@ -1,3 +1,5 @@
+{% from "macros/fields.html" import render_text_field, render_select_field, render_selectpicker_field %}
+
 {% extends 'base.html' %}
 
 {% block title %}Personal Zoo | Add Feeding{% endblock %}
@@ -14,43 +16,28 @@
 <div class="row row-cols-lg-1 row-cols-sm-1">
     <div class="card m-0 p-0">
         <div class="card-header">
-            <div class="flex-grow"> Add Feeding for {{ animal.name }}</div>
+            <div class="flex-grow"> Add Feeding for {{ animal }}</div>
             <div class="btn-list">
                 <!-- no button -->
             </div>
         </div>
-        <form action="{{ url_for('feeding.add', id=id) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ target }}" method="post" enctype="multipart/form-data">
+            {{ form.csrf_token }}
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <div class="mb-3">
-                            <label for="feeding_date" class="form-label">Date</label>
-                            <input type="date" class="form-control" id="feeding_date" name="feeding_date" required>
-                        </div>
+                        {{ render_text_field(form.date) }}
                     </div>
                     <div class="col">
-                        <div class="mb-3">
-                            <label for="feeding_type" class="form-label">Type</label>
-                            <select class="form-select" class="form-control" id="feeding_type" name="feeding_type" required>
-                                {% for feeding_type in feeding_types %}
-                            <option value="{{ feeding_type.id }}" {%if feeding_type.id|int == animal.default_ft|int %}selected{% endif %}>{{ feeding_type.name }}</option>
-                        {% endfor %}
-                            </select>
-                        </div>
+                        {{ render_select_field(form.type) }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div class="mb-3">
-                            <label for="feeding_count" class="form-label">Count</label>
-                            <input type="number" class="form-control" id="feeding_count" name="feeding_count" required>
-                        </div>
+                        {{ render_text_field(form.count) }}
                     </div>
                     <div class="col unit">
-                        <div class="mb-3">
-                            <label for="feeding_unit" class="form-label">Unit</label>
-                            <input type="number" class="form-control" id="feeding_unit" name="feeding_unit">
-                        </div>
+                        {{ render_text_field(form.unit) }}
                     </div>
                 </div>
             </div>
@@ -62,12 +49,15 @@
 </div>
 
 <script>
-    $('#feeding_date').val(new Date().toISOString().slice(0, 10));
+    $('#date').val(new Date().toISOString().slice(0, 10));
+
+    $('#type').val( {{dft}} );
 
     $(document).ready(function(){
-        var ft = $('#feeding_type').val();
+        var ft = $('#type').val();
+        var value = $('#unit').val();
         $.ajax({
-            url: '/feeding/get_units/'+ft,
+            url: '/feeding/get_units/'+ft+'?value='+value,
             type: 'get',
             success: function(data){
                 $('.unit').html(data);
@@ -75,7 +65,7 @@
         })
     });
 
-    $('#feeding_type').change(function(){
+    $('#type').change(function(){
         var ft = $(this).val();
         $.ajax({
             url: '/feeding/get_units/'+ft,

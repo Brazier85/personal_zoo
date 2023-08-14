@@ -1,3 +1,5 @@
+{% from "macros/fields.html" import render_text_field, render_select_field, render_selectpicker_field, render_clear_text_field %}
+
 <div class="modal-header">
     <h5 class="modal-title" id="itemLabel">Edit document</h5>
 </div>
@@ -5,16 +7,10 @@
     <div class="modal-body" id="modal-body">
         <div class="row">
             <div class="col">
-                <div class="mb-3">
-                    <label for="file_name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="file_name" name="file_name" value="{{ data.name }}" required>
-                </div>
+                {{ render_clear_text_field(form.name) }}
             </div>
             <div class="col">
-                <div class="mb-3">
-                    <label for="file" class="form-label">PDF-File:</label>
-                    <input type="file" accept="file/*" class="form-control" id="file" name="file">
-                </div>
+                {{ render_clear_text_field(form.filename) }}
             </div>
         </div>    
     </div>

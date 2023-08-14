@@ -1,23 +1,23 @@
 
 {% set unit = unit_data.unit %}
 {% if unit == "weight" %}
-<div class="mb-3">
-    <label for="feeding_unit" class="form-label">Weight ({{ unit_data.detail }})</label>
-    <input type="number" class="form-control" id="feeding_unit" name="feeding_unit" value="{{value}}">
+<div class="form-floating">
+    <input type="number" class="form-control" id="unit" name="unit" value="{{value}}">
+    <label for="unit" class="form-label">Weight ({{ unit_data.detail }})</label>
 </div>
 {% elif unit == "size" %}
-<div class="mb-3">
-    <label for="feeding_unit" class="form-label">Size</label>
-    <select class="form-select" class="form-control" id="feeding_unit" name="feeding_unit" required>
+<div class="form-floating">
+    <select class="form-control form-select" id="unit" name="unit" required>
         {% set options = unit_data.detail.split(',') %}
         {% for option in options %}
             <option value="{{ option }}" {% if value == option %}selected{%endif%}>{{ option }}</option>
         {% endfor %}
     </select>
+    <label for="unit" class="form-label">Size</label>
 </div>
 {% else %}
-<div class="mb-3">
-    <label for="feeding_unit" class="form-label">Text ({{ unit_data.detail }})</label>
-    <input type="text" class="form-control" id="feeding_unit" name="feeding_unit" value="{{value}}">
+<div class="form-floating">
+    <input type="text" class="form-control" id="unit" name="unit" value="{{value}}">
+    <label for="unit" class="form-label">Text ({{ unit_data.detail }})</label>
 </div>
 {% endif %}

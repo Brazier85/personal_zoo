@@ -1,8 +1,11 @@
 from flask import current_app, render_template, request, redirect, flash, jsonify, send_from_directory, url_for, Blueprint
 from werkzeug.utils import secure_filename
+from werkzeug.datastructures import CombinedMultiDict
 from datetime import datetime
 from functions import *
 import uuid
+
+from .forms import DocumentForm
 
 document_bp = Blueprint("document", __name__, template_folder="templates")
 
@@ -13,17 +16,12 @@ def download(id):
 
 @document_bp.route('/add/<string:target>/<int:id>', methods=['POST','GET'])
 def add(target, id):
-    if request.method == 'GET':
-        if target == 'animal':
-            animal = Animal.query.add_columns(Animal.id, Animal.name).filter(Animal.id==id).one()
-            return render_template('document_add.html', id=id, animal=animal)
-        elif target == 'terrarium':
-            terrarium = Terrarium.query.add_columns(Terrarium.id, Terrarium.name).filter(Terrarium.id==id).one()
-            return render_template('document_add.html', id=id, terrarium=terrarium)
-            
-    elif request.method == 'POST':
-        form_file = request.files['file']
-        name = request.form['file_name']
+
+    form = DocumentForm(CombinedMultiDict((request.files, request.form)))
+
+    if form.validate_on_submit():
+        form_file = form.filename.data
+        name = form.name.data
         if target == 'animal':
             animal_id = id
             terrarium_id = 'NULL'
@@ -61,24 +59,30 @@ def add(target, id):
             return redirect("/animal/"+str(animal_id))
         elif target == 'terrarium':
             return redirect("/terrarium/"+str(animal_id))
+        
+    if target == 'animal':
+        animal = Animal.query.add_columns(Animal.id, Animal.name).filter(Animal.id==id).one()
+        return render_template('document_add.html', id=id, animal=animal, form=form)
+    elif target == 'terrarium':
+        terrarium = Terrarium.query.add_columns(Terrarium.id, Terrarium.name).filter(Terrarium.id==id).one()
+        return render_template('document_add.html', id=id, terrarium=terrarium, form=form)
     
 @document_bp.route('/edit/<int:id>', methods=['POST','GET'])
 def edit(id):
 
     document = Document.query.filter(Document.id==id).first()
 
-    if request.method == 'GET':
-        return jsonify({'htmlresponse': render_template('document_edit.html', data=document)})
-    
-    elif request.method == 'POST':
+    form = DocumentForm(CombinedMultiDict((request.files, request.form)), obj=document)
+
+    if form.validate_on_submit():
 
         document.name = request.form['file_name']
         print(f"animal: {document.animal_id}")
         print(f"terrarium: {document.terrarium_id}")
 
         # Check if a new image file is provided
-        if 'file' in request.files:
-            file = request.files['file']
+        if form.file.data:
+            file = form.file.data
             if file.filename == '':
                 # No new file provided
                 filename = document.filename
@@ -113,6 +117,8 @@ def edit(id):
             return redirect("/animal/"+str(document.animal_id))
         else:
             return redirect("/terrarium/"+str(document.terrarium_id))
+        
+    return jsonify({'htmlresponse': render_template('document_edit.html', form=form)})
     
 @document_bp.route('/delete/<int:id>', methods=['POST'])
 def delete(id):

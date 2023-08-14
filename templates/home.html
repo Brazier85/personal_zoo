@@ -117,64 +117,6 @@
                 </div>
             </div>
         </div>
-        <div class="col d-none d-lg-block">
-            <div class="card">
-                <div class="card-header">
-                    <div class="flex-grow"> Add multi feeding </div>
-                </div>
-                <form action="{{ url_for('feeding.multi_add') }}" method="post" enctype="multipart/form-data">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label for="feeding_animals" class="form-label">Animals</label>
-                                    <select class="selectpicker form-control" multiple id="animals" name="animals"  data-live-search="true" required>       
-                                        {% for animal in data %}
-                                            <option value="{{ animal.id }}">{{ animal.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label for="feeding_date" class="form-label">Date</label>
-                                    <input type="date" class="form-control" id="feeding_date" name="feeding_date" required>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label for="feeding_type" class="form-label">Type</label>
-                                    <select class="form-select" class="form-control" id="feeding_type" name="feeding_type" required>
-                                        {% for feeding_type in feeding_types %}
-                                            <option value="{{ feeding_type.id }}">{{ feeding_type.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label for="feeding_count" class="form-label">Count</label>
-                                    <input type="number" class="form-control" id="feeding_count" name="feeding_count" required>
-                                </div>
-                            </div>
-                            <div class="col unit">
-                                <div class="mb-3">
-                                    <label for="feeding_unit" class="form-label">Unit</label>
-                                    <input type="number" class="form-control" id="feeding_unit" name="feeding_unit">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer text-end">
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
     </div>
     {% else %}
     <div class="row row-cols-lg-3 row-cols-1 g-4">
@@ -234,32 +176,6 @@
         });
     </script>
     {% endif %}
-
-    <script>
-        $('#feeding_date').val(new Date().toISOString().slice(0, 10));
-    
-        $(document).ready(function(){
-            var ft = $('#feeding_type').val();
-            $.ajax({
-                url: '/feeding/get_units/'+ft,
-                type: 'get',
-                success: function(data){
-                    $('.unit').html(data);
-                }
-            })
-        });
-    
-        $('#feeding_type').change(function(){
-            var ft = $(this).val();
-            $.ajax({
-                url: '/feeding/get_units/'+ft,
-                type: 'get',
-                success: function(data){
-                    $('.unit').html(data);
-                }
-            })
-        });
-    </script>
 
 <!-- Home Tabs controller-->
 <script src="{{ url_for('static', filename='js/pages/homeTabs.js') }}"></script>

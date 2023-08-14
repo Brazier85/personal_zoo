@@ -2,9 +2,12 @@ from flask import current_app, render_template, request, redirect, url_for, flas
 from flask_login import login_required
 import os, json
 from werkzeug.utils import secure_filename
+from werkzeug.datastructures import CombinedMultiDict
 from functions import *
 from flask_weasyprint import HTML, render_pdf
 from sqlalchemy.exc import SQLAlchemyError
+
+from .forms import AnimalForm
 
 animal_bp = Blueprint("animal", __name__, template_folder="templates")
 
@@ -59,35 +62,43 @@ def animal(id):
 def add():
 
     location = 'animal_add'
-    if request.method == 'GET':
-        return render_template('animal_add.html', location=location, animal_types=get_at(), feeding_types=get_ft(), terrariums=get_tr())
-    
-    elif request.method == 'POST':
-        print(request.form)
 
-        name = request.form['name']
-        image = request.files['image']
-        art = request.form['art']
-        morph = request.form['morph']
-        background_color = request.form['background-color']
-        gender = request.form['gender']
-        birth = request.form['birth']
-        notes = request.form['notes']
-        default_ft = request.form['dft']
+    form = AnimalForm(CombinedMultiDict((request.files, request.form)))
+
+    # Adding select values
+    form.art.choices = [(i.id, i.name) for i in get_at()]
+    form.default_ft.choices = [(i.id, i.name) for i in get_ft()]
+    form.terrarium.choices = [(i["id"], i["name"]) for i in get_tr()]
+    form.gender.choices = [('female', 'Female'),('male', 'Male'),('other', 'Other')]
+
+
+    if form.validate_on_submit():
+        name = form.name.data
+        art = form.art.data
+        morph = form.morph.data
+        background_color = form.background_color.data
+        gender = form.gender.data
+        birth = form.birth.data
+        notes = form.notes.data
+        default_ft = form.default_ft.data
         try:
-            terrarium = request.form['terrarium']
+            terrarium = form.terrarium.data
         except:
             terrarium = 0
 
+        print(f"Image: {form.image.data}")
+
         # Check if an image was uploaded
-        if image.filename != '':
-            # Save the image to a folder
-            if image and allowed_file(image.filename):
-                filename = secure_filename(image.filename)
-                image.save(os.path.join(f"{UPLOAD_FOLDER}/animals", filename))
-            else:
-                flash('Invalid file. Please upload an image file.', 'error')
-                return redirect(url_for('animal.add'))
+        if form.image.data:
+            image = form.image.data
+            if image.filename != '':
+                # Save the image to a folder
+                if image and allowed_file(image.filename):
+                    filename = secure_filename(image.filename)
+                    image.save(os.path.join(f"{UPLOAD_FOLDER}/animals", filename))
+                else:
+                    flash('Invalid file. Please upload an image file.', 'error')
+                    return redirect(url_for('animal.add'))
         else:
             filename = "dummy.jpg"
 
@@ -107,26 +118,34 @@ def add():
         flash('Data submitted successfully!', 'success')
         return redirect('/')
 
+    return render_template('animal_add.html', form=form, location=location, target="/animal/add/")
+
+
 @animal_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit(id):
 
     current_animal = Animal.query.filter(Animal.id==id).first()
 
-    if request.method == 'GET':
-        return render_template('animal_edit.html', data=current_animal, animal_types=get_at(), feeding_types=get_ft(), terrariums=get_tr())
-    
-    elif request.method == 'POST':
-        current_animal.name = request.form['name']
-        current_animal.art = request.form['art']
-        current_animal.morph = request.form['morph']
-        current_animal.background_color = request.form['background-color']
-        current_animal.gender = request.form['gender']
-        current_animal.birth = request.form['birth']
-        current_animal.notes = request.form['notes']
-        current_animal.default_ft = request.form['dft']
-        current_animal.terrarium = request.form['terrarium']
-        new_image = request.form['current_image']
+    form = AnimalForm(CombinedMultiDict((request.files, request.form)), obj=current_animal)
+
+    # Adding select values
+    form.art.choices = [(i.id, i.name) for i in get_at()]
+    form.default_ft.choices = [(i.id, i.name) for i in get_ft()]
+    form.terrarium.choices = [(i["id"], i["name"]) for i in get_tr()]
+    form.gender.choices = [('female', 'Female'),('male', 'Male'),('other', 'Other')]
+
+    if form.validate_on_submit():
+        current_animal.name = form.name.data
+        current_animal.art = form.art.data
+        current_animal.morph = form.morph.data
+        current_animal.background_color = form.background_color.data
+        current_animal.gender = form.gender.data
+        current_animal.birth = form.birth.data
+        current_animal.notes = form.notes.data
+        current_animal.default_ft = form.default_ft.data
+        current_animal.terrarium = form.terrarium.data
+        new_image = form.image.data
 
         # Check if a new image file is provided
         if 'image' in request.files:
@@ -162,6 +181,8 @@ def edit(id):
 
         flash('Data submitted successfully!', 'success')
         return redirect("/animal/"+str(id))
+    
+    return render_template('animal_edit.html', form=form, animal=current_animal, target="/animal/edit/"+str(id))
 
 @animal_bp.route('/delete/<int:id>', methods=['POST'])
 @login_required
