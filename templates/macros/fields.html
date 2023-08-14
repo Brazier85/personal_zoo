@@ -1,7 +1,7 @@
 <!-- Default field -->
 {% macro render_text_field(field) %}
     <div class="form-floating">
-        {{ field(class="form-control mb-3") }}
+        {{ field(class="form-control mb-3", placeholder='') }}
         {{ field.label }}
             {% if field.errors %}
             {% for error in field.errors %}
@@ -16,7 +16,7 @@
 <!-- Field without float-->
 {% macro render_clear_text_field(field) %}
     {{ field.label }}
-    {{ field(class="form-control mb-3") }}
+    {{ field(class="form-control mb-3", placeholder='') }}
         {% if field.errors %}
         {% for error in field.errors %}
             <div class="alert alert-danger" role="alert">
@@ -29,7 +29,7 @@
 <!-- Select field -->
 {% macro render_select_field(field) %}
     <div class="form-floating">
-        {{ field(class="form-control form-select mb-3") }}
+        {{ field(class="form-control form-select mb-3", placeholder='') }}
         {{ field.label }}
             {% if field.errors %}
             {% for error in field.errors %}
@@ -44,7 +44,7 @@
 <!-- Selectpicker -->
 {% macro render_selectpicker_field(field) %}
     <div class="form-floating">
-        {{ field(class="selectpicker form-control mb-3") }}
+        {{ field(class="selectpicker form-control mb-3", placeholder='') }}
         {{ field.label }}
             {% if field.errors %}
             {% for error in field.errors %}
