@@ -3,7 +3,8 @@
 <div class="modal-header">
     <h5 class="modal-title" id="itemLabel">Edit document</h5>
 </div>
-<form action="{{ url_for('document.edit', id=data.id) }}" method="post" enctype="multipart/form-data">
+<form role="form" method="post" action="{{ url_for('document.edit', id=id) }}" enctype="multipart/form-data">
+    {{ form.csrf_token }}
     <div class="modal-body" id="modal-body">
         <div class="row">
             <div class="col">
@@ -16,7 +17,7 @@
     </div>
     <div class="modal-footer">
         <div pos="start">
-            <button type="button" data-id="{{ data.id }}" class="btn btn-danger text-left document_delete_button">Delete</button>
+            <button type="button" data-id="{{ id }}" class="btn btn-danger text-left document_delete_button">Delete</button>
         </div>
         <div class="text-end">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

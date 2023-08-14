@@ -29,6 +29,9 @@ def add(target, id):
             terrarium_id = id
             animal_id = 'NULL'
 
+        print(f"animal: {animal_id}")
+        print(f"terrarium: {terrarium_id}")
+
         # Check if an image was uploaded
         if form_file.filename != '':
             # Save the image to a folder
@@ -62,10 +65,10 @@ def add(target, id):
         
     if target == 'animal':
         animal = Animal.query.add_columns(Animal.id, Animal.name).filter(Animal.id==id).one()
-        return render_template('document_add.html', id=id, animal=animal, form=form)
+        return render_template('document_add.html', id=id, animal=animal, form=form, target="animal")
     elif target == 'terrarium':
         terrarium = Terrarium.query.add_columns(Terrarium.id, Terrarium.name).filter(Terrarium.id==id).one()
-        return render_template('document_add.html', id=id, terrarium=terrarium, form=form)
+        return render_template('document_add.html', id=id, terrarium=terrarium, form=form, target="terrarium")
     
 @document_bp.route('/edit/<int:id>', methods=['POST','GET'])
 def edit(id):
@@ -76,13 +79,13 @@ def edit(id):
 
     if form.validate_on_submit():
 
-        document.name = request.form['file_name']
+        document.name = form.name.data
         print(f"animal: {document.animal_id}")
         print(f"terrarium: {document.terrarium_id}")
 
         # Check if a new image file is provided
-        if form.file.data:
-            file = form.file.data
+        if form.filename.data:
+            file = form.filename.data
             if file.filename == '':
                 # No new file provided
                 filename = document.filename
@@ -104,6 +107,8 @@ def edit(id):
                     return redirect("/animal/"+str(document.animal_id))
                 else:
                     return redirect("/terrarium/"+str(document.terrarium_id))
+        else:
+            filename = document.filename
             
         document.filename = filename
 
@@ -118,7 +123,7 @@ def edit(id):
         else:
             return redirect("/terrarium/"+str(document.terrarium_id))
         
-    return jsonify({'htmlresponse': render_template('document_edit.html', form=form)})
+    return jsonify({'htmlresponse': render_template('document_edit.html', form=form, id=id)})
     
 @document_bp.route('/delete/<int:id>', methods=['POST'])
 def delete(id):
