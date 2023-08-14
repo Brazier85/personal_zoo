@@ -13,6 +13,21 @@
     </div>
 {% endmacro %}
 
+<!-- Textarea -->
+{% macro render_textarea_field(field) %}
+    <div class="form-floating">
+        {{ field(rows="5", class="form-control mb-3", style="height: 100px", placeholder='') }}
+        {{ field.label }}
+            {% if field.errors %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger" role="alert">
+                {{ error }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endmacro %}
+
 <!-- Field without float-->
 {% macro render_clear_text_field(field) %}
     {{ field.label }}

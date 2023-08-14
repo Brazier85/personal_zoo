@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import TextAreaField, StringField, SelectField
 from flask_wtf.file import FileAllowed, FileField
 from wtforms.validators import DataRequired, Length
-from wtforms.widgets import ColorInput, FileInput
+from wtforms.widgets import ColorInput, FileInput, TextArea
 
 from functions import *
 
@@ -23,7 +23,7 @@ class AnimalForm(FlaskForm):
         "Birth", validators=[Length(max=40)]
     )
     notes = TextAreaField(
-        "Notes"
+        "Notes", widget=TextArea()
     )
     image = FileField(
         "Image", validators=[FileAllowed(ALLOWED_EXTENSIONS, 'Images only!')], widget=FileInput()

@@ -1,4 +1,4 @@
-{% from "macros/fields.html" import render_text_field, render_select_field %}
+{% from "macros/fields.html" import render_text_field, render_select_field, render_textarea_field %}
 
 <div class="modal-header">
     <h5 class="modal-title" id="itemLabel">Add event/action</h5>
@@ -17,7 +17,7 @@
         </div>
         <div class="row">
             <div class="col">
-                {{ render_text_field(form.text) }}
+                {{ render_textarea_field(form.text) }}
             </div>
         </div>
     

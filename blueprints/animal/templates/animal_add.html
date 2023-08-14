@@ -1,4 +1,4 @@
-{% from "macros/fields.html" import render_text_field, render_select_field, render_selectpicker_field, render_clear_text_field %}
+{% from "macros/fields.html" import render_text_field, render_select_field, render_selectpicker_field, render_clear_text_field, render_textarea_field %}
 
 {% extends 'base.html' %}
 
@@ -30,7 +30,7 @@
                     {{ render_text_field(form.birth) }}
                 </div>
             </div>
-            {{ render_text_field(form.notes) }} 
+            {{ render_textarea_field(form.notes) }} 
             <div class="row">
                 <div class="col">
                     {{ render_clear_text_field(form.image) }}
