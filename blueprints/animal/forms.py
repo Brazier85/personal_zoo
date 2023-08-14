@@ -23,17 +23,17 @@ class AnimalForm(FlaskForm):
         "Birth", validators=[Length(max=40)]
     )
     notes = TextAreaField(
-        "Notes", validators=[]
+        "Notes"
     )
     image = FileField(
         "Image", validators=[FileAllowed(ALLOWED_EXTENSIONS, 'Images only!')], widget=FileInput()
     )
     background_color = StringField(
-        "Background Color", validators=[], widget=ColorInput()
+        "Background Color",  widget=ColorInput()
     )
     default_ft = SelectField(
-        "Default feeding type", validators=[]
+        "Default feeding type"
     )
     terrarium = SelectField(
-        "Terrarium", validators=[]
+        "Terrarium"
     )
