@@ -1,42 +1,25 @@
+{% from "macros/fields.html" import render_text_field, render_select_field, render_selectpicker_field, render_clear_text_field %}
+
 <div class="card">
   <div class="card-header">
       <h3>Edit {{ data.name }}</h3>
   </div>
   <form action="{{ url_for('terrarium.edit', id=data.id) }}" method="post" enctype="multipart/form-data">
+    {{ form.csrf_token }}
     <div class="card-body">
-      <div class="mb-3">
-          <label for="name" class="form-label">Name</label>
-          <input type="text" class="form-control" id="name" name="name" value="{{ data.name }}">
-      </div>
+      {{ render_text_field(form.name) }}
       <div class="row">
           <div class="col">
-              <div class="mb-3">
-                  <label for="type" class="form-label">Type</label>
-                  <select class="form-select" id="type" name="type" required>
-                    {% for type in terrarium_types %}
-                      <option value="{{ type.id }}{% if type.id|int == data.type_id %}selected{% endif %}" >{{ type.name }}</option>
-                    {% endfor %}
-                  </select>
-              </div>
-            </div>
-            <div class="col">
-              <div class="mb-3">
-                  <label for="size" class="form-label">Size</label>
-                  <input type="text" class="form-control" id="size" name="size" value="{{ data.size }}">
-              </div>
+            {{ render_select_field(form.type) }}
+          </div>
+          <div class="col">
+            {{ render_text_field(form.size) }}
           </div>
       </div>
-      <div class="mb-3">
-          <label for="notes" class="form-label">Notes</label>
-          <textarea class="form-control" id="notes" name="notes" rows="3">{{ data.notes }}</textarea>
-      </div>
+      {{ render_text_field(form.notes) }}  
       <div class="row">
         <div class="col">
-          <div class="mb-3">
-              <label for="image" class="form-label">New Image</label>
-              <input type="file" accept="image/*" class="form-control" id="image" name="image">
-              <input type="hidden" name="current_image" value="{{ data.image }}">
-          </div>
+          {{ render_clear_text_field(form.image) }}
         </div>
       </div>
     </div>

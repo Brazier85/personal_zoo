@@ -1,7 +1,10 @@
 from flask import current_app, render_template, request, redirect, url_for, jsonify, flash, Blueprint
 import os, json
 from werkzeug.utils import secure_filename
+from werkzeug.datastructures import CombinedMultiDict
 from functions import *
+
+from .forms import TerrariumForm, EquipmentForm, LampsForm, EventsForm
 
 terrarium_bp = Blueprint("terrarium", __name__, template_folder="templates")
 
@@ -18,58 +21,68 @@ def terrarium(id):
 def add():
 
     location = 'terrarium_add'
-    if request.method == 'GET':
-        return render_template('terrarium_add.html', location=location, terrarium_types=get_tt())
+
+    form = TerrariumForm(CombinedMultiDict((request.files, request.form)))
+
+    form.type.choices = [(i.id, i.name) for i in get_tt()]
     
-    elif request.method == 'POST':
-        name = request.form.get('name')
-        image = request.files['image']
-        size = request.form['size']
-        type = request.form['type']
+    if form.validate_on_submit():
+        name = form.name.data
+        size = form.size.data
+        type = form.type.data
+        notes = form.notes.data
         
-        # Check if an image was uploaded
-        if image.filename != '':
-            # Save the image to a folder
-            if image and allowed_file(image.filename):
-                filename = secure_filename(image.filename)
-                image.save(os.path.join(f"{UPLOAD_FOLDER}/terrariums", filename))
+        if form.image.data:
+            image = form.image.data
+            # Check if an image was uploaded
+            if image.filename != '':
+                # Save the image to a folder
+                if image and allowed_file(image.filename):
+                    filename = secure_filename(image.filename)
+                    image.save(os.path.join(f"{UPLOAD_FOLDER}/terrariums", filename))
+                else:
+                    flash('Invalid file. Please upload an image file.', 'error')
+                    return redirect(url_for('terrarium.add'))
             else:
-                flash('Invalid file. Please upload an image file.', 'error')
-                return redirect(url_for('terrarium.add'))
+                filename = "dummy.jpg"
         else:
             filename = "dummy.jpg"
 
         terrarium = Terrarium(name=name,
                         image=filename,
                         size=size,
-                        type=type)
+                        type=type,
+                        notes=notes)
         db.session.add(terrarium)
         db.session.commit()
 
         flash('Data submitted successfully!', 'success')
         return redirect('/')
+    
+    return render_template('terrarium_add.html', location=location, form=form)
 
 @terrarium_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
 
     current_terrarium = Terrarium.query.filter(Terrarium.id==id).first()
 
-    if request.method == 'GET':
-        return render_template('terrarium_edit.html', data=current_terrarium, terrarium_types=get_tt())
-    
-    elif request.method == 'POST':
-        current_terrarium.name = request.form['name']
-        current_terrarium.type = request.form['type']
-        current_terrarium.size = request.form['size']
-        current_terrarium.notes = request.form['notes']
-        new_image = request.form['current_image']
+    form = TerrariumForm(CombinedMultiDict((request.files, request.form)), obj=current_terrarium)
+
+    form.type.choices = [(i.id, i.name) for i in get_tt()]
+
+    if form.validate_on_submit():
+        current_terrarium.name = form.name.data
+        current_terrarium.type = form.type.data
+        current_terrarium.size = form.size.data
+        current_terrarium.notes = form.notes.data
+        old_image = current_terrarium.image
 
         # Check if a new image file is provided
         if 'image' in request.files:
             image = request.files['image']
             if image.filename == '':
                 # No new image provided
-                filename = new_image
+                filename = old_image
             elif allowed_file(image.filename):
                 # New valid image provided
                 filename = secure_filename(image.filename)
@@ -97,6 +110,8 @@ def edit(id):
 
         flash('Data submitted successfully!', 'success')
         return redirect("/terrarium/"+str(id))
+    
+    return render_template('terrarium_edit.html', data=current_terrarium, form=form)
 
 @terrarium_bp.route('/delete/<int:id>', methods=['POST'])
 def delete(id):
@@ -114,6 +129,7 @@ def delete(id):
 
         terrarium = Terrarium.query.get_or_404(id)
         db.session.delete(terrarium)
+        db.session.commit()
 
         details = TerrariumEquipment.query.get_or_404(TerrariumEquipment.terrarium==id)
         db.session.delete(details)
@@ -126,13 +142,12 @@ def delete(id):
 
 @terrarium_bp.route('/equipment/add/<int:id>', methods=['POST','GET'])
 def equipment_add(id):
-    if request.method == 'GET':
-        terrarium = Terrarium.query.filter(Terrarium.id==id).first()
-        return render_template('equipment_add.html', id=id, data=terrarium)
-        
-    elif request.method == 'POST':
-        name = request.form['equipment_name']
-        text = request.form['equipment_text']
+
+    form = EquipmentForm(request.form)
+
+    if form.validate_on_submit():
+        name = form.name.data
+        text = form.text.data
         
         equipment = TerrariumEquipment(terrarium=id,
                             name=name,
@@ -145,18 +160,19 @@ def equipment_add(id):
 
         return redirect("/terrarium/"+str(id))
     
+    terrarium = Terrarium.query.filter(Terrarium.id==id).first()
+    return render_template('equipment_add.html', id=id, data=terrarium, form=form)
+    
 @terrarium_bp.route('/equipment/edit/<int:id>', methods=['POST','GET'])
 def equipment_edit(id):
 
     equipment = TerrariumEquipment.query.filter(TerrariumEquipment.id==id).first()
+    form = EquipmentForm(request.form, obj=equipment)
+  
+    if form.validate_on_submit():
 
-    if request.method == 'GET':
-        return jsonify({'htmlresponse': render_template('equipment_edit.html', data=equipment)})
-    
-    elif request.method == 'POST':
-
-        equipment.name = request.form['equipment_name']
-        equipment.text = request.form['equipment_text']
+        equipment.name = form.name.data
+        equipment.text = form.text.data
 
         db.session.add(equipment)
         db.session.commit()
@@ -164,6 +180,8 @@ def equipment_edit(id):
         flash('Changes to equipment saved!', 'success')
         current_app.logger.info(f"Modified equipment with id: {id} !")
         return redirect("/terrarium/"+str(request.form['terrarium_id']))
+    
+    return jsonify({'htmlresponse': render_template('equipment_edit.html', data=equipment, form=form)})
     
 @terrarium_bp.route('/equipment/delete/<int:id>', methods=['POST'])
 def equipment_delete(id):
@@ -179,15 +197,14 @@ def equipment_delete(id):
     
 @terrarium_bp.route('/lamp/add/<int:id>', methods=['POST','GET'])
 def lamp_add(id):
-    if request.method == 'GET':
-        terrarium = Terrarium.query.filter(Terrarium.id==id).first()
-        return render_template('lamp_add.html', id=id, data=terrarium)
-        
-    elif request.method == 'POST':
-        type = request.form['lamp_type']
-        watt = request.form['lamp_watt']
-        position = request.form['lamp_position']
-        changed = datetime.datetime.strptime(request.form['lamp_changed'], '%Y-%m-%d')
+
+    form = LampsForm(request.form)
+
+    if form.validate_on_submit():
+        type = form.type.data
+        watt = form.watt.data
+        position = form.position.data
+        changed = form.changed.data
         
         lamp = TerrariumLamps(terrarium=id,
                             type=type,
@@ -202,27 +219,31 @@ def lamp_add(id):
 
         return redirect("/terrarium/"+str(id))
     
+    terrarium = Terrarium.query.filter(Terrarium.id==id).first()
+    return render_template('lamp_add.html', id=id, data=terrarium, form=form)
+    
 @terrarium_bp.route('/lamp/edit/<int:id>', methods=['POST','GET'])
 def lamp_edit(id):
 
     lamp = TerrariumLamps.query.filter(TerrariumLamps.id==id).first()
 
-    if request.method == 'GET':
-        return jsonify({'htmlresponse': render_template('lamp_edit.html', data=lamp)})
-    
-    elif request.method == 'POST':
+    form = LampsForm(request.form, obj=lamp)
+  
+    if form.validate_on_submit():
 
-        lamp.type = request.form['lamp_type']
-        lamp.watt = request.form['lamp_watt']
-        lamp.position = request.form['lamp_position']
-        lamp.changed = datetime.datetime.strptime(request.form['lamp_changed'], '%Y-%m-%d')
+        lamp.type = form.type.data
+        lamp.watt = form.watt.data
+        lamp.position = form.position.data
+        lamp.changed = form.changed.data
 
         db.session.add(lamp)
         db.session.commit()
         
         flash('Changes to lamp saved!', 'success')
         current_app.logger.info(f"Modified lamp with id: {id} !")
-        return redirect("/terrarium/"+str(request.form['terrarium_id']))
+        return redirect("/terrarium/"+str(lamp.terrarium))
+    
+    return jsonify({'htmlresponse': render_template('lamp_edit.html', data=lamp, form=form)})
     
 @terrarium_bp.route('/lamp/delete/<int:id>', methods=['POST'])
 def lamp_delete(id):
@@ -248,16 +269,15 @@ def terrarium_history_get_all(id):
     
 @terrarium_bp.route('/history/add/<int:id>', methods=['POST','GET'])
 def terrarium_history_add(id):
-    if request.method == 'GET':
-        return render_template('t_history_add.html', id=id, event_types=get_htt())
 
-    elif request.method == 'POST':
-        history = request.form
-        event = history['history_event']
-        text = history['history_text']
-        date = history['history_date']
+    form = EventsForm(request.form)
 
-        date = datetime.datetime.strptime(date, '%Y-%m-%d')
+    form.event.choices = [(i.id, i.name) for i in get_htt()]
+
+    if form.validate_on_submit():
+        event = form.event.data
+        text = form.text.data
+        date = form.date.data
 
         event = TerrariumHistory(terrarium=id,
                             event=event,
@@ -271,37 +291,32 @@ def terrarium_history_add(id):
 
         return redirect("/terrarium/"+str(id))
     
+    return render_template('t_history_add.html', id=id, form=form)
+    
 @terrarium_bp.route('/history/edit/<int:id>', methods=['POST','GET'])
 def terrarium_history_edit(id):
 
     event = TerrariumHistory.query.filter(TerrariumHistory.id==id).first()
 
-    if request.method == 'GET':
-        return jsonify({'htmlresponse': render_template('t_history_edit.html', data=event, event_types=get_htt())})
-    
-    elif request.method == 'POST':
-        history = request.form
-        event_type = history['history_event']
-        text = history['history_text']
-        date = history['history_date']
-        terrarium_id = history['terrarium_id']
+    form = EventsForm(request.form, obj=event)
 
-        date = datetime.datetime.strptime(date, '%Y-%m-%d')
+    form.event.choices = [(i.id, i.name) for i in get_htt()]
 
-        event.terrarium = terrarium_id
-        event.event = event_type
-        event.text = text
-        event.date = date
+    if form.validate_on_submit():
+        event.event = form.event.data
+        event.text = form.text.data
+        event.date = form.date.data
         
-
         db.session.add(event)
         db.session.commit()
 
         flash('Changes to terrarium history saved!', 'success')
         current_app.logger.info(f"Modified terrarium history with id: {id} !")
-        return redirect("/terrarium/"+str(id))
+        return redirect("/terrarium/"+str(event.terrarium))
+    
+    return jsonify({'htmlresponse': render_template('t_history_edit.html', data=event, form=form)})
 
-@terrarium_bp.route('/history_delete/<int:id>', methods=['POST'])
+@terrarium_bp.route('/history/delete/<int:id>', methods=['POST'])
 def terrarium_history_delete(id):
     if request.method == 'POST': 
         # Delete data into the database

@@ -1,3 +1,5 @@
+{% from "macros/fields.html" import render_text_field, render_select_field, render_selectpicker_field, render_clear_text_field %}
+
 {% extends 'base.html' %}
 
 {% block title %}Add{% endblock %}
@@ -8,40 +10,22 @@
     <div class="card-header">
         <h3>Add new Terrarium</h3>
     </div>
-    <form action="{{ url_for('terrarium.add') }}" method="post" enctype="multipart/form-data">
+    <form role="form" method="post" action="{{ url_for('terrarium.add') }}" enctype="multipart/form-data">
+        {{ form.csrf_token }}
         <div class="card-body">
-            <div class="mb-3">
-                <label for="name" class="form-label">Name:</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
+            {{ render_text_field(form.name) }}
             <div class="row">
                 <div class="col">
-                    <div class="mb-3">
-                        <label for="type" class="form-label">Type</label>
-                        <select class="form-select" id="type" name="type" required>
-                        {% for type in terrarium_types %}
-                            <option value="{{ type.id }}" >{{ type.name }}</option>
-                        {% endfor %}
-                        </select>
-                    </div>
+                    {{ render_select_field(form.type) }}
                 </div>
                 <div class="col">
-                    <div class="mb-3">
-                        <label for="morph" class="form-label">Size</label>
-                        <input type="text" class="form-control" id="size" name="size">
-                    </div>
+                    {{ render_text_field(form.size) }}
                 </div>
             </div>
-            <div class="mb-3">
-                <label for="notes" class="form-label">Notes</label>
-                <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
-            </div>    
+            {{ render_text_field(form.notes) }}  
             <div class="row">
                 <div class="col">
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Image:</label>
-                        <input type="file" accept="image/*" class="form-control" id="image" name="image">
-                    </div>
+                    {{ render_clear_text_field(form.image) }}
                 </div>
             </div>
         </div>

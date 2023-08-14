@@ -1,34 +1,24 @@
+{% from "macros/fields.html" import render_text_field, render_select_field, render_selectpicker_field, render_clear_text_field %}
 <div class="modal-header">
     <h5 class="modal-title" id="itemLabel">Add lamp</h5>
 </div>
 <form action="{{ url_for('terrarium.lamp_edit', id=data.id) }}" method="post" enctype="multipart/form-data">
+    {{ form.csrf_token }}
     <div class="modal-body" id="modal-body">
         <div class="row">
             <div class="col">
-                <div class="mb-3">
-                    <label for="lamp_type" class="form-label">Type</label>
-                    <input type="text" class="form-control" id="lamp_type" name="lamp_type" value="{{ data.type }}" required>
-                </div>
+                {{ render_text_field(form.type) }}
             </div>
             <div class="col">
-                <div class="mb-3">
-                    <label for="lamp_watt" class="form-label">Watt</label>
-                    <input type="text" class="form-control" id="lamp_watt" name="lamp_watt"  value="{{ data.watt }}" required>
-                </div>
+                {{ render_text_field(form.watt) }}
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <div class="mb-3">
-                    <label for="lamp_position" class="form-label">Position</label>
-                    <input type="test" class="form-control" id="lamp_position" name="lamp_position" value="{{ data.position }}" required>
-                </div>
+                {{ render_text_field(form.position) }}
             </div>
             <div class="col">
-                <div class="mb-3">
-                    <label for="lamp_changed" class="form-label">changed</label>
-                    <input type="date" class="form-control" id="lamp_changed" name="lamp_changed" value="{{ data.changed }}" required>
-                </div>
+                {{ render_text_field(form.changed) }}
             </div>
         </div>    
     </div>

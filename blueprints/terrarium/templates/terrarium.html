@@ -363,7 +363,7 @@
                         $.ajax({
                                 url: '/terrarium/history/delete/'+feed_id,
                                 type: 'post',
-                                data: {animal_id: {{ terrarium.id }}},
+                                data: {terrarium_id: {{ terrarium.id }}},
                                 success: function(data) {
                                     location.reload(true); 
                                 }
