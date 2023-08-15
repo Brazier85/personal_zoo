@@ -2,12 +2,12 @@
 {% set unit = unit_data.unit %}
 {% if unit == "weight" %}
 <div class="form-floating">
-    <input type="number" class="form-control" id="unit" name="unit" value="{{value}}">
+    <input type="number" class="form-control" id="unit" name="unit" value="{{value}}" placeholder>
     <label for="unit" class="form-label">Weight ({{ unit_data.detail }})</label>
 </div>
 {% elif unit == "size" %}
 <div class="form-floating">
-    <select class="form-control form-select" id="unit" name="unit" required>
+    <select class="form-control form-select" id="unit" name="unit" required placeholder>
         {% set options = unit_data.detail.split(',') %}
         {% for option in options %}
             <option value="{{ option }}" {% if value == option %}selected{%endif%}>{{ option }}</option>
@@ -17,7 +17,7 @@
 </div>
 {% else %}
 <div class="form-floating">
-    <input type="text" class="form-control" id="unit" name="unit" value="{{value}}">
+    <input type="text" class="form-control" id="unit" name="unit" value="{{value}}" placeholder>
     <label for="unit" class="form-label">Text ({{ unit_data.detail }})</label>
 </div>
 {% endif %}
