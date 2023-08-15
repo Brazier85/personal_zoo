@@ -1,0 +1,11 @@
+<!-- Default nav item -->
+{% macro render_nav_item(text, icon, link, active_link, location) %}
+    <li class="nav-item text-center mx-2 mx-lg-1">
+        <a class="nav-link {% if location == active_link %}active{% endif %}" aria-current="page" href="{{ link }}">
+            <div>
+                <i class="bi {{ icon }}"></i>
+            </div>
+            {{ text }}
+        </a>
+    </li>
+{% endmacro %}

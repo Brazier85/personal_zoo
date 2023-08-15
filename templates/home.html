@@ -24,11 +24,9 @@
 </style>
 {% endblock %}
 
-{% set list=True %}
-
 {% block content %}
-    {% if list %}
-    <div class="row row-cols-1 row-cols-lg-2 mt-4 justify-content-center">
+    <p>&nbsp;</p>
+    <div class="row row-cols-1 row-cols-lg-2 justify-content-center">
         <div class="col">
             <div class="card">
                 <div class="card-header">
@@ -118,36 +116,7 @@
             </div>
         </div>
     </div>
-    {% else %}
-    <div class="row row-cols-lg-3 row-cols-1 g-4">
-        {% for row in data %}
-        <div class="col">
-            <div class="card card-animal">
-                <a href="{{ url_for('animal.animal', id=animal.id) }}" class="card-link">
-                <div class="container">
-                    <div class="row row-cols-3 align-items-center">
-                        <div class="col col-1"></div>
-                        <div class="card-animal-image col-5 mx-auto">
-                            <img src="{{ url_for('uploaded_file', filename=animal.image) }}" style="border-color: {{ animal.background_color }} !important;">
-                        </div>
-                        <div class="col col-1"></div>
-                    </div>
-                </div>
-                <div class="card-body card-body-clickable" style="min-height: 116.9px !important;">
-                    <h5 class="card-title text-center">{{ animal.name }}</h5>
-                    <p class="card-text">{{ row[6] }}</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">Last updated: {{ row[10] | fix_date }}</small>
-                </div>
-                </a>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
 
-    {% if list %}
     <script type="text/javascript">
         $(document).on("click",".show_animal",function(){
             var animal_id = $(this).data('id');
@@ -175,7 +144,6 @@
             "info": false
         });
     </script>
-    {% endif %}
 
 <!-- Home Tabs controller-->
 <script src="{{ url_for('static', filename='js/pages/homeTabs.js') }}"></script>
