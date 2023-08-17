@@ -49,19 +49,37 @@
                 <!-- Settings -->
                 {{ render_nav_item("Settings", "bi-gear-fill", "/settings", "settings", location) }}
 
-                {% if current_user.is_admin %}
-                {{ render_nav_item("Users", "bi-person", url_for('accounts.account'), "account", location) }}
-                {% endif %}
-
-                <!-- Logout -->
-                {{ render_nav_item("Logout", "bi-box-arrow-in-left", url_for('accounts.logout'), "logout", location) }}
+                <li class="nav-item dropdown text-center mx-2 mx-lg-1">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div>
+                            <i class="bi bi-person"></i>
+                        </div>
+                        Account
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
+                        {% if current_user.is_admin %}
+                        <li><a class="dropdown-item {% if location == 'account' %}active{% endif %}" href="{{ url_for('accounts.admin') }}">Admin settings</a></li>
+                        {% endif %}
+                        <li><a class="dropdown-item {% if location == 'profile' %}active{% endif %}" href="/account">Your Profile</a></li>
+                        <li><a class="dropdown-item {% if location == 'logout' %}active{% endif %}" href="{{ url_for('accounts.logout') }}">Logout</a></li>
+                    </ul>
+                </li>
                 {% else %}
 
-                <!-- Login -->
-                {{ render_nav_item("Login", "bi-box-arrow-in-right", url_for('accounts.login'), "login", location) }}
-
-                <!-- Register -->
-                {{ render_nav_item("Register", "bi-pencil-square", url_for('accounts.register'), "register", location) }}
+                <li class="nav-item dropdown text-center mx-2 mx-lg-1">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div>
+                            <i class="bi bi-person"></i>
+                        </div>
+                        Account
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
+                        <li><a class="dropdown-item {% if location == 'login' %}active{% endif %}" href="{{ url_for('accounts.login') }}">Login</a></li>
+                        <li><a class="dropdown-item {% if location == 'register' %}active{% endif %}" href="{{ url_for('accounts.register') }}">Register</a></li>
+                    </ul>
+                </li>
                 {% endif %} 
             </ul>            
 

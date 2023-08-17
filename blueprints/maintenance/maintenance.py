@@ -231,10 +231,19 @@ def do_update():
                 user.is_active = 1
                 db.session.add(user)
                 db.session.commit()
-
         except Exception as e:
             print(f"Error: {e}")
             error = error + f"Add is_active to user -> Error: {e}\n"
+
+    # Check if a user is admin
+    admins = User.query.filter(User.is_admin==True).count()
+    print(f"Admins: {admins}")
+    if admins == 0:
+        admin = User.query.first()
+        admin.is_admin = True
+        db.session.add(admin)
+        db.session.commit()
+        error = error + f"No admin found! &lt;{admin.email}&gt; is now administrator!"
 
     # Checking for new defaults
     print("Insert default values")

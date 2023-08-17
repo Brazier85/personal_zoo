@@ -1,15 +1,26 @@
 from flask import current_app, render_template, request, redirect, url_for, flash, Blueprint
 from flask_login import current_user, login_required, login_user, logout_user
-from flask_bcrypt import check_password_hash
+from flask_bcrypt import check_password_hash, generate_password_hash
 
 from functions import *
 
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, PasswordForm
 
 accounts_bp = Blueprint("accounts", __name__, template_folder="templates")
 
 @accounts_bp.route("/", methods=["GET", "POST"])
-def account():
+@login_required
+def profile():
+    users = User.query.all()
+    if current_user.is_admin:
+        return render_template("profile.html", users=users, location="profile")
+    else:
+        flash("You need to be an Administrator to view this page!", "warning")
+        return redirect("/")
+    
+@accounts_bp.route("/admin", methods=["GET", "POST"])
+@login_required
+def admin():
     users = User.query.all()
     if current_user.is_admin:
         return render_template("admin.html", users=users, location="account")
@@ -17,9 +28,32 @@ def account():
         flash("You need to be an Administrator to view this page!", "warning")
         return redirect("/")
 
+@accounts_bp.route("/change_password/<int:id>", methods=["GET", "POST"])
+@login_required
+def update_password(id):
+
+    target_user = User.query.get_or_404(id)
+    form = PasswordForm(request.form)
+
+    if form.validate_on_submit():
+        if check_password_hash(target_user.password, form.old_password.data):
+            target_user.password = generate_password_hash(form.new_password.data)
+            db.session.add(target_user)
+            db.session.commit()
+            flash("Password changed!", "success")
+            return redirect(url_for("accounts.profile"))
+        else:
+            flash("Wrong current password entered!", "danger")
+            return redirect(url_for("accounts.profile"))
+    
+    return render_template("password_form.html", form=form, location="profile", id=id)
+
 @accounts_bp.route("/change/<string:mode>/<int:id>", methods=["GET", "POST"])
+@login_required
 def change(mode, id):
-    target_user = User.query.filter(User.id==id).first()
+
+    target_user = User.query.get_or_404(id)
+
     if current_user.is_admin:
         if current_user == target_user:
             flash("You can not change your own account!", "warning")
@@ -44,6 +78,10 @@ def change(mode, id):
                 db.session.add(target_user)
                 db.session.commit()
 
+            if mode == "delete":
+                db.session.delete(target_user)
+                db.session.commit()
+
             return "", 200
     else:
         flash("You need to be an Administrator to view this page!", "warning")
@@ -57,12 +95,17 @@ def register():
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         # Check for existing users
-        user = User(email=form.email.data, password=form.password.data)
+        admins = User.query.filter(User.is_admin==True).count()
+        if admins == 0:
+            user = User(email=form.email.data, password=form.password.data, is_admin=True, is_active=True)
+            flash("Registration successful. You are an administrator!", "success")
+        else:
+            user = User(email=form.email.data, password=form.password.data)
+            flash("Registration successful. Ask an administrator to activate your account!", "success")
         db.session.add(user)
         db.session.commit()
 
         login_user(user, True)
-        flash("You registered and are now logged in. Welcome!", "success")
 
         return redirect("/")
 

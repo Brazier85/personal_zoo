@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row row-cols-1">
+    <div>
+        <div class="mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="flex-grow"> Your Profile </div>
+                    <div class="btn-list">
+                        <!-- no button -->
+                    </div>
+                </div>
+                <form action="{{ url_for('settings.edit') }}" method="post" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <table class="table table-striped m-0 table-sm align-middle">
+                            <thead>
+                                <th>E-Mail</th>
+                                <th>Admin</th>
+                                <th>Active</th>
+                                <th>Change Password</th>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                <tr>
+                                    <td>{{user.email}}</td>
+                                    <td data-id="{{ user.id }}">{% if user.is_admin %}<i class="bi bi-check fs-3 text-success"></i>{%else%}<i class="bi bi-x fs-3 text-danger"></i>{% endif %}</td>
+                                    <td data-id="{{ user.id }}">{% if user.is_active %}<i class="bi bi-check fs-3 text-success"></i>{%else%}<i class="bi bi-x fs-3 text-danger"></i>{% endif %}</td>
+                                    <td data-id="{{ user.id }}" class="change_password"><i class="bi bi-pencil-square fs-5 text-success clickable"></i></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer text-end pr-0">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Will be loaded later -->
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).on("click",".change_password",function(){
+        var user_id = $(this).data('id');
+        $.ajax({
+            url: '/account/change_password/'+user_id,
+            type: 'get',
+            success: function(data){ 
+                $('.modal-content').html(data);
+                $('.modal-content').append(data.htmlresponse);
+                $('#modal_details').modal('show');
+            }
+        });
+    });
+
+</script>
+
+{% endblock %}

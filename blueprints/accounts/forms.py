@@ -35,3 +35,20 @@ class RegisterForm(FlaskForm):
 class LoginForm(FlaskForm):
     email = EmailField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired()])
+
+class PasswordForm(FlaskForm):
+    old_password = PasswordField(
+        "old Password", validators=[DataRequired()]
+    )
+
+    new_password = PasswordField(
+        "new Password", validators=[DataRequired(), Length(min=6, max=25)]
+    )
+
+    confirm = PasswordField(
+        "Repeat password",
+        validators=[
+            DataRequired(),
+            EqualTo("new_password", message="Passwords must match."),
+        ],
+    )

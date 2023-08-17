@@ -369,6 +369,10 @@ left: 50%;
   cursor: pointer;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .active_row:hover {
   border-left: #29a039 solid 5px;
   cursor: pointer;
