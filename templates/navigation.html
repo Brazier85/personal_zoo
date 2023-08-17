@@ -49,6 +49,10 @@
                 <!-- Settings -->
                 {{ render_nav_item("Settings", "bi-gear-fill", "/settings", "settings", location) }}
 
+                {% if current_user.is_admin %}
+                {{ render_nav_item("Users", "bi-person", url_for('accounts.account'), "", location) }}
+                {% endif %}
+
                 <!-- Logout -->
                 {{ render_nav_item("Logout", "bi-box-arrow-in-left", url_for('accounts.logout'), "logout", location) }}
                 {% else %}

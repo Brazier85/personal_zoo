@@ -141,12 +141,14 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String, nullable=False)
     created_on = db.Column(db.DateTime, nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
+    is_active = db.Column(db.Boolean, nullable=False, default=False)
 
-    def __init__(self, email, password, is_admin=False):
+    def __init__(self, email, password, is_admin=False, is_active=False):
         self.email = email
         self.password = generate_password_hash(password)
         self.created_on = datetime.datetime.now()
         self.is_admin = is_admin
+        self.is_active = is_active
 
     def __repr__(self):
         return '<User %r>' % self.username

@@ -222,6 +222,20 @@ def do_update():
             print(f"Error: {e}")
             error = error + f"Add terrarium to animals -> Error: {e}\n"
 
+    if not db_col_exists("user","is_active"):
+        try:
+            query= "ALTER TABLE user ADD is_active BOOLEAN DEFAULT 0"
+            db_update(query)
+            users = User.query.all()
+            for user in users:
+                user.is_active = 1
+                db.session.add(user)
+                db.session.commit()
+
+        except Exception as e:
+            print(f"Error: {e}")
+            error = error + f"Add is_active to user -> Error: {e}\n"
+
     # Checking for new defaults
     print("Insert default values")
     try:

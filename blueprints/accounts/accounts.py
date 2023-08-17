@@ -8,6 +8,15 @@ from .forms import RegisterForm, LoginForm
 
 accounts_bp = Blueprint("accounts", __name__, template_folder="templates")
 
+@accounts_bp.route("/", methods=["GET", "POST"])
+def account():
+    users = User.query.all()
+    if current_user.is_admin:
+        return render_template("admin.html", users=users, location="account")
+    else:
+        flash("You need to be an Administrator to view this page!", "warning")
+        return redirect("/")
+
 @accounts_bp.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
@@ -15,11 +24,14 @@ def register():
         return redirect("/")
     form = RegisterForm(request.form)
     if form.validate_on_submit():
+        # Check for existing users
+        user_count = (User.query.all()).count
+        print(user_count)
         user = User(email=form.email.data, password=form.password.data)
         db.session.add(user)
         db.session.commit()
 
-        login_user(user)
+        login_user(user, True)
         flash("You registered and are now logged in. Welcome!", "success")
 
         return redirect("/")
@@ -35,8 +47,13 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and check_password_hash(user.password, request.form["password"]):
-            login_user(user)
-            return redirect("/")
+            login_user(user, True)
+            if current_user.is_active:
+                flash("Login successful!", "success")
+                return redirect("/")
+            else:
+                flash("Your user is not activated!", "warning")
+                return render_template("login.html", form=form)            
         else:
             flash("Invalid email and/or password.", "warning")
             return render_template("login.html", form=form)
