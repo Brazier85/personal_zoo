@@ -11,12 +11,9 @@ accounts_bp = Blueprint("accounts", __name__, template_folder="templates")
 @accounts_bp.route("/", methods=["GET", "POST"])
 @login_required
 def profile():
-    users = User.query.all()
-    if current_user.is_admin:
-        return render_template("profile.html", users=users, location="profile")
-    else:
-        flash("You need to be an Administrator to view this page!", "warning")
-        return redirect("/")
+    print(current_user.id)
+    user = User.query.filter(User.id==current_user.id).first()
+    return render_template("profile.html", user=user, location="profile")
     
 @accounts_bp.route("/admin", methods=["GET", "POST"])
 @login_required
@@ -33,20 +30,22 @@ def admin():
 def update_password(id):
 
     target_user = User.query.get_or_404(id)
-    form = PasswordForm(request.form)
 
-    if form.validate_on_submit():
-        if check_password_hash(target_user.password, form.old_password.data):
-            target_user.password = generate_password_hash(form.new_password.data)
-            db.session.add(target_user)
-            db.session.commit()
-            flash("Password changed!", "success")
-            return redirect(url_for("accounts.profile"))
-        else:
-            flash("Wrong current password entered!", "danger")
-            return redirect(url_for("accounts.profile"))
-    
-    return render_template("password_form.html", form=form, location="profile", id=id)
+    if current_user == target_user:
+        form = PasswordForm(request.form)
+
+        if form.validate_on_submit():
+            if check_password_hash(target_user.password, form.old_password.data):
+                target_user.password = generate_password_hash(form.new_password.data)
+                db.session.add(target_user)
+                db.session.commit()
+                flash("Password changed!", "success")
+                return redirect(url_for("accounts.profile"))
+            else:
+                flash("Wrong current password entered!", "danger")
+                return redirect(url_for("accounts.profile"))
+        
+        return render_template("password_form.html", form=form, location="profile", id=id)
 
 @accounts_bp.route("/change/<string:mode>/<int:id>", methods=["GET", "POST"])
 @login_required
