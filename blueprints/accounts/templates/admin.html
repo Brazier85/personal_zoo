@@ -23,8 +23,8 @@
                                 {% for user in users %}
                                 <tr>
                                     <td>{{user.email}}</td>
-                                    <td>{% if user.is_admin %}<i class="bi bi-check fs-3"></i>{%else%}<i class="bi bi-x"></i>{% endif %}</td>
-                                    <td>{% if user.is_active %}<i class="bi bi-check fs-3"></i>{%else%}<i class="bi bi-x"></i>{% endif %}</td>
+                                    <td data-id="{{ user.id }}" class="change_admin">{% if user.is_admin %}<i class="bi bi-check fs-3"></i>{%else%}<i class="bi bi-x"></i>{% endif %}</td>
+                                    <td data-id="{{ user.id }}" class="change_active">{% if user.is_active %}<i class="bi bi-check fs-3"></i>{%else%}<i class="bi bi-x"></i>{% endif %}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -38,22 +38,28 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).on("click",".change_admin",function(){
+        var user_id = $(this).data('id');
+        $.ajax({
+            url: '/account/change/admin/'+user_id,
+            type: 'get',
+            success: function(data) {
+                location.reload(true); 
+            }
+        });
+    });
 
-<div class="row row-cols-1 mt-4 justify-content-center">
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header">
-                <div class="flex-grow"> Users </div>
-            </div>
-            <div class="card-body">
-                {% for user in users %}
-                    {{user.email}},
-                    {{user.is_admin}},
-                    {{user.is_active}}
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</div>
+    $(document).on("click",".change_active",function(){
+        var user_id = $(this).data('id');
+        $.ajax({
+            url: '/account/change/active/'+user_id,
+            type: 'get',
+            success: function(data) {
+                location.reload(true); 
+            }
+        });
+    });
+</script>
 
 {% endblock %}

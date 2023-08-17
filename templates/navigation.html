@@ -50,7 +50,7 @@
                 {{ render_nav_item("Settings", "bi-gear-fill", "/settings", "settings", location) }}
 
                 {% if current_user.is_admin %}
-                {{ render_nav_item("Users", "bi-person", url_for('accounts.account'), "", location) }}
+                {{ render_nav_item("Users", "bi-person", url_for('accounts.account'), "account", location) }}
                 {% endif %}
 
                 <!-- Logout -->

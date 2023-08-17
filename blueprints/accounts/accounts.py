@@ -17,6 +17,38 @@ def account():
         flash("You need to be an Administrator to view this page!", "warning")
         return redirect("/")
 
+@accounts_bp.route("/change/<string:mode>/<int:id>", methods=["GET", "POST"])
+def change(mode, id):
+    target_user = User.query.filter(User.id==id).first()
+    if current_user.is_admin:
+        if current_user == target_user:
+            flash("You can not change your own account!", "warning")
+            return "", 200
+        else:
+            if mode == "admin":
+                if target_user.is_admin:
+                    target_user.is_admin = False
+                else:
+                    target_user.is_admin = True
+
+                db.session.add(target_user)
+                db.session.commit()
+
+                return "", 200
+            if mode == "active":
+                if target_user.is_active:
+                    target_user.is_active = False
+                else:
+                    target_user.is_active = True
+
+                db.session.add(target_user)
+                db.session.commit()
+
+            return "", 200
+    else:
+        flash("You need to be an Administrator to view this page!", "warning")
+        return redirect("/")
+
 @accounts_bp.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
@@ -25,8 +57,6 @@ def register():
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         # Check for existing users
-        user_count = (User.query.all()).count
-        print(user_count)
         user = User(email=form.email.data, password=form.password.data)
         db.session.add(user)
         db.session.commit()

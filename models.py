@@ -151,4 +151,4 @@ class User(UserMixin, db.Model):
         self.is_active = is_active
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User %r>' % self.email
