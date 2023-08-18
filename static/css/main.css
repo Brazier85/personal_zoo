@@ -226,6 +226,7 @@ left: 50%;
   height: 100px;
   position: relative;
   width: 100px;
+  object-fit: contain;
 }
 
 .animal-image-small {
@@ -239,6 +240,7 @@ left: 50%;
   height: 50px;
   position: relative;
   width: 50px;
+  object-fit: contain;
 }
 
 .terrarium-image img {
@@ -247,6 +249,7 @@ left: 50%;
   height: 100px;
   position: relative;
   width: 200px;
+  object-fit: contain;
 }
 
 .terrarium-image-small img {
@@ -255,6 +258,7 @@ left: 50%;
   height: 50px;
   position: relative;
   width: 100px;
+  object-fit: contain;
 }
 
 .card-animal-image img {

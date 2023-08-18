@@ -1,6 +1,7 @@
-from flask import current_app, render_template, request, redirect, url_for, flash, Blueprint
+from flask import current_app, render_template, request, redirect, url_for, flash, jsonify, Blueprint
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_bcrypt import check_password_hash, generate_password_hash
+import json
 
 from functions import *
 
@@ -11,7 +12,6 @@ accounts_bp = Blueprint("accounts", __name__, template_folder="templates")
 @accounts_bp.route("/", methods=["GET", "POST"])
 @login_required
 def profile():
-    print(current_user.id)
     user = User.query.filter(User.id==current_user.id).first()
     return render_template("profile.html", user=user, location="profile")
     
@@ -40,12 +40,16 @@ def update_password(id):
                 db.session.add(target_user)
                 db.session.commit()
                 flash("Password changed!", "success")
-                return redirect(url_for("accounts.profile"))
+                #return redirect(url_for("accounts.profile"))
+                return jsonify(status='ok')
             else:
                 flash("Wrong current password entered!", "danger")
                 return redirect(url_for("accounts.profile"))
-        
-        return render_template("password_form.html", form=form, location="profile", id=id)
+        elif request.method == 'GET':
+            return render_template("password_form.html", form=form, location="profile", id=id)
+        else:
+            data = json.dumps(form.errors, ensure_ascii=False)
+            return jsonify(data)
 
 @accounts_bp.route("/change/<string:mode>/<int:id>", methods=["GET", "POST"])
 @login_required
