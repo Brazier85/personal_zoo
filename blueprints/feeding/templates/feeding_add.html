@@ -3,7 +3,7 @@
 <div class="modal-header">
     <h5 class="modal-title" id="itemLabel">Add feeding</h5>
 </div>
-<form role="form" method="post" action="{{ target }}" enctype="multipart/form-data">
+<form role="form" id="feeding_form" method="post" action="{{ target }}" enctype="multipart/form-data">
     {{ form.csrf_token }}
 
     <div class="modal-body" id="modal-body">
