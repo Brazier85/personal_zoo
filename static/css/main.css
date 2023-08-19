@@ -294,8 +294,7 @@ left: 50%;
 }
 
 .gender {
-  font-size: 1.5rem;
-  -webkit-text-stroke: 1px;
+  font-size: 1.7rem;
 }
 
 .female {
@@ -334,7 +333,6 @@ left: 50%;
   margin: 0;
   padding-left: 0.75rem!important;
   padding-right: 0.75rem!important;
-  -webkit-text-stroke: 1px;
 }
 
 .btn-list>.btn {
@@ -343,7 +341,6 @@ left: 50%;
   margin: 0;
   padding-left: 0.75rem!important;
   padding-right: 0.75rem!important;
-  /* -webkit-text-stroke: 1px; */
 }
 
 .flex-grow {
