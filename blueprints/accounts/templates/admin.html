@@ -24,9 +24,9 @@
                                 {% for user in users %}
                                 <tr>
                                     <td>{{user.email}}</td>
-                                    <td data-id="{{ user.id }}" class="change_admin">{% if user.is_admin %}<i class="bi bi-check fs-3 text-success clickable"></i>{%else%}<i class="bi bi-x fs-3 text-danger clickable"></i>{% endif %}</td>
-                                    <td data-id="{{ user.id }}" class="change_active">{% if user.is_active %}<i class="bi bi-check fs-3 text-success clickable"></i>{%else%}<i class="bi bi-x fs-3 text-danger clickable"></i>{% endif %}</td>
-                                    <td data-id="{{ user.id }}" class="change_delete"><i class="bi bi-trash fs-5 text-danger clickable"></i></td>
+                                    <td data-id="{{ user.id }}" class="change_admin">{% if user.is_admin %}<i class="fa-solid fa-check fs-4 text-success clickable"></i>{%else%}<i class="fa-solid fa-x fs-4 text-danger clickable"></i>{% endif %}</td>
+                                    <td data-id="{{ user.id }}" class="change_active">{% if user.is_active %}<i class="fa-solid fa-check fs-4 text-success clickable"></i>{%else%}<i class="fa-solid fa-x fs-4 text-danger clickable"></i>{% endif %}</td>
+                                    <td data-id="{{ user.id }}" class="change_delete"><i class="fa-solid fa-trash-can fs-5 text-danger clickable"></i></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

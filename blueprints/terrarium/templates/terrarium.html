@@ -45,9 +45,9 @@
             {% if current_user.is_authenticated %}
             <div class="card-footer">
                 <div class="btn-list">  
-                    <button class="btn rounded-right terrarium_edit_button green_button"><i class="bi bi-pencil-square"></i></button>
-                    <button class="btn rounded-right terrarium_feeding_button green_button"><i class="bi bi-egg-fill"></i></button>
-                    <button class="btn rounded-right terrarium_history_button green_button"><i class="bi bi-calendar-event"></i></button>
+                    <button class="btn rounded-right terrarium_edit_button green_button"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button class="btn rounded-right terrarium_feeding_button green_button"><i class="fa-solid fa-utensils"></i></button>
+                    <button class="btn rounded-right terrarium_history_button green_button"><i class="fa-regular fa-calendar-plus"></i></button>
                 </div>
             </div>
             {% endif %}
@@ -108,7 +108,7 @@
                 <div class="flex-grow"> Lamps </div>
                 <div class="btn-list">
                     {% if current_user.is_authenticated %}
-                    <button class="btn rounded-right lamp_add_button green_button"><i class="bi bi-plus"></i></button>
+                    <button class="btn rounded-right lamp_add_button green_button"><i class="fa-solid fa-plus"></i></button>
                     {% endif %}
                 </div>
             </div>
@@ -149,7 +149,7 @@
                 <div class="flex-grow"> Equipment </div>
                 <div class="btn-list">
                     {% if current_user.is_authenticated %}
-                    <button class="btn equipment_add_button green_button"><i class="bi bi-plus"></i></button>
+                    <button class="btn equipment_add_button green_button"><i class="fa-solid fa-plus"></i></button>
                     {% endif %}
                 </div>
             </div>
@@ -177,7 +177,7 @@
                 <div class="flex-grow"> Events/Actions </div>
                 <div class="btn-list">
                     {% if current_user.is_authenticated %}
-                    <button class="btn history_add_button green_button"><i class="bi bi-plus"></i></button>
+                    <button class="btn history_add_button green_button"><i class="fa-solid fa-plus"></i></button>
                     {% endif %}
                 </div>
             </div>
@@ -204,7 +204,7 @@
                 {% endif %}
             </div>
             <div class="card-footer card-footer-clickable text-right pr-0 show_all_history">
-                <div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>
+                <div style="text-transform: uppercase;">Show all <i class="fa-solid fa-chevron-right"></i></div>
             </div>
         </div>
     </div>
@@ -254,10 +254,10 @@
         $('.show_all_history').click(function(){
             if ($(this).html().includes("less")) {
                 url = '/terrarium/history/get_all/{{ terrarium.id }}?less=1'
-                $('.show_all_history').html('<div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>');                
+                $('.show_all_history').html('<div style="text-transform: uppercase;">Show all <i class="fa-solid fa-chevron-right"></i></div>');                
             } else {
                 url = '/terrarium/history/get_all/{{ terrarium.id }}'
-                $('.show_all_history').html('<div style="text-transform: uppercase;"> <i class="bi bi-chevron-left"></i> Show less</div>');
+                $('.show_all_history').html('<div style="text-transform: uppercase;"> <i class="fa-solid fa-chevron-left"></i></i> Show less</div>');
             }
             $.ajax({
                 url: url,

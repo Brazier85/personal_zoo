@@ -23,9 +23,9 @@
                             <tbody>
                                 <tr>
                                     <td>{{user.email}}</td>
-                                    <td>{% if user.is_admin %}<i class="bi bi-check fs-3 text-success"></i>{%else%}<i class="bi bi-x fs-3 text-danger"></i>{% endif %}</td>
-                                    <td>{% if user.is_active %}<i class="bi bi-check fs-3 text-success"></i>{%else%}<i class="bi bi-x fs-3 text-danger"></i>{% endif %}</td>
-                                    <td data-id="{{ user.id }}" class="change_password"><i class="bi bi-pencil-square fs-5 text-success clickable"></i></td>
+                                    <td>{% if user.is_admin %}<i class="fa-solid fa-check fs-4 text-success"></i>{%else%}<i class="fa-solid  fa-x fs-4 text-danger"></i>{% endif %}</td>
+                                    <td>{% if user.is_active %}<i class="fa-solid fa-check fs-4 text-success"></i>{%else%}<i class="fa-solid  fa-x fs-4 text-danger"></i>{% endif %}</td>
+                                    <td data-id="{{ user.id }}" class="change_password"><i class="fa-solid fa-pen-to-square fs-5 text-success clickable"></i></td>
                                 </tr>
                             </tbody>
                         </table>

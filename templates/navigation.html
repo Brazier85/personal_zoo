@@ -18,21 +18,21 @@
             <ul class="navbar-nav justify-content-lg-center">
 
                 <!-- Home -->
-                {{ render_nav_item("Home", "bi-house-heart-fill", "/", "home", location) }}
+                {{ render_nav_item("Home", "fa-solid fa-house", "/", "home", location) }}
 
                 {% if current_user.is_authenticated %}
 
                 <!-- Multi Feeding -->
-                {{ render_nav_item("Multi Feeding", "bi-egg-fill", "/feeding/multi", "multi_feeding", location) }}
+                {{ render_nav_item("Multi Feeding", "fa-solid fa-utensils", "/feeding/multi", "multi_feeding", location) }}
 
                 <!-- Multi Event -->
-                {{ render_nav_item("Multi Event", "bi-calendar-event", "/history/multi", "multi_event", location) }}
+                {{ render_nav_item("Multi Event", "fa-regular fa-calendar-plus", "/history/multi", "multi_event", location) }}
 
                 <!-- Add dropdown -->
                 <li class="nav-item dropdown text-center mx-2 mx-lg-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div>
-                            <i class="bi bi-plus-circle"></i>
+                            <i class="fa-solid fa-circle-plus"></i>
                         </div>
                         Add
                     </a>
@@ -44,15 +44,15 @@
                 </li>
 
                 <!-- Print -->
-                {{ render_nav_item("Print", "bi-printer-fill", "/print", "print", location) }}
+                {{ render_nav_item("Print", "fa-solid fa-print", "/print", "print", location) }}
 
                 <!-- Settings -->
-                {{ render_nav_item("Settings", "bi-gear-fill", "/settings", "settings", location) }}
+                {{ render_nav_item("Settings", "fa-solid fa-gear", "/settings", "settings", location) }}
 
                 <li class="nav-item dropdown text-center mx-2 mx-lg-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div>
-                            <i class="bi bi-person"></i>
+                            <i class="fa-solid fa-user"></i>
                         </div>
                         Account
                     </a>
@@ -70,7 +70,7 @@
                 <li class="nav-item dropdown text-center mx-2 mx-lg-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div>
-                            <i class="bi bi-person"></i>
+                            <i class="fa-solid fa-user"></i>
                         </div>
                         Account
                     </a>
@@ -87,30 +87,30 @@
             <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
                 <li class="nav-item dropdown">
                     <button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (dark)">
-                        <i class="theme-icon-active bi bi-moon-stars-fill"><use href="bi-moon-stars-fill"></use></i>
+                        <i class="theme-icon-active fa-solid fa-moon"><use href="fa-solid fa-moon"></use></i>
                         <span class="d-lg-none ms-2" id="bd-theme-text">Toggle theme</span>
                     </button>
                     <!-- Theme Dropdown -->
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
                         <li>
                         <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
-                            <i class="bi bi-sun-fill"><use href="bi-sun-fill"></use></i>
-                            Light
-                            <i class="bi bi-check2 ms-auto d-none"></i>
+                            <i class="fa-solid fa-sun"><use href="fa-solid fa-sun"></use></i>
+                            &nbsp;Light
+                            <i class="fa-solid fa-check ms-auto d-none"></i>
                         </button>
                         </li>
                         <li>
                         <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="dark" aria-pressed="true">
-                            <i class="bi bi-moon-stars-fill"><use href="bi-moon-stars-fill"></use></i>
-                            Dark
-                            <i class="bi bi-check2 ms-auto d-none"></i>
+                            <i class="fa-solid fa-moon"><use href="fa-solid fa-moon"></use></i>
+                            &nbsp;Dark
+                            <i class="fa-solid fa-check ms-auto d-none"></i>
                         </button>
                         </li>
                         <li>
                         <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="false">
-                            <i class="bi bi-circle-half"><use href="bi-circle-half"></use></i>
-                            Auto
-                            <i class="bi bi-check2 ms-auto d-none"></i>
+                            <i class="fa-solid fa-circle-half-stroke"><use href="fa-solid fa-circle-half-stroke"></use></i>
+                            &nbsp;Auto
+                            <i class="fa-solid fa-check ms-auto d-none"></i>
                         </button>
                         </li>
                     </ul>

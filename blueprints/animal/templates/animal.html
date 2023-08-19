@@ -37,7 +37,7 @@
                         <div>
                             <h2 class="d-inline">{{ animal.name }}</h2>
                             <span class="gender text-center ml-3">
-                                <i class="bi {% if animal.gender == 'female' %} bi-gender-female female {% elif animal.gender == 'male' %} bi-gender-male male {% else %}  bi-gender-ambiguous ambiguous {% endif %} d-sm-inline-block"></i>
+                                <i class="fa-solid {% if animal.gender == 'female' %} fa-venus female {% elif animal.gender == 'male' %} fa-mars male {% else %}  fa-transgender ambiguous {% endif %} d-sm-inline-block"></i>
                             </span>
                         </div>
                         <div>{{ animal.morph }}</div>
@@ -54,9 +54,9 @@
             {% if current_user.is_authenticated %}
             <div class="card-footer">
                 <div class="btn-list">
-                    <button class="btn rounded-right animal_edit_button green_button"><i class="bi bi-pencil-square"></i></button>
-                    <button class="btn rounded-right animal_print_button green_button"><i class="bi bi-printer"></i></button>
-                    <button class="btn rounded-right animal_qr_button green_button"><i class="bi bi-qr-code-scan"></i></button>
+                    <button class="btn rounded-right animal_edit_button green_button"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button class="btn rounded-right animal_print_button green_button"><i class="fa-solid fa-print"></i></button>
+                    <button class="btn rounded-right animal_qr_button green_button"><i class="fa-solid fa-qrcode"></i></button>
                 </div>
             </div>
             {% endif %}
@@ -71,7 +71,7 @@
                 <div class="flex-grow"> Feedings </div>
                 <div class="btn-list">
                     {% if current_user.is_authenticated %}
-                    <button class="btn rounded-right feeding_add_button green_button"><i class="bi bi-plus"></i></button>
+                    <button class="btn rounded-right feeding_add_button green_button"><i class="fa-solid fa-plus"></i></button>
                     {% endif %}
                 </div>
             </div>
@@ -105,7 +105,7 @@
                 {% endif %}
             </div>
             <div class="card-footer card-footer-clickable text-right pr-0 show_all_feedings">
-                <div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>
+                <div style="text-transform: uppercase;">Show all <i class="fa-solid fa-chevron-right"></i></div>
             </div>
         </div>
     </div>
@@ -115,7 +115,7 @@
                 <div class="flex-grow"> Events/Actions </div>
                 <div class="btn-list">
                     {% if current_user.is_authenticated %}
-                    <button class="btn history_add_button green_button"><i class="bi bi-plus"></i></button>
+                    <button class="btn history_add_button green_button"><i class="fa-solid fa-plus"></i></button>
                     {% endif %}
                 </div>
             </div>
@@ -142,7 +142,7 @@
                 {% endif %}
             </div>
             <div class="card-footer card-footer-clickable text-right pr-0 show_all_history">
-                <div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>
+                <div style="text-transform: uppercase;">Show all <i class="fa-solid fa-chevron-right"></i></div>
             </div>
         </div>
     </div>
@@ -152,7 +152,7 @@
                 <div class="flex-grow"> Documents </div>
                 <div class="btn-list">
                     {% if current_user.is_authenticated %}
-                    <button class="btn document_add_button green_button"><i class="bi bi-plus"></i></button>
+                    <button class="btn document_add_button green_button"><i class="fa-solid fa-plus"></i></button>
                     {% endif %}
                 </div>
             </div>
@@ -216,10 +216,10 @@
         $('.show_all_history').click(function(){
             if ($(this).html().includes("less")) {
                 url = '/history/get_all/{{ animal.id }}?less=1'
-                $('.show_all_history').html('<div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>');                
+                $('.show_all_history').html('<div style="text-transform: uppercase;">Show all <i class="fa-solid fa-chevron-right"></i></div>');                
             } else {
                 url = '/history/get_all/{{ animal.id }}'
-                $('.show_all_history').html('<div style="text-transform: uppercase;"> <i class="bi bi-chevron-left"></i> Show less</div>');
+                $('.show_all_history').html('<div style="text-transform: uppercase;"> <i class="fa-solid fa-chevron-left"></i> Show less</div>');
             }
             $.ajax({
                 url: url,
@@ -232,10 +232,10 @@
         $('.show_all_feedings').click(function(){
             if ($(this).html().includes("less")) {
                 url = '/feeding/get_all/{{ animal.id }}?less=1'
-                $('.show_all_feedings').html('<div style="text-transform: uppercase;">Show all <i class="bi bi-chevron-right"></i></div>');                
+                $('.show_all_feedings').html('<div style="text-transform: uppercase;">Show all <i class="fa-solid fa-chevron-right"></i></div>');                
             } else {
                 url = '/feeding/get_all/{{ animal.id }}'
-                $('.show_all_feedings').html('<div style="text-transform: uppercase;"> <i class="bi bi-chevron-left"></i> Show less</div>');
+                $('.show_all_feedings').html('<div style="text-transform: uppercase;"> <i class="fa-solid fa-chevron-left"></i> Show less</div>');
             }
             $.ajax({
                 url: url,
