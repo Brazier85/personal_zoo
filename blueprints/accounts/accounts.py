@@ -40,7 +40,6 @@ def update_password(id):
                 db.session.add(target_user)
                 db.session.commit()
                 flash("Password changed!", "success")
-                #return redirect(url_for("accounts.profile"))
                 return jsonify(status='ok')
             else:
                 flash("Wrong current password entered!", "danger")
@@ -128,7 +127,7 @@ def login():
                 flash("Login successful!", "success")
                 return redirect("/")
             else:
-                flash("Your user is not activated!", "warning")
+                flash("Your account is not activated!", "warning")
                 return render_template("login.html", form=form)            
         else:
             flash("Invalid email and/or password.", "warning")
