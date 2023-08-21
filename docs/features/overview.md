@@ -2,6 +2,12 @@
 
 My app primarily focuses on two main functions: feeding tracking and event/action management. Please note that this application is not designed for breeding purposes. If you are involved in breeding, there are specialized apps available to cater to those needs.
 
+## Accounts
+
+The incorporation of user accounts marks the initial implementation of security features within Personal Zoo. This fundamental addition enhances the application's overall security and sets the stage for future security enhancements.
+
+[read more](/features/accounts)
+
 ## Events
 
 In the app's events/actions section, you can conveniently document various occurrences such as medical treatments, shedding, and more. This feature allows you to keep a comprehensive record of important events related to your animals.
