@@ -7,7 +7,7 @@
     </thead>
     <tbody>
         {% for feeding in feedings %}
-        <tr data-id="{{ feeding.id }}" class="feeding_edit active_row no-select">
+        <tr data-id="{{ feeding.id }}" class="feeding_edit active_row user-select-none">
             <td>{{ feeding.date | fix_date }}</td>
             <td>{{ feeding.count }}</td>
             <td>{{ feeding.type }}</td>

@@ -31,7 +31,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center align-middle flex-wrap animal-head">
                     <div class="animal-image"><!---->
-                        <img class="show_animal_image" src="{{ image }}" alt="Image for {{ animal.name }}"  style="border-color: {{ animal.background_color }} !important;">
+                        <img class="show_animal_image object-fit-contain" src="{{ image }}" alt="Image for {{ animal.name }}"  style="border-color: {{ animal.background_color }} !important;">
                     </div>
                     <div class="px-4">
                         <div>
@@ -87,7 +87,7 @@
                         </thead>
                         <tbody>
                             {% for feeding in feedings %}
-                            <tr data-id="{{ feeding.id }}" class="feeding_edit active_row no-select">
+                            <tr data-id="{{ feeding.id }}" class="feeding_edit active_row user-select-none">
                                 <td>{{ feeding.date | fix_date }}</td>
                                 <td>{{ feeding.count }}</td>
                                 <td>{{ feeding.type }}</td>
@@ -129,7 +129,7 @@
                     </thead>
                     <tbody>
                         {% for event in history %}
-                        <tr data-id="{{ event.id }}" class="history_edit active_row no-select">
+                        <tr data-id="{{ event.id }}" class="history_edit active_row user-select-none">
                             <td>{{ event.date | fix_date }}</td>
                             <td>{{ event.name }}</td>
                             <td>{{ event.text|linebreaksbr|safe }}</td>
@@ -165,7 +165,7 @@
                     </thead>
                     <tbody>
                         {% for document in documents %}
-                        <tr class="no-select">
+                        <tr class="user-select-none">
                             <td data-id="{{ document.id }}" class="active_row document_edit">{{ document.name }}</td>
                             <td><a href="{{ url_for('document.download', id=document.id) }}" target="_blank">Download</a></td>
                         </tr>

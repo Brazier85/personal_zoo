@@ -6,7 +6,7 @@
     </thead>
     <tbody>
         {% for event in history %}
-        <tr data-id="{{ event.id }}" class="history_edit active_row no-select">
+        <tr data-id="{{ event.id }}" class="history_edit active_row user-select-none">
             <td>{{ event.date | fix_date }}</td>
             <td>{{ event.name }}</td>
             <td>{{ event.text|linebreaksbr|safe }}</td>
