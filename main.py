@@ -94,15 +94,16 @@ QRcode(app)
 app.jinja_env.globals['momentjs'] = momentjs
 
 # Blueprints
+app.register_blueprint(accounts_bp, url_prefix="/account")
 app.register_blueprint(animal_bp, url_prefix="/animal")
-app.register_blueprint(feeding_bp, url_prefix="/feeding")
 app.register_blueprint(document_bp, url_prefix="/document")
+app.register_blueprint(feeding_bp, url_prefix="/feeding")
 app.register_blueprint(history_bp, url_prefix="/history")
+app.register_blueprint(maintenance_bp, url_prefix="/maintenance")
 app.register_blueprint(settings_bp, url_prefix="/settings")
 app.register_blueprint(terrarium_bp, url_prefix="/terrarium")
-app.register_blueprint(maintenance_bp, url_prefix="/maintenance")
-app.register_blueprint(accounts_bp, url_prefix="/account")
 
+# Error handler
 @app.errorhandler(Exception)
 def handle_exception(e):
     # pass through HTTP errors
@@ -116,6 +117,7 @@ def handle_exception(e):
     # now you're handling non-HTTP exceptions only
     return render_template("error_generic.html", e=str(e), traceback=traceback.format_exc())
 
+# Logging
 @app.after_request
 def AfterRequest(response):
 
@@ -129,6 +131,7 @@ def AfterRequest(response):
 
     return response
 
+# New line to br
 @app.template_filter(name='linebreaksbr')
 def linebreaksbr_filter(text):
     try:
@@ -136,6 +139,7 @@ def linebreaksbr_filter(text):
     except:
         return text
 
+# Date to europe
 @app.template_filter(name='fix_date')
 def fix_date_filter(text):
     try:
@@ -162,12 +166,14 @@ def send_notifications():
 def load_user(user_id):
     return User.query.filter(User.id == int(user_id)).first()
 
+# Check if PW is okay
 def check_pw(hash, pw):
     if bcrypt.check_password_hash(hash, pw):
         return True
     else:
         return False
     
+# Gen new pw hash
 def gen_hash(pw):
     return bcrypt.generate_password_hash(pw)
 
@@ -201,6 +207,7 @@ def print_data(id=None):
 
     return render_template('print.html', animals=animal_data, location=location, feed_url=feed_url)
 
+# Routes to get uploaded files
 @app.route('/uploads/<folder>/<filename>')
 @app.route('/uploads/<filename>')
 def uploaded_file(folder='', filename=''):

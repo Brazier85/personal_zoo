@@ -231,6 +231,7 @@ def get_tr(id=None):
             })
         return terrariums
 
+# Get documents
 def get_docs(target, id):
     if target == 'animal':
         return Document.query.filter(Document.animal_id==id).all()
@@ -346,7 +347,7 @@ def insert_defaults():
             db.session.add(type)
             db.session.commit()
 
-# Create required folders
+# Create required folders and files
 def create_folders(name=None):
     if not os.path.exists(UPLOAD_FOLDER):
         print("Create upload folder")
