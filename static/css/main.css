@@ -373,6 +373,16 @@ table .wide-cell {
   --bs-tooltip-color: var(--bs-white);
 }
 
+/* Popover */
+.custom-popover {
+  --bs-popover-max-width: 200px;
+  --bs-popover-border-color: var(--zoo-green);
+  --bs-popover-header-bg: var(--zoo-green);
+  --bs-popover-header-color: var(--bs-white);
+  --bs-popover-body-padding-x: 1rem;
+  --bs-popover-body-padding-y: .5rem;
+}
+
 /* print cards */
 .print_card {
   width: 650px;

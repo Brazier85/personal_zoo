@@ -17,3 +17,13 @@
     data-bs-custom-class="custom-tooltip"
     data-bs-title="{{ text }}"
 {% endmacro %}
+
+<!-- Popover -->
+{% macro basic_popover(title, text) %}
+    data-bs-toggle="popover" data-bs-placement="top"
+    data-bs-html="true"
+    data-bs-trigger="hover focus" 
+    data-bs-custom-class="custom-popover"
+    data-bs-title="{{ title }}"
+    data-bs-content="{{ text }}"
+{% endmacro %}
