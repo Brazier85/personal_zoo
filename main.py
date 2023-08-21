@@ -135,7 +135,7 @@ def AfterRequest(response):
 @app.template_filter(name='linebreaksbr')
 def linebreaksbr_filter(text):
     try:
-        return text.replace('\n', '<br \>')
+        return text.replace('\n', '<br />')
     except:
         return text
 

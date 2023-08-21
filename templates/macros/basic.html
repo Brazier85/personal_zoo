@@ -9,3 +9,11 @@
         </a>
     </li>
 {% endmacro %}
+
+<!-- Tooltip -->
+{% macro basic_tooltip(text) %}
+    data-bs-html="true"
+    data-bs-toggle="tooltip" data-bs-placement="top"
+    data-bs-custom-class="custom-tooltip"
+    data-bs-title="{{ text }}"
+{% endmacro %}
