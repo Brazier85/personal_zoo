@@ -191,7 +191,9 @@ def home():
 
     print(user_agent)
 
-    if ("iphone" or "android") in user_agent:
+    if "android" in user_agent:
+        return render_template('home_mobile.html', animals=get_ad(), terrariums=get_tr(), settings=get_setting(), location=location)
+    elif "iphone"  in user_agent:
         return render_template('home_mobile.html', animals=get_ad(), terrariums=get_tr(), settings=get_setting(), location=location)
     else:
         return render_template('home.html', animals=get_ad(), terrariums=get_tr(), settings=get_setting(), location=location)
