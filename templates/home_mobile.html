@@ -1,5 +1,3 @@
-{% from "macros/basic.html" import basic_tooltip, basic_popover %}
-
 {% extends 'base.html' %}
 
 {% block title %}Personal Zoo{% endblock %}
@@ -54,7 +52,7 @@
                                     <tbody>
                                         {% for animal in animals %}
                                         <tr data-id="{{ animal.id }}" class="active_row show_animal user-select-none">
-                                            <td {{ basic_popover("Notes", animal.notes|linebreaksbr|safe) }}>
+                                            <td>
                                                 <div class="d-flex align-items-center align-middle">
                                                     <div class="img-container animal-image-small">
                                                         <img class="object-fit-contain" src="{{ url_for('uploaded_file', folder='animals', filename=animal.image) }}" alt="Image for {{ animal.name }}" style="border-color: {{ animal.background_color }} !important;">
@@ -93,7 +91,7 @@
                                     <tbody>
                                         {% for terrarium in terrariums %}
                                         <tr data-id="{{ terrarium.id }}" class="active_row show_terrarium user-select-none">
-                                            <td {{ basic_popover("Notes", terrarium.notes|linebreaksbr|safe) }}>
+                                            <td>
                                                 <div class="img-container terrarium-image-small">
                                                     <img class="rounded object-fit-contain" src="{{ url_for('uploaded_file', folder='terrariums', filename=terrarium.image) }}" alt="Image for {{ terrarium.name }}">
                                                 </div>
