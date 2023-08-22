@@ -186,14 +186,14 @@ def home():
     # Create the table if it doesn't exist
     insert_defaults()
 
-    user_agent = request.headers.get('User-Agent')
+    # Detect if mobile user
+    user_agent = request.headers.get("User-Agent")
     user_agent = user_agent.lower()
+    phones = ["android", "iphone"]
 
     print(user_agent)
 
-    if "android" in user_agent:
-        return render_template('home_mobile.html', animals=get_ad(), terrariums=get_tr(), settings=get_setting(), location=location)
-    elif "iphone"  in user_agent:
+    if any(phone in user_agent for phone in phones):
         return render_template('home_mobile.html', animals=get_ad(), terrariums=get_tr(), settings=get_setting(), location=location)
     else:
         return render_template('home.html', animals=get_ad(), terrariums=get_tr(), settings=get_setting(), location=location)
