@@ -186,11 +186,15 @@ def home():
     # Create the table if it doesn't exist
     insert_defaults()
 
-    order = request.cookies.get('animal_order')
-    if order == None:
-        order = "name"
+    user_agent = request.headers.get('User-Agent')
+    user_agent = user_agent.lower()
 
-    return render_template('home.html', animals=get_ad(), terrariums=get_tr(), settings=get_setting(), location=location)
+    print(user_agent)
+
+    if ("iphone" or "android") in user_agent:
+        return render_template('home_mobile.html', animals=get_ad(), terrariums=get_tr(), settings=get_setting(), location=location)
+    else:
+        return render_template('home.html', animals=get_ad(), terrariums=get_tr(), settings=get_setting(), location=location)
 
 # Route for printing
 @app.route('/print')

@@ -28,91 +28,87 @@
 
 {% block content %}
     <div class="row row-cols-1 row-cols-lg-2 justify-content-center">
+        <div class="col mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="flex-grow"> Your Animals </div>
+                </div>
+                <div class="card-body">
+                    {% if animals %}
+                        <table id="animals" class="table table-striped dt-responsive"  style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for animal in animals %}
+                                <tr data-id="{{ animal.id }}" class="active_row show_animal user-select-none">
+                                    <td {{ basic_popover("Notes", animal.notes|linebreaksbr|safe) }}>
+                                        <div class="d-flex align-items-center align-middle">
+                                            <div class="img-container animal-image-small">
+                                                <img class="object-fit-contain" src="{{ url_for('uploaded_file', folder='animals', filename=animal.image) }}" alt="Image for {{ animal.name }}" style="border-color: {{ animal.background_color }} !important;">
+                                            </div>
+                                            <div class="ps-3 flex-shrink-1">
+                                                <div class="pb-1 fw-bold {% if animal.gender == 'female' %}female{% elif animal.gender == 'male' %}male{% else %}ambiguous{% endif %}">
+                                                    {{ animal.name }}
+                                                </div>
+                                                <p class="m-0 text-muted fw-normal">{{ animal.morph }}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle"><div class="flex-shrink-1 text-break fw-normal">{{ animal.art }}</div></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="text-center">
+                            <h5 class="card-title">No animals found!</h5>
+                            <p>You can add your first animal here:</p>
+                            <a href="{{ url_for('animal.add')}}" class="btn btn-primary">Add animal</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    <ul class="nav nav-tabs card-header-tabs" id="mainTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="animal-tab" data-bs-toggle="tab" data-bs-target="#animal" type="button" role="tab" aria-controls="animal" aria-selected="true">Your Animals</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="terrarium-tab" data-bs-toggle="tab" data-bs-target="#terrarium" type="button" role="tab" aria-controls="terrarium" aria-selected="false">Your Terrariums</button>
-                        </li>
-                    </ul>
+                    <div class="flex-grow"> Your Terrariums </div>
                 </div>
                 <div class="card-body">
-                    <div class="tab-content" id="mainTabContent">
-                        <div class="tab-pane fade show active" id="animal" role="tabpanel" aria-labelledby="animal-tab">
-                            {% if animals %}
-                                <table id="animals" class="table table-striped dt-responsive"  style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Type</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for animal in animals %}
-                                        <tr data-id="{{ animal.id }}" class="active_row show_animal user-select-none">
-                                            <td {{ basic_popover("Notes", animal.notes|linebreaksbr|safe) }}>
-                                                <div class="d-flex align-items-center align-middle">
-                                                    <div class="img-container animal-image-small">
-                                                        <img class="object-fit-contain" src="{{ url_for('uploaded_file', folder='animals', filename=animal.image) }}" alt="Image for {{ animal.name }}" style="border-color: {{ animal.background_color }} !important;">
-                                                    </div>
-                                                    <div class="ps-3 flex-shrink-1">
-                                                        <div class="pb-1 fw-bold {% if animal.gender == 'female' %}female{% elif animal.gender == 'male' %}male{% else %}ambiguous{% endif %}">
-                                                            {{ animal.name }}
-                                                        </div>
-                                                        <p class="m-0 text-muted fw-normal">{{ animal.morph }}</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle"><div class="flex-shrink-1 text-break fw-normal">{{ animal.art }}</div></td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            {% else %}
-                                <div class="text-center">
-                                    <h5 class="card-title">No animals found!</h5>
-                                    <p>You can add your first animal here:</p>
-                                    <a href="{{ url_for('animal.add')}}" class="btn btn-primary">Add animal</a>
-                                </div>
-                            {% endif %}
+                    {% if terrariums %}
+                        <table id="terrariums" class="table table-striped dt-responsive"  style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Size</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for terrarium in terrariums %}
+                                <tr data-id="{{ terrarium.id }}" class="active_row show_terrarium user-select-none">
+                                    <td {{ basic_popover("Notes", terrarium.notes|linebreaksbr|safe) }}>
+                                        <div class="img-container terrarium-image-small">
+                                            <img class="rounded object-fit-contain" src="{{ url_for('uploaded_file', folder='terrariums', filename=terrarium.image) }}" alt="Image for {{ terrarium.name }}">
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">{{ terrarium.name }}</td>
+                                    <td class="align-middle">{{ terrarium.size }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="text-center">
+                            <h5 class="card-title">No terrariums found!</h5>
+                            <p>You can add your first terrarium here:</p>
+                            <a href="{{ url_for('terrarium.add')}}" class="btn btn-primary">Add terrarium</a>
                         </div>
-                        <div class="tab-pane fade" id="terrarium" role="tabpanel" aria-labelledby="terrarium-tab">
-                            {% if terrariums %}
-                                <table id="terrariums" class="table table-striped dt-responsive"  style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Image</th>
-                                            <th>Name</th>
-                                            <th>Size</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for terrarium in terrariums %}
-                                        <tr data-id="{{ terrarium.id }}" class="active_row show_terrarium user-select-none">
-                                            <td {{ basic_popover("Notes", terrarium.notes|linebreaksbr|safe) }}>
-                                                <div class="img-container terrarium-image-small">
-                                                    <img class="rounded object-fit-contain" src="{{ url_for('uploaded_file', folder='terrariums', filename=terrarium.image) }}" alt="Image for {{ terrarium.name }}">
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">{{ terrarium.name }}</td>
-                                            <td class="align-middle">{{ terrarium.size }}</td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            {% else %}
-                                <div class="text-center">
-                                    <h5 class="card-title">No terrariums found!</h5>
-                                    <p>You can add your first terrarium here:</p>
-                                    <a href="{{ url_for('terrarium.add')}}" class="btn btn-primary">Add terrarium</a>
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -151,7 +147,4 @@
         const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
         const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
     </script>
-
-<!-- Home Tabs controller-->
-<script src="{{ url_for('static', filename='js/pages/homeTabs.js') }}"></script>
 {% endblock %}
