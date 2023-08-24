@@ -21,6 +21,7 @@ from momentjs import momentjs
 
 # Import Blueprints
 from blueprints.animal.animal import animal_bp
+from blueprints.api.api import api_bp
 from blueprints.document.document import document_bp
 from blueprints.terrarium.terrarium import terrarium_bp
 from blueprints.feeding.feeding import feeding_bp
@@ -96,6 +97,7 @@ app.jinja_env.globals['momentjs'] = momentjs
 # Blueprints
 app.register_blueprint(accounts_bp, url_prefix="/account")
 app.register_blueprint(animal_bp, url_prefix="/animal")
+app.register_blueprint(api_bp, url_prefix="/api/v1")
 app.register_blueprint(document_bp, url_prefix="/document")
 app.register_blueprint(feeding_bp, url_prefix="/feeding")
 app.register_blueprint(history_bp, url_prefix="/history")
@@ -108,6 +110,7 @@ app.register_blueprint(terrarium_bp, url_prefix="/terrarium")
 def handle_exception(e):
     # pass through HTTP errors
     if isinstance(e, HTTPException):
+        print(e.get_response())
         if e.code == 401:
             return render_template("error_401.html")
         else:

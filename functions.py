@@ -29,7 +29,7 @@ def get_at():
     return AnimalType.query.all()
 
 # Get animal history data
-def get_hd(id=None, animal_id=None, limit=None):
+def get_hd(id=None, animal_id=None, limit=None, e_type=None):
     if id:
         event_with_type = db.session.query(History, HistoryType).join(HistoryType, HistoryType.id == History.event).filter(History.animal == animal_id).first()
         vEvent= event_with_type[0]
@@ -38,10 +38,24 @@ def get_hd(id=None, animal_id=None, limit=None):
             'id': vEvent.id,
             'animal': vEvent.animal,
             'name': vEventType.name,
+            'eventType': vEventType.id,
             'text': vEvent.text,
             'date': vEvent.date
         }
         return event
+    elif e_type:
+        events_with_type = db.session.query(History, HistoryType).join(HistoryType, HistoryType.id == History.event).filter(History.animal == animal_id).filter(HistoryType.id == e_type).order_by(History.date.desc()).limit(limit).all()   
+        events = []
+        for vEvent, vEventType in events_with_type:
+            events.append({
+                'id': vEvent.id,
+                'animal': vEvent.animal,
+                'name': vEventType.name,
+                'eventType': vEventType.id,
+                'text': vEvent.text,
+                'date': vEvent.date
+            })
+        return events
     else:
         events_with_type = db.session.query(History, HistoryType).join(HistoryType, HistoryType.id == History.event).filter(History.animal == animal_id).order_by(History.date.desc()).limit(limit).all()   
         events = []
@@ -50,6 +64,7 @@ def get_hd(id=None, animal_id=None, limit=None):
                 'id': vEvent.id,
                 'animal': vEvent.animal,
                 'name': vEventType.name,
+                'eventType': vEventType.id,
                 'text': vEvent.text,
                 'date': vEvent.date
             })

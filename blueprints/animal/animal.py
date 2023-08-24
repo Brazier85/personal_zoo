@@ -5,7 +5,6 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import CombinedMultiDict
 from functions import *
 from flask_weasyprint import HTML, render_pdf
-from sqlalchemy.exc import SQLAlchemyError
 
 from .forms import AnimalForm
 
