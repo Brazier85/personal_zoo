@@ -25,28 +25,13 @@ def animal(id):
     history_data = get_hd(None, id, limit)
     documents = get_docs('animal', id)
 
-    weight_number = float(animal_data['current_weight'].split(' ')[0].replace(',','.'))
-    
-    feeding_size = ""
-    setting_feeding_size = json.loads(get_setting("feeding_size"))
-    if str(animal_data["art_id"]) in setting_feeding_size:
-        # Calculate feeding size 
-        if weight_number > 0:
-            f_min_value = animal_data['f_min']
-            f_max_value = animal_data['f_max']
-            percent = lambda part, whole:float(whole) / 100 * float(part)
-            feed_min = percent(f_min_value,weight_number)
-            feed_max = percent(f_max_value,weight_number)
-            feeding_size = f"Currently a feeding size between {feed_min:.0f}gr and {feed_max:.0f}gr ({f_min_value}% -> {f_max_value}%) is recommended!"
-
     if printing == '1':
         html = render_template('animal_print.html', animal=animal_data, feedings=feeding_data, history=history_data, location=location)
         return render_pdf(HTML(string=html), "", download_filename=f"{animal_data['name']}.pdf", automatic_download=False)
     else:
         return render_template('animal.html', animal=animal_data,
                                 feedings=feeding_data, history=history_data,
-                                location=location, current_weight=animal_data['current_weight'],
-                                feeding_size=feeding_size, settings=get_setting(),
+                                location=location, settings=get_setting(),
                                 documents=documents)
 
 @animal_bp.route('/add', methods=['POST','GET'])

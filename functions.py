@@ -1,5 +1,5 @@
 import sqlite3
-import os
+import os, json
 from shutil import copyfile
 from models import *
 
@@ -130,6 +130,24 @@ def get_fd(id=None, animal_id=None, limit=None):
             })
         return feedings
 
+def get_fsize(vAnimalType, weight_number):
+    try:
+        weight_number = float(weight_number.split(' ')[0].replace(',','.'))
+        feeding_size = ""
+        setting_feeding_size = json.loads(get_setting("feeding_size"))
+        if str(vAnimalType.id) in setting_feeding_size:
+            # Calculate feeding size 
+            if weight_number > 0:
+                percent = lambda part, whole:float(whole) / 100 * float(part)
+                feed_min = percent(vAnimalType.f_min,weight_number)
+                feed_max = percent(vAnimalType.f_max,weight_number)
+                feeding_size = f"Currently a feeding size between {feed_min:.0f}gr and {feed_max:.0f}gr ({vAnimalType.f_min}% -> {vAnimalType.f_max}%) is recommended!"
+    except:
+        feeding_size = ""
+
+    return feeding_size
+
+
 # Get animal data
 def get_ad(id=None, terrarium=None):
     if id:
@@ -141,6 +159,9 @@ def get_ad(id=None, terrarium=None):
             current_weight = History.query.filter(History.event==weight_setting).filter(History.animal==vAnimal.id).order_by(History.date.desc()).add_columns(History.text).first().text
         except:
             current_weight = "0"
+
+        feeding_size = get_fsize(vAnimalType, current_weight)
+
         animal = {
             'id': vAnimal.id,
             'name': vAnimal.name,
@@ -157,7 +178,8 @@ def get_ad(id=None, terrarium=None):
             'default_ft': vAnimal.default_ft,
             'terrarium': vAnimal.terrarium,
             'updated_date': vAnimal.updated_date,
-            'current_weight': current_weight
+            'current_weight': current_weight,
+            'feeding_size': feeding_size
         }
         return animal
     elif terrarium:
@@ -169,6 +191,9 @@ def get_ad(id=None, terrarium=None):
                 current_weight = History.query.filter(History.event==weight_setting).filter(History.animal==vAnimal.id).order_by(History.date.desc()).add_columns(History.text).first().text
             except:
                 current_weight = "0"
+
+            feeding_size = get_fsize(vAnimalType, current_weight)
+
             animals.append({
                 'id': vAnimal.id,
                 'name': vAnimal.name,
@@ -184,7 +209,8 @@ def get_ad(id=None, terrarium=None):
                 'default_ft': vAnimal.default_ft,
                 'terrarium': vAnimal.terrarium,
                 'updated_date': vAnimal.updated_date,
-                'current_weight': current_weight
+                'current_weight': current_weight,
+                'feeding_size': feeding_size
             })
         return animals
     else:
@@ -196,6 +222,9 @@ def get_ad(id=None, terrarium=None):
                 current_weight = History.query.filter(History.event==weight_setting).filter(History.animal==vAnimal.id).order_by(History.date.desc()).add_columns(History.text).first().text
             except:
                 current_weight = "0"
+
+            feeding_size = get_fsize(vAnimalType, current_weight)
+
             animals.append({
                 'id': vAnimal.id,
                 'name': vAnimal.name,
@@ -211,7 +240,8 @@ def get_ad(id=None, terrarium=None):
                 'default_ft': vAnimal.default_ft,
                 'terrarium': vAnimal.terrarium,
                 'updated_date': vAnimal.updated_date,
-                'current_weight': current_weight
+                'current_weight': current_weight,
+                'feeding_size': feeding_size
             })
         return animals
 

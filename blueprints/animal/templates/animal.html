@@ -43,9 +43,9 @@
                         <div>{{ animal.morph }}</div>
                         <div class="text-muted">{{ animal.art }} (*{{ animal.birth }})</div>
                     </div>
-                    {% if current_weight != "0" %}
+                    {% if animal.current_weight != "0" %}
                     <div class="px-4 text-center border-start border-danger">
-                        <div class="fs-4">{{ current_weight }}</div>
+                        <div class="fs-4">{{ animal.current_weight }}</div>
                         <div class="text-muted text-lowercase"> Current Weight </div>
                     </div>
                     {% endif %}
@@ -100,8 +100,8 @@
                 {% else %}
                     <p class="mb-0">No feedings found!</p>
                 {% endif %}
-                {% if feeding_size %}
-                    <div class="text-muted mt-2 text-center">{{ feeding_size }}</div>
+                {% if animal.feeding_size %}
+                    <div class="text-muted mt-2 text-center">{{ animal.feeding_size }}</div>
                 {% endif %}
             </div>
             <div class="card-footer card-footer-clickable text-right pr-0 show_all_feedings">
