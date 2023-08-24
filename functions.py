@@ -136,6 +136,11 @@ def get_ad(id=None, terrarium=None):
         animal_with_type = db.session.query(Animal, AnimalType).join(AnimalType, AnimalType.id == Animal.art).filter(Animal.id==id).first()
         vAnimal = animal_with_type[0]
         vAnimalType = animal_with_type[1]
+        weight_setting = get_setting("weight_type")
+        try:
+            current_weight = History.query.filter(History.event==weight_setting).filter(History.animal==vAnimal.id).order_by(History.date.desc()).add_columns(History.text).first().text
+        except:
+            current_weight = "0"
         animal = {
             'id': vAnimal.id,
             'name': vAnimal.name,
@@ -151,13 +156,19 @@ def get_ad(id=None, terrarium=None):
             'f_max': vAnimalType.f_max,
             'default_ft': vAnimal.default_ft,
             'terrarium': vAnimal.terrarium,
-            'updated_date': vAnimal.updated_date
+            'updated_date': vAnimal.updated_date,
+            'current_weight': current_weight
         }
         return animal
     elif terrarium:
         animals_with_type = db.session.query(Animal, AnimalType).join(AnimalType, AnimalType.id == Animal.art).filter(Animal.terrarium==terrarium).all()   
         animals = []
         for vAnimal, vAnimalType in animals_with_type:
+            weight_setting = get_setting("weight_type")
+            try:
+                current_weight = History.query.filter(History.event==weight_setting).filter(History.animal==vAnimal.id).order_by(History.date.desc()).add_columns(History.text).first().text
+            except:
+                current_weight = "0"
             animals.append({
                 'id': vAnimal.id,
                 'name': vAnimal.name,
@@ -172,13 +183,19 @@ def get_ad(id=None, terrarium=None):
                 'f_max': vAnimalType.f_max,
                 'default_ft': vAnimal.default_ft,
                 'terrarium': vAnimal.terrarium,
-                'updated_date': vAnimal.updated_date
+                'updated_date': vAnimal.updated_date,
+                'current_weight': current_weight
             })
         return animals
     else:
         animals_with_type = db.session.query(Animal, AnimalType).join(AnimalType, AnimalType.id == Animal.art).all()   
         animals = []
         for vAnimal, vAnimalType in animals_with_type:
+            weight_setting = get_setting("weight_type")
+            try:
+                current_weight = History.query.filter(History.event==weight_setting).filter(History.animal==vAnimal.id).order_by(History.date.desc()).add_columns(History.text).first().text
+            except:
+                current_weight = "0"
             animals.append({
                 'id': vAnimal.id,
                 'name': vAnimal.name,
@@ -193,7 +210,8 @@ def get_ad(id=None, terrarium=None):
                 'f_max': vAnimalType.f_max,
                 'default_ft': vAnimal.default_ft,
                 'terrarium': vAnimal.terrarium,
-                'updated_date': vAnimal.updated_date
+                'updated_date': vAnimal.updated_date,
+                'current_weight': current_weight
             })
         return animals
 

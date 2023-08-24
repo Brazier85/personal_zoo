@@ -25,14 +25,7 @@ def animal(id):
     history_data = get_hd(None, id, limit)
     documents = get_docs('animal', id)
 
-    weight_setting = get_setting("weight_type")
-    try:
-        #current_weight = db_fetch(f"SELECT text FROM history WHERE event='{weight_setting}' AND animal='{ id }' ORDER BY date DESC", False)[0]
-        current_weight = History.query.filter(History.event==weight_setting).filter(History.animal==id).order_by(History.date.desc()).add_columns(History.text).first().text
-        weight_number = float(current_weight.split(' ')[0].replace(',','.'))
-    except:
-        current_weight = "0"
-        weight_number = 0
+    weight_number = float(animal_data['current_weight'].split(' ')[0].replace(',','.'))
     
     feeding_size = ""
     setting_feeding_size = json.loads(get_setting("feeding_size"))
@@ -52,7 +45,7 @@ def animal(id):
     else:
         return render_template('animal.html', animal=animal_data,
                                 feedings=feeding_data, history=history_data,
-                                location=location, current_weight=current_weight,
+                                location=location, current_weight=animal_data['current_weight'],
                                 feeding_size=feeding_size, settings=get_setting(),
                                 documents=documents)
 
