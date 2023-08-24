@@ -58,7 +58,7 @@ def do_sql():
     if request.method == 'POST':
         data = request.form
         query = data['sqlquery']
-        print(query)
+        current_app.logger.info(query)
         try:
             conn = sqlite3.connect(DATABASE)
             c = conn.cursor()
@@ -75,7 +75,7 @@ def do_sql():
 @maintenance_bp.route("/tasks/<string:task>")
 @login_required
 def tasks(task):
-    print(task)
+    current_app.logger.info(task)
     if task == 'cleanup_images':
         # Get all animal images
         animal_images = Animal.query.add_columns(Animal.image).all()
@@ -84,28 +84,28 @@ def tasks(task):
         for image in os.listdir(f"{UPLOAD_FOLDER}/animals"):
             if str(image) != 'dummy.jpg':
                 if any(image in filename for filename in animal_images):
-                    print(f"Found {image} in table!")
+                    current_app.logger.info(f"Found {image} in table!")
                 else:
-                    print(f"Could not find {image} in table!")
+                    current_app.logger.info(f"Could not find {image} in table!")
                     try:
                         file_path = os.path.join(f"{UPLOAD_FOLDER}/animals", str(image))
                         if os.path.exists(file_path):
                             os.remove(file_path)
                     except:
-                        print(f"Could not delete old file: {image}")
+                        current_app.logger.info(f"Could not delete old file: {image}")
 
         for image in os.listdir(f"{UPLOAD_FOLDER}/terrariums"):
             if str(image) != 'dummy.jpg':
                 if any(image in filename for filename in terrarium_images):
-                    print(f"Found {image} in table!")
+                    current_app.logger.info(f"Found {image} in table!")
                 else:
-                    print(f"Could not find {image} in table!")
+                    current_app.logger.info(f"Could not find {image} in table!")
                     try:
                         file_path = os.path.join(f"{UPLOAD_FOLDER}/terrariums", str(image))
                         if os.path.exists(file_path):
                             os.remove(file_path)
                     except:
-                        print(f"Could not delete old file: {image}")
+                        current_app.logger.info(f"Could not delete old file: {image}")
 
 
         flash('Deleted old images!', 'success')
@@ -131,7 +131,7 @@ def tasks(task):
     
 @maintenance_bp.route("/update")
 def do_update():
-    print("Running Update...")
+    current_app.logger.info("Running Update...")
     error = ""
 
     # Rename feeding Table
@@ -139,19 +139,19 @@ def do_update():
     exists = db_fetch("SELECT * FROM feeding LIMIT 1")
     if exists:
         try:
-            print("DROP auto-generated table feedings")
+            current_app.logger.info("DROP auto-generated table feedings")
             query = "DROP TABLE feedings"
             db_update(query)
         except:
-            print(f"Error: {e} -> DROP generated table feedings")
+            current_app.logger.info(f"Error: {e} -> DROP generated table feedings")
             error = error + f"DROP generated table feedings -> Error: {e}\n"
 
         try:
-            print("Rename feeding table to feedings")
+            current_app.logger.info("Rename feeding table to feedings")
             query = "ALTER TABLE feeding RENAME TO feedings"
             db_update(query)
         except:
-            print(f"Error: {e} -> Renaming Table")
+            current_app.logger.info(f"Error: {e} -> Renaming Table")
             error = error + f"Renaming Table feeding to feedings -> Error: {e}\n"
 
     # Check for feeding size setting
@@ -159,19 +159,19 @@ def do_update():
     exists = db_fetch("SELECT * FROM settings WHERE setting='feeding_size'", False)
     if exists == None:
         try:
-            print("Insert new setting feeding_size to database")
+            current_app.logger.info("Insert new setting feeding_size to database")
             type = Settings(setting='feeding_size', value='[\"1\"]', name='Feeding Size', description='Show feeding size for animal type!')
             db.session.add(type)
             db.session.commit()
         except:
-            print(f"Error: {e} -> add default feeding_size")
+            current_app.logger.info(f"Error: {e} -> add default feeding_size")
             error = error + f"Could not add default for feeding_size -> Error: {e}\n"
 
     exists = None
     exists = db_fetch("SELECT * FROM settings WHERE setting='color_female'", False)
     if exists == None:
         try:
-            print("Insert new setting gender_colors to database")
+            current_app.logger.info("Insert new setting gender_colors to database")
             # Color female
             type = Settings(setting='color_female', value='#e481e4', name='Female Color', description='Color for female animals!')
             db.session.add(type)
@@ -183,17 +183,17 @@ def do_update():
             db.session.add(type)
             db.session.commit()
         except:
-            print(f"Error: {e} -> add default colors")
+            current_app.logger.info(f"Error: {e} -> add default colors")
             error = error + f"Could not add default colors -> Error: {e}\n"
     
     ## Delete old cols
-    print("Remove old columns....")
+    current_app.logger.info("Remove old columns....")
     if db_col_exists("animal_type","note"):
         try:
             query= "ALTER TABLE animal_type DROP COLUMN note"
             db_update(query)
         except Exception as e:
-            print(f"Error: {e} -> Remove old column")
+            current_app.logger.info(f"Error: {e} -> Remove old column")
             error = error + f"Remove old column 'note' from animal_type -> Error: {e}\n"
 
     if db_col_exists("feeding_type","note"):
@@ -201,17 +201,17 @@ def do_update():
             query= "ALTER TABLE feeding_type DROP COLUMN note"
             db_update(query)
         except Exception as e:
-            print(f"Error: {e} -> Remove old column")
+            current_app.logger.info(f"Error: {e} -> Remove old column")
             error = error + f"Remove old column 'note' from feeding_type -> Error: {e}\n"
 
     # Add new cols
-    print("Add new columns")
+    current_app.logger.info("Add new columns")
     if not db_col_exists("animals","default_ft"):
         try:
             query= "ALTER TABLE animals ADD default_ft INTEGER"
             db_update(query)
         except Exception as e:
-            print(f"Error: {e}")
+            current_app.logger.info(f"Error: {e}")
             error = error + f"Add default_ft to animals -> Error: {e}\n"
 
     if not db_col_exists("animals","terrarium"):
@@ -219,7 +219,7 @@ def do_update():
             query= "ALTER TABLE animals ADD terrarium INTEGER"
             db_update(query)
         except Exception as e:
-            print(f"Error: {e}")
+            current_app.logger.info(f"Error: {e}")
             error = error + f"Add terrarium to animals -> Error: {e}\n"
 
     if not db_col_exists("user","is_active"):
@@ -232,11 +232,12 @@ def do_update():
                 db.session.add(user)
                 db.session.commit()
         except Exception as e:
-            print(f"Error: {e}")
+            current_app.logger.info(f"Error: {e}")
             error = error + f"Add is_active to user -> Error: {e}\n"
 
     # Check if a user is admin
-    users = User.query.all().count()
+    users = User.query.count()
+    current_app.logger.info(f"User count: {users}")
     admins = User.query.filter(User.is_admin==True).count()
     if users > 0:
         if admins == 0:
@@ -247,30 +248,32 @@ def do_update():
             error = error + f"No admin found! &lt;{admin.email}&gt; is now administrator!"
 
     # Checking for new defaults
-    print("Insert default values")
+    current_app.logger.info("Insert default values")
     try:
         query = f"UPDATE animal_type SET f_min='0', f_max='0' WHERE f_min IS NULL OR f_max IS NULL"
         db_update(query)
     except Exception as e:
-        print(f"Error: {e}")
+        current_app.logger.info(f"Error: {e}")
         error = error + f"Add defaults for animal_type -> Error: {e}\n"
 
     # Migrate images
-    print("Migrating images")
+    current_app.logger.info("Migrating images")
     try:
         for image in os.listdir(UPLOAD_FOLDER):
             if allowed_file(image):
-                print(f"migrating {image}")
+                current_app.logger.info(f"migrating {image}")
                 src = os.path.join(UPLOAD_FOLDER, image)
                 dst = os.path.join(f"{UPLOAD_FOLDER}/animals", image)
                 shutil.move(src,dst)
     except Exception as e:
-        print(f"Error: {e}")
+        current_app.logger.info(f"Error: {e}")
         error = error + f"Migrate animal images to new path -> Error: {e}\n"
 
     # Done Updating
     if error != "":
         flash(f"<strong>Error while doing update!</strong>\n\n{error}", 'danger')
+        current_app.logger.error(f"<strong>Error while doing update!</strong>\n\n{error}")
     else:
         flash("Update done!", 'success')
+        current_app.logger.info("Update done")
     return redirect('/')

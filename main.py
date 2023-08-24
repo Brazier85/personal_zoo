@@ -121,13 +121,15 @@ def handle_exception(e):
 @app.after_request
 def AfterRequest(response):
 
-    app.logger.info(
-        "path: %s | method: %s | status: %s | size: %s",
-        request.path,
-        request.method,
-        response.status,
-        response.content_length,
-    )
+    IGNORE_REQUESTS_CODES = [304]
+
+    if response.status_code not in IGNORE_REQUESTS_CODES:
+        app.logger.info(
+            "path: %s | method: %s | status: %s",
+            request.path,
+            request.method,
+            response.status
+        )
 
     return response
 
@@ -190,8 +192,6 @@ def home():
     user_agent = request.headers.get("User-Agent")
     user_agent = user_agent.lower()
     phones = ["android", "iphone"]
-
-    print(user_agent)
 
     if any(phone in user_agent for phone in phones):
         return render_template('home_mobile.html', animals=get_ad(), terrariums=get_tr(), settings=get_setting(), location=location)
