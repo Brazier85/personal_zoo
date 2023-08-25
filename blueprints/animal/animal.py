@@ -34,6 +34,10 @@ def animal(id):
                                 location=location, settings=get_setting(),
                                 documents=documents)
 
+@animal_bp.route("/get_weight/<int:id>")
+def get_weight(id):
+    return render_template('weight_chart.html', weight_list=get_weight_chart(id))
+
 @animal_bp.route('/add', methods=['POST','GET'])
 @login_required
 def add():

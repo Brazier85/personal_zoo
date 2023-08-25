@@ -1,5 +1,5 @@
 import sqlite3
-import os, json
+import os, json, datetime
 from shutil import copyfile
 from models import *
 
@@ -146,6 +146,23 @@ def get_fsize(vAnimalType, weight_number):
         feeding_size = ""
 
     return feeding_size
+
+def get_weight_chart(animal):
+    # Get weight event type
+    weight_setting = get_setting("weight_type")
+    weight_list = []
+    try:
+        animal_weight = History.query.filter(History.event==weight_setting).filter(History.animal==animal).order_by(History.date.asc()).all()
+        for weight in animal_weight:
+            weight_list.append({
+                'weight': float(weight.text.split(' ')[0].replace(',','.')),
+                'weight_unit': weight.text.split(' ')[0],
+                'date': weight.date
+            })
+    except:
+        weight_list = None
+    
+    return weight_list
 
 
 # Get animal data
