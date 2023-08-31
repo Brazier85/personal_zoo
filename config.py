@@ -10,9 +10,11 @@ class Config(object):
     SECRET_KEY = '4a591941b7f9ce05833eeae0aca040e830072bbb067db5d3f3712b93babbba13'
     STATIC_FOLDER = 'static'
     TEMPLATES_FOLDER = 'templates'
+    
+    # DB location
     DATABASE = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/database.db')
 
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///'+os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/database.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///'+DATABASE
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class DevConfig(Config):      

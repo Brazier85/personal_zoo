@@ -1,11 +1,10 @@
+from flask import current_app
 import sqlite3
 import os, json, datetime
 from shutil import copyfile
 from models import *
 
 # Variables
-DATABASE = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/database.db')
-UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/uploads')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf'}
 
 # Check if a file has an allowed extension
@@ -428,7 +427,9 @@ def insert_defaults():
             db.session.commit()
 
 # Create required folders and files
-def create_folders(name=None):
+def create_folders():
+    UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/uploads')
+    
     if not os.path.exists(UPLOAD_FOLDER):
         print("Create upload folder")
         os.makedirs(UPLOAD_FOLDER)
@@ -455,6 +456,7 @@ def create_folders(name=None):
 
 # Add col to table
 def add_col(table, col, type):
+    DATABASE = current_app.config['DATABASE']
     conn = sqlite3.connect(DATABASE)
     c = conn.cursor()
     exists = None

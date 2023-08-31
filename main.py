@@ -33,12 +33,21 @@ from blueprints.accounts.accounts import accounts_bp
 # Feeding Form
 from blueprints.feeding.forms import FeedingMultiForm
 
+# Define AP
+app = Flask(__name__)
 
 # Environment file
 from dotenv import load_dotenv
 load_dotenv()
 
-app = Flask(__name__)
+# App configuration
+if os.getenv("PZOO_FLASK_ENV") == 'dev':
+    app.logger.warning(f"App running in mode: { os.environ.get('PZOO_FLASK_ENV') }")
+    app.config.from_object('config.DevConfig')
+else:
+    app.logger.info(f"App running in mode: { os.environ.get('PZOO_FLASK_ENV') }")
+    app.config.from_object('config.ProdConfig')
+
 mail = Mail(app)
 scheduler = APScheduler()
 scheduler.init_app(app)
@@ -65,14 +74,6 @@ dictConfig(
         "root": {"level": "INFO", "handlers": ["console"]},
     }
 )
-
-# Configuration
-if os.getenv("PZOO_FLASK_ENV") == 'dev':
-    app.logger.warning(f"App running in mode: { os.environ.get('PZOO_FLASK_ENV') }")
-    app.config.from_object('config.DevConfig')
-else:
-    app.logger.info(f"App running in mode: { os.environ.get('PZOO_FLASK_ENV') }")
-    app.config.from_object('config.ProdConfig')
 
 # Login management
 login_manager = LoginManager()
@@ -195,6 +196,8 @@ def home():
     user_agent = request.headers.get("User-Agent")
     user_agent = user_agent.lower()
     phones = ["android", "iphone"]
+
+    print(app.config['SECRET_KEY'])
 
     if any(phone in user_agent for phone in phones):
         return render_template('home_mobile.html', animals=get_ad(), terrariums=get_tr(), settings=get_setting(), location=location)
