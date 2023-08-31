@@ -197,8 +197,6 @@ def home():
     user_agent = user_agent.lower()
     phones = ["android", "iphone"]
 
-    print(app.config['SECRET_KEY'])
-
     if any(phone in user_agent for phone in phones):
         return render_template('home_mobile.html', animals=get_ad(), terrariums=get_tr(), settings=get_setting(), location=location)
     else:

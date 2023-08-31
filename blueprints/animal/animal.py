@@ -99,7 +99,7 @@ def add():
         flash('Data submitted successfully!', 'success')
         return redirect('/')
 
-    return render_template('animal_add.html', form=form, location=location, target="/animal/add/")
+    return render_template('animal_add.html', form=form, location=location, target=url_for('animal.add'))
 
 
 @animal_bp.route('/edit/<int:id>', methods=['GET', 'POST'])

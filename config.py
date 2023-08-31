@@ -13,7 +13,6 @@ class Config(object):
     
     # DB location
     DATABASE = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/database.db')
-
     SQLALCHEMY_DATABASE_URI = 'sqlite:///'+DATABASE
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 

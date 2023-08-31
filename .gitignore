@@ -22,6 +22,8 @@ __pycache__/
 # No env
 .env
 
+# DigitalOcean
+digital_ocean
 
 # No not ignore .gitkeep
 !/**/.gitkeep
