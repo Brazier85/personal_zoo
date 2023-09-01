@@ -81,6 +81,8 @@ def tasks(task):
         animal_images = Animal.query.add_columns(Animal.image).all()
         terrarium_images = Terrarium.query.add_columns(Terrarium.image).all()
 
+        UPLOAD_FOLDER = current_app.config.get('UPLOAD_FOLDER')
+
         for image in os.listdir(f"{UPLOAD_FOLDER}/animals"):
             if str(image) != 'dummy.jpg':
                 if any(image in filename for filename in animal_images):
@@ -258,6 +260,7 @@ def do_update():
 
     # Migrate images
     current_app.logger.info("Migrating images")
+    UPLOAD_FOLDER = current_app.config.get('UPLOAD_FOLDER')
     try:
         for image in os.listdir(UPLOAD_FOLDER):
             if allowed_file(image):
