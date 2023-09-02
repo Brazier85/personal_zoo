@@ -26,6 +26,7 @@
     .no-print, .no-print * {
         display: none !important;
     }
+
 }
 
 @page {
@@ -125,6 +126,10 @@ left: 50%;
 }
 
 /* Formatting */
+.print_logo {
+  width: 150px;
+}
+
 .tbl_title {
   font-weight: bold;
   text-align: left;

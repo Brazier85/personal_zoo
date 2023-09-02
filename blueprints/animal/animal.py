@@ -26,8 +26,9 @@ def animal(id):
     documents = get_docs('animal', id)
 
     if printing == '1':
+        #return render_template('animal_print.html', animal=animal_data, feedings=feeding_data, history=history_data, location=location)
         html = render_template('animal_print.html', animal=animal_data, feedings=feeding_data, history=history_data, location=location)
-        return render_pdf(HTML(string=html), "", download_filename=f"{animal_data['name']}.pdf", automatic_download=False)
+        return render_pdf(HTML(string=html), [], download_filename=f"{animal_data['name']}.pdf", automatic_download=False)
     else:
         return render_template('animal.html', animal=animal_data,
                                 feedings=feeding_data, history=history_data,

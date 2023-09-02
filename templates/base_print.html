@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>{% block title %}{% endblock %}</title>
-    <!-- Include Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main_print.css') }}">
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}" />
+        <!-- Include Bootstrap CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/brands.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/solid.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main_print.css') }}">
 
+        <!-- MomentJS -->
+        <script src="{{ url_for('static', filename='js/moment-with-locales.js') }}"></script>
 
-    <!-- mobile render fix -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-    <div class="container mb-1">
-        {% block content %}{% endblock %}
-    </div>
+        <!-- mobile render fix -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Add something if needed -->
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
 </body>
 </html>
