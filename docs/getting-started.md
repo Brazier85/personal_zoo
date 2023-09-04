@@ -10,7 +10,7 @@ Simply visit the following URL to order your Personal Zoo hosting today:
 
 With our hosting service, you can focus on enjoying the benefits of Personal Zoo without the technical complexities of setting up and maintaining the infrastructure.
 
-[read more](/features/hosting)
+[read more](/hosting)
 
 ## Requirements
  
