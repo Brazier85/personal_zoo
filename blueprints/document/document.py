@@ -13,12 +13,14 @@ document_bp = Blueprint("document", __name__, template_folder="templates")
 @document_bp.route('/download/<int:id>')
 @login_required
 def download(id):
+    UPLOAD_FOLDER = current_app.config['UPLOAD_FOLDER']
     file = Document.query.filter(Document.id==id).first()
     return send_from_directory(f"{UPLOAD_FOLDER}/documents", file.filename)
 
 @document_bp.route('/add/<string:target>/<int:id>', methods=['POST','GET'])
 @login_required
 def add(target, id):
+    UPLOAD_FOLDER = current_app.config['UPLOAD_FOLDER']
 
     form = DocumentForm(CombinedMultiDict((request.files, request.form)))
 
@@ -76,6 +78,7 @@ def add(target, id):
 @document_bp.route('/edit/<int:id>', methods=['POST','GET'])
 @login_required
 def edit(id):
+    UPLOAD_FOLDER = current_app.config['UPLOAD_FOLDER']
 
     document = Document.query.filter(Document.id==id).first()
 
@@ -132,6 +135,7 @@ def edit(id):
 @document_bp.route('/delete/<int:id>', methods=['POST'])
 @login_required
 def delete(id):
+    UPLOAD_FOLDER = current_app.config['UPLOAD_FOLDER']
     if request.method == 'POST': 
         document = Document.query.get_or_404(id)
 
