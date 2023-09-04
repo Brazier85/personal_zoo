@@ -34,7 +34,7 @@ The monthly cost for hosting on our side is distributed as follows:
 
 Prices are rounded to the nearest full euro.
 
-This cost breakdown ensures the stability and security of your Personal Zoo instance, covering expenses for hosting, regular backups, and efficient payment processing. It allows us to provide you with a reliable and hassle-free experience as you manage your personal zoo. The remaining € in the table above will be allocated to developing new features and compensating for required support, further enhancing your Personal Zoo experience.
+This cost breakdown ensures the stability and security of your Personal Zoo instance, covering expenses for hosting, regular backups, and efficient payment processing. It allows us to provide you with a reliable and hassle-free experience as you manage your personal zoo. The missing €1.00 in the table above will be allocated to developing new features and compensating for required support, further enhancing your Personal Zoo experience.
 
 
 ## Get Started Today
