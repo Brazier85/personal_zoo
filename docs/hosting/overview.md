@@ -16,7 +16,7 @@ PersonalZoo as a Service (PaaS) offers you the power of Personal Zoo without the
 
 ## How It Works
 
-1. **Order your Instance**: Order our hosting subscription -> [here](https://buy.stripe.com/8wMeVm3ic7mB3OE8ww)
+1. **Order your Instance**: Order our hosting subscription -> [here](https://buy.stripe.com/8wMeVm3ic7mB3OE8ww){:target="_blank"}
 
 2. **Access Anywhere**: Access your zoo data from anywhere with an internet connection. [How to access](/hosting/access)
 

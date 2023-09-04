@@ -11,29 +11,27 @@
                         <!-- no button -->
                     </div>
                 </div>
-                <form action="{{ url_for('settings.edit') }}" method="post" enctype="multipart/form-data">
-                    <div class="card-body">
-                        <table class="table table-striped m-0 table-sm align-middle">
-                            <thead>
-                                <th>E-Mail</th>
-                                <th>Admin</th>
-                                <th>Active</th>
-                                <th>Change Password</th>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{{user.email}}</td>
-                                    <td>{% if user.is_admin %}<i class="fa-solid fa-check fs-4 text-success"></i>{%else%}<i class="fa-solid  fa-x fs-4 text-danger"></i>{% endif %}</td>
-                                    <td>{% if user.is_active %}<i class="fa-solid fa-check fs-4 text-success"></i>{%else%}<i class="fa-solid  fa-x fs-4 text-danger"></i>{% endif %}</td>
-                                    <td data-id="{{ user.id }}" class="change_password"><i class="fa-solid fa-pen-to-square fs-5 text-success clickable"></i></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer pr-0">
-                        Basic profile data!
-                    </div>
-                </form>
+                <div class="card-body">
+                    <table class="table table-striped m-0 table-sm align-middle">
+                        <thead>
+                            <th>E-Mail</th>
+                            <th>Admin</th>
+                            <th>Active</th>
+                            <th>Change Password</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{user.email}}</td>
+                                <td>{% if user.is_admin %}<i class="fa-solid fa-check fs-4 text-success"></i>{%else%}<i class="fa-solid  fa-x fs-4 text-danger"></i>{% endif %}</td>
+                                <td>{% if user.is_active %}<i class="fa-solid fa-check fs-4 text-success"></i>{%else%}<i class="fa-solid  fa-x fs-4 text-danger"></i>{% endif %}</td>
+                                <td data-id="{{ user.id }}" class="change_password"><i class="fa-solid fa-pen-to-square fs-5 text-success clickable"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer pr-0">
+                    Basic profile data!
+                </div>
             </div>
         </div>
     </div>
