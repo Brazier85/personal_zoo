@@ -26,13 +26,18 @@ def animal(id):
     documents = get_docs('animal', id)
 
     if printing == '1':
+        #return render_template('animal_print.html', animal=animal_data, feedings=feeding_data, history=history_data, location=location)
         html = render_template('animal_print.html', animal=animal_data, feedings=feeding_data, history=history_data, location=location)
-        return render_pdf(HTML(string=html), "", download_filename=f"{animal_data['name']}.pdf", automatic_download=False)
+        return render_pdf(HTML(string=html), [], download_filename=f"{animal_data['name']}.pdf", automatic_download=False)
     else:
         return render_template('animal.html', animal=animal_data,
                                 feedings=feeding_data, history=history_data,
                                 location=location, settings=get_setting(),
                                 documents=documents)
+
+@animal_bp.route("/get_weight/<int:id>")
+def get_weight(id):
+    return render_template('weight_chart.html', weight_list=get_weight_chart(id))
 
 @animal_bp.route('/add', methods=['POST','GET'])
 @login_required
@@ -95,7 +100,7 @@ def add():
         flash('Data submitted successfully!', 'success')
         return redirect('/')
 
-    return render_template('animal_add.html', form=form, location=location, target="/animal/add/")
+    return render_template('animal_add.html', form=form, location=location, target=url_for('animal.add'))
 
 
 @animal_bp.route('/edit/<int:id>', methods=['GET', 'POST'])

@@ -20,9 +20,12 @@
         <div>{{ animal.morph }}</div>
         <div class="text-muted">{{ animal.art }} (*{{ animal.birth }})</div>
     </div>
+    <div class="flex-grow-1 text-end align-self-center">
+        <img src="{{ url_for('static', filename='images/logo-no-background.svg') }}" alt="Logo" class="print_logo"/>
+    </div>
 </div>
 
-<div class="spacer"></div>
+<div class="mb-2"></div>
 
 <div class="row">
     <div class="col">
@@ -92,9 +95,10 @@
     </div>
 </div>
 
-<div class="spacer"></div>
+<div class="mb-2"></div>
+
 <div class="d-flex flex-row rounded" style="background-color: #d7d7d7; padding: 5px;">
-    <div class="card">
+    <div class="card flex-grow-1">
         <div class="card-header">
             <div class="flex-grow"> Notes </div>
             <div class="btn-list">
@@ -106,7 +110,7 @@
         </div>
         <div class="list-group list-group-clickable"><!----></div>
         <div class="card-footer card-footer-clickable text-right pr-0">
-            <div style="text-transform: uppercase;">Last updated: {{ animal.updated_date | fix_date }}</div>
+            <div style="text-transform: uppercase;">Last updated: {{ animal.updated_date | fix_date }} | Powered by https://www.personal-zoo.com</div>
         </div>
     </div>
 </div>

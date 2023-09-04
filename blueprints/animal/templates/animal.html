@@ -7,6 +7,9 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/datatables.min.css') }}">
 <script src="{{ url_for('static', filename='js/datatables.min.js') }}"></script>
 
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <!-- custom gender colors -->
 <style>
     .female {
@@ -44,7 +47,7 @@
                         <div class="text-muted">{{ animal.art }} (*{{ animal.birth }})</div>
                     </div>
                     {% if animal.current_weight != "0" %}
-                    <div class="px-4 text-center border-start border-danger">
+                    <div class="px-4 text-center border-start border-danger user-select-none clickable animal_show_weight">
                         <div class="fs-4">{{ animal.current_weight }}</div>
                         <div class="text-muted text-lowercase"> Current Weight </div>
                     </div>
@@ -244,6 +247,11 @@
                     $('.feeding_card_table').html(data);
                 }
             })
+        });
+    });
+    $('.animal_show_weight').on('click',function(){
+        $('.modal-content').load('/animal/get_weight/{{ animal.id }}',function(){
+            $('#modal_details').modal('show'); 
         });
     });
     {% if current_user.is_authenticated %}

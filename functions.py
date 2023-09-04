@@ -1,11 +1,10 @@
+from flask import current_app
 import sqlite3
-import os, json
+import os, json, datetime
 from shutil import copyfile
 from models import *
 
 # Variables
-DATABASE = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/database.db')
-UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/uploads')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf'}
 
 # Check if a file has an allowed extension
@@ -146,6 +145,23 @@ def get_fsize(vAnimalType, weight_number):
         feeding_size = ""
 
     return feeding_size
+
+def get_weight_chart(animal):
+    # Get weight event type
+    weight_setting = get_setting("weight_type")
+    weight_list = []
+    try:
+        animal_weight = History.query.filter(History.event==weight_setting).filter(History.animal==animal).order_by(History.date.asc()).all()
+        for weight in animal_weight:
+            weight_list.append({
+                'weight': float(weight.text.split(' ')[0].replace(',','.')),
+                'weight_unit': weight.text.split(' ')[0],
+                'date': weight.date
+            })
+    except:
+        weight_list = None
+    
+    return weight_list
 
 
 # Get animal data
@@ -411,7 +427,9 @@ def insert_defaults():
             db.session.commit()
 
 # Create required folders and files
-def create_folders(name=None):
+def create_folders():
+    UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/uploads')
+    
     if not os.path.exists(UPLOAD_FOLDER):
         print("Create upload folder")
         os.makedirs(UPLOAD_FOLDER)
@@ -438,6 +456,7 @@ def create_folders(name=None):
 
 # Add col to table
 def add_col(table, col, type):
+    DATABASE = current_app.config['DATABASE']
     conn = sqlite3.connect(DATABASE)
     c = conn.cursor()
     exists = None
