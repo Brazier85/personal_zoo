@@ -17,11 +17,15 @@ Personal Zoo is a dedicated web application designed to manage your personal zoo
 
 [Get started](getting-started){ .md-button .md-button--primary }
 
-## Introducing Terrarium Management
+## DEMO
 
-I understand that reptile habitats, like terrariums, play a crucial role in providing a comfortable environment for your scaly friends. That's why I've added a new feature to Personal Zoo - Terrariums!
+If you want to try out Personal Zoo, you can visit our demo page at [https://demo.personal-zoo.com/](https://demo.personal-zoo.com/){:target="_blank"}.
 
-With the Terrariums feature, you can keep track of changes, make adjustments to provide the best living conditions for your reptile companions.
+**Demo Credentials:**
+- Username: demo@personal-zoo.com
+- Password: demologin
+
+**Please Note:** This demo page will reset every hour, providing you with a fresh experience each time you visit. Feel free to explore and test the features of Personal Zoo with these demo credentials.
 
 ## User-Friendly and Ever-Improving
 
