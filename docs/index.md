@@ -22,8 +22,9 @@ Personal Zoo is a dedicated web application designed to manage your personal zoo
 If you want to try out Personal Zoo, you can visit our demo page at [https://demo.personal-zoo.com/](https://demo.personal-zoo.com/){:target="_blank"}.
 
 **Demo Credentials:**
-- Username: demo@personal-zoo.com
-- Password: demologin
+
+  - Username: demo@personal-zoo.com
+  - Password: demologin
 
 **Please Note:** This demo page will reset every hour, providing you with a fresh experience each time you visit. Feel free to explore and test the features of Personal Zoo with these demo credentials.
 
