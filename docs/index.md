@@ -23,10 +23,6 @@ I understand that reptile habitats, like terrariums, play a crucial role in prov
 
 With the Terrariums feature, you can keep track of changes, make adjustments to provide the best living conditions for your reptile companions.
 
-## No Cloud, No Hassle
-
-Personal Zoo stays true to its local nature, ensuring your data remains securely stored on your own system. We believe in privacy and keeping things simple. No cloud-based subscriptions, no third-party access. Just you and your animals, under your care and control.
-
 ## User-Friendly and Ever-Improving
 
 Designed with both beginners and experienced reptile enthusiasts in mind, Personal Zoo continues to evolve based on user feedback and needs. We value your input and strive to make your zoo management experience as seamless as possible.

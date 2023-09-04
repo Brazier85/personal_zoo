@@ -42,6 +42,9 @@ nav:
     - Installation: getting-started.md
     - Security: security.md
     - Update: update.md
+  - Hosting:
+    - Overview: hosting/overview.md
+    - Access: hosting/access.md
   - Features:
     - Overview: features/overview.md
     - Accounts: features/accounts.md

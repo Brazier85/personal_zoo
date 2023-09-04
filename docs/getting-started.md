@@ -1,5 +1,17 @@
 # Getting Started with Personal Zoo
 
+## Hosting Simplified
+
+Setting up Docker and hosting can be a bit challenging for less experienced users. If you'd prefer a hassle-free hosting solution for your Personal Zoo instance, we've got you covered!
+
+Simply visit the following URL to order your Personal Zoo hosting today:
+
+[Order Personal Zoo Hosting](https://buy.stripe.com/8wM14w4mg7mB70QfYZ)
+
+With our hosting service, you can focus on enjoying the benefits of Personal Zoo without the technical complexities of setting up and maintaining the infrastructure.
+
+[read more](/hosting/overview)
+
 ## Requirements
  
 To run this application, there are two main methods: using Docker (recommended) or running it as a local Python app. Ensure that you have:
