@@ -6,7 +6,7 @@ Setting up Docker and hosting can be a bit challenging for less experienced user
 
 Simply visit the following URL to order your Personal Zoo hosting today:
 
-[Order Personal Zoo Hosting](https://buy.stripe.com/8wMeVm3ic7mB3OE8ww)
+[Order Personal Zoo Hosting](https://buy.stripe.com/8wM14w4mg7mB70QfYZ)
 
 With our hosting service, you can focus on enjoying the benefits of Personal Zoo without the technical complexities of setting up and maintaining the infrastructure.
 
