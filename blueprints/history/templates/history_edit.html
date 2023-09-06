@@ -27,6 +27,29 @@
             <button type="button" data-id="{{ id }}" class="btn btn-danger text-left history_delete_button">Delete</button>
         </div>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" id="submit" class="btn btn-primary">Save</button>
     </div>
 </form>
+
+<script>
+    $('#submit').click(function (event) {
+        event.preventDefault();
+        var url = $('#history_form').attr('action');
+        $.post(url, data = $('#history_form').serialize(), function (data) {
+            if (data.status == 'ok') {
+                $('#modal_details').modal('hide'); 
+                location.reload();
+            } else {
+                var obj = JSON.parse(data);
+                for (var key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        var value = obj[key];
+                    }
+                }
+                $('.alert').remove()
+                $('<div class="alert alert-danger" role="alert">' + value +'</div>').insertAfter('#' + key);
+                $('.form-group').addClass('has-error')
+            }
+        })
+    });
+</script>

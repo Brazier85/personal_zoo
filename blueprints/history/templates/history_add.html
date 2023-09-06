@@ -3,7 +3,7 @@
 <div class="modal-header">
     <h5 class="modal-title" id="itemLabel">Add event/action</h5>
 </div>
-<form role="form" method="post" action="{{ target }}" enctype="multipart/form-data">
+<form role="form" id="history_form" method="post" action="{{ target }}" enctype="multipart/form-data">
     {{ form.csrf_token }}
 
     <div class="modal-body" id="modal-body">
@@ -24,10 +24,31 @@
     </div>
     <div class="modal-footer text-end">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" id="submit" class="btn btn-primary">Save</button>
     </div>
 </form>
 
 <script>
     $('#date').val(new Date().toISOString().slice(0, 10));
+
+    $('#submit').click(function (event) {
+        event.preventDefault();
+        var url = $('#history_form').attr('action');
+        $.post(url, data = $('#history_form').serialize(), function (data) {
+            if (data.status == 'ok') {
+                $('#modal_details').modal('hide'); 
+                location.reload();
+            } else {
+                var obj = JSON.parse(data);
+                for (var key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        var value = obj[key];
+                    }
+                }
+                $('.alert').remove()
+                $('<div class="alert alert-danger" role="alert">' + value +'</div>').insertAfter('#' + key);
+                $('.form-group').addClass('has-error')
+            }
+        })
+    });
 </script>

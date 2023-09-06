@@ -9,7 +9,7 @@
     <div class="card-header">
         <h3>Add a new animal</h3>
     </div>
-    <form role="form" method="post" action="{{ target }}" enctype="multipart/form-data">
+    <form role="form" id="form" method="post" action="{{ target }}" enctype="multipart/form-data">
         {{ form.csrf_token }}
         <div class="card-body">
             {{ render_text_field(form.name) }}
