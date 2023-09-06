@@ -429,10 +429,15 @@ def insert_defaults():
 # Create required folders and files
 def create_folders():
     UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/uploads')
-    
+    LOGS_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/logs')
+
     if not os.path.exists(UPLOAD_FOLDER):
         print("Create upload folder")
         os.makedirs(UPLOAD_FOLDER)
+
+    if not os.path.exists(LOGS_FOLDER):
+        print("Create logs folder")
+        os.makedirs(LOGS_FOLDER)
 
     if not os.path.exists(f"{UPLOAD_FOLDER}/terrariums"):
         print("Create terrarium upload folder")
