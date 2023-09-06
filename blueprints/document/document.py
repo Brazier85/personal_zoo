@@ -1,6 +1,7 @@
 from flask import current_app, render_template, request, redirect, flash, jsonify, send_from_directory, url_for, Blueprint
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import CombinedMultiDict
+from flask_login import login_required
 from datetime import datetime
 from functions import *
 import uuid
@@ -10,12 +11,16 @@ from .forms import DocumentForm
 document_bp = Blueprint("document", __name__, template_folder="templates")
 
 @document_bp.route('/download/<int:id>')
+@login_required
 def download(id):
+    UPLOAD_FOLDER = current_app.config['UPLOAD_FOLDER']
     file = Document.query.filter(Document.id==id).first()
     return send_from_directory(f"{UPLOAD_FOLDER}/documents", file.filename)
 
 @document_bp.route('/add/<string:target>/<int:id>', methods=['POST','GET'])
+@login_required
 def add(target, id):
+    UPLOAD_FOLDER = current_app.config['UPLOAD_FOLDER']
 
     form = DocumentForm(CombinedMultiDict((request.files, request.form)))
 
@@ -71,7 +76,9 @@ def add(target, id):
         return render_template('document_add.html', id=id, terrarium=terrarium, form=form, target="terrarium")
     
 @document_bp.route('/edit/<int:id>', methods=['POST','GET'])
+@login_required
 def edit(id):
+    UPLOAD_FOLDER = current_app.config['UPLOAD_FOLDER']
 
     document = Document.query.filter(Document.id==id).first()
 
@@ -126,7 +133,9 @@ def edit(id):
     return jsonify({'htmlresponse': render_template('document_edit.html', form=form, id=id)})
     
 @document_bp.route('/delete/<int:id>', methods=['POST'])
+@login_required
 def delete(id):
+    UPLOAD_FOLDER = current_app.config['UPLOAD_FOLDER']
     if request.method == 'POST': 
         document = Document.query.get_or_404(id)
 

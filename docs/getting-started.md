@@ -6,7 +6,7 @@ Setting up Docker and hosting can be a bit challenging for less experienced user
 
 Simply visit the following URL to order your Personal Zoo hosting today:
 
-[Order Personal Zoo Hosting](https://buy.stripe.com/8wM14w4mg7mB70QfYZ)
+[Order Personal Zoo Hosting](https://buy.stripe.com/8wM14w4mg7mB70QfYZ){:target="_blank"}
 
 With our hosting service, you can focus on enjoying the benefits of Personal Zoo without the technical complexities of setting up and maintaining the infrastructure.
 
@@ -21,8 +21,6 @@ To run this application, there are two main methods: using Docker (recommended) 
 or
 
 - Python3
-
-Please note that this application is not designed for public access due to the absence of authentication and authorization mechanisms. (See [security](/security))
 
 ### Quick Startup with Docker
 

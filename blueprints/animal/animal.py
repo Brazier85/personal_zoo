@@ -44,6 +44,7 @@ def get_weight(id):
 def add():
 
     location = 'animal_add'
+    UPLOAD_FOLDER = current_app.config['UPLOAD_FOLDER']
 
     form = AnimalForm(CombinedMultiDict((request.files, request.form)))
 
@@ -106,7 +107,7 @@ def add():
 @animal_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit(id):
-
+    UPLOAD_FOLDER = current_app.config['UPLOAD_FOLDER']
     current_animal = Animal.query.filter(Animal.id==id).first()
 
     form = AnimalForm(CombinedMultiDict((request.files, request.form)), obj=current_animal)
@@ -169,6 +170,7 @@ def edit(id):
 @animal_bp.route('/delete/<int:id>', methods=['POST'])
 @login_required
 def delete(id):
+    UPLOAD_FOLDER = current_app.config['UPLOAD_FOLDER']
     if request.method == 'POST':
 
         result = Animal.query.filter(Animal.id==id).add_columns(Animal.image).first()
