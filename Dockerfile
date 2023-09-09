@@ -8,7 +8,7 @@ LABEL maintainer="Ferdinand Berger <ferdy@berger-em.de>" \
 WORKDIR /app
 
 # Setings for ARM7
-FROM base AS base-arm7
+FROM base AS base-arm
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y; fi
 ENV PATH="/root/.cargo/bin:${PATH}"
 # Copy the required files into the container
