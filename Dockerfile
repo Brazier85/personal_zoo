@@ -1,18 +1,32 @@
 # Use the official Python base image
-FROM python:3.9
+FROM python:3.9 AS base
 
 LABEL maintainer="Ferdinand Berger <ferdy@berger-em.de>" \ 
       description="Personal Zoo - visit: https://personal-zoo.com"
 
-# Add rust for arm7 build required
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-ENV PATH="/root/.cargo/bin:${PATH}"
-
 # Set the working directory inside the container
 WORKDIR /app
 
+# Setings for ARM7
+FROM base AS base-arm7
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y; fi
+ENV PATH="/root/.cargo/bin:${PATH}"
 # Copy the required files into the container
 COPY . ./
+
+# Settings for amd64
+FROM base AS base-amd64
+# Copy the required files into the container
+COPY . ./
+
+# Settings for arm64
+FROM base AS base-arm64
+# Copy the required files into the container
+COPY . ./
+
+# Main build procress
+FROM base-${TARGETARCH}
+WORKDIR /app
 
 # Install the dependencies
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
