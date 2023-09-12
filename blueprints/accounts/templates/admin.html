@@ -17,6 +17,7 @@
                             <th>{{ _("E-Mail") }}</th>
                             <th>{{ _("Admin") }}</th>
                             <th>{{ _("Active") }}</th>
+                            <th>{{ _("Language") }}</th>
                             <th>{{ _("Delete") }}</th>
                         </thead>
                         <tbody>
@@ -25,6 +26,7 @@
                                 <td>{{user.email}}</td>
                                 <td data-id="{{ user.id }}" class="change_admin">{% if user.is_admin %}<i class="fa-solid fa-check fs-4 text-success clickable"></i>{%else%}<i class="fa-solid fa-x fs-4 text-danger clickable"></i>{% endif %}</td>
                                 <td data-id="{{ user.id }}" class="change_active">{% if user.is_active %}<i class="fa-solid fa-check fs-4 text-success clickable"></i>{%else%}<i class="fa-solid fa-x fs-4 text-danger clickable"></i>{% endif %}</td>
+                                <td>{{ user.lang }}</td>
                                 <td data-id="{{ user.id }}" class="change_delete"><i class="fa-solid fa-trash-can fs-5 text-danger clickable"></i></td>
                             </tr>
                             {% endfor %}
