@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-09-12 11:53+0200\n"
+"POT-Creation-Date: 2023-09-12 15:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -137,10 +137,14 @@ msgid "Your Profile"
 msgstr ""
 
 #: blueprints/accounts/templates/profile.html:20
+msgid "Language"
+msgstr ""
+
+#: blueprints/accounts/templates/profile.html:21
 msgid "Change Password"
 msgstr ""
 
-#: blueprints/accounts/templates/profile.html:33
+#: blueprints/accounts/templates/profile.html:40
 msgid "Basic profile data!"
 msgstr ""
 
@@ -198,7 +202,8 @@ msgstr ""
 #: blueprints/animal/forms.py:26 blueprints/animal/templates/animal.html:190
 #: blueprints/animal/templates/animal_print.html:103
 #: blueprints/terrarium/forms.py:20
-#: blueprints/terrarium/templates/terrarium.html:214
+#: blueprints/terrarium/templates/terrarium.html:214 templates/home.html:48
+#: templates/home.html:94
 msgid "Notes"
 msgstr ""
 
@@ -592,7 +597,7 @@ msgid "Be careful when changing a unit!"
 msgstr ""
 
 #: blueprints/settings/templates/settings.html:172
-msgid "Feeding sizes are in %!"
+msgid "Feeding sizes are in &#037;!"
 msgstr ""
 
 #: blueprints/settings/templates/settings.html:201
