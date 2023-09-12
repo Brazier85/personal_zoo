@@ -1,6 +1,7 @@
 from flask import current_app
 import sqlite3
 import os, json, datetime
+from flask_babel import format_decimal, gettext, lazy_gettext
 from shutil import copyfile
 from models import *
 
@@ -140,7 +141,7 @@ def get_fsize(vAnimalType, weight_number):
                 percent = lambda part, whole:float(whole) / 100 * float(part)
                 feed_min = percent(vAnimalType.f_min,weight_number)
                 feed_max = percent(vAnimalType.f_max,weight_number)
-                feeding_size = f"Currently a feeding size between {feed_min:.0f}gr and {feed_max:.0f}gr ({vAnimalType.f_min}% -> {vAnimalType.f_max}%) is recommended!"
+                feeding_size = gettext("Currently a feeding size between {fmin} gr and {fmax} gr ({afmin}% -> {afmax}%) is recommended!").format(fmin=format_decimal(feed_min,format='#'),fmax=format_decimal(feed_max,format='#'),afmin=vAnimalType.f_min,afmax=vAnimalType.f_max)
     except:
         feeding_size = ""
 

@@ -1,14 +1,14 @@
 <table class="table table-striped m-0">
     <thead>
-        <th class="w-25">Date</th>
-        <th>Count</th>
-        <th>Type</th>
-        <th>Size</th>
+        <th class="w-25">{{ _("Date") }}</th>
+        <th>{{ _("Count") }}</th>
+        <th>{{ _("Type") }}</th>
+        <th>{{ _("Size") }}</th>
     </thead>
     <tbody>
         {% for feeding in feedings %}
         <tr data-id="{{ feeding.id }}" class="feeding_edit active_row no-select">
-            <td>{{ feeding.date | fix_date }}</td>
+            <td>{{ feeding.date | dateformat }}</td>
             <td>{{ feeding.count }}</td>
             <td>{{ feeding.type }}</td>
             <td>{{ feeding.unit }} {%if feeding.ftunit == "weight" %}{{feeding.detail}}{%endif%}</td>

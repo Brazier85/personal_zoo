@@ -7,8 +7,8 @@ from functions import *
 
 class DocumentForm(FlaskForm):
     name = StringField(
-        "Name", validators=[DataRequired()]
+        lazy_gettext("Name"), validators=[DataRequired()]
     )
     filename = FileField(
-        "File"
+        lazy_gettext("File")
     )

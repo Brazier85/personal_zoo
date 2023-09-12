@@ -18,15 +18,15 @@
             <ul class="navbar-nav justify-content-lg-center">
 
                 <!-- Home -->
-                {{ render_nav_item("Home", "fa-solid fa-house", "/", "home", location) }}
+                {{ render_nav_item(_("Home"), "fa-solid fa-house", "/", "home", location) }}
 
                 {% if current_user.is_authenticated %}
 
                 <!-- Multi Feeding -->
-                {{ render_nav_item("Multi Feeding", "fa-solid fa-utensils", "/feeding/multi", "multi_feeding", location) }}
+                {{ render_nav_item(_("Multi Feeding"), "fa-solid fa-utensils", "/feeding/multi", "multi_feeding", location) }}
 
                 <!-- Multi Event -->
-                {{ render_nav_item("Multi Event", "fa-regular fa-calendar-plus", "/history/multi", "multi_event", location) }}
+                {{ render_nav_item(_("Multi Event"), "fa-regular fa-calendar-plus", "/history/multi", "multi_event", location) }}
 
                 <!-- Add dropdown -->
                 <li class="nav-item dropdown text-center mx-2 mx-lg-1">
@@ -34,35 +34,35 @@
                         <div>
                             <i class="fa-solid fa-circle-plus"></i>
                         </div>
-                        Add
+                        {{ _("Add") }}
                     </a>
                     <!-- Dropdown menu -->
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item {% if location == 'animal_add' %}active{% endif %}" href="/animal/add">Add Animal</a></li>
-                        <li><a class="dropdown-item {% if location == 'terrarium_add' %}active{% endif %}" href="/terrarium/add">Add Terrarium</a></li>
+                        <li><a class="dropdown-item {% if location == 'animal_add' %}active{% endif %}" href="/animal/add">{{ _("Add Animal") }}</a></li>
+                        <li><a class="dropdown-item {% if location == 'terrarium_add' %}active{% endif %}" href="/terrarium/add">{{ _("Add Terrarium") }}</a></li>
                     </ul>
                 </li>
 
                 <!-- Print -->
-                {{ render_nav_item("Print", "fa-solid fa-print", "/print", "print", location) }}
+                {{ render_nav_item(_("Print"), "fa-solid fa-print", "/print", "print", location) }}
 
                 <!-- Settings -->
-                {{ render_nav_item("Settings", "fa-solid fa-gear", "/settings", "settings", location) }}
+                {{ render_nav_item(_("Settings"), "fa-solid fa-gear", "/settings", "settings", location) }}
 
                 <li class="nav-item dropdown text-center mx-2 mx-lg-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div>
                             <i class="fa-solid fa-user"></i>
                         </div>
-                        Account
+                        {{ _("Account") }}
                     </a>
                     <!-- Dropdown menu -->
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
                         {% if current_user.is_admin %}
-                        <li><a class="dropdown-item {% if location == 'account' %}active{% endif %}" href="{{ url_for('accounts.admin') }}">Admin settings</a></li>
+                        <li><a class="dropdown-item {% if location == 'account' %}active{% endif %}" href="{{ url_for('accounts.admin') }}">{{ _("Admin settings") }}</a></li>
                         {% endif %}
-                        <li><a class="dropdown-item {% if location == 'profile' %}active{% endif %}" href="/account">Your Profile</a></li>
-                        <li><a class="dropdown-item {% if location == 'logout' %}active{% endif %}" href="{{ url_for('accounts.logout') }}">Logout</a></li>
+                        <li><a class="dropdown-item {% if location == 'profile' %}active{% endif %}" href="/account">{{ _("Your Profile") }}</a></li>
+                        <li><a class="dropdown-item {% if location == 'logout' %}active{% endif %}" href="{{ url_for('accounts.logout') }}">{{ _("Logout") }}</a></li>
                     </ul>
                 </li>
                 {% else %}
@@ -72,12 +72,12 @@
                         <div>
                             <i class="fa-solid fa-user"></i>
                         </div>
-                        Account
+                        {{ _("Account") }}
                     </a>
                     <!-- Dropdown menu -->
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
-                        <li><a class="dropdown-item {% if location == 'login' %}active{% endif %}" href="{{ url_for('accounts.login') }}">Login</a></li>
-                        <li><a class="dropdown-item {% if location == 'register' %}active{% endif %}" href="{{ url_for('accounts.register') }}">Register</a></li>
+                        <li><a class="dropdown-item {% if location == 'login' %}active{% endif %}" href="{{ url_for('accounts.login') }}">{{ _("Login") }}</a></li>
+                        <li><a class="dropdown-item {% if location == 'register' %}active{% endif %}" href="{{ url_for('accounts.register') }}">{{ _("Register") }}</a></li>
                     </ul>
                 </li>
                 {% endif %} 
@@ -88,28 +88,28 @@
                 <li class="nav-item dropdown">
                     <button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (dark)">
                         <i class="theme-icon-active fa-solid fa-moon"><use href="fa-solid fa-moon"></use></i>
-                        <span class="d-lg-none ms-2" id="bd-theme-text">Toggle theme</span>
+                        <span class="d-lg-none ms-2" id="bd-theme-text">{{ _("Toggle theme") }}</span>
                     </button>
                     <!-- Theme Dropdown -->
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
                         <li>
                         <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
                             <i class="fa-solid fa-sun"><use href="fa-solid fa-sun"></use></i>
-                            &nbsp;Light
+                            &nbsp;{{ _("Light") }}
                             <i class="fa-solid fa-check ms-auto d-none"></i>
                         </button>
                         </li>
                         <li>
                         <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="dark" aria-pressed="true">
                             <i class="fa-solid fa-moon"><use href="fa-solid fa-moon"></use></i>
-                            &nbsp;Dark
+                            &nbsp;{{ _("Dark") }}
                             <i class="fa-solid fa-check ms-auto d-none"></i>
                         </button>
                         </li>
                         <li>
                         <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="false">
                             <i class="fa-solid fa-circle-half-stroke"><use href="fa-solid fa-circle-half-stroke"></use></i>
-                            &nbsp;Auto
+                            &nbsp;{{ _("Auto") }}
                             <i class="fa-solid fa-check ms-auto d-none"></i>
                         </button>
                         </li>

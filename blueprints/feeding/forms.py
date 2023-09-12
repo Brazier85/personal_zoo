@@ -7,35 +7,35 @@ from functions import *
 
 class FeedingForm(FlaskForm):
     date = DateField(
-        "Date", validators=[DataRequired()]
+        lazy_gettext("Date"), validators=[DataRequired()]
     )
     type = SelectField(
-        "Type"
+        lazy_gettext("Type")
     )
     count = IntegerField(
-        "Count"
+        lazy_gettext("Count")
     )
     unit = StringField(
-        "Unit"
+        lazy_gettext("Unit")
     )
 
 
 class FeedingMultiForm(FlaskForm):
     date = DateField(
-        "Date", validators=[DataRequired()]
+        lazy_gettext("Date"), validators=[DataRequired()]
     )
     type = SelectField(
-        "Type"
+        lazy_gettext("Type")
     )
     count = IntegerField(
-        "Count"
+        lazy_gettext("Count")
     )
     unit = StringField(
-        "Unit"
+        lazy_gettext("Unit")
     )
     animals = SelectMultipleField(
-        "Animals", coerce=int
+        lazy_gettext("Animals"), coerce=int
     )
     terrariums = SelectMultipleField(
-        "Terrariums", coerce=int
+        lazy_gettext("Terrariums"), coerce=int
     )

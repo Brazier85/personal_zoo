@@ -64,6 +64,9 @@ pip install flask
 # create requirements.txt
 pip freeze > requirements.txt
 
+# For new versions
+backports.zoneinfo==0.2.1;python_version<"3.9"
+
 # deactivate venv
 deactivate
 

@@ -4,11 +4,11 @@
 
 {% block content %}
     <p>&nbsp;</p>
-    <h2>Hey, something went wrong :(</h2>
+    <h2>{{ _("Hey, something went wrong :(") }}</h2>
     <p>&nbsp;</p>
-    <h4><a href="/">click here to go back</a></h4>
+    <h4><a href="/">{{ _("click here to go back") }}</a></h4>
     <p>&nbsp;</p>
-    <h3>The error you found is:</h3>
+    <h3>{{ _("The error you found is:") }}</h3>
     <p class="ps-5">{{ e }}</p>
     <p><strong>Traceback:</strong></p>
     <pre>
@@ -16,5 +16,5 @@
             {{ traceback }}
         </code>
     </pre>
-    <h3 class="text-danger">If you see this message after you did update the application visit the <a href="/update">update page!</a></h3>
+    <h3 class="text-danger">{{ _("If you see this message after you did update the application visit the") }}<a href="/update">{{ _("update page!") }}</a>)</h3>
 {% endblock %}

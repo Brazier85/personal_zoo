@@ -8,50 +8,50 @@ from functions import *
 
 class TerrariumForm(FlaskForm):
     name = StringField(
-        "Name", validators=[DataRequired(), Length(min=1, max=40)]
+        lazy_gettext("Name"), validators=[DataRequired(), Length(min=1, max=40)]
     )
     type = SelectField(
-        "Type", validators=[DataRequired()]
+        lazy_gettext("Type"), validators=[DataRequired()]
     )
     size = StringField(
-        "Size", validators=[Length(max=40)]
+        lazy_gettext("Size"), validators=[Length(max=40)]
     )
     notes = TextAreaField(
-        "Notes", validators=[]
+        lazy_gettext("Notes"), validators=[]
     )
     image = FileField(
-        "Image", validators=[FileAllowed(ALLOWED_EXTENSIONS, 'Images only!')], widget=FileInput()
+        lazy_gettext("Image"), validators=[FileAllowed(ALLOWED_EXTENSIONS, 'Images only!')], widget=FileInput()
     )
 
 class EquipmentForm(FlaskForm):
     name = StringField(
-        "Name", validators=[DataRequired(), Length(min=1, max=40)]
+        lazy_gettext("Name"), validators=[DataRequired(), Length(min=1, max=40)]
     )
     text = StringField(
-        "Text", validators=[DataRequired()]
+        lazy_gettext("Text"), validators=[DataRequired()]
     )
 
 class LampsForm(FlaskForm):
     type = StringField(
-        "Type", validators=[DataRequired(), Length(min=1, max=40)]
+        lazy_gettext("Type"), validators=[DataRequired(), Length(min=1, max=40)]
     )
     watt = StringField(
-        "Watt"
+        lazy_gettext("Watt")
     )
     position = StringField(
-        "Position"
+        lazy_gettext("Position")
     )
     changed = DateField(
-        "Changed"
+        lazy_gettext("Changed")
     )
 
 class EventsForm(FlaskForm):
     event = SelectField(
-        "Event", validators=[DataRequired()]
+        lazy_gettext("Event"), validators=[DataRequired()]
     )
     text = TextAreaField(
-        "Text", validators=[DataRequired()]
+        lazy_gettext("Text"), validators=[DataRequired()]
     )
     date = DateField(
-        "Date"
+        lazy_gettext("Date")
     )

@@ -14,7 +14,7 @@
         <div class="mb-3">
             <div class="card">
                 <div class="card-header">
-                    <div class="flex-grow"> General Settings </div>
+                    <div class="flex-grow"> {{ _("General Settings") }} </div>
                     <div class="btn-list">
                         <!-- no button -->
                     </div>
@@ -23,8 +23,8 @@
                     <div class="card-body">
                         <table class="table table-striped m-0 table-sm">
                             <thead>
-                                <th class="w-50">Setting</th>
-                                <th>Option</th>
+                                <th class="w-50">{{ _("Setting") }}</th>
+                                <th>{{ _("Option") }}</th>
                             </thead>
                             <tbody>
                                 <tr>
@@ -84,7 +84,7 @@
                         </table>
                     </div>
                     <div class="card-footer text-end pr-0">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">{{ _("Save") }}</button>
                     </div>
                 </form>
             </div>
@@ -95,17 +95,17 @@
     <div>
         <div class="mb-3">
             <div class="card">
-                <div class="settings-title m-2 text-uppercase">Animal Settings</div>
+                <div class="settings-title m-2 text-uppercase">{{ _("Animal Settings") }}</div>
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" id="settingsAnimalTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link text-uppercase active" id="feeding-tab" data-bs-toggle="tab" data-bs-target="#feeding_types" type="button" role="tab" aria-controls="feeding_types" aria-selected="true">Feeding Types</button>
+                            <button class="nav-link text-uppercase active" id="feeding-tab" data-bs-toggle="tab" data-bs-target="#feeding_types" type="button" role="tab" aria-controls="feeding_types" aria-selected="true">{{ _("Feeding Types") }}</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link text-uppercase" id="animal_types-tab" data-bs-toggle="tab" data-bs-target="#animal_types" type="button" role="tab" aria-controls="animal_types" aria-selected="false">Animal Types</button>
+                            <button class="nav-link text-uppercase" id="animal_types-tab" data-bs-toggle="tab" data-bs-target="#animal_types" type="button" role="tab" aria-controls="animal_types" aria-selected="false">{{ _("Animal Types") }}</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link text-uppercase" id="animal_event_types-tab" data-bs-toggle="tab" data-bs-target="#animal_event_types" type="button" role="tab" aria-controls="animal_event_types" aria-selected="false">Event/Action Types</button>
+                            <button class="nav-link text-uppercase" id="animal_event_types-tab" data-bs-toggle="tab" data-bs-target="#animal_event_types" type="button" role="tab" aria-controls="animal_event_types" aria-selected="false">{{ _("Event/Action Types") }}</button>
                         </li>
                     </ul>
                 </div>
@@ -122,9 +122,9 @@
                                 <div class="card-body feeding_card">
                                     <table class="table table-striped m-0">
                                         <thead>
-                                            <th class="w-50">Name</th>
-                                            <th>Unit</th>
-                                            <th>Detail</th>
+                                            <th class="w-50">{{ _("Name") }}</th>
+                                            <th>{{ _("Unit") }}</th>
+                                            <th>{{ _("Detail") }}</th>
                                         </thead>
                                         <tbody>
                                             {% for type in feeding_types %}
@@ -138,7 +138,7 @@
                                     </table>
                                 </div>
                                 <div class="card-footer text-right pr-0">
-                                    <div>Be careful when changing a unit!</div>
+                                    <div>{{ _("Be careful when changing a unit!") }}</div>
                                 </div>
                             </div>
                         </div>
@@ -153,9 +153,9 @@
                                 <div class="card-body animal_card">
                                     <table class="table table-striped m-0 ">
                                         <thead>
-                                            <th class="w-50">Name</th>
-                                            <th>Feeding size min</th>
-                                            <th>Feeding size max</th>
+                                            <th class="w-50">{{ _("Name") }}</th>
+                                            <th>{{ _("Feeding size min") }}</th>
+                                            <th>{{ _("Feeding size max") }}</th>
                                         </thead>
                                         <tbody>
                                             {% for type in animal_types %}
@@ -169,7 +169,7 @@
                                     </table>
                                 </div>
                                 <div class="card-footer text-right pr-0">
-                                    <div>Feeding sizes are in %!</div>
+                                    <div>{{ _("Feeding sizes are in %!") }}</div>
                                 </div>
                             </div>
                         </div>
@@ -184,8 +184,8 @@
                                 <div class="card-body history_card">
                                     <table class="table table-striped m-0">
                                         <thead>
-                                            <th class="w-50">Name</th>
-                                            <th>Note</th>
+                                            <th class="w-50">{{ _("Name") }}</th>
+                                            <th>{{ _("Note") }}</th>
                                         </thead>
                                         <tbody>
                                             {% for type in history_types %}
@@ -198,7 +198,7 @@
                                     </table>
                                 </div>
                                 <div class="card-footer text-right pr-0">
-                                    <div>Notes are only visible on this page</div>
+                                    <div>{{ _("Notes are only visible on this page") }}</div>
                                 </div>
                             </div>
                         </div>
@@ -210,14 +210,14 @@
     <div>
         <div class="mb-3">
             <div class="card">
-                <div class="settings-title m-2 text-uppercase">Terrarium Settings</div>
+                <div class="settings-title m-2 text-uppercase">{{ _("Terrarium Settings") }}</div>
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" id="settingsTerrariumTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active text-uppercase" id="terrarium_types-tab" data-bs-toggle="tab" data-bs-target="#terrarium_types" type="button" role="tab" aria-controls="terrarium_types" aria-selected="true">Terrarium Types</button>
+                            <button class="nav-link active text-uppercase" id="terrarium_types-tab" data-bs-toggle="tab" data-bs-target="#terrarium_types" type="button" role="tab" aria-controls="terrarium_types" aria-selected="true">{{ _("Terrarium Types") }}</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link text-uppercase" id="terrarium_event_types-tab" data-bs-toggle="tab" data-bs-target="#terrarium_event_types" type="button" role="tab" aria-controls="terrarium_event_types" aria-selected="false">Event/Action Types</button>
+                            <button class="nav-link text-uppercase" id="terrarium_event_types-tab" data-bs-toggle="tab" data-bs-target="#terrarium_event_types" type="button" role="tab" aria-controls="terrarium_event_types" aria-selected="false">{{ _("Event/Action Types") }}</button>
                         </li>
                     </ul>
                 </div>
@@ -226,7 +226,7 @@
                         <div class="tab-pane fade show active" id="terrarium_types" role="tabpanel" aria-labelledby="terrarium_types-tab">
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="flex-grow"> Terrarium Types </div>
+                                    <div class="flex-grow"> {{ _("Terrarium Types") }} </div>
                                     <div class="btn-list">
                                         <button class="btn rounded-right tt_add_button green_button"><i class="fa-solid fa-plus"></i></button>
                                     </div>
@@ -235,7 +235,7 @@
                                     {% if terrarium_types %}
                                     <table class="table table-striped m-0">
                                         <thead>
-                                            <th class="w-50">Name</th>
+                                            <th class="w-50">{{ _("Name") }}</th>
                                         </thead>
                                         <tbody>
                                             {% for type in terrarium_types %}
@@ -246,11 +246,11 @@
                                         </tbody>
                                     </table>
                                     {% else %}
-                                        <p>No Terrarium types found!</p>
+                                        <p>{{ _("No Terrarium types found!") }}</p>
                                     {% endif %}
                                 </div>
                                 <div class="card-footer text-right pr-0">
-                                    <div>This function is work in progress!</div>
+                                    <div>{{ _("This function is work in progress!") }}</div>
                                 </div>
                             </div>
                         </div>
@@ -265,8 +265,8 @@
                                 <div class="card-body terrarium_history_types_card">
                                     <table class="table table-striped m-0">
                                         <thead>
-                                            <th class="w-50">Name</th>
-                                            <th>Note</th>
+                                            <th class="w-50">{{ _("Name") }}</th>
+                                            <th>{{ _("Note") }}</th>
                                         </thead>
                                         <tbody>
                                             {% for type in terrarium_history_types %}
@@ -279,7 +279,7 @@
                                     </table>
                                 </div>
                                 <div class="card-footer text-right pr-0">
-                                    <div>Notes are only visible on this page</div>
+                                    <div>{{ _("Notes are only visible on this page") }}</div>
                                 </div>
                             </div>
                         </div>

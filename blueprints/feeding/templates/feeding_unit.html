@@ -3,7 +3,7 @@
 {% if unit == "weight" %}
 <div class="form-floating">
     <input type="number" class="form-control" id="unit" name="unit" value="{{value}}" placeholder>
-    <label for="unit" class="form-label">Weight ({{ unit_data.detail }})</label>
+    <label for="unit" class="form-label">{{ _("Weight") }} ({{ unit_data.detail }})</label>
 </div>
 {% elif unit == "size" %}
 <div class="form-floating">
@@ -18,6 +18,6 @@
 {% else %}
 <div class="form-floating">
     <input type="text" class="form-control" id="unit" name="unit" value="{{value}}" placeholder>
-    <label for="unit" class="form-label">Text ({{ unit_data.detail }})</label>
+    <label for="unit" class="form-label">{{ _("Text") }} ({{ unit_data.detail }})</label>
 </div>
 {% endif %}

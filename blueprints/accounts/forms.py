@@ -6,13 +6,13 @@ from functions import *
 
 class RegisterForm(FlaskForm):
     email = EmailField(
-        "Email", validators=[DataRequired(), Email(message=None), Length(min=6, max=40)]
+        lazy_gettext("Email"), validators=[DataRequired(), Email(message=None), Length(min=6, max=40)]
     )
     password = PasswordField(
-        "Password", validators=[DataRequired(), Length(min=6, max=25)]
+        lazy_gettext("Password"), validators=[DataRequired(), Length(min=6, max=25)]
     )
     confirm = PasswordField(
-        "Repeat password",
+        lazy_gettext("Repeat password"),
         validators=[
             DataRequired(),
             EqualTo("password", message="Passwords must match."),
@@ -33,20 +33,20 @@ class RegisterForm(FlaskForm):
         return True
     
 class LoginForm(FlaskForm):
-    email = EmailField("Email", validators=[DataRequired(), Email()])
-    password = PasswordField("Password", validators=[DataRequired()])
+    email = EmailField(lazy_gettext("Email"), validators=[DataRequired(), Email()])
+    password = PasswordField(lazy_gettext("Password"), validators=[DataRequired()])
 
 class PasswordForm(FlaskForm):
     old_password = PasswordField(
-        "old Password", validators=[DataRequired()]
+        lazy_gettext("old Password"), validators=[DataRequired()]
     )
 
     new_password = PasswordField(
-        "new Password", validators=[DataRequired(), Length(min=6, max=25)]
+        lazy_gettext("new Password"), validators=[DataRequired(), Length(min=6, max=25)]
     )
 
     confirm = PasswordField(
-        "Repeat password",
+        lazy_gettext("Repeat password"),
         validators=[
             DataRequired(),
             EqualTo("new_password", message="Passwords must match."),

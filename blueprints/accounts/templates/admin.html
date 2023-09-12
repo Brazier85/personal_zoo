@@ -6,7 +6,7 @@
         <div class="mb-3">
             <div class="card">
                 <div class="card-header">
-                    <div class="flex-grow"> Users </div>
+                    <div class="flex-grow"> {{ _("Users") }} </div>
                     <div class="btn-list">
                         <!-- no button -->
                     </div>
@@ -14,10 +14,10 @@
                 <div class="card-body">
                     <table class="table table-striped m-0 table-sm align-middle">
                         <thead>
-                            <th>E-Mail</th>
-                            <th>Admin</th>
-                            <th>Active</th>
-                            <th>Delete</th>
+                            <th>{{ _("E-Mail") }}</th>
+                            <th>{{ _("Admin") }}</th>
+                            <th>{{ _("Active") }}</th>
+                            <th>{{ _("Delete") }}</th>
                         </thead>
                         <tbody>
                             {% for user in users %}

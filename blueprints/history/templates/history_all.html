@@ -1,13 +1,13 @@
 <table class="table table-striped m-0">
     <thead>
-        <th class="w-25">Date</th>
-        <th>Event</th>
-        <th>Details</th>
+        <th class="w-25">{{ _("Date") }}</th>
+        <th>{{ _("Event") }}</th>
+        <th>{{ _("Details") }}</th>
     </thead>
     <tbody>
         {% for event in history %}
         <tr data-id="{{ event.id }}" class="history_edit active_row user-select-none">
-            <td>{{ event.date | fix_date }}</td>
+            <td>{{ event.date | dateformat }}</td>
             <td>{{ event.name }}</td>
             <td>{{ event.text|linebreaksbr|safe }}</td>
         </tr>

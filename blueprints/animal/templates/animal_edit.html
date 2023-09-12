@@ -3,7 +3,7 @@
         {{ form.csrf_token }}
         <div class="card">
             <div class="card-header">
-                <h3>Edit {{animal.name}}</h3>
+                <h3>{{ _("Edit") }} {{animal.name}}</h3>
             </div>
             <div class="card-body">
                 {{ render_text_field(form.name) }}
@@ -44,10 +44,10 @@
         </div>
         <div class="modal-footer">
             <div pos="start">
-            <button type="button" data-id="{{ animal.id }}" class="btn btn-danger text-left animal_delete_button">Delete</button>
+            <button type="button" data-id="{{ animal.id }}" class="btn btn-danger text-left animal_delete_button">{{ _("Delete") }}</button>
             </div>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _("Cancel") }}</button>
+            <button type="submit" class="btn btn-primary">{{ _("Save") }}</button>
         </div>
     </form>
 </div>

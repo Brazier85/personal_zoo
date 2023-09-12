@@ -1,7 +1,7 @@
 {% from "macros/fields.html" import render_text_field, render_select_field, render_textarea_field %}
 
 <div class="modal-header">
-    <h5 class="modal-title" id="itemLabel">Edit event/action</h5>
+    <h5 class="modal-title" id="itemLabel">{{ _("Edit event/action") }}</h5>
 </div>
 <form role="form" method="post" action="{{ target }}" enctype="multipart/form-data">
     {{ form.csrf_token }}
@@ -24,9 +24,9 @@
     </div>
     <div class="modal-footer">
         <div pos="start">
-            <button type="button" data-id="{{ id }}" class="btn btn-danger text-left history_delete_button">Delete</button>
+            <button type="button" data-id="{{ id }}" class="btn btn-danger text-left history_delete_button">{{ _("Delete") }}</button>
         </div>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _("Cancel") }}</button>
+        <button type="submit" class="btn btn-primary">{{ _("Save") }}</button>
     </div>
 </form>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_from_directory, flash, redirect
+from flask import Flask, render_template, request, send_from_directory, flash, redirect, g
 from flask_qrcode import QRcode
 from flask_mail import Mail, Message
 from flask_login import (
@@ -13,6 +13,7 @@ import traceback
 from datetime import datetime
 from flask_apscheduler import APScheduler
 from flask_bcrypt import Bcrypt
+from flask_babel import Babel
 
 # Imports
 from models import *
@@ -74,6 +75,21 @@ dictConfig(
         "root": {"level": "INFO", "handlers": ["console"]},
     }
 )
+
+def get_locale():
+    # if a user is logged in, use the locale from the user settings
+    user = getattr(g, 'user', None)
+    if user is not None:
+        return user.locale
+    return request.accept_languages.best_match(['de', 'en'])
+
+def get_timezone():
+    user = getattr(g, 'user', None)
+    if user is not None:
+        return user.timezone
+    
+
+babel = Babel(app, locale_selector=get_locale, timezone_selector=get_timezone)
 
 # Login management
 login_manager = LoginManager()
@@ -144,23 +160,6 @@ def linebreaksbr_filter(text):
         return text.replace('\n', '<br />')
     except:
         return text
-
-# Date to europe
-@app.template_filter(name='fix_date')
-def fix_date_filter(text):
-    try:
-        new_text = datetime.strptime(text, '%Y-%m-%d').strftime('%d.%m.%Y')
-        return new_text
-    except:
-        text = text
-
-    try:
-        new_text = text.strftime('%d.%m.%Y')
-        return new_text
-    except:
-        text = text
-
-    return text
 
 # Check every minute for notifications
 @scheduler.task('cron', id='send_notifications', minute='*')

@@ -21,6 +21,7 @@ class DevConfig(Config):
     SECRET_KEY = '8ad5ab033fb63bbf3b17ccab423e7cce5b705254a420440e0012f05cf72583c0'
     DEBUG = True
     TEMPLATES_AUTO_RELOAD = True
+    BABEL_DEFAULT_LOCALE = 'de'
 
 class ProdConfig(Config):
     FLASK_ENV = "production"

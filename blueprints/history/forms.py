@@ -6,29 +6,29 @@ from functions import *
 
 class HistoryForm(FlaskForm):
     date = DateField(
-        "Date", validators=[DataRequired()]
+        lazy_gettext("Date"), validators=[DataRequired()]
     )
     event = SelectField(
-        "Event/Action"
+        lazy_gettext("Event/Action")
     )
     text = TextAreaField(
-        "Text"
+        lazy_gettext("Text")
     )
 
 
 class HistoryMultiForm(FlaskForm):
     date = DateField(
-        "Date", validators=[DataRequired()]
+        lazy_gettext("Date"), validators=[DataRequired()]
     )
     event = SelectField(
-        "Event/Action"
+        lazy_gettext("Event/Action")
     )
     text = TextAreaField(
-        "Text"
+        lazy_gettext("Text")
     )
     animals = SelectMultipleField(
-        "Animals", coerce=int
+        lazy_gettext("Animals"), coerce=int
     )
     terrariums = SelectMultipleField(
-        "Terrariums", coerce=int
+        lazy_gettext("Terrariums"), coerce=int
     )
