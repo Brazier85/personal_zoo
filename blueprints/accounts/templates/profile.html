@@ -17,6 +17,7 @@
                             <th>{{ _("E-Mail") }}</th>
                             <th>{{ _("Admin") }}</th>
                             <th>{{ _("Active") }}</th>
+                            <th>{{ _("Language") }}</th>
                             <th>{{ _("Change Password") }}</th>
                         </thead>
                         <tbody>
@@ -24,6 +25,12 @@
                                 <td>{{user.email}}</td>
                                 <td>{% if user.is_admin %}<i class="fa-solid fa-check fs-4 text-success"></i>{%else%}<i class="fa-solid  fa-x fs-4 text-danger"></i>{% endif %}</td>
                                 <td>{% if user.is_active %}<i class="fa-solid fa-check fs-4 text-success"></i>{%else%}<i class="fa-solid  fa-x fs-4 text-danger"></i>{% endif %}</td>
+                                <td>
+                                    <select id="change_lang" name="change_lang">
+                                        {% for lang in languages %}
+                                            <option {% if user.lang == lang %}selected{%endif%}>{{ lang }}</option>
+                                        {% endfor %}
+                                    </select>
                                 <td data-id="{{ user.id }}" class="change_password"><i class="fa-solid fa-pen-to-square fs-5 text-success clickable"></i></td>
                             </tr>
                         </tbody>
@@ -78,6 +85,17 @@
                 });
             }
         });
+    });
+
+    $('#change_lang').change(function(){
+        var lang = $(this).val();
+        $.ajax({
+            url: '/account/change_language/'+lang,
+            type: 'get',
+            success: function(data) {
+                location.reload(true); 
+            }
+        })
     });
 </script>
 

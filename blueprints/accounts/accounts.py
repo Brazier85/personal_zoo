@@ -13,7 +13,7 @@ accounts_bp = Blueprint("accounts", __name__, template_folder="templates")
 @login_required
 def profile():
     user = User.query.filter(User.id==current_user.id).first()
-    return render_template("profile.html", user=user, location="profile")
+    return render_template("profile.html", user=user, location="profile", languages=current_app.config['LANGUAGES'])
     
 @accounts_bp.route("/admin", methods=["GET", "POST"])
 @login_required
@@ -49,6 +49,18 @@ def update_password(id):
         else:
             data = json.dumps(form.errors, ensure_ascii=False)
             return jsonify(data)
+        
+@accounts_bp.route("/change_language/<string:lang>", methods=["GET", "POST"])
+@login_required
+def update_language(lang):
+
+    target_user = User.query.get_or_404(current_user.id)
+    target_user.lang = lang
+
+    db.session.add(target_user)
+    db.session.commit()
+
+    return "", 200
 
 @accounts_bp.route("/change/<string:mode>/<int:id>", methods=["GET", "POST"])
 @login_required
@@ -70,12 +82,17 @@ def change(mode, id):
                 db.session.add(target_user)
                 db.session.commit()
 
-                return "", 200
             if mode == "active":
                 if target_user.is_active:
                     target_user.is_active = False
                 else:
                     target_user.is_active = True
+
+                db.session.add(target_user)
+                db.session.commit()
+
+            if mode == "language":
+                target_user.language = id
 
                 db.session.add(target_user)
                 db.session.commit()

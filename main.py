@@ -76,11 +76,16 @@ dictConfig(
     }
 )
 
+# Login management
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+bcrypt = Bcrypt(app)
+
 def get_locale():
     # if a user is logged in, use the locale from the user settings
-    user = getattr(g, 'user', None)
-    if user is not None:
-        return user.locale
+    if current_user.lang is not None:
+        return current_user.lang
     return request.accept_languages.best_match(['de', 'en'])
 
 def get_timezone():
@@ -90,12 +95,6 @@ def get_timezone():
     
 
 babel = Babel(app, locale_selector=get_locale, timezone_selector=get_timezone)
-
-# Login management
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-bcrypt = Bcrypt(app)
 
 # Init DB
 db.init_app(app)
