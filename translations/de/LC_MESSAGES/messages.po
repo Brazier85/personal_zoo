@@ -28,23 +28,23 @@ msgstr ""
 
 #: blueprints/accounts/forms.py:9 blueprints/accounts/forms.py:36
 msgid "Email"
-msgstr "Email"
+msgstr "E-Mail"
 
 #: blueprints/accounts/forms.py:12 blueprints/accounts/forms.py:37
 msgid "Password"
-msgstr "Password"
+msgstr "Passwort"
 
 #: blueprints/accounts/forms.py:15 blueprints/accounts/forms.py:49
 msgid "Repeat password"
-msgstr "Password wiederholen"
+msgstr "Passwort wiederholen"
 
 #: blueprints/accounts/forms.py:41
 msgid "old Password"
-msgstr "Altes Password"
+msgstr "Altes Passwort"
 
 #: blueprints/accounts/forms.py:45
 msgid "new Password"
-msgstr "Neues Password"
+msgstr "Neues Passwort"
 
 #: blueprints/accounts/templates/admin.html:9
 msgid "Users"
@@ -52,8 +52,8 @@ msgstr "Benutzer"
 
 #: blueprints/accounts/templates/admin.html:17
 #: blueprints/accounts/templates/profile.html:17
-msgid "E-Mail"
-msgstr ""
+msgid "new Password"
+msgstr "Neues Passwort"
 
 #: blueprints/accounts/templates/admin.html:18
 #: blueprints/accounts/templates/profile.html:18
@@ -141,7 +141,7 @@ msgstr "Dein Profil"
 
 #: blueprints/accounts/templates/profile.html:20
 msgid "Language"
-msgstr ""
+msgstr "Sprache"
 
 #: blueprints/accounts/templates/profile.html:21
 msgid "Change Password"
@@ -149,11 +149,11 @@ msgstr "Password ändern"
 
 #: blueprints/accounts/templates/profile.html:40
 msgid "Basic profile data!"
-msgstr "Profil daten"
+msgstr "Grundlegende Profildaten!
 
 #: blueprints/accounts/templates/register.html:9
 msgid "Registration"
-msgstr ""
+msgstr "Registrierung"
 
 #: blueprints/animal/forms.py:11 blueprints/animal/templates/animal.html:166
 #: blueprints/document/forms.py:10 blueprints/settings/templates/at_add.html:9
@@ -222,7 +222,7 @@ msgstr "Hintergrund Farbe"
 #: blueprints/animal/forms.py:35
 #, fuzzy
 msgid "Default feeding type"
-msgstr "Fütterung bearbeiten"
+msgstr "Standard-Fütterungstyp"
 
 #: blueprints/animal/forms.py:38
 #, fuzzy
@@ -298,7 +298,7 @@ msgstr "Events/Aktionen"
 #: blueprints/terrarium/templates/t_history_all.html:4
 #: blueprints/terrarium/templates/terrarium.html:189
 msgid "Event"
-msgstr ""
+msgstr "Ereignis"
 
 #: blueprints/animal/templates/animal.html:131
 #: blueprints/animal/templates/animal_print.html:77
@@ -306,14 +306,14 @@ msgstr ""
 #: blueprints/terrarium/templates/t_history_all.html:5
 #: blueprints/terrarium/templates/terrarium.html:190
 msgid "Details"
-msgstr ""
+msgstr "Details""
 
 #: blueprints/animal/templates/animal.html:144
 #: blueprints/animal/templates/animal_print.html:90
 #: blueprints/terrarium/templates/terrarium.html:203
 #, fuzzy
 msgid "No History found!"
-msgstr "Keine Einträge gefunden!"
+msgstr "Keine Historie gefunden!"
 
 #: blueprints/animal/templates/animal.html:155
 msgid "Documents"
@@ -352,7 +352,7 @@ msgstr "Zeige weniger"
 #: blueprints/animal/templates/animal_add.html:10
 #, fuzzy
 msgid "Add a new animal"
-msgstr "Tier hinzufügen"
+msgstr "Ein neues Tier hinzufügen"
 
 #: blueprints/animal/templates/animal_edit.html:6
 #: blueprints/terrarium/templates/terrarium_edit.html:5
@@ -455,7 +455,7 @@ msgstr "Massen Fütterung hinzufügen"
 
 #: blueprints/feeding/templates/feeding_multi_add.html:17
 msgid "Add multi feeding"
-msgstr "Massen Fütterungn hinzufügen"
+msgstr "Massen Fütterung hinzufügen"
 
 #: blueprints/feeding/templates/feeding_multi_add.html:49
 #: blueprints/history/templates/history_multi_add.html:46
@@ -504,7 +504,7 @@ msgstr "Massen Events/Aktionen hinzufügen "
 
 #: blueprints/settings/templates/at_add.html:2
 msgid "Add animal type"
-msgstr "Tier hinzufügen"
+msgstr "Tierart hinzufügen"
 
 #: blueprints/settings/templates/at_add.html:17
 #: blueprints/settings/templates/at_edit.html:17
@@ -520,11 +520,11 @@ msgstr "Maximalgröße (&#037;"
 
 #: blueprints/settings/templates/at_edit.html:2
 msgid "Edit animal type"
-msgstr "Tier hinzufügen"
+msgstr "Tierart bearbeiten"
 
 #: blueprints/settings/templates/ft_add.html:2
 msgid "Add feeding type"
-msgstr "Fütterung hinzufügen"
+msgstr "Fütterungstyp hinzufügen"
 
 #: blueprints/settings/templates/ft_add.html:29
 #: blueprints/settings/templates/ft_edit.html:29
@@ -555,7 +555,7 @@ msgstr "Fütterung bearbeiten"
 #: blueprints/settings/templates/ht_add.html:2
 #, fuzzy
 msgid "Add event/action type"
-msgstr "Event/Aktion hinzufügen"
+msgstr "Ereignis/Aktionstyp hinzufügen"
 
 #: blueprints/settings/templates/ht_add.html:17
 #: blueprints/settings/templates/ht_edit.html:17
@@ -570,17 +570,17 @@ msgstr "Notizen"
 #: blueprints/settings/templates/ht_edit.html:2
 #, fuzzy
 msgid "Edit event/action type"
-msgstr "Event/Aktion bearbeiten"
+msgstr "Ereignis/Aktionstyp bearbeiten"
 
 #: blueprints/settings/templates/htt_add.html:2
 #, fuzzy
 msgid "Add terrarium event/action type"
-msgstr "Event/Aktion hinzufügen"
+msgstr "Terrarium Ereignis/Aktionstyp hinzufügen"
 
 #: blueprints/settings/templates/htt_edit.html:2
 #, fuzzy
 msgid "Edit terrarium event/action type"
-msgstr "Event/Aktion bearbeiten"
+msgstr "Terrarium Ereignis/Aktionstyp bearbeiten"
 
 #: blueprints/settings/templates/settings.html:17
 #, fuzzy
@@ -654,22 +654,22 @@ msgstr "Diese Funktion befindet sich in der Entwicklung"
 #: blueprints/settings/templates/tt_add.html:2
 #, fuzzy
 msgid "Add Terrarium Type"
-msgstr "Terrarium hinzufügen"
+msgstr "Terrariumtyp hinzufügen"
 
 #: blueprints/settings/templates/tt_edit.html:2
 #, fuzzy
 msgid "Edit Terrarium Type"
-msgstr "Terrarium hinzufügen"
+msgstr "Terrariumtyp bearbeiten"
 
 #: blueprints/terrarium/forms.py:39
 #: blueprints/terrarium/templates/terrarium.html:121
 msgid "Watt"
-msgstr ""
+msgstr "Watt"
 
 #: blueprints/terrarium/forms.py:42
 #: blueprints/terrarium/templates/terrarium.html:122
 msgid "Position"
-msgstr ""
+msgstr "Position"
 
 #: blueprints/terrarium/forms.py:45
 #: blueprints/terrarium/templates/terrarium.html:123
@@ -679,28 +679,28 @@ msgstr "Gewechselt"
 #: blueprints/terrarium/templates/equipment_add.html:4
 #, fuzzy
 msgid "Add equipment"
-msgstr "Zubehör"
+msgstr "Zubehör hinzufügen"
 
 #: blueprints/terrarium/templates/equipment_edit.html:4
 #, fuzzy
 msgid "Edit equipment"
-msgstr "Zubehör"
+msgstr "Zubehör bearbeiten"
 
 #: blueprints/terrarium/templates/lamp_add.html:3
 #: blueprints/terrarium/templates/lamp_edit.html:3
 #, fuzzy
 msgid "Add lamp"
-msgstr "Tier hinzufügen"
+msgstr "Lampe hinzufügen"
 
 #: blueprints/terrarium/templates/t_history_add.html:3
 #, fuzzy
 msgid "Add Terrarium event/action"
-msgstr "Event/Aktion hinzufügen"
+msgstr "Terrarium Ereignis/Aktion hinzufügen"
 
 #: blueprints/terrarium/templates/t_history_edit.html:3
 #, fuzzy
 msgid "Edit terrarium event/action"
-msgstr "Event/Aktion bearbeiten"
+msgstr "Terrarium Ereignis/Aktion bearbeiten"
 
 #: blueprints/terrarium/templates/terrarium.html:97 templates/home.html:68
 #: templates/home_mobile.html:75
@@ -764,7 +764,7 @@ msgstr "Deine Tiere"
 
 #: templates/home.html:69 templates/home_mobile.html:76
 msgid "You can add your first animal here:"
-msgstr "Du kannst dein erstes Tier hier hinzufügen:"
+msgstr "Du kannst hier dein erstes Tier hinzufügen:"
 
 #: templates/home.html:70 templates/home_mobile.html:77
 msgid "Add animal"
@@ -780,7 +780,7 @@ msgstr "Keine Terrarien gefunden"
 
 #: templates/home.html:108 templates/home_mobile.html:108
 msgid "You can add your first terrarium here:"
-msgstr "Du kannst dein erstes Terrarium hier hinzufügen:"
+msgstr "Du kannst hier dein erstes Terrarium hinzufügen:"
 
 #: templates/home.html:109 templates/home_mobile.html:109
 msgid "Add terrarium"
@@ -838,7 +838,7 @@ msgstr "Registrieren"
 
 #: templates/navigation.html:91
 msgid "Toggle theme"
-msgstr "Theme wechseln"
+msgstr "Design wechseln"
 
 #: templates/navigation.html:98
 msgid "Light"
@@ -850,5 +850,5 @@ msgstr "Dunkel"
 
 #: templates/navigation.html:112
 msgid "Auto"
-msgstr ""
+msgstr "Automatisch"
 
