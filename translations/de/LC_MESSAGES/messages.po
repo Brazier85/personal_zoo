@@ -516,7 +516,7 @@ msgstr "Minimalgröße (&#037;)"
 #: blueprints/settings/templates/at_edit.html:23
 #: blueprints/settings/templates/settings.html:158
 msgid "Feeding size max"
-msgstr "Maximalgröße (&#037;"
+msgstr "Maximalgröße (&#037;)"
 
 #: blueprints/settings/templates/at_edit.html:2
 msgid "Edit animal type"
