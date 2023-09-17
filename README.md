@@ -79,7 +79,7 @@ deactivate
 pybabel extract -F babel.cfg -k lazy_gettext -o messages.pot .
 
 # Update existing translations
-pybabel update -i messages.pot -d translation
+pybabel update -i messages.pot -d translations
 
 # Compile translations
 pybabel compile -d translations -f
