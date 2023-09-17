@@ -55,14 +55,15 @@ scheduler.init_app(app)
 scheduler.start()
 
 # Logging
-logging.getLogger('werkzeug').disabled = True
+app.logger.setLevel(logging.INFO)
 dictConfig(
     {
         "version": 1,
+        "disable_existing_loggers": False,
         "formatters": {
             "default": {
                 "format": "[%(asctime)s] %(levelname)s | %(module)s >>> %(message)s",
-                "datefmt": "%B %d, %Y %H:%M:%S %Z",
+                "datefmt": "%B %d, %Y %H:%M:%S %Z"
             }
         },
         "handlers": {
@@ -70,11 +71,24 @@ dictConfig(
                 "class": "logging.StreamHandler",
                 "stream": "ext://sys.stdout",
                 "formatter": "default",
+            },
+            "error_file": {
+                "class": "logging.handlers.RotatingFileHandler",
+                "formatter": "default",
+                "filename": app.config['APPLICATION_LOG_PATH'] + "/error.log",
+                "maxBytes": 10000,
+                "backupCount": 10,
+                "delay": "True",
+                'level': 'ERROR',
             }
         },
-        "root": {"level": "INFO", "handlers": ["console"]},
+        "root": {
+            "level": "INFO",
+            "handlers": ['console',  'error_file']
+        }
     }
 )
+logging.getLogger('werkzeug').disabled = True
 
 # Login management
 login_manager = LoginManager()
@@ -149,7 +163,6 @@ def AfterRequest(response):
             request.method,
             response.status
         )
-
     return response
 
 # New line to br

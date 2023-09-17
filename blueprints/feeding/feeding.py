@@ -57,16 +57,18 @@ def add(id):
 
         flash('Added feeding successfully!', 'success')
         current_app.logger.info("Added feeding!")
-
-        return redirect("/animal/"+str(id))
+        return jsonify(status='ok')
     
-    
-    external = request.args.get('external')
-    animal = Animal.query.add_columns(Animal.name, Animal.default_ft).filter(Animal.id==id).one()
-    if external is None:
-        return render_template('feeding_add.html', id=id, form=form, target=url_for("feeding.add", id=id), dft=animal.default_ft)
+    elif request.method == 'GET':
+        external = request.args.get('external')
+        animal = Animal.query.add_columns(Animal.name, Animal.default_ft).filter(Animal.id==id).one()
+        if external is None:
+            return render_template('feeding_add.html', id=id, form=form, target=url_for("feeding.add", id=id), dft=animal.default_ft)
+        else:
+            return render_template('feeding_add_external.html', id=id, animal=animal.name, form=form, target=url_for("feeding.add", id=id), dft=animal.default_ft)
     else:
-        return render_template('feeding_add_external.html', id=id, animal=animal.name, form=form, target=url_for("feeding.add", id=id), dft=animal.default_ft)
+        data = json.dumps(form.errors, ensure_ascii=False)
+        return jsonify(data)
     
 @feeding_bp.route('/multi', methods=['POST','GET'])
 @login_required
@@ -109,15 +111,17 @@ def multi_add():
         flash('Added multi feeding successfully!', 'success')
         current_app.logger.info("Added multi feeding!")
 
-        return redirect("/")
+        return jsonify(status='ok')
     
-    
-
-    if terrarium is None:
-        return render_template('feeding_multi_add.html', form=form, location="multi_feeding")
+    elif request.method == 'GET':
+        if terrarium is None:
+            return render_template('feeding_multi_add.html', form=form, location="multi_feeding")
+        else:
+            return render_template('feeding_multi_add.html', form=form, terrarium=terrarium, location="multi_feeding")
     else:
-        return render_template('feeding_multi_add.html', form=form, terrarium=terrarium, location="multi_feeding")
-    
+        data = json.dumps(form.errors, ensure_ascii=False)
+        return jsonify(data)
+        
     
 @feeding_bp.route('/edit/<int:id>', methods=['POST','GET'])
 @login_required
@@ -142,9 +146,12 @@ def edit(id):
         
         flash('Changes to feeding saved!', 'success')
         current_app.logger.info(f"Modified feeding with id: {id} !")
-        return redirect("/animal/"+str(feeding.animal))
-    
-    return jsonify({'htmlresponse': render_template('feeding_edit.html', form=form, target=url_for("feeding.edit", id=id), id=id)})
+        return jsonify(status='ok')
+    elif request.method == 'GET':
+        return jsonify({'htmlresponse': render_template('feeding_edit.html', form=form, target=url_for("feeding.edit", id=id), id=id)})
+    else:
+        data = json.dumps(form.errors, ensure_ascii=False)
+        return jsonify(data)
     
 @feeding_bp.route('/delete/<int:id>', methods=['POST'])
 @login_required

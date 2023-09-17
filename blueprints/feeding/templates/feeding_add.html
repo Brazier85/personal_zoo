@@ -58,4 +58,25 @@
             }
         })
     });
+
+    $('#submit').click(function (event) {
+        event.preventDefault();
+        var url = $('#feeding_form').attr('action');
+        $.post(url, data = $('#feeding_form').serialize(), function (data) {
+            if (data.status == 'ok') {
+                $('#modal_details').modal('hide'); 
+                location.reload();
+            } else {
+                var obj = JSON.parse(data);
+                for (var key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        var value = obj[key];
+                    }
+                }
+                $('.alert').remove()
+                $('<div class="alert alert-danger" role="alert">' + value +'</div>').insertAfter('#' + key);
+                $('.form-group').addClass('has-error')
+            }
+        })
+    });
 </script>

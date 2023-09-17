@@ -2,6 +2,7 @@
 venv
 *.log
 Backup
+logs
 
 # No database
 *.db
