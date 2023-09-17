@@ -16,7 +16,7 @@
     <div class="card-header">
         <div class="flex-grow"> {{ _("Add multi feeding") }} </div>
     </div>
-    <form role="form" method="post" action="{{ target }}" enctype="multipart/form-data">
+    <form role="form" id="feeding_form" method="post" action="{{ target }}" enctype="multipart/form-data">
         {{ form.csrf_token }}
     
         <div class="card-body">
@@ -78,6 +78,27 @@
             type: 'get',
             success: function(data){
                 $('.unit').html(data);
+            }
+        })
+    });
+
+    $('#submit').click(function (event) {
+        event.preventDefault();
+        var url = $('#feeding_form').attr('action');
+        $.post(url, data = $('#feeding_form').serialize(), function (data) {
+            if (data.status == 'ok') {
+                $('#modal_details').modal('hide'); 
+                location.reload();
+            } else {
+                var obj = JSON.parse(data);
+                for (var key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        var value = obj[key];
+                    }
+                }
+                $('.alert').remove()
+                $('<div class="alert alert-danger" role="alert">' + value +'</div>').insertAfter('#' + key);
+                $('.form-group').addClass('has-error')
             }
         })
     });

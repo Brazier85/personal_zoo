@@ -41,9 +41,12 @@ def add(id):
         flash('Added event/action successfully!', 'success')
         current_app.logger.info("Added history!")
 
-        return redirect("/animal/"+str(id))
-    
-    return render_template('history_add.html', id=id, form=form, target=url_for('history.add', id=id))
+        return jsonify(status='ok')
+    elif request.method == 'GET':
+        return render_template('history_add.html', id=id, form=form, target=url_for('history.add', id=id))
+    else:
+        data = json.dumps(form.errors, ensure_ascii=False)
+        return jsonify(data)
     
 @history_bp.route('/multi', methods=['POST','GET'])
 @login_required
@@ -84,15 +87,18 @@ def multi_add():
         flash('Added event/action successfully!', 'success')
         current_app.logger.info("Added history!")
 
-        return redirect("/")
-    
-    terrarium = request.args.get('terrarium')
-    animals = Animal.query.add_columns(Animal.id, Animal.name).all()
+        return jsonify(status='ok')
+    elif request.method == 'GET':
+        terrarium = request.args.get('terrarium')
+        animals = Animal.query.add_columns(Animal.id, Animal.name).all()
 
-    if terrarium is None:
-        return render_template('history_multi_add.html', form=form, location="multi_event")
+        if terrarium is None:
+            return render_template('history_multi_add.html', form=form, location="multi_event")
+        else:
+            return render_template('history_multi_add.html', form=form, terrarium=terrarium, location="multi_event")
     else:
-        return render_template('history_multi_add.html', form=form, terrarium=terrarium, location="multi_event")
+        data = json.dumps(form.errors, ensure_ascii=False)
+        return jsonify(data)
     
 @history_bp.route('/edit/<int:id>', methods=['POST','GET'])
 @login_required
@@ -115,9 +121,12 @@ def edit(id):
 
         flash('Changes to history saved!', 'success')
         current_app.logger.info(f"Modified history with id: {id} !")
-        return redirect("/animal/"+str(event.animal))
-    
-    return jsonify({'htmlresponse': render_template('history_edit.html', form=form, target=url_for('history.edit', id=id), id=id)})
+        return jsonify(status='ok')
+    elif request.method == 'GET':
+        return jsonify({'htmlresponse': render_template('history_edit.html', form=form, target=url_for('history.edit', id=id), id=id)})
+    else:
+        data = json.dumps(form.errors, ensure_ascii=False)
+        return jsonify(data)
 
 @history_bp.route('/delete/<int:id>', methods=['POST'])
 @login_required

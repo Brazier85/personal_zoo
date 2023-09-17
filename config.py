@@ -10,6 +10,7 @@ class Config(object):
     SECRET_KEY = '4a591941b7f9ce05833eeae0aca040e830072bbb067db5d3f3712b93babbba13'
     STATIC_FOLDER = 'static'
     TEMPLATES_FOLDER = 'templates'
+    APPLICATION_LOG_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'logs')
     
     # DB location
     DATABASE = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data/database.db')
