@@ -21,6 +21,7 @@ def terrarium(id):
 def add():
 
     location = 'terrarium_add'
+    UPLOAD_FOLDER = current_app.config['UPLOAD_FOLDER']
 
     form = TerrariumForm(CombinedMultiDict((request.files, request.form)))
 
@@ -65,6 +66,7 @@ def add():
 def edit(id):
 
     current_terrarium = Terrarium.query.filter(Terrarium.id==id).first()
+    UPLOAD_FOLDER = current_app.config['UPLOAD_FOLDER']
 
     form = TerrariumForm(CombinedMultiDict((request.files, request.form)), obj=current_terrarium)
 
@@ -115,6 +117,7 @@ def edit(id):
 
 @terrarium_bp.route('/delete/<int:id>', methods=['POST'])
 def delete(id):
+    UPLOAD_FOLDER = current_app.config['UPLOAD_FOLDER']
     if request.method == 'POST':
 
         result = Terrarium.query.filter(Terrarium.id==id).add_columns(Terrarium.image).first()
