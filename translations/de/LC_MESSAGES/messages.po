@@ -1,0 +1,854 @@
+# German translations for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2023-09-12 15:02+0200\n"
+"PO-Revision-Date: 2023-09-12 09:12+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: functions.py:144
+msgid ""
+"Currently a feeding size between {fmin} gr and {fmax} gr ({afmin}% -> "
+"{afmax}%) is recommended!"
+msgstr ""
+"Aktuell wird eine Futtergröße zwischen {fmin} gr und {fmax} gr ({afmin}% "
+"-> {afmax}%) empfohlen!"
+
+#: blueprints/accounts/forms.py:9 blueprints/accounts/forms.py:36
+msgid "Email"
+msgstr "E-Mail"
+
+#: blueprints/accounts/forms.py:12 blueprints/accounts/forms.py:37
+msgid "Password"
+msgstr "Passwort"
+
+#: blueprints/accounts/forms.py:15 blueprints/accounts/forms.py:49
+msgid "Repeat password"
+msgstr "Passwort wiederholen"
+
+#: blueprints/accounts/forms.py:41
+msgid "old Password"
+msgstr "Altes Passwort"
+
+#: blueprints/accounts/forms.py:45
+msgid "new Password"
+msgstr "Neues Passwort"
+
+#: blueprints/accounts/templates/admin.html:9
+msgid "Users"
+msgstr "Benutzer"
+
+#: blueprints/accounts/templates/admin.html:17
+#: blueprints/accounts/templates/profile.html:17
+msgid "new Password"
+msgstr "Neues Passwort"
+
+#: blueprints/accounts/templates/admin.html:18
+#: blueprints/accounts/templates/profile.html:18
+msgid "Admin"
+msgstr ""
+
+#: blueprints/accounts/templates/admin.html:19
+#: blueprints/accounts/templates/profile.html:19
+msgid "Active"
+msgstr "Aktiv"
+
+#: blueprints/accounts/templates/admin.html:20
+#: blueprints/animal/templates/animal_edit.html:47
+#: blueprints/document/templates/document_edit.html:20
+#: blueprints/feeding/templates/feeding_edit.html:30
+#: blueprints/history/templates/history_edit.html:27
+#: blueprints/settings/templates/at_edit.html:32
+#: blueprints/settings/templates/ft_edit.html:42
+#: blueprints/settings/templates/ht_edit.html:26
+#: blueprints/settings/templates/htt_edit.html:26
+#: blueprints/settings/templates/tt_edit.html:17
+#: blueprints/terrarium/templates/equipment_edit.html:23
+#: blueprints/terrarium/templates/lamp_edit.html:28
+#: blueprints/terrarium/templates/t_history_edit.html:25
+#: blueprints/terrarium/templates/terrarium_edit.html:28
+msgid "Delete"
+msgstr "Löschen"
+
+#: blueprints/accounts/templates/login.html:9
+#: blueprints/accounts/templates/login.html:37 templates/navigation.html:79
+msgid "Login"
+msgstr "Login"
+
+#: blueprints/accounts/templates/login.html:38
+msgid "Register now"
+msgstr "Jetzt Registrieren"
+
+#: blueprints/accounts/templates/password_form.html:4
+msgid "Change password"
+msgstr "Passwort ändern"
+
+#: blueprints/accounts/templates/password_form.html:26
+#: blueprints/animal/templates/weight_chart.html:10
+#: blueprints/feeding/templates/feeding_qr.html:11
+msgid "Close"
+msgstr "Schließen"
+
+#: blueprints/accounts/templates/password_form.html:27
+#: blueprints/animal/templates/animal_add.html:51
+#: blueprints/animal/templates/animal_edit.html:50
+#: blueprints/document/templates/document_add.html:27
+#: blueprints/document/templates/document_edit.html:24
+#: blueprints/feeding/templates/feeding_add.html:30
+#: blueprints/feeding/templates/feeding_add_external.html:45
+#: blueprints/feeding/templates/feeding_edit.html:34
+#: blueprints/feeding/templates/feeding_multi_add.html:51
+#: blueprints/history/templates/history_add.html:27
+#: blueprints/history/templates/history_edit.html:30
+#: blueprints/history/templates/history_multi_add.html:48
+#: blueprints/settings/templates/at_add.html:31
+#: blueprints/settings/templates/at_edit.html:35
+#: blueprints/settings/templates/ft_add.html:42
+#: blueprints/settings/templates/ft_edit.html:45
+#: blueprints/settings/templates/ht_add.html:26
+#: blueprints/settings/templates/ht_edit.html:29
+#: blueprints/settings/templates/htt_add.html:26
+#: blueprints/settings/templates/htt_edit.html:29
+#: blueprints/settings/templates/settings.html:87
+#: blueprints/settings/templates/tt_add.html:17
+#: blueprints/settings/templates/tt_edit.html:20
+#: blueprints/terrarium/templates/equipment_add.html:23
+#: blueprints/terrarium/templates/equipment_edit.html:27
+#: blueprints/terrarium/templates/lamp_add.html:29
+#: blueprints/terrarium/templates/lamp_edit.html:32
+#: blueprints/terrarium/templates/t_history_add.html:25
+#: blueprints/terrarium/templates/t_history_edit.html:28
+#: blueprints/terrarium/templates/terrarium_add.html:32
+#: blueprints/terrarium/templates/terrarium_edit.html:31
+msgid "Save"
+msgstr "Speichern"
+
+#: blueprints/accounts/templates/profile.html:9 templates/navigation.html:64
+msgid "Your Profile"
+msgstr "Dein Profil"
+
+#: blueprints/accounts/templates/profile.html:20
+msgid "Language"
+msgstr "Sprache"
+
+#: blueprints/accounts/templates/profile.html:21
+msgid "Change Password"
+msgstr "Password ändern"
+
+#: blueprints/accounts/templates/profile.html:40
+msgid "Basic profile data!"
+msgstr "Grundlegende Profildaten!
+
+#: blueprints/accounts/templates/register.html:9
+msgid "Registration"
+msgstr "Registrierung"
+
+#: blueprints/animal/forms.py:11 blueprints/animal/templates/animal.html:166
+#: blueprints/document/forms.py:10 blueprints/settings/templates/at_add.html:9
+#: blueprints/settings/templates/at_edit.html:9
+#: blueprints/settings/templates/ft_add.html:9
+#: blueprints/settings/templates/ft_edit.html:9
+#: blueprints/settings/templates/ht_add.html:9
+#: blueprints/settings/templates/ht_edit.html:9
+#: blueprints/settings/templates/htt_add.html:9
+#: blueprints/settings/templates/htt_edit.html:9
+#: blueprints/settings/templates/settings.html:125
+#: blueprints/settings/templates/settings.html:156
+#: blueprints/settings/templates/settings.html:187
+#: blueprints/settings/templates/settings.html:238
+#: blueprints/settings/templates/settings.html:268
+#: blueprints/settings/templates/tt_add.html:9
+#: blueprints/settings/templates/tt_edit.html:9
+#: blueprints/terrarium/forms.py:11 blueprints/terrarium/forms.py:28
+#: blueprints/terrarium/templates/terrarium.html:70 templates/home.html:41
+#: templates/home.html:87 templates/home_mobile.html:48
+#: templates/home_mobile.html:87
+msgid "Name"
+msgstr "Name"
+
+#: blueprints/animal/forms.py:14 blueprints/animal/templates/animal.html:88
+#: blueprints/animal/templates/animal_print.html:42
+#: blueprints/document/templates/document_all.html:5
+#: blueprints/feeding/forms.py:13 blueprints/feeding/forms.py:28
+#: blueprints/feeding/templates/feeding_all.html:5
+#: blueprints/terrarium/forms.py:14 blueprints/terrarium/forms.py:36
+#: blueprints/terrarium/templates/terrarium.html:71
+#: blueprints/terrarium/templates/terrarium.html:120 templates/home.html:42
+#: templates/home_mobile.html:49
+msgid "Type"
+msgstr "Typ"
+
+#: blueprints/animal/forms.py:17
+msgid "Morph"
+msgstr "Art"
+
+#: blueprints/animal/forms.py:20
+msgid "Gender"
+msgstr "Geschlecht"
+
+#: blueprints/animal/forms.py:23
+msgid "Birth"
+msgstr "Schlupfdatum"
+
+#: blueprints/animal/forms.py:26 blueprints/animal/templates/animal.html:190
+#: blueprints/animal/templates/animal_print.html:103
+#: blueprints/terrarium/forms.py:20
+#: blueprints/terrarium/templates/terrarium.html:214 templates/home.html:48
+#: templates/home.html:94
+msgid "Notes"
+msgstr "Notizen"
+
+#: blueprints/animal/forms.py:29 blueprints/terrarium/forms.py:23
+#: templates/home.html:86 templates/home_mobile.html:86
+msgid "Image"
+msgstr "Bild"
+
+#: blueprints/animal/forms.py:32
+msgid "Background Color"
+msgstr "Hintergrund Farbe"
+
+#: blueprints/animal/forms.py:35
+#, fuzzy
+msgid "Default feeding type"
+msgstr "Standard-Fütterungstyp"
+
+#: blueprints/animal/forms.py:38
+#, fuzzy
+msgid "Terrarium"
+msgstr "Terrarium hinzufügen"
+
+#: blueprints/animal/templates/animal.html:52
+msgid "Current Weight"
+msgstr "Aktuelles Gewicht"
+
+#: blueprints/animal/templates/animal.html:74
+msgid "Feedings"
+msgstr "Fütterungen"
+
+#: blueprints/animal/templates/animal.html:86
+#: blueprints/animal/templates/animal.html:129
+#: blueprints/animal/templates/animal_print.html:40
+#: blueprints/animal/templates/animal_print.html:75
+#: blueprints/document/templates/document_all.html:3
+#: blueprints/feeding/forms.py:10 blueprints/feeding/forms.py:25
+#: blueprints/feeding/templates/feeding_all.html:3
+#: blueprints/history/forms.py:9 blueprints/history/forms.py:21
+#: blueprints/history/templates/history_all.html:3
+#: blueprints/terrarium/forms.py:56
+#: blueprints/terrarium/templates/t_history_all.html:3
+#: blueprints/terrarium/templates/terrarium.html:188
+msgid "Date"
+msgstr "Datum"
+
+#: blueprints/animal/templates/animal.html:87
+#: blueprints/animal/templates/animal_print.html:41
+#: blueprints/document/templates/document_all.html:4
+#: blueprints/feeding/forms.py:16 blueprints/feeding/forms.py:31
+#: blueprints/feeding/templates/feeding_all.html:4
+msgid "Count"
+msgstr "Anzahl"
+
+#: blueprints/animal/templates/animal.html:89
+#: blueprints/animal/templates/animal_print.html:43
+#: blueprints/document/templates/document_all.html:6
+#: blueprints/feeding/templates/feeding_all.html:6
+#: blueprints/settings/templates/ft_add.html:21
+#: blueprints/settings/templates/ft_edit.html:21
+#: blueprints/terrarium/forms.py:17 templates/home.html:88
+#: templates/home_mobile.html:88
+msgid "Size"
+msgstr "Größe"
+
+#: blueprints/animal/templates/animal.html:104
+#: blueprints/animal/templates/animal_print.html:57
+#, fuzzy
+msgid "No feedings found!"
+msgstr "Keine Fütterungen gefunden!"
+
+#: blueprints/animal/templates/animal.html:111
+#: blueprints/animal/templates/animal.html:148
+#: blueprints/animal/templates/animal.html:223
+#: blueprints/animal/templates/animal.html:240
+#: blueprints/terrarium/templates/terrarium.html:207
+#: blueprints/terrarium/templates/terrarium.html:257
+msgid "Show all"
+msgstr "Alle anzeigen"
+
+#: blueprints/animal/templates/animal.html:118
+#: blueprints/terrarium/templates/terrarium.html:177
+msgid "Events/Actions"
+msgstr "Events/Aktionen"
+
+#: blueprints/animal/templates/animal.html:130
+#: blueprints/animal/templates/animal_print.html:76
+#: blueprints/history/templates/history_all.html:4
+#: blueprints/terrarium/forms.py:50
+#: blueprints/terrarium/templates/t_history_all.html:4
+#: blueprints/terrarium/templates/terrarium.html:189
+msgid "Event"
+msgstr "Ereignis"
+
+#: blueprints/animal/templates/animal.html:131
+#: blueprints/animal/templates/animal_print.html:77
+#: blueprints/history/templates/history_all.html:5
+#: blueprints/terrarium/templates/t_history_all.html:5
+#: blueprints/terrarium/templates/terrarium.html:190
+msgid "Details"
+msgstr "Details""
+
+#: blueprints/animal/templates/animal.html:144
+#: blueprints/animal/templates/animal_print.html:90
+#: blueprints/terrarium/templates/terrarium.html:203
+#, fuzzy
+msgid "No History found!"
+msgstr "Keine Historie gefunden!"
+
+#: blueprints/animal/templates/animal.html:155
+msgid "Documents"
+msgstr "Dokumente"
+
+#: blueprints/animal/templates/animal.html:167
+#: blueprints/animal/templates/animal.html:173
+msgid "Download"
+msgstr "Herunterladen"
+
+#: blueprints/animal/templates/animal.html:179
+#, fuzzy
+msgid "No Documents found!"
+msgstr "Keine Dokumente gefunden!"
+
+#: blueprints/animal/templates/animal.html:183
+msgid "You can only upload pdf and image-files!"
+msgstr "Es können nur pdf und Bild-Dateien hochgeladen werden!"
+
+#: blueprints/animal/templates/animal.html:199
+#: blueprints/animal/templates/animal_print.html:113
+msgid "Last updated:"
+msgstr "Zuletzt aktuallisiert:"
+
+#: blueprints/animal/templates/animal.html:220
+#: blueprints/animal/templates/animal.html:237
+msgid "less"
+msgstr "weniger"
+
+#: blueprints/animal/templates/animal.html:226
+#: blueprints/animal/templates/animal.html:243
+#: blueprints/terrarium/templates/terrarium.html:260
+msgid "Show less"
+msgstr "Zeige weniger"
+
+#: blueprints/animal/templates/animal_add.html:10
+#, fuzzy
+msgid "Add a new animal"
+msgstr "Ein neues Tier hinzufügen"
+
+#: blueprints/animal/templates/animal_edit.html:6
+#: blueprints/terrarium/templates/terrarium_edit.html:5
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: blueprints/animal/templates/animal_edit.html:49
+#: blueprints/document/templates/document_add.html:26
+#: blueprints/document/templates/document_edit.html:23
+#: blueprints/feeding/templates/feeding_add.html:29
+#: blueprints/feeding/templates/feeding_edit.html:33
+#: blueprints/history/templates/history_add.html:26
+#: blueprints/history/templates/history_edit.html:29
+#: blueprints/settings/templates/at_add.html:30
+#: blueprints/settings/templates/at_edit.html:34
+#: blueprints/settings/templates/ft_add.html:41
+#: blueprints/settings/templates/ft_edit.html:44
+#: blueprints/settings/templates/ht_add.html:25
+#: blueprints/settings/templates/ht_edit.html:28
+#: blueprints/settings/templates/htt_add.html:25
+#: blueprints/settings/templates/htt_edit.html:28
+#: blueprints/settings/templates/tt_add.html:16
+#: blueprints/settings/templates/tt_edit.html:19
+#: blueprints/terrarium/templates/equipment_add.html:22
+#: blueprints/terrarium/templates/equipment_edit.html:26
+#: blueprints/terrarium/templates/lamp_add.html:28
+#: blueprints/terrarium/templates/lamp_edit.html:31
+#: blueprints/terrarium/templates/t_history_add.html:24
+#: blueprints/terrarium/templates/t_history_edit.html:27
+#: blueprints/terrarium/templates/terrarium_edit.html:30
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: blueprints/animal/templates/animal_print.html:34
+msgid "Feedings (last 10)"
+msgstr "Fütterungen (Letzte 10)"
+
+#: blueprints/animal/templates/animal_print.html:69
+msgid "Events/Actions (last 10)"
+msgstr "Events/Aktionen (Letzte 10)"
+
+#: blueprints/animal/templates/animal_print.html:113
+msgid "Powered by https://www.personal-zoo.com"
+msgstr "Erstellt von https://www.personal-zoo.com"
+
+#: blueprints/animal/templates/weight_chart.html:2
+msgid "Weight Chart"
+msgstr "Gewichtsverlauf"
+
+#: blueprints/document/forms.py:13
+msgid "File"
+msgstr "Datei"
+
+#: blueprints/document/templates/document_add.html:4
+msgid "Add document to"
+msgstr "Dokument hinzufügen für"
+
+#: blueprints/document/templates/document_edit.html:4
+msgid "Edit document"
+msgstr "Dokument bearbeiten"
+
+#: blueprints/feeding/forms.py:19 blueprints/feeding/forms.py:34
+#: blueprints/settings/templates/ft_add.html:17
+#: blueprints/settings/templates/ft_edit.html:17
+#: blueprints/settings/templates/settings.html:126
+#, fuzzy
+msgid "Unit"
+msgstr "Anzahl"
+
+#: blueprints/feeding/forms.py:37 blueprints/history/forms.py:30
+#: blueprints/terrarium/templates/terrarium.html:62
+#, fuzzy
+msgid "Animals"
+msgstr "Deine Tiere"
+
+#: blueprints/feeding/forms.py:40 blueprints/history/forms.py:33
+#, fuzzy
+msgid "Terrariums"
+msgstr "Deine Terrarien"
+
+#: blueprints/feeding/templates/feeding_add.html:4
+msgid "Add feeding"
+msgstr "Fütterung hinzufügen"
+
+#: blueprints/feeding/templates/feeding_add_external.html:5
+msgid "Add Feeding"
+msgstr "Fütterung hinzufügen"
+
+#: blueprints/feeding/templates/feeding_add_external.html:19
+msgid "Add Feeding for"
+msgstr "Fütterung hinzufügen für"
+
+#: blueprints/feeding/templates/feeding_edit.html:4
+msgid "Edit feeding"
+msgstr "Fütterung bearbeiten"
+
+#: blueprints/feeding/templates/feeding_multi_add.html:5
+msgid "Add Multi Feeding"
+msgstr "Massen Fütterung hinzufügen"
+
+#: blueprints/feeding/templates/feeding_multi_add.html:17
+msgid "Add multi feeding"
+msgstr "Massen Fütterung hinzufügen"
+
+#: blueprints/feeding/templates/feeding_multi_add.html:49
+#: blueprints/history/templates/history_multi_add.html:46
+msgid "Note:"
+msgstr "Notiz:"
+
+#: blueprints/feeding/templates/feeding_multi_add.html:49
+#: blueprints/history/templates/history_multi_add.html:46
+msgid "You can select both, animals and/or terrariums."
+msgstr "Du kannst Tiere und Terrariuen auswählen"
+
+#: blueprints/feeding/templates/feeding_qr.html:2
+msgid "Feeding QR-Code for"
+msgstr "QR-Code für"
+
+#: blueprints/feeding/templates/feeding_unit.html:6
+#: blueprints/settings/templates/ft_add.html:19
+#: blueprints/settings/templates/ft_edit.html:19
+msgid "Weight"
+msgstr "Gewicht"
+
+#: blueprints/feeding/templates/feeding_unit.html:21
+#: blueprints/history/forms.py:15 blueprints/history/forms.py:27
+#: blueprints/settings/templates/ft_add.html:20
+#: blueprints/settings/templates/ft_edit.html:20
+#: blueprints/terrarium/forms.py:31 blueprints/terrarium/forms.py:53
+msgid "Text"
+msgstr ""
+
+#: blueprints/history/forms.py:12 blueprints/history/forms.py:24
+#, fuzzy
+msgid "Event/Action"
+msgstr "Events/Aktionen"
+
+#: blueprints/history/templates/history_add.html:4
+msgid "Add event/action"
+msgstr "Event/Aktion hinzufügen"
+
+#: blueprints/history/templates/history_edit.html:4
+msgid "Edit event/action"
+msgstr "Event/Aktion bearbeiten"
+
+#: blueprints/history/templates/history_multi_add.html:17
+msgid "Add multi history/event"
+msgstr "Massen Events/Aktionen hinzufügen "
+
+#: blueprints/settings/templates/at_add.html:2
+msgid "Add animal type"
+msgstr "Tierart hinzufügen"
+
+#: blueprints/settings/templates/at_add.html:17
+#: blueprints/settings/templates/at_edit.html:17
+#: blueprints/settings/templates/settings.html:157
+msgid "Feeding size min"
+msgstr "Minimalgröße (&#037;)"
+
+#: blueprints/settings/templates/at_add.html:23
+#: blueprints/settings/templates/at_edit.html:23
+#: blueprints/settings/templates/settings.html:158
+msgid "Feeding size max"
+msgstr "Maximalgröße (&#037;)"
+
+#: blueprints/settings/templates/at_edit.html:2
+msgid "Edit animal type"
+msgstr "Tierart bearbeiten"
+
+#: blueprints/settings/templates/ft_add.html:2
+msgid "Add feeding type"
+msgstr "Fütterungstyp hinzufügen"
+
+#: blueprints/settings/templates/ft_add.html:29
+#: blueprints/settings/templates/ft_edit.html:29
+#: blueprints/settings/templates/settings.html:127
+msgid "Detail"
+msgstr "Detail"
+
+#: blueprints/settings/templates/ft_add.html:32
+#: blueprints/settings/templates/ft_edit.html:32
+msgid "Weight: Enter weight unit"
+msgstr "Gewicht: Bitte Typ eingeben"
+
+#: blueprints/settings/templates/ft_add.html:33
+#: blueprints/settings/templates/ft_edit.html:33
+msgid "Text: Enter a hint"
+msgstr "Text: Hinweis eingeben"
+
+#: blueprints/settings/templates/ft_add.html:34
+#: blueprints/settings/templates/ft_edit.html:34
+msgid "Size: Enter sizes (small,middle,large)"
+msgstr "Größe: Im Format (klein,mittel,groß)"
+
+#: blueprints/settings/templates/ft_edit.html:2
+#, fuzzy
+msgid "Edit feeding type"
+msgstr "Fütterung bearbeiten"
+
+#: blueprints/settings/templates/ht_add.html:2
+#, fuzzy
+msgid "Add event/action type"
+msgstr "Ereignis/Aktionstyp hinzufügen"
+
+#: blueprints/settings/templates/ht_add.html:17
+#: blueprints/settings/templates/ht_edit.html:17
+#: blueprints/settings/templates/htt_add.html:17
+#: blueprints/settings/templates/htt_edit.html:17
+#: blueprints/settings/templates/settings.html:188
+#: blueprints/settings/templates/settings.html:269
+#, fuzzy
+msgid "Note"
+msgstr "Notizen"
+
+#: blueprints/settings/templates/ht_edit.html:2
+#, fuzzy
+msgid "Edit event/action type"
+msgstr "Ereignis/Aktionstyp bearbeiten"
+
+#: blueprints/settings/templates/htt_add.html:2
+#, fuzzy
+msgid "Add terrarium event/action type"
+msgstr "Terrarium Ereignis/Aktionstyp hinzufügen"
+
+#: blueprints/settings/templates/htt_edit.html:2
+#, fuzzy
+msgid "Edit terrarium event/action type"
+msgstr "Terrarium Ereignis/Aktionstyp bearbeiten"
+
+#: blueprints/settings/templates/settings.html:17
+#, fuzzy
+msgid "General Settings"
+msgstr "Einstellungen"
+
+#: blueprints/settings/templates/settings.html:26
+#, fuzzy
+msgid "Setting"
+msgstr "Einstellungen"
+
+#: blueprints/settings/templates/settings.html:27
+msgid "Option"
+msgstr "Option"
+
+#: blueprints/settings/templates/settings.html:98
+#, fuzzy
+msgid "Animal Settings"
+msgstr "Admin Einstellungen"
+
+#: blueprints/settings/templates/settings.html:102
+#, fuzzy
+msgid "Feeding Types"
+msgstr "Fütterungen"
+
+#: blueprints/settings/templates/settings.html:105
+#, fuzzy
+msgid "Animal Types"
+msgstr "Deine Tiere"
+
+#: blueprints/settings/templates/settings.html:108
+#: blueprints/settings/templates/settings.html:220
+#, fuzzy
+msgid "Event/Action Types"
+msgstr "Events/Aktionen"
+
+#: blueprints/settings/templates/settings.html:141
+msgid "Be careful when changing a unit!"
+msgstr "Bittem beim Typ wechsel aufpassen!"
+
+#: blueprints/settings/templates/settings.html:172
+#, fuzzy
+msgid "Feeding sizes are in &#037;!"
+msgstr "Fütterungsgrößen in &#037;!"
+
+#: blueprints/settings/templates/settings.html:201
+#: blueprints/settings/templates/settings.html:282
+msgid "Notes are only visible on this page"
+msgstr "Notizen sidn nur auf dieser Seite sichtbar"
+
+#: blueprints/settings/templates/settings.html:213
+#, fuzzy
+msgid "Terrarium Settings"
+msgstr "Admin Einstellungen"
+
+#: blueprints/settings/templates/settings.html:217
+#: blueprints/settings/templates/settings.html:229
+#, fuzzy
+msgid "Terrarium Types"
+msgstr "Deine Terrarien"
+
+#: blueprints/settings/templates/settings.html:249
+#, fuzzy
+msgid "No Terrarium types found!"
+msgstr "Keine Terrarien gefunden"
+
+#: blueprints/settings/templates/settings.html:253
+msgid "This function is work in progress!"
+msgstr "Diese Funktion befindet sich in der Entwicklung"
+
+#: blueprints/settings/templates/tt_add.html:2
+#, fuzzy
+msgid "Add Terrarium Type"
+msgstr "Terrariumtyp hinzufügen"
+
+#: blueprints/settings/templates/tt_edit.html:2
+#, fuzzy
+msgid "Edit Terrarium Type"
+msgstr "Terrariumtyp bearbeiten"
+
+#: blueprints/terrarium/forms.py:39
+#: blueprints/terrarium/templates/terrarium.html:121
+msgid "Watt"
+msgstr "Watt"
+
+#: blueprints/terrarium/forms.py:42
+#: blueprints/terrarium/templates/terrarium.html:122
+msgid "Position"
+msgstr "Position"
+
+#: blueprints/terrarium/forms.py:45
+#: blueprints/terrarium/templates/terrarium.html:123
+msgid "Changed"
+msgstr "Gewechselt"
+
+#: blueprints/terrarium/templates/equipment_add.html:4
+#, fuzzy
+msgid "Add equipment"
+msgstr "Zubehör hinzufügen"
+
+#: blueprints/terrarium/templates/equipment_edit.html:4
+#, fuzzy
+msgid "Edit equipment"
+msgstr "Zubehör bearbeiten"
+
+#: blueprints/terrarium/templates/lamp_add.html:3
+#: blueprints/terrarium/templates/lamp_edit.html:3
+#, fuzzy
+msgid "Add lamp"
+msgstr "Lampe hinzufügen"
+
+#: blueprints/terrarium/templates/t_history_add.html:3
+#, fuzzy
+msgid "Add Terrarium event/action"
+msgstr "Terrarium Ereignis/Aktion hinzufügen"
+
+#: blueprints/terrarium/templates/t_history_edit.html:3
+#, fuzzy
+msgid "Edit terrarium event/action"
+msgstr "Terrarium Ereignis/Aktion bearbeiten"
+
+#: blueprints/terrarium/templates/terrarium.html:97 templates/home.html:68
+#: templates/home_mobile.html:75
+msgid "No animals found!"
+msgstr "Keine Tiere gefunden!"
+
+#: blueprints/terrarium/templates/terrarium.html:101
+msgid "Anyone in here?"
+msgstr "Jemand da?"
+
+#: blueprints/terrarium/templates/terrarium.html:108
+msgid "Lamps"
+msgstr "Lampen"
+
+#: blueprints/terrarium/templates/terrarium.html:138
+#, fuzzy
+msgid "No lamps found!"
+msgstr "Keine Tiere gefunden!"
+
+#: blueprints/terrarium/templates/terrarium.html:142
+msgid "Light it up!"
+msgstr "Es werde Licht!"
+
+#: blueprints/terrarium/templates/terrarium.html:149
+msgid "Equipment"
+msgstr "Zubehör"
+
+#: blueprints/terrarium/templates/terrarium.html:169
+#, fuzzy
+msgid "No equipment found!"
+msgstr "Kein Zubehör gefunden!"
+
+#: blueprints/terrarium/templates/terrarium_add.html:10
+#, fuzzy
+msgid "Add new Terrarium"
+msgstr "Terrarium hinzufügen"
+
+#: templates/error_generic.html:7 templates/error_html.html:7
+msgid "Hey, something went wrong :("
+msgstr "Hey, irgendwas hat nicht geklappt :("
+
+#: templates/error_generic.html:9 templates/error_html.html:11
+msgid "click here to go back"
+msgstr "Hier gehts zurück"
+
+#: templates/error_generic.html:11
+msgid "The error you found is:"
+msgstr "Es ist folgender Fehler aufgetreten:"
+
+#: templates/error_generic.html:19
+msgid "If you see this message after you did update the application visit the"
+msgstr "Wenn du diese Seite nach einem Update siehst besuche bitte die "
+
+#: templates/error_generic.html:19
+msgid "update page!"
+msgstr "Update Seite"
+
+#: templates/home.html:34
+msgid "Your Animals"
+msgstr "Deine Tiere"
+
+#: templates/home.html:69 templates/home_mobile.html:76
+msgid "You can add your first animal here:"
+msgstr "Du kannst hier dein erstes Tier hinzufügen:"
+
+#: templates/home.html:70 templates/home_mobile.html:77
+msgid "Add animal"
+msgstr "Tier hinzufügen"
+
+#: templates/home.html:79
+msgid "Your Terrariums"
+msgstr "Deine Terrarien"
+
+#: templates/home.html:107 templates/home_mobile.html:107
+msgid "No terrariums found!"
+msgstr "Keine Terrarien gefunden"
+
+#: templates/home.html:108 templates/home_mobile.html:108
+msgid "You can add your first terrarium here:"
+msgstr "Du kannst hier dein erstes Terrarium hinzufügen:"
+
+#: templates/home.html:109 templates/home_mobile.html:109
+msgid "Add terrarium"
+msgstr "Terrarium hinzufügen"
+
+#: templates/navigation.html:21
+msgid "Home"
+msgstr "Home"
+
+#: templates/navigation.html:26
+msgid "Multi Feeding"
+msgstr "Massen Fütterung"
+
+#: templates/navigation.html:29
+msgid "Multi Event"
+msgstr "Massen Event"
+
+#: templates/navigation.html:37
+msgid "Add"
+msgstr "Hinzufügen"
+
+#: templates/navigation.html:41
+#, fuzzy
+msgid "Add Animal"
+msgstr "Tier hinzufügen"
+
+#: templates/navigation.html:42
+#, fuzzy
+msgid "Add Terrarium"
+msgstr "Terrarium hinzufügen"
+
+#: templates/navigation.html:47
+msgid "Print"
+msgstr "Drucken"
+
+#: templates/navigation.html:50
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: templates/navigation.html:57 templates/navigation.html:75
+msgid "Account"
+msgstr "Profil"
+
+#: templates/navigation.html:62
+msgid "Admin settings"
+msgstr "Admin Einstellungen"
+
+#: templates/navigation.html:65
+msgid "Logout"
+msgstr "Abmelden"
+
+#: templates/navigation.html:80
+msgid "Register"
+msgstr "Registrieren"
+
+#: templates/navigation.html:91
+msgid "Toggle theme"
+msgstr "Design wechseln"
+
+#: templates/navigation.html:98
+msgid "Light"
+msgstr "Hell"
+
+#: templates/navigation.html:105
+msgid "Dark"
+msgstr "Dunkel"
+
+#: templates/navigation.html:112
+msgid "Auto"
+msgstr "Automatisch"
+

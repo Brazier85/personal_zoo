@@ -1,7 +1,7 @@
 {% from "macros/fields.html" import render_text_field, render_select_field, render_selectpicker_field, render_clear_text_field %}
 
 <div class="modal-header">
-    <h5 class="modal-title" id="itemLabel">Add document to {% if animal %}{{animal.name}}{%else%}{{terrarium.name}}{%endif%}</h5>
+    <h5 class="modal-title" id="itemLabel">{{ _("Add document to") }} {% if animal %}{{animal.name}}{%else%}{{terrarium.name}}{%endif%}</h5>
 </div>
 
 <form action="{{ url_for('document.add', target=target, id=id) }}" method="post" enctype="multipart/form-data">
@@ -23,8 +23,8 @@
     </div>
     <div class="modal-footer">
         <div class="text-end">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _("Cancel") }}</button>
+            <button type="submit" class="btn btn-primary">{{ _("Save") }}</button>
         </div>
     </div>
 </form>

@@ -64,9 +64,25 @@ pip install flask
 # create requirements.txt
 pip freeze > requirements.txt
 
+# For new versions
+backports.zoneinfo==0.2.1;python_version<"3.9"
+
 # deactivate venv
 deactivate
 
+```
+
+## Language
+
+```bash
+# Search for strings
+pybabel extract -F babel.cfg -k lazy_gettext -o messages.pot .
+
+# Update existing translations
+pybabel update -i messages.pot -d translation
+
+# Compile translations
+pybabel compile -d translations -f
 ```
 
 ## Docs

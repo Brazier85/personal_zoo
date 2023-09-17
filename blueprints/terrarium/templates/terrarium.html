@@ -59,7 +59,7 @@
     <div class="col">
         <div class="card h-100">
             <div class="card-header">
-                <div class="flex-grow"> Animals </div>
+                <div class="flex-grow"> {{ _("Animals") }} </div>
             </div>
             <div class="card-body animal_card">
                 {% if animals %}
@@ -67,8 +67,8 @@
                     <table id="animals" class="table table-striped dt-responsive"  style="width:100%">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Type</th>
+                                <th>{{ _("Name") }}</th>
+                                <th>{{ _("Type") }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -94,18 +94,18 @@
                     </table>
                 </div>
                 {% else %}
-                    <p class="mb-0">No animals found!</p>
+                    <p class="mb-0">{{ _("No animals found!") }}</p>
                 {% endif %}
             </div>
             <div class="card-footer text-right pr-0">
-                <div style="text-transform: uppercase;">Anyone in here?</div>
+                <div style="text-transform: uppercase;">{{ _("Anyone in here?") }}</div>
             </div>
         </div>
     </div>
     <div class="col">
         <div class="card h-100">
             <div class="card-header">
-                <div class="flex-grow"> Lamps </div>
+                <div class="flex-grow"> {{ _("Lamps") }} </div>
                 <div class="btn-list">
                     {% if current_user.is_authenticated %}
                     <button class="btn rounded-right lamp_add_button green_button"><i class="fa-solid fa-plus"></i></button>
@@ -117,10 +117,10 @@
                 <div class="lamp_card_table">
                     <table class="table table-striped m-0">
                         <thead>
-                            <th>Type</th>
-                            <th>Watt</th>
-                            <th>Position</th>
-                            <th>Changed</th>
+                            <th>{{ _("Type") }}</th>
+                            <th>{{ _("Watt") }}</th>
+                            <th>{{ _("Position") }}</th>
+                            <th>{{ _("Changed") }}</th>
                         </thead>
                         <tbody>
                             {% for lamp in lamps %}
@@ -128,25 +128,25 @@
                                 <td>{{ lamp.type }}</td>
                                 <td>{{ lamp.watt}}</td>
                                 <td>{{ lamp.position}}</td>
-                                <td>{{ lamp.changed | fix_date }}</td>
+                                <td>{{ lamp.changed | dateformat }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
                 {% else %}
-                    <p class="mb-0">No lamps found!</p>
+                    <p class="mb-0">{{ _("No lamps found!") }}</p>
                 {% endif %}
             </div>
             <div class="card-footer text-right pr-0">
-                <div style="text-transform: uppercase;">Light it up!</div>
+                <div style="text-transform: uppercase;">{{ _("Light it up!") }}</div>
             </div>
         </div>
     </div>
     <div class="col">
         <div class="card h-100">
             <div class="card-header">
-                <div class="flex-grow"> Equipment </div>
+                <div class="flex-grow"> {{ _("Equipment") }} </div>
                 <div class="btn-list">
                     {% if current_user.is_authenticated %}
                     <button class="btn equipment_add_button green_button"><i class="fa-solid fa-plus"></i></button>
@@ -166,7 +166,7 @@
                     </tbody>
                 </table>
                 {% else %}
-                    <p class="mb-0">No equipment found!</p>
+                    <p class="mb-0">{{ _("No equipment found!") }}</p>
                 {% endif %}
             </div>
         </div>
@@ -174,7 +174,7 @@
     <div class="col">
         <div class="card h-100">
             <div class="card-header">
-                <div class="flex-grow"> Events/Actions </div>
+                <div class="flex-grow"> {{ _("Events/Actions") }} </div>
                 <div class="btn-list">
                     {% if current_user.is_authenticated %}
                     <button class="btn history_add_button green_button"><i class="fa-solid fa-plus"></i></button>
@@ -185,14 +185,14 @@
                 {% if terrarium_history %}
                 <table class="table table-striped m-0">
                     <thead>
-                        <th class="w-25">Date</th>
-                        <th>Event</th>
-                        <th>Details</th>
+                        <th class="w-25">{{ _("Date") }}</th>
+                        <th>{{ _("Event") }}</th>
+                        <th>{{ _("Details") }}</th>
                     </thead>
                     <tbody>
                         {% for event in terrarium_history %}
                         <tr data-id="{{ event.id }}" class="history_edit active_row no-select">
-                            <td>{{ event.date | fix_date }}</td>
+                            <td>{{ event.date | dateformat }}</td>
                             <td>{{ event.name }}</td>
                             <td>{{ event.text|linebreaksbr|safe }}</td>
                         </tr>
@@ -200,18 +200,18 @@
                     </tbody>
                 </table>
                 {% else %}
-                    <p class="mb-0">No History found!</p>
+                    <p class="mb-0">{{ _("No History found!") }}</p>
                 {% endif %}
             </div>
             <div class="card-footer card-footer-clickable text-right pr-0 show_all_history">
-                <div style="text-transform: uppercase;">Show all <i class="fa-solid fa-chevron-right"></i></div>
+                <div style="text-transform: uppercase;">{{ _("Show all") }} <i class="fa-solid fa-chevron-right"></i></div>
             </div>
         </div>
     </div>
     <div class="col">
         <div class="card h-100">
             <div class="card-header">
-                <div class="flex-grow"> Notes </div>
+                <div class="flex-grow"> {{ _("Notes") }} </div>
                 <div class="btn-list">
                     <!-- no button -->
                 </div>
@@ -254,10 +254,10 @@
         $('.show_all_history').click(function(){
             if ($(this).html().includes("less")) {
                 url = '/terrarium/history/get_all/{{ terrarium.id }}?less=1'
-                $('.show_all_history').html('<div style="text-transform: uppercase;">Show all <i class="fa-solid fa-chevron-right"></i></div>');                
+                $('.show_all_history').html('<div style="text-transform: uppercase;">{{ _("Show all") }} <i class="fa-solid fa-chevron-right"></i></div>');                
             } else {
                 url = '/terrarium/history/get_all/{{ terrarium.id }}'
-                $('.show_all_history').html('<div style="text-transform: uppercase;"> <i class="fa-solid fa-chevron-left"></i></i> Show less</div>');
+                $('.show_all_history').html('<div style="text-transform: uppercase;"> <i class="fa-solid fa-chevron-left"></i></i> {{ _("Show less") }}</div>');
             }
             $.ajax({
                 url: url,

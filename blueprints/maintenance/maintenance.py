@@ -237,6 +237,19 @@ def do_update():
             current_app.logger.info(f"Error: {e}")
             error = error + f"Add is_active to user -> Error: {e}\n"
 
+    if not db_col_exists("user","lang"):
+        try:
+            query= "ALTER TABLE user ADD lang BOOLEAN DEFAULT 'en'"
+            db_update(query)
+            users = User.query.all()
+            for user in users:
+                user.lang = "en"
+                db.session.add(user)
+                db.session.commit()
+        except Exception as e:
+            current_app.logger.info(f"Error: {e}")
+            error = error + f"Add lang to user -> Error: {e}\n"
+
     # Check if a user is admin
     users = User.query.count()
     current_app.logger.info(f"User count: {users}")

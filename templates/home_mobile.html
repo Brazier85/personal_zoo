@@ -45,8 +45,8 @@
                                 <table id="animals" class="table table-striped dt-responsive"  style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Type</th>
+                                            <th>{{ _("Name") }}</th>
+                                            <th>{{ _("Type") }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -72,9 +72,9 @@
                                 </table>
                             {% else %}
                                 <div class="text-center">
-                                    <h5 class="card-title">No animals found!</h5>
-                                    <p>You can add your first animal here:</p>
-                                    <a href="{{ url_for('animal.add')}}" class="btn btn-primary">Add animal</a>
+                                    <h5 class="card-title">{{ _("No animals found!") }}</h5>
+                                    <p>{{ _("You can add your first animal here:") }}</p>
+                                    <a href="{{ url_for('animal.add')}}" class="btn btn-primary">{{ _("Add animal") }}</a>
                                 </div>
                             {% endif %}
                         </div>
@@ -83,9 +83,9 @@
                                 <table id="terrariums" class="table table-striped dt-responsive"  style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Image</th>
-                                            <th>Name</th>
-                                            <th>Size</th>
+                                            <th>{{ _("Image") }}</th>
+                                            <th>{{ _("Name") }}</th>
+                                            <th>{{ _("Size") }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -104,9 +104,9 @@
                                 </table>
                             {% else %}
                                 <div class="text-center">
-                                    <h5 class="card-title">No terrariums found!</h5>
-                                    <p>You can add your first terrarium here:</p>
-                                    <a href="{{ url_for('terrarium.add')}}" class="btn btn-primary">Add terrarium</a>
+                                    <h5 class="card-title">{{ _("No terrariums found!") }}</h5>
+                                    <p>{{ _("You can add your first terrarium here:") }}</p>
+                                    <a href="{{ url_for('terrarium.add')}}" class="btn btn-primary">{{ _("Add terrarium") }}</a>
                                 </div>
                             {% endif %}
                         </div>

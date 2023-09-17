@@ -17,11 +17,15 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///'+DATABASE
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    # Language
+    LANGUAGES = ["de", "en"]
+
 class DevConfig(Config):      
     FLASK_ENV = "development"
     SECRET_KEY = '8ad5ab033fb63bbf3b17ccab423e7cce5b705254a420440e0012f05cf72583c0'
     DEBUG = True
     TEMPLATES_AUTO_RELOAD = True
+    BABEL_DEFAULT_LOCALE = 'de'
 
 class ProdConfig(Config):
     FLASK_ENV = "production"

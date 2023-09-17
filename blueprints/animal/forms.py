@@ -8,32 +8,32 @@ from functions import *
 
 class AnimalForm(FlaskForm):
     name = StringField(
-        "Name", validators=[DataRequired(), Length(min=1, max=40)]
+        lazy_gettext("Name"), validators=[DataRequired(), Length(min=1, max=40)]
     )
     art = SelectField(
-        "Type", validators=[DataRequired()]
+        lazy_gettext("Type"), validators=[DataRequired()]
     )
     morph = StringField(
-        "Morph", validators=[Length(max=40)]
+        lazy_gettext("Morph"), validators=[Length(max=40)]
     )
     gender = SelectField(
-        "Gender", validators=[DataRequired()]
+        lazy_gettext("Gender"), validators=[DataRequired()]
     )
     birth = StringField(
-        "Birth", validators=[Length(max=40)]
+        lazy_gettext("Birth"), validators=[Length(max=40)]
     )
     notes = TextAreaField(
-        "Notes", widget=TextArea()
+        lazy_gettext("Notes"), widget=TextArea()
     )
     image = FileField(
-        "Image", validators=[FileAllowed(ALLOWED_EXTENSIONS, 'Images only!')], widget=FileInput()
+        lazy_gettext("Image"), validators=[FileAllowed(ALLOWED_EXTENSIONS, 'Images only!')], widget=FileInput()
     )
     background_color = StringField(
-        "Background Color",  widget=ColorInput()
+        lazy_gettext("Background Color"),  widget=ColorInput()
     )
     default_ft = SelectField(
-        "Default feeding type"
+        lazy_gettext("Default feeding type")
     )
     terrarium = SelectField(
-        "Terrarium"
+        lazy_gettext("Terrarium")
     )

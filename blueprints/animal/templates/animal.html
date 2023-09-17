@@ -49,7 +49,7 @@
                     {% if animal.current_weight != "0" %}
                     <div class="px-4 text-center border-start border-danger user-select-none clickable animal_show_weight">
                         <div class="fs-4">{{ animal.current_weight }}</div>
-                        <div class="text-muted text-lowercase"> Current Weight </div>
+                        <div class="text-muted text-lowercase"> {{ _("Current Weight") }} </div>
                     </div>
                     {% endif %}
                 </div>
@@ -71,7 +71,7 @@
     <div class="col">
         <div class="card h-100">
             <div class="card-header">
-                <div class="flex-grow"> Feedings </div>
+                <div class="flex-grow"> {{ _("Feedings") }} </div>
                 <div class="btn-list">
                     {% if current_user.is_authenticated %}
                     <button class="btn rounded-right feeding_add_button green_button"><i class="fa-solid fa-plus"></i></button>
@@ -83,15 +83,15 @@
                 <div class="feeding_card_table">
                     <table class="table table-striped m-0">
                         <thead>
-                            <th class="w-25">Date</th>
-                            <th>Count</th>
-                            <th>Type</th>
-                            <th>Size</th>
+                            <th class="w-25">{{ _("Date") }}</th>
+                            <th>{{ _("Count") }}</th>
+                            <th>{{ _("Type") }}</th>
+                            <th>{{ _("Size") }}</th>
                         </thead>
                         <tbody>
                             {% for feeding in feedings %}
                             <tr data-id="{{ feeding.id }}" class="feeding_edit active_row user-select-none">
-                                <td>{{ feeding.date | fix_date }}</td>
+                                <td>{{ feeding.date | dateformat }}</td>
                                 <td>{{ feeding.count }}</td>
                                 <td>{{ feeding.type }}</td>
                                 <td>{{ feeding.unit }} {%if feeding.ftunit == "weight" %}{{feeding.detail}}{%endif%}</td>
@@ -101,21 +101,21 @@
                     </table>
                 </div>
                 {% else %}
-                    <p class="mb-0">No feedings found!</p>
+                    <p class="mb-0">{{ _("No feedings found!") }}</p>
                 {% endif %}
                 {% if animal.feeding_size %}
                     <div class="text-muted mt-2 text-center">{{ animal.feeding_size }}</div>
                 {% endif %}
             </div>
             <div class="card-footer card-footer-clickable text-right pr-0 show_all_feedings">
-                <div style="text-transform: uppercase;">Show all <i class="fa-solid fa-chevron-right"></i></div>
+                <div style="text-transform: uppercase;">{{ _("Show all") }} <i class="fa-solid fa-chevron-right"></i></div>
             </div>
         </div>
     </div>
     <div class="col">
         <div class="card h-100">
             <div class="card-header">
-                <div class="flex-grow"> Events/Actions </div>
+                <div class="flex-grow"> {{ _("Events/Actions") }} </div>
                 <div class="btn-list">
                     {% if current_user.is_authenticated %}
                     <button class="btn history_add_button green_button"><i class="fa-solid fa-plus"></i></button>
@@ -126,14 +126,14 @@
                 {% if history %}
                 <table class="table table-striped m-0">
                     <thead>
-                        <th class="w-25">Date</th>
-                        <th>Event</th>
-                        <th>Details</th>
+                        <th class="w-25">{{ _("Date") }}</th>
+                        <th>{{ _("Event") }}</th>
+                        <th>{{ _("Details") }}</th>
                     </thead>
                     <tbody>
                         {% for event in history %}
                         <tr data-id="{{ event.id }}" class="history_edit active_row user-select-none">
-                            <td>{{ event.date | fix_date }}</td>
+                            <td>{{ event.date | dateformat }}</td>
                             <td>{{ event.name }}</td>
                             <td>{{ event.text|linebreaksbr|safe }}</td>
                         </tr>
@@ -141,18 +141,18 @@
                     </tbody>
                 </table>
                 {% else %}
-                    <p class="mb-0">No History found!</p>
+                    <p class="mb-0">{{ _("No History found!") }}</p>
                 {% endif %}
             </div>
             <div class="card-footer card-footer-clickable text-right pr-0 show_all_history">
-                <div style="text-transform: uppercase;">Show all <i class="fa-solid fa-chevron-right"></i></div>
+                <div style="text-transform: uppercase;">{{ _("Show all") }} <i class="fa-solid fa-chevron-right"></i></div>
             </div>
         </div>
     </div>
     <div class="col">
         <div class="card h-100">
             <div class="card-header">
-                <div class="flex-grow"> Documents </div>
+                <div class="flex-grow"> {{ _("Documents") }} </div>
                 <div class="btn-list">
                     {% if current_user.is_authenticated %}
                     <button class="btn document_add_button green_button"><i class="fa-solid fa-plus"></i></button>
@@ -163,31 +163,31 @@
                 {% if documents %}
                 <table class="table table-striped m-0">
                     <thead>
-                        <th>Name</th>
-                        <th width="25%">Download</th>
+                        <th>{{ _("Name") }}</th>
+                        <th width="25%">{{ _("Download") }}</th>
                     </thead>
                     <tbody>
                         {% for document in documents %}
                         <tr class="user-select-none">
                             <td data-id="{{ document.id }}" class="active_row document_edit">{{ document.name }}</td>
-                            <td><a href="{{ url_for('document.download', id=document.id) }}" target="_blank">Download</a></td>
+                            <td><a href="{{ url_for('document.download', id=document.id) }}" target="_blank">{{ _("Download") }}</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
                 {% else %}
-                    <p class="mb-0">No Documents found!</p>
+                    <p class="mb-0">{{ _("No Documents found!") }}</p>
                 {% endif %}
             </div>
             <div class="card-footer card-footer-clickable text-right pr-0">
-                <div style="text-transform: uppercase;">You can only upload pdf and image-files!</div>
+                <div style="text-transform: uppercase;">{{ _("You can only upload pdf and image-files!") }}</div>
             </div>
         </div>
     </div>
     <div class="col">
         <div class="card h-100">
             <div class="card-header">
-                <div class="flex-grow"> Notes </div>
+                <div class="flex-grow"> {{ _("Notes") }} </div>
                 <div class="btn-list">
                     <!-- no button -->
                 </div>
@@ -196,7 +196,7 @@
                 {{ animal.notes|linebreaksbr|safe }}
             </div>
             <div class="card-footer text-right pr-0">
-                <div style="text-transform: uppercase;">Last updated: {{ animal.updated_date | fix_date }}</div>
+                <div style="text-transform: uppercase;">{{ _("Last updated:") }} {{ animal.updated_date | dateformat }}</div>
             </div>
         </div>
     </div>
@@ -211,7 +211,169 @@
 </div>
 
 <script type="text/javascript" >
-    {% include "animals.js" %}
+    $(document).ready(function(){
+        $('.show_animal_image').click(function(){
+            $('.modal-content').html('<div class="modal-body"><img src="{{ image }}" class="rounded img-fluid mx-auto"></div>')
+            $('#modal_details').modal('show'); 
+        });
+        $('.show_all_history').click(function(){
+            var less = "{{ _("less") }}";
+            if ($(this).html().includes(less)) {
+                url = '/history/get_all/{{ animal.id }}?less=1'
+                $('.show_all_history').html('<div style="text-transform: uppercase;">{{ _("Show all") }} <i class="fa-solid fa-chevron-right"></i></div>');                
+            } else {
+                url = '/history/get_all/{{ animal.id }}'
+                $('.show_all_history').html('<div style="text-transform: uppercase;"> <i class="fa-solid fa-chevron-left"></i> {{ _("Show less") }}</div>');
+            }
+            $.ajax({
+                url: url,
+                type: 'get',
+                success: function(data){
+                    $('.history_card').html(data);
+                }
+            })
+        });
+        $('.show_all_feedings').click(function(){
+            var less = "{{ _("less") }}";
+            if ($(this).html().includes(less)) {
+                url = '/feeding/get_all/{{ animal.id }}?less=1'
+                $('.show_all_feedings').html('<div style="text-transform: uppercase;">{{ _("Show all") }} <i class="fa-solid fa-chevron-right"></i></div>');                
+            } else {
+                url = '/feeding/get_all/{{ animal.id }}'
+                $('.show_all_feedings').html('<div style="text-transform: uppercase;"> <i class="fa-solid fa-chevron-left"></i> {{ _("Show less") }}</div>');
+            }
+            $.ajax({
+                url: url,
+                type: 'get',
+                success: function(data){
+                    $('.feeding_card_table').html(data);
+                }
+            })
+        });
+    });
+    $('.animal_show_weight').on('click',function(){
+        $('.modal-content').load('/animal/get_weight/{{ animal.id }}',function(){
+            $('#modal_details').modal('show'); 
+        });
+    });
+    {% if current_user.is_authenticated %}
+    $(document).on("click",".feeding_edit",function(){
+        var feed_id = $(this).data('id');
+        $.ajax({
+            url: '/feeding/edit/'+feed_id,
+            type: 'get',
+            success: function(data){ 
+                $('.modal-content').html(data); 
+                $('.modal-content').append(data.htmlresponse);
+                $('#modal_details').modal('show');
+                $('.feeding_delete_button').click(function(){
+                    var feed_id = $(this).data('id');
+                    if (confirm("Are You Sure ?")) {
+                        $.ajax({
+                                url: '/feeding/delete/'+feed_id,
+                                type: 'post',
+                                data: {},
+                                success: function(data) {
+                                    location.reload(true); 
+                                }
+                            });
+                    }
+                });
+            }
+        });
+    });
+    $(document).on("click",".history_edit",function(){
+        var feed_id = $(this).data('id');
+        $.ajax({
+            url: '/history/edit/'+feed_id,
+            type: 'get',
+            success: function(data){ 
+                $('.modal-content').html(data); 
+                $('.modal-content').append(data.htmlresponse);
+                $('#modal_details').modal('show');
+                $('.history_delete_button').click(function(){
+                    var feed_id = $(this).data('id');
+                    if (confirm("Are You Sure ?")) {
+                        $.ajax({
+                                url: '/history/delete/'+feed_id,
+                                type: 'post',
+                                data: {},
+                                success: function(data) {
+                                    location.reload(true); 
+                                }
+                            });
+                    }
+                });
+            }
+        });
+    });
+    $(document).on("click",".document_edit",function(){
+        var feed_id = $(this).data('id');
+        $.ajax({
+            url: '/document/edit/'+feed_id,
+            type: 'get',
+            success: function(data){ 
+                $('.modal-content').html(data); 
+                $('.modal-content').append(data.htmlresponse);
+                $('#modal_details').modal('show');
+                $('.document_delete_button').click(function(){
+                    var feed_id = $(this).data('id');
+                    if (confirm("Are You Sure ?")) {
+                        $.ajax({
+                                url: '/document/delete/'+feed_id,
+                                type: 'post',
+                                data: {},
+                                success: function(data) {
+                                    location.reload(true); 
+                                }
+                            });
+                    }
+                });
+            }
+        });
+    });
+    $('.feeding_add_button').on('click',function(){
+        $('.modal-content').load('/feeding/add/{{ animal.id }}',function(){
+            $('#modal_details').modal('show'); 
+        });
+    });
+    $('.history_add_button').on('click',function(){
+        $('.modal-content').load('/history/add/{{ animal.id }}',function(){
+            $('#modal_details').modal('show');
+        });
+    });
+    $('.animal_qr_button').on('click',function(){
+        $('.modal-content').load('/feeding/get_qr/{{ animal.id }}',function(){
+            $('#modal_details').modal('show'); 
+        });
+    })
+    $('.document_add_button').on('click',function(){
+        $('.modal-content').load('/document/add/animal/{{ animal.id }}',function(){
+            $('#modal_details').modal('show'); 
+        });
+    });
+    $('.animal_print_button').on('click',function(){
+        window.open('/animal/{{ animal.id }}?print=1', '_blank'); 
+    });
+    $('.animal_edit_button').on('click',function(){
+        $('.modal-content').load('/animal/edit/{{ animal.id }}',function(){
+            $('#modal_details').modal('show'); 
+            $('.animal_delete_button').click(function(){
+                                var animal_id = $(this).data('id');
+                                if (confirm("Are You Sure ?")) {
+                                    $.ajax({
+                                            url: '/animal/delete/'+animal_id,
+                                            type: 'post',
+                                            data: {animal_id: {{ animal.id }}},
+                                            success: function(data) {
+                                                window.location.replace("/"); 
+                                            }
+                                        });
+                                }
+                            });
+        });
+    });
+    {% endif %}
 </script>
 
 {% endblock %}

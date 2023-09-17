@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title" id="itemLabel">Weight Chart</h5>
+    <h5 class="modal-title" id="itemLabel">{{ _("Weight Chart") }}</h5>
 </div>
 
 <div class="modal-body" id="modal-body">
@@ -7,7 +7,7 @@
 </div>
 
 <div class="modal-footer text-end">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _("Close") }}</button>
 </div>
 
 <script>
@@ -22,7 +22,7 @@
                 label: 'Weight',
                 data: [
                     {% for weight in weight_list %}
-                        {x: '{{ weight.date|fix_date }}', y: '{{ weight.weight }}'},
+                        {x: '{{ weight.date|dateformat }}', y: '{{ weight.weight }}'},
                     {% endfor %}
                 ],
                 borderColor: ['teal']

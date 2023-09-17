@@ -7,7 +7,7 @@
 {% block content %}
 <div class="card">
     <div class="card-header">
-        <h3>Add new Terrarium</h3>
+        <h3>{{ _("Add new Terrarium") }}</h3>
     </div>
     <form role="form" method="post" action="{{ url_for('terrarium.add') }}" enctype="multipart/form-data">
         {{ form.csrf_token }}
@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="card-footer text-end">
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">{{ _("Save") }}</button>
         </div>
     </form>
 </div>

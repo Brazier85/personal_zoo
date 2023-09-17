@@ -31,21 +31,21 @@
         <div class="col mb-3">
             <div class="card">
                 <div class="card-header">
-                    <div class="flex-grow"> Your Animals </div>
+                    <div class="flex-grow"> {{ _("Your Animals") }} </div>
                 </div>
                 <div class="card-body">
                     {% if animals %}
                         <table id="animals" class="table table-striped dt-responsive"  style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Type</th>
+                                    <th>{{ _("Name") }}</th>
+                                    <th>{{ _("Type") }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for animal in animals %}
                                 <tr data-id="{{ animal.id }}" class="active_row show_animal user-select-none">
-                                    <td {{ basic_popover("Notes", animal.notes|linebreaksbr|safe) }}>
+                                    <td {{ basic_popover(_("Notes"), animal.notes|linebreaksbr|safe) }}>
                                         <div class="d-flex align-items-center align-middle">
                                             <div class="img-container animal-image-small">
                                                 <img class="object-fit-contain" src="{{ url_for('uploaded_file', folder='animals', filename=animal.image) }}" alt="Image for {{ animal.name }}" style="border-color: {{ animal.background_color }} !important;">
@@ -65,9 +65,9 @@
                         </table>
                     {% else %}
                         <div class="text-center">
-                            <h5 class="card-title">No animals found!</h5>
-                            <p>You can add your first animal here:</p>
-                            <a href="{{ url_for('animal.add')}}" class="btn btn-primary">Add animal</a>
+                            <h5 class="card-title">{{ _("No animals found!") }}</h5>
+                            <p>{{ _("You can add your first animal here:") }}</p>
+                            <a href="{{ url_for('animal.add')}}" class="btn btn-primary">{{ _("Add animal") }}</a>
                         </div>
                     {% endif %}
                 </div>
@@ -76,22 +76,22 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    <div class="flex-grow"> Your Terrariums </div>
+                    <div class="flex-grow"> {{ _("Your Terrariums") }} </div>
                 </div>
                 <div class="card-body">
                     {% if terrariums %}
                         <table id="terrariums" class="table table-striped dt-responsive"  style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Image</th>
-                                    <th>Name</th>
-                                    <th>Size</th>
+                                    <th>{{ _("Image") }}</th>
+                                    <th>{{ _("Name") }}</th>
+                                    <th>{{ _("Size") }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for terrarium in terrariums %}
                                 <tr data-id="{{ terrarium.id }}" class="active_row show_terrarium user-select-none">
-                                    <td {{ basic_popover("Notes", terrarium.notes|linebreaksbr|safe) }}>
+                                    <td {{ basic_popover(_("Notes"), terrarium.notes|linebreaksbr|safe) }}>
                                         <div class="img-container terrarium-image-small">
                                             <img class="rounded object-fit-contain" src="{{ url_for('uploaded_file', folder='terrariums', filename=terrarium.image) }}" alt="Image for {{ terrarium.name }}">
                                         </div>
@@ -104,9 +104,9 @@
                         </table>
                     {% else %}
                         <div class="text-center">
-                            <h5 class="card-title">No terrariums found!</h5>
-                            <p>You can add your first terrarium here:</p>
-                            <a href="{{ url_for('terrarium.add')}}" class="btn btn-primary">Add terrarium</a>
+                            <h5 class="card-title">{{ _("No terrariums found!") }}</h5>
+                            <p>{{ _("You can add your first terrarium here:") }}</p>
+                            <a href="{{ url_for('terrarium.add')}}" class="btn btn-primary">{{ _("Add terrarium") }}</a>
                         </div>
                     {% endif %}
                 </div>

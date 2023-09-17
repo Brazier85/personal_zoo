@@ -6,7 +6,7 @@
         <div class="mb-3">
             <div class="card">
                 <div class="card-header">
-                    <div class="flex-grow"> Your Profile </div>
+                    <div class="flex-grow"> {{ _("Your Profile") }} </div>
                     <div class="btn-list">
                         <!-- no button -->
                     </div>
@@ -14,23 +14,31 @@
                 <div class="card-body">
                     <table class="table table-striped m-0 table-sm align-middle">
                         <thead>
-                            <th>E-Mail</th>
-                            <th>Admin</th>
-                            <th>Active</th>
-                            <th>Change Password</th>
+                            <th>{{ _("E-Mail") }}</th>
+                            <th>{{ _("Admin") }}</th>
+                            <th>{{ _("Active") }}</th>
+                            <th>{{ _("Language") }}</th>
+                            <th>{{ _("Change Password") }}</th>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>{{user.email}}</td>
                                 <td>{% if user.is_admin %}<i class="fa-solid fa-check fs-4 text-success"></i>{%else%}<i class="fa-solid  fa-x fs-4 text-danger"></i>{% endif %}</td>
                                 <td>{% if user.is_active %}<i class="fa-solid fa-check fs-4 text-success"></i>{%else%}<i class="fa-solid  fa-x fs-4 text-danger"></i>{% endif %}</td>
+                                <td>
+                                    <select id="change_lang" name="change_lang">
+                                        {% for lang in languages %}
+                                            <option {% if user.lang == lang %}selected{%endif%}>{{ lang }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
                                 <td data-id="{{ user.id }}" class="change_password"><i class="fa-solid fa-pen-to-square fs-5 text-success clickable"></i></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="card-footer pr-0">
-                    Basic profile data!
+                    {{ _("Basic profile data!") }}
                 </div>
             </div>
         </div>
@@ -78,6 +86,17 @@
                 });
             }
         });
+    });
+
+    $('#change_lang').change(function(){
+        var lang = $(this).val();
+        $.ajax({
+            url: '/account/change_language/'+lang,
+            type: 'get',
+            success: function(data) {
+                location.reload(true); 
+            }
+        })
     });
 </script>
 

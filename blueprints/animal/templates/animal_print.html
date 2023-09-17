@@ -31,21 +31,21 @@
     <div class="col">
         <div class="card" >
             <div class="card-header">
-                <div class="flex-grow"> Feedings (last 10)</div>
+                <div class="flex-grow"> {{ _("Feedings (last 10)") }}</div>
             </div>
             <div class="card-body">
                 {% if feedings %}
                 <table class="table table-striped m-0">
                     <thead>
-                        <th class="w-25">Date</th>
-                        <th>Count</th>
-                        <th>Type</th>
-                        <th>Size</th>
+                        <th class="w-25">{{ _("Date") }}</th>
+                        <th>{{ _("Count") }}</th>
+                        <th>{{ _("Type") }}</th>
+                        <th>{{ _("Size") }}</th>
                     </thead>
                     <tbody>
                         {% for feeding in feedings %}
                         <tr data-id="{{ feeding.id }}" class="feeding_edit active_row no-select">
-                            <td>{{ feeding.date | fix_date }}</td>
+                            <td>{{ feeding.date | dateformat }}</td>
                             <td>{{ feeding.count }}</td>
                             <td>{{ feeding.type }}</td>
                             <td>{{ feeding.unit }} {%if feeding.ftunit == "weight" %}{{feeding.detail}}{%endif%}</td>
@@ -54,7 +54,7 @@
                     </tbody>
                 </table>
                 {% else %}
-                    <p class="mb-0">No feedings found!</p>
+                    <p class="mb-0">{{ _("No feedings found!") }}</p>
                 {% endif %}
                 {% if feeding_size %}
                     <div class="text-muted mt-2 text-center">{{ feeding_size }}</div>
@@ -66,20 +66,20 @@
         <div class="card" >
             <div class="card">
                 <div class="card-header">
-                    <div class="flex-grow"> Events/Actions (last 10)</div>
+                    <div class="flex-grow"> {{ _("Events/Actions (last 10)") }}</div>
                 </div>
                 <div class="card-body">
                     {% if history %}
                     <table class="table table-striped m-0">
                         <thead>
-                            <th>Date</th>
-                            <th>Event</th>
-                            <th>Details</th>
+                            <th>{{ _("Date") }}</th>
+                            <th>{{ _("Event") }}</th>
+                            <th>{{ _("Details") }}</th>
                         </thead>
                         <tbody>
                             {% for event in history %}
                         <tr data-id="{{ event.id }}" class="history_edit active_row no-select">
-                            <td>{{ event.date | fix_date }}</td>
+                            <td>{{ event.date | dateformat }}</td>
                             <td>{{ event.name }}</td>
                             <td>{{ event.text|linebreaksbr|safe }}</td>
                         </tr>
@@ -87,7 +87,7 @@
                         </tbody>
                     </table>
                     {% else %}
-                        <p class="mb-0">No History found!</p>
+                        <p class="mb-0">{{ _("No History found!") }}</p>
                     {% endif %}
                 </div>
             </div>
@@ -100,7 +100,7 @@
 <div class="d-flex flex-row rounded" style="background-color: #d7d7d7; padding: 5px;">
     <div class="card flex-grow-1">
         <div class="card-header">
-            <div class="flex-grow"> Notes </div>
+            <div class="flex-grow"> {{ _("Notes") }} </div>
             <div class="btn-list">
                 <!-- no button -->
             </div>
@@ -110,7 +110,7 @@
         </div>
         <div class="list-group list-group-clickable"><!----></div>
         <div class="card-footer card-footer-clickable text-right pr-0">
-            <div style="text-transform: uppercase;">Last updated: {{ animal.updated_date | fix_date }} | Powered by https://www.personal-zoo.com</div>
+            <div style="text-transform: uppercase;">{{ _("Last updated:") }} {{ animal.updated_date | dateformat }} | {{ _("Powered by https://www.personal-zoo.com") }}</div>
         </div>
     </div>
 </div>

@@ -1,12 +1,12 @@
 <div class="modal-header">
-    <h5 class="modal-title" id="itemLabel">Edit feeding type</h5>
+    <h5 class="modal-title" id="itemLabel">{{ _("Edit feeding type") }}</h5>
 </div>
 <form action="{{ url_for('settings.ft_edit', id=data.id) }}" method="post" enctype="multipart/form-data">
     <div class="modal-body" id="modal-body">
         <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <label for="ft_name" class="form-label">Name</label>
+                    <label for="ft_name" class="form-label">{{ _("Name") }}</label>
                     <input type="text" class="form-control" id="ft_name" name="ft_name" value="{{ data.name }}" required>
                 </div>
             </div>
@@ -14,11 +14,11 @@
         <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <label for="ft_unit" class="form-label">Unit</label>
+                    <label for="ft_unit" class="form-label">{{ _("Unit") }}</label>
                     <select class="form-select" class="form-control" id="ft_unit" name="ft_unit" required>
-                            <option value="weight" {% if data.unit == "weight" %}selected{%endif%}>Weight</option>
-                            <option value="text" {% if data.unit == "text" %}selected{%endif%}>Text</option>
-                            <option value="size" {% if data.unit == "size" %}selected{%endif%}>Size</option>
+                            <option value="weight" {% if data.unit == "weight" %}selected{%endif%}>{{ _("Weight") }}</option>
+                            <option value="text" {% if data.unit == "text" %}selected{%endif%}>{{ _("Text") }}</option>
+                            <option value="size" {% if data.unit == "size" %}selected{%endif%}>{{ _("Size") }}</option>
                     </select>
                 </div>
             </div>
@@ -26,12 +26,12 @@
         <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <label for="ft_detail" class="form-label">Detail</label>
+                    <label for="ft_detail" class="form-label">{{ _("Detail") }}</label>
                     <input type="text" class="form-control" id="ft_detail" name="ft_detail" value="{{ data.detail }}" required>
                     <p>
-                        Weight: Enter weight unit<br />
-                        Text: Enter a hint<br />
-                        Size: Enter sizes (small,middle,large)
+                        {{ _("Weight: Enter weight unit") }}<br />
+                        {{ _("Text: Enter a hint") }}<br />
+                        {{ _("Size: Enter sizes (small,middle,large)") }}
                     </p>
                 </div>
             </div>
@@ -39,9 +39,9 @@
     </div>
     <div class="modal-footer">
         <div pos="start">
-            <button type="button" data-id="{{ data.id }}" class="btn btn-danger text-left ft_delete_button">Delete</button>
+            <button type="button" data-id="{{ data.id }}" class="btn btn-danger text-left ft_delete_button">{{ _("Delete") }}</button>
         </div>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _("Cancel") }}</button>
+        <button type="submit" class="btn btn-primary">{{ _("Save") }}</button>
     </div>
 </form>
