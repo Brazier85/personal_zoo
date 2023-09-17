@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-09-12 15:02+0200\n"
+"POT-Creation-Date: 2023-09-17 20:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,6 +63,11 @@ msgid "Active"
 msgstr ""
 
 #: blueprints/accounts/templates/admin.html:20
+#: blueprints/accounts/templates/profile.html:20
+msgid "Language"
+msgstr ""
+
+#: blueprints/accounts/templates/admin.html:21
 #: blueprints/animal/templates/animal_edit.html:47
 #: blueprints/document/templates/document_edit.html:20
 #: blueprints/feeding/templates/feeding_edit.html:30
@@ -136,15 +141,11 @@ msgstr ""
 msgid "Your Profile"
 msgstr ""
 
-#: blueprints/accounts/templates/profile.html:20
-msgid "Language"
-msgstr ""
-
 #: blueprints/accounts/templates/profile.html:21
 msgid "Change Password"
 msgstr ""
 
-#: blueprints/accounts/templates/profile.html:40
+#: blueprints/accounts/templates/profile.html:41
 msgid "Basic profile data!"
 msgstr ""
 

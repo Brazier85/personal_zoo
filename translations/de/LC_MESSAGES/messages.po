@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-09-12 15:02+0200\n"
+"POT-Creation-Date: 2023-09-17 20:01+0200\n"
 "PO-Revision-Date: 2023-09-12 09:12+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -52,8 +52,9 @@ msgstr "Benutzer"
 
 #: blueprints/accounts/templates/admin.html:17
 #: blueprints/accounts/templates/profile.html:17
-msgid "new Password"
-msgstr "Neues Passwort"
+#, fuzzy
+msgid "E-Mail"
+msgstr "E-Mail"
 
 #: blueprints/accounts/templates/admin.html:18
 #: blueprints/accounts/templates/profile.html:18
@@ -66,6 +67,11 @@ msgid "Active"
 msgstr "Aktiv"
 
 #: blueprints/accounts/templates/admin.html:20
+#: blueprints/accounts/templates/profile.html:20
+msgid "Language"
+msgstr "Sprache"
+
+#: blueprints/accounts/templates/admin.html:21
 #: blueprints/animal/templates/animal_edit.html:47
 #: blueprints/document/templates/document_edit.html:20
 #: blueprints/feeding/templates/feeding_edit.html:30
@@ -139,17 +145,13 @@ msgstr "Speichern"
 msgid "Your Profile"
 msgstr "Dein Profil"
 
-#: blueprints/accounts/templates/profile.html:20
-msgid "Language"
-msgstr "Sprache"
-
 #: blueprints/accounts/templates/profile.html:21
 msgid "Change Password"
 msgstr "Password ändern"
 
-#: blueprints/accounts/templates/profile.html:40
+#: blueprints/accounts/templates/profile.html:41
 msgid "Basic profile data!"
-msgstr "Grundlegende Profildaten!
+msgstr "Grundlegende Profildaten"
 
 #: blueprints/accounts/templates/register.html:9
 msgid "Registration"
@@ -306,7 +308,7 @@ msgstr "Ereignis"
 #: blueprints/terrarium/templates/t_history_all.html:5
 #: blueprints/terrarium/templates/terrarium.html:190
 msgid "Details"
-msgstr "Details""
+msgstr "Details\""
 
 #: blueprints/animal/templates/animal.html:144
 #: blueprints/animal/templates/animal_print.html:90
@@ -640,12 +642,12 @@ msgstr "Admin Einstellungen"
 #: blueprints/settings/templates/settings.html:229
 #, fuzzy
 msgid "Terrarium Types"
-msgstr "Deine Terrarien"
+msgstr "Terrarien Arten"
 
 #: blueprints/settings/templates/settings.html:249
 #, fuzzy
 msgid "No Terrarium types found!"
-msgstr "Keine Terrarien gefunden"
+msgstr "Keine Terrarien Arten gefunden"
 
 #: blueprints/settings/templates/settings.html:253
 msgid "This function is work in progress!"
