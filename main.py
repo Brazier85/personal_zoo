@@ -98,9 +98,11 @@ bcrypt = Bcrypt(app)
 
 def get_locale():
     # if a user is logged in, use the locale from the user settings
-    if current_user.lang is not None:
-        return current_user.lang
-    return request.accept_languages.best_match(['de', 'en'])
+    try:
+        if current_user.lang is not None:
+            return current_user.lang
+    except:
+        return request.accept_languages.best_match(['de', 'en'])
 
 def get_timezone():
     user = getattr(g, 'user', None)
