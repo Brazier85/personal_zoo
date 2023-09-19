@@ -601,7 +601,7 @@ msgstr "Option"
 #: blueprints/settings/templates/settings.html:98
 #, fuzzy
 msgid "Animal Settings"
-msgstr "Admin Einstellungen"
+msgstr "Tier Einstellungen"
 
 #: blueprints/settings/templates/settings.html:102
 #, fuzzy
@@ -611,7 +611,7 @@ msgstr "Fütterungen"
 #: blueprints/settings/templates/settings.html:105
 #, fuzzy
 msgid "Animal Types"
-msgstr "Deine Tiere"
+msgstr "Tierarten"
 
 #: blueprints/settings/templates/settings.html:108
 #: blueprints/settings/templates/settings.html:220
@@ -636,7 +636,7 @@ msgstr "Notizen sidn nur auf dieser Seite sichtbar"
 #: blueprints/settings/templates/settings.html:213
 #, fuzzy
 msgid "Terrarium Settings"
-msgstr "Admin Einstellungen"
+msgstr "Terrarium Einstellungen"
 
 #: blueprints/settings/templates/settings.html:217
 #: blueprints/settings/templates/settings.html:229
