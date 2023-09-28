@@ -102,7 +102,7 @@ def get_locale():
         if current_user.lang is not None:
             return current_user.lang
     except:
-        return request.accept_languages.best_match(['de', 'en'])
+        return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 def get_timezone():
     user = getattr(g, 'user', None)
