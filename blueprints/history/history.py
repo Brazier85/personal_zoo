@@ -104,26 +104,26 @@ def multi_add():
 @login_required
 def edit(id):
 
-    event = History.query.filter(History.id==id).first()
+    f_event = History.query.filter(History.id==id).first()
 
-    form = HistoryForm(request.form, obj=event)
+    form = HistoryForm(request.form, obj=f_event)
 
     # Adding select values
     form.event.choices = [(i.id, i.name) for i in get_ht()]
 
     if form.validate_on_submit():
-        event.event = form.event.data
-        event.text = form.text.data
-        event.date = form.date.data
+        f_event.event = form.event.data
+        f_event.text = form.text.data
+        f_event.date = form.date.data
         
-        db.session.add(event)
+        db.session.add(f_event)
         db.session.commit()
 
         flash('Changes to history saved!', 'success')
         current_app.logger.info(f"Modified history with id: {id} !")
         return jsonify(status='ok')
     elif request.method == 'GET':
-        return jsonify({'htmlresponse': render_template('history_edit.html', form=form, target=url_for('history.edit', id=id), id=id)})
+        return jsonify({'htmlresponse': render_template('history_edit.html', form=form, target=url_for("history.edit", id=id), id=id)})
     else:
         data = json.dumps(form.errors, ensure_ascii=False)
         return jsonify(data)

@@ -308,7 +308,7 @@ msgstr "Ereignis"
 #: blueprints/terrarium/templates/t_history_all.html:5
 #: blueprints/terrarium/templates/terrarium.html:190
 msgid "Details"
-msgstr "Details\""
+msgstr "Details"
 
 #: blueprints/animal/templates/animal.html:144
 #: blueprints/animal/templates/animal_print.html:90
